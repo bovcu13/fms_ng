@@ -1,33 +1,36 @@
-<div class="login-container">
-  <div class="login-card">
-    <div class="logo">
-      <i class="pi pi-key"></i>
-      <span>天網熊貓</span><br>
-      <span>SkyNet Panda</span>
-    </div>
+<form [formGroup]="login_form">
+  <div class="login-container">
+    <div class="login-card">
+      <div class="logo">
+        <i class="pi pi-key"></i>
+        <span>天網熊貓</span><br>
+        <span>SkyNet Panda</span>
+      </div>
 
       <div class="p-fluid">
         <div class="p-field">
           <label for="company">車隊ID</label>
-          <input id="company" type="text" pInputText />
+          <input id="company" formControlName="company" type="text" pInputText/>
         </div>
-      <div class="p-field">
-        <label for="account">帳號ID</label>
-        <input id="account" type="text" pInputText />
-      </div>
-      <div class="p-field">
-        <label for="password">密碼</label>
-        <input id="password" type="password" pInputText />
-      </div>
-      <div class="p-field">
-        <p-checkbox id="rememberMe" label="記住密碼"></p-checkbox>
-      </div>
-      <div class="p-field">
-        <p-checkbox id="autoLogin" label="自動登入"></p-checkbox>
-      </div>
-      <div class="p-field">
-        <button type="button" pButton icon="pi pi-sign-in" label="登入" class="p-button p-button-success"></button>
+        <div class="p-field mt-2">
+          <label for="account">帳號ID</label>
+          <input id="account" formControlName="account" type="text" pInputText/>
+        </div>
+        <div class="p-field mt-2">
+          <label for="password">密碼</label>
+          <input id="password" formControlName="password" type="password" pInputText/>
+        </div>
+        <div class="p-field mt-2">
+          <p-checkbox id="rememberMe" [binary]="true" label="記住密碼"></p-checkbox>
+        </div>
+        <div class="p-field mt-2">
+          <p-checkbox id="autoLogin" [binary]="true" label="自動登入"></p-checkbox>
+        </div>
+        <div class="p-field">
+          <button type="button" (click)="login()" pButton icon="pi pi-sign-in" label="登入"
+                  class="p-button p-button-success"></button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</form>
