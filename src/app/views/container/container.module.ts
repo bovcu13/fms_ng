@@ -6,6 +6,7 @@ import {ContainerComponent} from './container.component';
 import {ContainerRoutingModule} from './container-routing.module';
 import {RoleComponent} from '../features/role/role.component';
 import {MainComponent} from '../features/main/main.component';
+import {GoogleMapsModule} from "@angular/google-maps";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {MainComponent} from '../features/main/main.component';
     SharedModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GoogleMapsModule
   ]
 })
 export class ContainerModule {

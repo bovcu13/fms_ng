@@ -5,6 +5,7 @@ import {AppRoutingModule} from "./app.routing.module";
 import {AppComponent} from './app.component';
 import {SharedModule} from './shared/shared.module';
 import {LoginComponent} from './views/components/login/login.component';
+import {GoogleMapsModule} from '@angular/google-maps'
 
 @NgModule({
   declarations: [
@@ -15,11 +16,12 @@ import {LoginComponent} from './views/components/login/login.component';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    GoogleMapsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

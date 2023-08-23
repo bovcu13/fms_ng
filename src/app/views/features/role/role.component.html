@@ -47,39 +47,39 @@
           <tr>
             <td colspan="7">
               <div class="p-3">
-<!--                <p-table [value]="data.data2" dataKey="id">-->
-<!--                  <ng-template pTemplate="header">-->
-<!--                    <tr>-->
-<!--                      <th pSortableColumn="role" [style]="{width: '450px'}">權限-->
-<!--                      </th>-->
-<!--                      <th pSortableColumn="read">審核-->
-<!--                      </th>-->
-<!--                      <th pSortableColumn="create">停權-->
-<!--                      </th>-->
-<!--                      <th pSortableColumn="update">賦權-->
-<!--                      </th>-->
-<!--                    </tr>-->
-<!--                  </ng-template>-->
-<!--                  <ng-template pTemplate="body" let-order>-->
-<!--                    <tr>-->
-<!--                      <td>{{ order.role }}</td>-->
-<!--                      <td>-->
-<!--                        <p-checkbox [binary]="true" [(ngModel)]="order.examine"></p-checkbox>-->
-<!--                      </td>-->
-<!--                      <td>-->
-<!--                        <p-checkbox [binary]="true" [(ngModel)]="order.suspension"></p-checkbox>-->
-<!--                      </td>-->
-<!--                      <td>-->
-<!--                        <p-checkbox [binary]="true" [(ngModel)]="order.empowerment"></p-checkbox>-->
-<!--                      </td>-->
-<!--                    </tr>-->
-<!--                  </ng-template>-->
-<!--                  <ng-template pTemplate="emptymessage">-->
-<!--                    <tr>-->
-<!--                      <td colspan="6">目前尚無資料</td>-->
-<!--                    </tr>-->
-<!--                  </ng-template>-->
-<!--                </p-table>-->
+                <!--                <p-table [value]="data.data2" dataKey="id">-->
+                <!--                  <ng-template pTemplate="header">-->
+                <!--                    <tr>-->
+                <!--                      <th pSortableColumn="role" [style]="{width: '450px'}">權限-->
+                <!--                      </th>-->
+                <!--                      <th pSortableColumn="read">審核-->
+                <!--                      </th>-->
+                <!--                      <th pSortableColumn="create">停權-->
+                <!--                      </th>-->
+                <!--                      <th pSortableColumn="update">賦權-->
+                <!--                      </th>-->
+                <!--                    </tr>-->
+                <!--                  </ng-template>-->
+                <!--                  <ng-template pTemplate="body" let-order>-->
+                <!--                    <tr>-->
+                <!--                      <td>{{ order.role }}</td>-->
+                <!--                      <td>-->
+                <!--                        <p-checkbox [binary]="true" [(ngModel)]="order.examine"></p-checkbox>-->
+                <!--                      </td>-->
+                <!--                      <td>-->
+                <!--                        <p-checkbox [binary]="true" [(ngModel)]="order.suspension"></p-checkbox>-->
+                <!--                      </td>-->
+                <!--                      <td>-->
+                <!--                        <p-checkbox [binary]="true" [(ngModel)]="order.empowerment"></p-checkbox>-->
+                <!--                      </td>-->
+                <!--                    </tr>-->
+                <!--                  </ng-template>-->
+                <!--                  <ng-template pTemplate="emptymessage">-->
+                <!--                    <tr>-->
+                <!--                      <td colspan="6">目前尚無資料</td>-->
+                <!--                    </tr>-->
+                <!--                  </ng-template>-->
+                <!--                </p-table>-->
                 <p-table [value]="data.data3" dataKey="id">
                   <ng-template pTemplate="header">
                     <tr>
@@ -125,30 +125,30 @@
   <p-dialog [(visible)]="add" header="新增角色" [modal]="true" [style]="{width: '30vw',height: 'auto'}">
     <div class="grid">
       <div class="col-4 md:col-4 lg:col-4">
-          <label><span class="text-red-500">*</span>名稱</label>
+        <label><span class="text-red-500">*</span>名稱</label>
       </div>
       <div class="col-8 md:col-8 lg:col-8">
-          <input pInputText formControlName="role_name" [style]="{'width':'100%'}"
-                 [ngClass]="{'ng-dirty':roleForm.controls['role_name'].hasError('required') && roleForm.controls['role_name'].touched}">
+        <input pInputText formControlName="role_name" [style]="{'width':'100%'}"
+               [ngClass]="{'ng-dirty':roleForm.controls['role_name'].hasError('required') && roleForm.controls['role_name'].touched}">
       </div>
-<!--      <div class="col-6 md:col-6 lg:col-6">-->
-<!--        <div class="flex justify-content-center">-->
+      <!--      <div class="col-6 md:col-6 lg:col-6">-->
+      <!--        <div class="flex justify-content-center">-->
 
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="col-6 md:col-6 lg:col-6 flex justify-content-between">-->
-<!--        <label class="text-base font-bold">審核</label>-->
-<!--        <label class="text-base font-bold">停權</label>-->
-<!--        <label class="text-base font-bold">賦權</label>-->
-<!--      </div>-->
-<!--      <div class="col-6 md:col-6 lg:col-6">-->
-<!--        <label><span class="text-red-500">*</span>權限管理</label>-->
-<!--      </div>-->
-<!--      <div class="col-6 md:col-6 lg:col-6 flex justify-content-between">-->
-<!--        <p-checkbox formControlName="examine" value="examine" [binary]="true"></p-checkbox>-->
-<!--        <p-checkbox formControlName="suspension" value="suspension" [binary]="true"></p-checkbox>-->
-<!--        <p-checkbox formControlName="empowerment" value="empowerment" [binary]="true"></p-checkbox>-->
-<!--      </div>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--      <div class="col-6 md:col-6 lg:col-6 flex justify-content-between">-->
+      <!--        <label class="text-base font-bold">審核</label>-->
+      <!--        <label class="text-base font-bold">停權</label>-->
+      <!--        <label class="text-base font-bold">賦權</label>-->
+      <!--      </div>-->
+      <!--      <div class="col-6 md:col-6 lg:col-6">-->
+      <!--        <label><span class="text-red-500">*</span>權限管理</label>-->
+      <!--      </div>-->
+      <!--      <div class="col-6 md:col-6 lg:col-6 flex justify-content-between">-->
+      <!--        <p-checkbox formControlName="examine" value="examine" [binary]="true"></p-checkbox>-->
+      <!--        <p-checkbox formControlName="suspension" value="suspension" [binary]="true"></p-checkbox>-->
+      <!--        <p-checkbox formControlName="empowerment" value="empowerment" [binary]="true"></p-checkbox>-->
+      <!--      </div>-->
       <div class="col-4 md:col-4 lg:col-4 mt-2">
         <div class="flex justify-content-center">
 
@@ -239,3 +239,5 @@
 <!--    </p-card>-->
 <!--  </div>-->
 
+<google-map height="1000px" width="80%" [center]="center" [zoom]="zoom" (mapClick)="moveMap($event)"
+            (mapMousemove)="move($event)"></google-map>
