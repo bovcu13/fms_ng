@@ -26,9 +26,9 @@ export class LoginComponent implements OnInit {
     private recaptchaV3Service: ReCaptchaV3Service
   ) {
     this.login_form = this.fb.group({
-      company: ['', [Validators.required]],
-      account: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      company: ['A12345', [Validators.required]],
+      account: ['admin', [Validators.required]],
+      password: ['12345', [Validators.required]],
       recaptcha: ['', Validators.required]
     });
   }
