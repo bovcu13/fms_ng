@@ -82,8 +82,26 @@ export class MainComponent implements OnInit {
           icon: 'pi pi-fw pi-box'
         }
       ]
+    },
+    {
+      label: '權限管理',
+      icon: 'pi pi-shield',
+      routerLink: '/role'
     }
   ];
+  carGroups: any = [
+    {name: '車隊(A)', code: 'A'},
+    {name: '車隊(B)', code: 'B'},
+    {name: '車隊(C)', code: 'C'},
+    {name: '車隊(D)', code: 'D'},
+  ]
+
+  cars: any = [
+    {name: 'A-123', code: 'A'},
+    {name: 'B-123', code: 'B'},
+    {name: 'C-123', code: 'C'},
+    {name: 'D-123', code: 'D'},
+  ]
 
   ngOnInit() {
   }

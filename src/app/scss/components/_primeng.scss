@@ -1,5 +1,6 @@
 :host ::ng-deep {
 
+  /* 第一層 menu */
   .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content {
     border: none;
     background: none;
@@ -8,15 +9,14 @@
     }
   }
 
+  /* 第二層 menu */
   .p-panelmenu .p-panelmenu-content {
     border: none;
     background: none;
-    &:hover{
-      border-top-right-radius: 6px;
-      border-top-left-radius: 6px;
-      border-bottom-right-radius: 6px;
-      border-bottom-left-radius: 6px;
-    }
   }
 
+  /* sidebar 陰影 */
+  .p-sidebar {
+    box-shadow: none;
+  }
 }
