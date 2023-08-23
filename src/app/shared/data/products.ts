@@ -1,0 +1,23 @@
+export const products = [
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"},
+  {"statetime": "2022-11-25 10:00:00", "state": "green", "speed": "0", "addr": "五福一路，高雄市苓雅區"}
+]

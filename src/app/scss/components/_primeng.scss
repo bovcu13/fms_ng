@@ -1,0 +1,37 @@
+:host ::ng-deep {
+
+  /* 第一層 menu */
+  .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content {
+    border: none;
+    background: none;
+    &:hover{
+      border-radius: 6px;
+    }
+  }
+
+  /* 第二層 menu */
+  .p-panelmenu .p-panelmenu-content {
+    border: none;
+    background: none;
+  }
+
+  /* sidebar 陰影 */
+  .p-sidebar {
+    box-shadow: none;
+  }
+
+  .p-calendar {
+    width: 100%;
+    border-radius: 6px;
+  }
+
+  .p-inputtext, .p-multiselect, .p-inputnumber {
+    width: 100%;
+    border-radius: 6px;
+  }
+
+  .p-dropdown {
+    width: 100%;
+    border-radius: 6px;
+  }
+}
