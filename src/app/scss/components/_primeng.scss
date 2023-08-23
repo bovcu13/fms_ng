@@ -19,4 +19,19 @@
   .p-sidebar {
     box-shadow: none;
   }
+
+  .p-calendar {
+    width: 100%;
+    border-radius: 6px;
+  }
+
+  .p-inputtext, .p-multiselect, .p-inputnumber {
+    width: 100%;
+    border-radius: 6px;
+  }
+
+  .p-dropdown {
+    width: 100%;
+    border-radius: 6px;
+  }
 }

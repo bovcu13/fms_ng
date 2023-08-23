@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
+import {products} from "../../../shared/data/products";
 
 @Component({
   selector: 'app-main',
@@ -7,6 +8,8 @@ import {MenuItem} from "primeng/api";
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
+  products: any = products;
+
   items: MenuItem[] = [
     {
       label: '監控查詢',
