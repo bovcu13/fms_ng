@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
-      // Check roles and companies, and navigate accordingly
+      // 只有 role = admin 才可以進入 /role
       if (route.routeConfig?.path === 'role' && currentUser.role !== 'admin') {
         return this.router.createUrlTree(['/main']);
       }
