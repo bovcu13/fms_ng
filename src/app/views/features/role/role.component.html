@@ -1,7 +1,7 @@
 <div class="flex justify-content-center">
   <div class="col-10 md:col-10 lg:col-10">
     <p-card>
-      <h2>角色管理</h2>
+      <h2>角色權限管理</h2>
       <p-table [value]="data" dataKey="name">
         <ng-template pTemplate="caption">
           <div class="flex justify-content-between flex-wrap">
@@ -19,13 +19,13 @@
         <ng-template pTemplate="header">
           <tr>
             <th></th>
-            <th></th>
             <th pSortableColumn="role_name">角色名稱
               <p-sortIcon field="role_name"></p-sortIcon>
             </th>
             <th pSortableColumn="created_at">建立時間
               <p-sortIcon field="created_at"></p-sortIcon>
             </th>
+            <th></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-role let-expanded="expanded">
@@ -35,74 +35,74 @@
                       class="p-button-text p-button-rounded p-button-plain"
                       [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
             </td>
+            <td>{{ role.name }}</td>
+            <td>{{ role.created_at }}</td>
             <td>
               <p-button icon="pi pi-trash" pTooltip="刪除"
                         tooltipPosition="top" styleClass="p-button-rounded p-button-secondary p-button-text"></p-button>
             </td>
-            <td>{{ role.name }}</td>
-            <td>{{ role.created_at }}</td>
           </tr>
         </ng-template>
         <ng-template pTemplate="rowexpansion" let-data>
           <tr>
             <td colspan="7">
               <div class="p-3">
-                <p-table [value]="data.data2" dataKey="id">
-                  <ng-template pTemplate="header">
-                    <tr>
-                      <th pSortableColumn="role" [style]="{width: '450px'}">權限
-                      </th>
-                      <th pSortableColumn="read">審核
-                      </th>
-                      <th pSortableColumn="create">停權
-                      </th>
-                      <th pSortableColumn="update">賦權
-                      </th>
-                    </tr>
-                  </ng-template>
-                  <ng-template pTemplate="body" let-order>
-                    <tr>
-                      <td>{{ order.role }}</td>
-                      <td>
-                        <p-checkbox [binary]="true" [(ngModel)]="order.examine"></p-checkbox>
-                      </td>
-                      <td>
-                        <p-checkbox [binary]="true" [(ngModel)]="order.suspension"></p-checkbox>
-                      </td>
-                      <td>
-                        <p-checkbox [binary]="true" [(ngModel)]="order.empowerment"></p-checkbox>
-                      </td>
-                    </tr>
-                  </ng-template>
-                  <ng-template pTemplate="emptymessage">
-                    <tr>
-                      <td colspan="6">目前尚無資料</td>
-                    </tr>
-                  </ng-template>
-                </p-table>
+<!--                <p-table [value]="data.data2" dataKey="id">-->
+<!--                  <ng-template pTemplate="header">-->
+<!--                    <tr>-->
+<!--                      <th pSortableColumn="role" [style]="{width: '450px'}">權限-->
+<!--                      </th>-->
+<!--                      <th pSortableColumn="read">審核-->
+<!--                      </th>-->
+<!--                      <th pSortableColumn="create">停權-->
+<!--                      </th>-->
+<!--                      <th pSortableColumn="update">賦權-->
+<!--                      </th>-->
+<!--                    </tr>-->
+<!--                  </ng-template>-->
+<!--                  <ng-template pTemplate="body" let-order>-->
+<!--                    <tr>-->
+<!--                      <td>{{ order.role }}</td>-->
+<!--                      <td>-->
+<!--                        <p-checkbox [binary]="true" [(ngModel)]="order.examine"></p-checkbox>-->
+<!--                      </td>-->
+<!--                      <td>-->
+<!--                        <p-checkbox [binary]="true" [(ngModel)]="order.suspension"></p-checkbox>-->
+<!--                      </td>-->
+<!--                      <td>-->
+<!--                        <p-checkbox [binary]="true" [(ngModel)]="order.empowerment"></p-checkbox>-->
+<!--                      </td>-->
+<!--                    </tr>-->
+<!--                  </ng-template>-->
+<!--                  <ng-template pTemplate="emptymessage">-->
+<!--                    <tr>-->
+<!--                      <td colspan="6">目前尚無資料</td>-->
+<!--                    </tr>-->
+<!--                  </ng-template>-->
+<!--                </p-table>-->
                 <p-table [value]="data.data3" dataKey="id">
                   <ng-template pTemplate="header">
                     <tr>
                       <th pSortableColumn="role" [style]="{width: '450px'}">權限
                       </th>
-                      <th pSortableColumn="read">查詢
+                      <th pSortableColumn="read" class="text-center">查詢
                       </th>
-                      <th pSortableColumn="create">新增
+                      <th pSortableColumn="create" class="text-center">新增
                       </th>
-                      <th pSortableColumn="update">修改
+                      <th pSortableColumn="update" class="text-center">修改/停用
                       </th>
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-order>
                     <tr>
                       <td>{{ order.role }}</td>
-                      <td>
+                      <td class="text-center">
                         <p-checkbox [binary]="true" [(ngModel)]="order.read"></p-checkbox>
                       </td>
-                      <td>
+                      <td class="text-center">
                         <p-checkbox [binary]="true" [(ngModel)]="order.create"></p-checkbox>
                       </td>
-                      <td>
+                      <td class="text-center">
                         <p-checkbox [binary]="true" [(ngModel)]="order.update"></p-checkbox>
                       </td>
                     </tr>
@@ -122,61 +122,69 @@
   </div>
 </div>
 <form [formGroup]="roleForm">
-  <p-dialog [(visible)]="add" header="新增角色" [modal]="true" [style]="{width: '50vw',height: 'auto'}">
+  <p-dialog [(visible)]="add" header="新增角色" [modal]="true" [style]="{width: '30vw',height: 'auto'}">
     <div class="grid">
-      <div class="col-6 md:col-6 lg:col-6">
+      <div class="col-4 md:col-4 lg:col-4">
           <label><span class="text-red-500">*</span>名稱</label>
       </div>
-      <div class="col-6 md:col-6 lg:col-6">
-          <input pInputText formControlName="role_name"
+      <div class="col-8 md:col-8 lg:col-8">
+          <input pInputText formControlName="role_name" [style]="{'width':'100%'}"
                  [ngClass]="{'ng-dirty':roleForm.controls['role_name'].hasError('required') && roleForm.controls['role_name'].touched}">
       </div>
-      <div class="col-6 md:col-6 lg:col-6">
+<!--      <div class="col-6 md:col-6 lg:col-6">-->
+<!--        <div class="flex justify-content-center">-->
+
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="col-6 md:col-6 lg:col-6 flex justify-content-between">-->
+<!--        <label class="text-base font-bold">審核</label>-->
+<!--        <label class="text-base font-bold">停權</label>-->
+<!--        <label class="text-base font-bold">賦權</label>-->
+<!--      </div>-->
+<!--      <div class="col-6 md:col-6 lg:col-6">-->
+<!--        <label><span class="text-red-500">*</span>權限管理</label>-->
+<!--      </div>-->
+<!--      <div class="col-6 md:col-6 lg:col-6 flex justify-content-between">-->
+<!--        <p-checkbox formControlName="examine" value="examine" [binary]="true"></p-checkbox>-->
+<!--        <p-checkbox formControlName="suspension" value="suspension" [binary]="true"></p-checkbox>-->
+<!--        <p-checkbox formControlName="empowerment" value="empowerment" [binary]="true"></p-checkbox>-->
+<!--      </div>-->
+      <div class="col-4 md:col-4 lg:col-4 mt-2">
         <div class="flex justify-content-center">
 
         </div>
       </div>
-      <div class="col-6 md:col-6 lg:col-6 flex justify-content-between">
-        <label class="text-base font-bold">審核</label>
-        <label class="text-base font-bold">停權</label>
-        <label class="text-base font-bold">賦權</label>
-      </div>
-      <div class="col-6 md:col-6 lg:col-6">
-        <label><span class="text-red-500">*</span>權限管理</label>
-      </div>
-      <div class="col-6 md:col-6 lg:col-6 flex justify-content-between">
-        <p-checkbox formControlName="examine" value="examine" [binary]="true"></p-checkbox>
-        <p-checkbox formControlName="suspension" value="suspension" [binary]="true"></p-checkbox>
-        <p-checkbox formControlName="empowerment" value="empowerment" [binary]="true"></p-checkbox>
-      </div>
-      <div class="col-6 md:col-6 lg:col-6">
-        <div class="flex justify-content-center">
-
-        </div>
-      </div>
-      <div class="col-6 md:col-6 lg:col-6 flex justify-content-between">
+      <div class="col-7 md:col-7 lg:col-7 flex justify-content-between mt-2">
         <label class="text-base font-bold">查詢</label>
         <label class="text-base font-bold">新增</label>
         <label class="text-base font-bold">修改</label>
       </div>
-      <div class="col-6 md:col-6 lg:col-6">
-        <label><span class="text-red-500">*</span>後台帳號管理</label>
+      <div class="col-4 md:col-4 lg:col-4">
+        <label><span class="text-red-500">*</span>角色權限管理</label>
       </div>
-      <div class="col-6 md:col-6 lg:col-6 flex justify-content-between">
-        <p-checkbox formControlName="account_create" value="account_create" [binary]="true"></p-checkbox>
-        <p-checkbox formControlName="account_read" value="account_read" [binary]="true"></p-checkbox>
-        <p-checkbox formControlName="account_update" value="account_update" [binary]="true"></p-checkbox>
-      </div>
-      <div class="col-6 md:col-6 lg:col-6">
-        <label><span class="text-red-500">*</span>角色管理</label>
-      </div>
-      <div class="col-6 md:col-6 lg:col-6 flex justify-content-between">
+      <div class="col-7 md:col-7 lg:col-7 flex justify-content-between">
         <p-checkbox formControlName="role_create" value="role_create" [binary]="true"></p-checkbox>
         <p-checkbox formControlName="role_read" value="role_read" [binary]="true"></p-checkbox>
         <p-checkbox formControlName="role_update" value="role_update" [binary]="true"></p-checkbox>
       </div>
+      <div class="col-4 md:col-4 lg:col-4">
+        <label><span class="text-red-500">*</span>後台管理</label>
+      </div>
+      <div class="col-7 md:col-7 lg:col-7 flex justify-content-between">
+        <p-checkbox formControlName="account_create" value="account_create" [binary]="true"></p-checkbox>
+        <p-checkbox formControlName="account_read" value="account_read" [binary]="true"></p-checkbox>
+        <p-checkbox formControlName="account_update" value="account_update" [binary]="true"></p-checkbox>
+      </div>
+      <div class="col-4 md:col-4 lg:col-4">
+        <label><span class="text-red-500">*</span>前台管理</label>
+      </div>
+      <div class="col-7 md:col-7 lg:col-7 flex justify-content-between">
+        <p-checkbox formControlName="account_create" value="frontend_create" [binary]="true"></p-checkbox>
+        <p-checkbox formControlName="account_read" value="frontend_read" [binary]="true"></p-checkbox>
+        <p-checkbox formControlName="account_update" value="frontend_update" [binary]="true"></p-checkbox>
+      </div>
     </div>
-    <div class="flex justify-content-end">
+    <div class="flex justify-content-end mt-3">
       <p-button label="取消" styleClass="p-button-secondary mr-2" (click)="add = false"></p-button>
       <p-button label="新增" styleClass="p-button-info" (click)="add = false"></p-button>
     </div>

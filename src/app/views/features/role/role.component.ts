@@ -34,16 +34,22 @@ export class RoleComponent {
       ],
       data3: [
         {
-          role: '後台帳號管理',
+          role: '角色權限管理',
           read: true,
-          create: true,
+          create: false,
           update: true,
         },
         {
-          role: '角色管理',
+          role: '後台管理',
+          read: false,
+          create: false,
+          update: true,
+        },
+        {
+          role: '前台管理',
           read: true,
           create: false,
-          update: false,
+          update: true,
         },
       ]
     },
@@ -60,13 +66,19 @@ export class RoleComponent {
       ],
       data3: [
         {
-          role: '後台帳號管理',
+          role: '角色權限管理',
+          read: true,
+          create: false,
+          update: true,
+        },
+        {
+          role: '後台管理',
           read: false,
           create: false,
           update: true,
         },
         {
-          role: '角色管理',
+          role: '前台管理',
           read: true,
           create: false,
           update: true,
@@ -92,6 +104,9 @@ export class RoleComponent {
       account_create: [false],
       account_read: [false],
       account_update: [false],
+      frontend_create: [false],
+      frontend_read: [false],
+      frontend_update: [false],
     });
   }
 
