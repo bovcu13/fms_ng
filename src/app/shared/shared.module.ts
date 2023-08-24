@@ -6,6 +6,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module} from 'ng-recaptcha';
 import {environment} from "../../environments/environment";
 import {NgxCaptchaModule} from "ngx-captcha";
+import {GoogleMapsModule} from '@angular/google-maps'
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {NgxCaptchaModule} from "ngx-captcha";
     ReactiveFormsModule,
     FormsModule,
     RecaptchaV3Module,
-    NgxCaptchaModule
+    NgxCaptchaModule,
+    GoogleMapsModule
   ],
   providers: [
     {

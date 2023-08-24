@@ -5,7 +5,6 @@ import {AppRoutingModule} from "./app.routing.module";
 import {AppComponent} from './app.component';
 import {SharedModule} from './shared/shared.module';
 import {LoginComponent} from './views/components/login/login.component';
-import {GoogleMapsModule} from '@angular/google-maps'
 
 @NgModule({
   declarations: [
@@ -16,8 +15,7 @@ import {GoogleMapsModule} from '@angular/google-maps'
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    SharedModule,
-    GoogleMapsModule
+    SharedModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
