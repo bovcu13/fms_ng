@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     if (this.authService.login(company, account, password)) {
       const currentUser = this.authService.getCurrentUser();
       if (currentUser.role === 'admin') {
-        this.router.navigate(['/role']);
+        this.router.navigate(['/main']);
         this.showSuccess();
       } else {
         this.router.navigate(['/main']);
