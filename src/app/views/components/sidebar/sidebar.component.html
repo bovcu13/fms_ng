@@ -1,0 +1,9 @@
+<p-button icon="pi pi-bars" styleClass="p-button-secondary p-button-text" (click)="sideVisible = true"></p-button>
+<p-sidebar [visible]="sideVisible" [showCloseIcon]="false">
+  <div class="flex justify-content-between">
+    <h3>iCar TMS 1.0</h3>
+    <p-button icon="pi pi-times" styleClass="p-button-secondary p-button-text" (click)="sideVisible = false"></p-button>
+  </div>
+  <p-panelMenu [model]="items"></p-panelMenu>
+</p-sidebar>
+

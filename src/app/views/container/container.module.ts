@@ -4,15 +4,21 @@ import {SharedModule} from 'src/app/shared/shared.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ContainerComponent} from './container.component';
 import {ContainerRoutingModule} from './container-routing.module';
+import {GoogleMapsModule} from "@angular/google-maps";
+
+// Component
 import {RoleComponent} from '../features/role/role.component';
 import {MainComponent} from '../features/main/main.component';
-import {GoogleMapsModule} from "@angular/google-maps";
+import {SidebarComponent} from "../components/sidebar/sidebar.component";
+import {MonitorComponent} from "../features/monitor/monitor.component";
 
 @NgModule({
   declarations: [
     ContainerComponent,
     RoleComponent,
-    MainComponent
+    MainComponent,
+    MonitorComponent,
+    SidebarComponent
   ],
   imports: [
     CommonModule,
