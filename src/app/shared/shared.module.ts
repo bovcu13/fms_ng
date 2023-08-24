@@ -6,7 +6,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module} from 'ng-recaptcha';
 import {environment} from "../../environments/environment";
 import {GoogleMapsModule} from '@angular/google-maps'
-
+import {VgCoreModule} from '@videogular/ngx-videogular/core';
+import {VgControlsModule} from '@videogular/ngx-videogular/controls';
+import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
+import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
+import {VgStreamingModule} from "@videogular/ngx-videogular/streaming";
 
 @NgModule({
   declarations: [],
@@ -19,7 +23,12 @@ import {GoogleMapsModule} from '@angular/google-maps'
     ReactiveFormsModule,
     FormsModule,
     RecaptchaV3Module,
-    GoogleMapsModule
+    GoogleMapsModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
+    VgStreamingModule
   ],
   providers: [
     {
