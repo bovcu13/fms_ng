@@ -108,4 +108,17 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  display: any;
+  center: google.maps.LatLngLiteral = {
+    lat: 25.0336962,
+    lng: 121.5643673
+  };
+  zoom = 15;
+  moveMap(event: google.maps.MapMouseEvent) {
+    if (event.latLng != null) this.center = (event.latLng.toJSON());
+  }
+  move(event: google.maps.MapMouseEvent) {
+    if (event.latLng != null) this.display = event.latLng.toJSON();
+  }
 }

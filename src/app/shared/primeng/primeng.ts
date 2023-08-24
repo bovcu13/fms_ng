@@ -47,6 +47,7 @@ import { PanelModule } from "primeng/panel";
 import { BreadcrumbModule } from "primeng/breadcrumb";
 import { BadgeModule } from "primeng/badge";
 import { TreeModule } from "primeng/tree";
+import { AccordionModule } from 'primeng/accordion';
 
 
 export const ngModule = [
@@ -96,6 +97,7 @@ export const ngModule = [
   PanelModule,
   BreadcrumbModule,
   BadgeModule,
-  TreeModule
+  TreeModule,
+  AccordionModule
 ]
 

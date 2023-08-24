@@ -9,10 +9,8 @@
     <div class="col-10 h-screen">
       <p-splitter [panelSizes]="[70, 30]" [style]="{ height: '100%' }">
         <ng-template pTemplate>
-          <iframe class="iframe-bottom-layer"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.002889711431!2d121.56453889999999!3d25.033976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abb6da9c9e1f%3A0x1206bcf082fd10a6!2zMTEw5Y-w5YyX5biC5L-h576p5Y2A5L-h576p6Lev5LqU5q61N-iZnw!5e0!3m2!1szh-CN!2stw!4v1669280313154!5m2!1szh-TW!2stw"
-                  width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <google-map class="w-full" height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="moveMap($event)"
+                      (mapMousemove)="move($event)"></google-map>
         </ng-template>
         <ng-template pTemplate>
           <p-card class="w-full">
@@ -25,12 +23,14 @@
                   <div class="col-6">
                     <p-dropdown [options]="cars" optionLabel="name" placeholder="選擇車牌"></p-dropdown>
                   </div>
-                  <div class="col-12">
-                    <p-calendar selectionMode="range" dateFormat="yy-mm-dd"
-                                [readonlyInput]="true" placeholder="選擇起訖日期"></p-calendar>
+                  <div class="col-6">
+                    <p-calendar [showTime]="true" placeholder="選擇開始時間"></p-calendar>
+                  </div>
+                  <div class="col-6">
+                    <p-calendar [showTime]="true" placeholder="選擇結束時間"></p-calendar>
                   </div>
                 </div>
-                <p-table [value]="products" [tableStyle]="{ 'min-width': '25rem' }">
+                <p-table class="max-h-15rem" [value]="products" [tableStyle]="{ 'min-width': '32rem'}">
                   <ng-template pTemplate="header">
                     <tr>
                       <th>狀態累積</th>
@@ -48,6 +48,16 @@
                     </tr>
                   </ng-template>
                 </p-table>
+                <p-accordion [activeIndex]="0">
+                  <p-accordionTab header="異常中心">
+                    <p-card styleClass="flex justify-content-center">
+                      <h2 class="text-center">溫度異常</h2>
+                      <p-divider></p-divider>
+                      <h2 class="text-center">0</h2><br>
+                      <h2 class="text-center">台</h2>
+                    </p-card>
+                  </p-accordionTab>
+                </p-accordion>
               </p-tabPanel>
               <p-tabPanel header="功能A">
 
