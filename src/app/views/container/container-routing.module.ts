@@ -4,6 +4,7 @@ import {ContainerComponent} from './container.component';
 import {RoleComponent} from '../features/role/role.component';
 import {MainComponent} from "../features/main/main.component";
 import {AuthGuard} from "../../shared/guard/auth.guard";
+import {MonitorComponent} from "../features/monitor/monitor.component";
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
     children: [
       {path: 'main', component: MainComponent, canActivate: [AuthGuard]},
       {path: 'role', component: RoleComponent, canActivate: [AuthGuard]},
+      {path: 'monitor', component: MonitorComponent, canActivate: [AuthGuard]},
     ],
   },
 ];
