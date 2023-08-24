@@ -9,7 +9,8 @@
     <div class="col-10 h-screen">
       <p-splitter [panelSizes]="[70, 30]" [style]="{ height: '100%' }">
         <ng-template pTemplate>
-          <google-map class="w-full" height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="moveMap($event)"
+          <google-map class="w-full" height="100%" width="100%" [center]="center" [zoom]="zoom"
+                      (mapClick)="moveMap($event)"
                       (mapMousemove)="move($event)"></google-map>
         </ng-template>
         <ng-template pTemplate>
@@ -30,7 +31,8 @@
                     <p-calendar [showTime]="true" placeholder="選擇結束時間"></p-calendar>
                   </div>
                 </div>
-                <p-table class="max-h-15rem" [value]="products" [tableStyle]="{ 'min-width': '32rem'}">
+                <p-table [value]="products" [paginator]="true" [rows]="5"
+                         [tableStyle]="{ 'min-width': '33rem'}">
                   <ng-template pTemplate="header">
                     <tr>
                       <th>狀態累積</th>
