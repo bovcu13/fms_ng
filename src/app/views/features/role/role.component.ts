@@ -5,7 +5,7 @@ import {UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 @Component({
   selector: 'app-role',
   templateUrl: './role.component.html',
-  styleUrls: ['./role.component.css']
+  styleUrls: ['./role.component.scss']
 })
 export class RoleComponent {
   @ViewChild('dt1') dt1!: Table;
