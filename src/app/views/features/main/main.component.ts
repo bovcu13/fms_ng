@@ -40,8 +40,8 @@ export class MainComponent implements OnInit {
           "text": "臺北 101",
         },
         icon: {
-          url: "https://i.52112.com/icon/256/20200817/87824/3827207.png",
-          scaledSize: new google.maps.Size(40, 40), // 调整为 48x48 像素
+          url: "assets/image/warehouse.png",
+          scaledSize: new google.maps.Size(50, 50),
         },
       }),
       new google.maps.Marker({
@@ -50,8 +50,8 @@ export class MainComponent implements OnInit {
           "text": "臺北車站",
         },
         icon: {
-          url: "https://i.52112.com/icon/256/20200817/87824/3827207.png",
-          scaledSize: new google.maps.Size(40, 40), // 调整为 48x48 像素
+          url: "assets/image/warehouse.png",
+          scaledSize: new google.maps.Size(50, 50),
         },
       }),
       new google.maps.Marker({
@@ -60,8 +60,8 @@ export class MainComponent implements OnInit {
           "text": "國立國父紀念館",
         },
         icon: {
-          url: "https://i.52112.com/icon/256/20200817/87824/3827207.png",
-          scaledSize: new google.maps.Size(40, 40), // 调整为 48x48 像素
+          url: "assets/image/warehouse.png",
+          scaledSize: new google.maps.Size(50, 50), // 调整为 48x48 像素
         },
       }),
       new google.maps.Marker({
@@ -72,8 +72,8 @@ export class MainComponent implements OnInit {
           text: "故宮博物院",
         },
         icon: {
-          url: "https://i.52112.com/icon/256/20200821/88868/3695140.png",
-          scaledSize: new google.maps.Size(40, 40),
+          url: "assets/image/car2.png",
+          scaledSize: new google.maps.Size(50, 50),
         },
       }),
       new google.maps.Marker({
@@ -84,8 +84,8 @@ export class MainComponent implements OnInit {
           text: "龍山寺",
         },
         icon: {
-          url: "https://i.52112.com/icon/256/20200821/88868/3695140.png",
-          scaledSize: new google.maps.Size(40, 40),
+          url: "assets/image/car1.png",
+          scaledSize: new google.maps.Size(50, 50),
         },
       })
       // new google.maps.Polygon({paths: [

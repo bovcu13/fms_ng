@@ -10,7 +10,7 @@
               *ngFor="let marker of markers"
               [position]="marker.position"
               [title]="marker.title"
-              [options]="{ icon: marker.icon }"
+              [icon]="marker.icon"
               (mapClick)="openInfo(markerElem, marker.label.text)">
             </map-marker>
 
