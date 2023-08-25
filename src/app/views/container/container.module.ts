@@ -5,6 +5,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ContainerComponent} from './container.component';
 import {ContainerRoutingModule} from './container-routing.module';
 import {GoogleMapsModule} from "@angular/google-maps";
+import {StreamComponent} from "../features/stream/stream.component";
 
 // Component
 import {RoleComponent} from '../features/role/role.component';
@@ -18,7 +19,8 @@ import {MonitorComponent} from "../features/monitor/monitor.component";
     RoleComponent,
     MainComponent,
     MonitorComponent,
-    SidebarComponent
+    SidebarComponent,
+    StreamComponent
   ],
   imports: [
     CommonModule,

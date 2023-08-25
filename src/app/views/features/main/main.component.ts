@@ -58,7 +58,6 @@ export class MainComponent implements OnInit {
     // ];
     console.log(this.markers)
   }
-
   //初始地圖地點
   center: google.maps.LatLngLiteral = {
     lat: 25.0336962,
@@ -83,14 +82,11 @@ export class MainComponent implements OnInit {
     this.infoContent = content;
     this.info.open(marker)
   }
-
   //點擊地圖會在中間
   moveMap(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.center = (event.latLng.toJSON());
   }
-
   display: any
-
   move(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.display = event.latLng.toJSON();
   }
