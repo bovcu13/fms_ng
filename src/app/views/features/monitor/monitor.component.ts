@@ -5,7 +5,7 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: './monitor.component.html',
   styleUrls: ['./monitor.component.scss']
 })
-export class MonitorComponent implements OnInit{
+export class MonitorComponent implements OnInit {
   videoItems = [
     {
       name: 'Video one',
@@ -16,13 +16,29 @@ export class MonitorComponent implements OnInit{
   activeIndex = 0;
   currentVideo = this.videoItems[this.activeIndex];
   data: any;
-  constructor() { }
-  ngOnInit(): void { }
+
+  totalItems: number = 4;
+  rows: number = Math.ceil(Math.sqrt(this.totalItems));
+  cols: number = Math.ceil(this.totalItems / this.rows);
+  layout: number[]= [];
+
+  constructor() {
+    console.log('每列 ' + this.rows + ' 個\n' + '共 ' + this.cols + ' 列')
+    for (let i = 0; i < this.rows * this.cols; i++) {
+      this.layout.push(i);
+    }
+    console.log('layout ' + this.layout)
+  }
+
+  ngOnInit(): void {
+  }
+
   videoPlayerInit(data: any) {
     this.data = data;
     this.data.getDefaultMedia().subscriptions.loadedMetadata.subscribe(this.initVdo.bind(this));
     this.data.getDefaultMedia().subscriptions.ended.subscribe(this.nextVideo.bind(this));
   }
+
   nextVideo() {
     this.activeIndex++;
     if (this.activeIndex === this.videoItems.length) {
@@ -30,11 +46,35 @@ export class MonitorComponent implements OnInit{
     }
     this.currentVideo = this.videoItems[this.activeIndex];
   }
+
   initVdo() {
     this.data.play();
   }
+
   startPlaylistVdo(item: any, index: number) {
     this.activeIndex = index;
     this.currentVideo = item;
+  }
+
+  count(){
+    this.rows = Math.floor(Math.sqrt(this.totalItems));
+    this.cols = Math.ceil(this.totalItems / this.rows);
+    console.log('每列 ' + this.rows + ' 個\n' + '共 ' + this.cols + ' 列')
+  }
+
+  plus() {
+    this.totalItems++;
+    console.log(this.totalItems);
+    this.layout.push(this.totalItems-1);
+    console.log('layout ' + this.layout);
+    this.count();
+  }
+
+  minus() {
+    this.totalItems--;
+    console.log(this.totalItems);
+    this.layout.pop();
+    console.log('layout ' + this.layout)
+    this.count();
   }
 }
