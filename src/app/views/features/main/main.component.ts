@@ -57,7 +57,7 @@ export class MainComponent implements OnInit {
       new google.maps.Marker({
         position: {lat: 25.040332032733083, lng: 121.56028041739316}, title: "Yatsen", "label": {
           "color": "blue",
-          "text": "國立國父紀念館",
+          "text": "李一萱紀念館",
         },
         icon: {
           url: "assets/image/warehouse.png",
