@@ -12,30 +12,6 @@ export class RoleComponent {
   ngOnInit() {
 
   }
-
-  display: any;
-  center: google.maps.LatLngLiteral = {
-    lat: 25.0336962,
-    lng: 121.5643673
-  };
-  zoom = 15;
-  moveMap(event: google.maps.MapMouseEvent) {
-    if (event.latLng != null) this.center = (event.latLng.toJSON());
-  }
-  move(event: google.maps.MapMouseEvent) {
-    if (event.latLng != null) this.display = event.latLng.toJSON();
-  }
-  // zoomIn() {
-  //   if (this.zoom < this.options.maxZoom) this.zoom++
-  // }
-  //
-  // zoomOut() {
-  //   if (this.zoom > this.options.minZoom) this.zoom--
-  // }
-
-
-
-
 //table的死值
   order: any[] = [
     {
