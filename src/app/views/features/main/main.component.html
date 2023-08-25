@@ -35,8 +35,8 @@
                     <p-calendar [showTime]="true" placeholder="選擇結束時間"></p-calendar>
                   </div>
                 </div>
-                <p-table [value]="products" [paginator]="true" [rows]="5"
-                         [tableStyle]="{ 'min-width': '33rem'}">
+                <p-table [value]="products" [paginator]="true" [rows]="5" selectionMode="single" [(selection)]="selectedProduct"
+                         [tableStyle]="{ 'min-width': '33rem'}" (onRowSelect)="Select()">
                   <ng-template pTemplate="header">
                     <tr>
                       <th>狀態累積</th>
@@ -46,7 +46,7 @@
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-product>
-                    <tr>
+                    <tr [pSelectableRow]="product">
                       <td>{{ product.statetime }}</td>
                       <td>{{ product.state }}</td>
                       <td>{{ product.speed }}</td>

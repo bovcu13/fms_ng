@@ -10,6 +10,7 @@ import {MapInfoWindow, MapMarker} from "@angular/google-maps";
 export class MainComponent implements OnInit {
   @ViewChild(MapInfoWindow, {static: false}) info!: MapInfoWindow
   products: any = products;
+  selectedProduct: any;
   carGroups: any = [
     {name: '車隊(A)', code: 'A'},
     {name: '車隊(B)', code: 'B'},
@@ -24,6 +25,13 @@ export class MainComponent implements OnInit {
     {name: 'D-123', code: 'D'},
   ]
   markers: any[] = []
+
+  Select() {
+    if (this.selectedProduct) {
+      this.center = this.selectedProduct.position;
+    }
+  }
+
   ngOnInit(): void {
     // this.http.get('https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js').subscribe({
     //   next: res => {
@@ -33,68 +41,21 @@ export class MainComponent implements OnInit {
     //     console.log(error);
     //   }
     // });
-    this.markers = [
-      new google.maps.Marker({
-        position: {lat: 25.0336962, lng: 121.5643673}, title: "Taipei 101", "label": {
-          "color": "blue",
-          "text": "臺北 101",
-        },
-        icon: {
-          url: "assets/image/warehouse.png",
-          scaledSize: new google.maps.Size(50, 50),
-        },
-      }),
-      new google.maps.Marker({
-        position: {lat: 25.04673, lng: 121.51504}, title: "Chiang Kai-shek Memorial Hall", "label": {
-          "color": "blue",
-          "text": "臺北車站",
-        },
-        icon: {
-          url: "assets/image/warehouse.png",
-          scaledSize: new google.maps.Size(50, 50),
-        },
-      }),
-      new google.maps.Marker({
-        position: {lat: 25.040332032733083, lng: 121.56028041739316}, title: "Yatsen", "label": {
-          "color": "blue",
-          "text": "李一萱紀念館",
-        },
-        icon: {
-          url: "assets/image/warehouse.png",
-          scaledSize: new google.maps.Size(50, 50), // 调整为 48x48 像素
-        },
-      }),
-      new google.maps.Marker({
-        position: {lat: 25.102169, lng: 121.548884},
-        title: "National Palace Museum",
-        label: {
-          color: "red",
-          text: "故宮博物院",
-        },
-        icon: {
-          url: "assets/image/car2.png",
-          scaledSize: new google.maps.Size(50, 50),
-        },
-      }),
-      new google.maps.Marker({
-        position: {lat: 25.036213, lng: 121.499763},
-        title: "Longshan Temple",
-        label: {
-          color: "green",
-          text: "龍山寺",
-        },
-        icon: {
-          url: "assets/image/car1.png",
-          scaledSize: new google.maps.Size(50, 50),
-        },
-      })
-      // new google.maps.Polygon({paths: [
-      //     {lat: 25.0339, lng: 121.5774}, {lat: 25.0335, lng: 121.5764}, {lat: 25.0328, lng: 121.5769}, {lat: 25.0332, lng: 121.5780}
-      //   ], strokeOpacity: 0.5, strokeWeight: 1, fillColor: '#1976D2', fillOpacity: 0.35
-      // }),
-      // new google.maps.Circle({center: {lat: 25.03396, lng: 121.56446}, fillColor: '#1976D2', fillOpacity: 0.35, strokeWeight: 1, radius: 1500}),
-      // new google.maps.Polyline({path: [{lat: 25.03421, lng: 121.57612}, {lat: 25.03351, lng: 121.58693}], geodesic: true, strokeColor: '#FF0000', strokeOpacity: 0.5, strokeWeight: 2})
-    ];
+
+    this.markers = products.map(product => ({
+      position: {lat: product.position.lat, lng: product.position.lng}, // 假設 products 有經緯度資訊
+      title: product.label.text, // 使用產品名稱作為標記/標題
+      icon: {url: product.url, scaledSize: new google.maps.Size(50, 50)},
+      label: {text: product.label.text} // 使用產品描述作為標記標籤內容
+    }));
+    // this.markers = [
+    // new google.maps.Polygon({paths: [
+    //     {lat: 25.0339, lng: 121.5774}, {lat: 25.0335, lng: 121.5764}, {lat: 25.0328, lng: 121.5769}, {lat: 25.0332, lng: 121.5780}
+    //   ], strokeOpacity: 0.5, strokeWeight: 1, fillColor: '#1976D2', fillOpacity: 0.35
+    // }),
+    // new google.maps.Circle({center: {lat: 25.03396, lng: 121.56446}, fillColor: '#1976D2', fillOpacity: 0.35, strokeWeight: 1, radius: 1500}),
+    // new google.maps.Polyline({path: [{lat: 25.03421, lng: 121.57612}, {lat: 25.03351, lng: 121.58693}], geodesic: true, strokeColor: '#FF0000', strokeOpacity: 0.5, strokeWeight: 2})
+    // ];
     console.log(this.markers)
   }
   //初始地圖地點
