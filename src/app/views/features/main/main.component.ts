@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {products} from "../../../shared/data/products";
-import {MapInfoWindow, MapMarker} from "@angular/google-maps";
+import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
 
 @Component({
   selector: 'app-main',
@@ -8,7 +8,54 @@ import {MapInfoWindow, MapMarker} from "@angular/google-maps";
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  @ViewChild(MapInfoWindow, {static: false}) info!: MapInfoWindow
+  polyPath: google.maps.LatLngLiteral[] = [
+    { lat: 25.03280092118552, lng: 121.56348748779168 },// 起點：大安森林公園座標
+    { lat: 25.033452, lng:121.537594 },
+    { lat: 25.033681, lng:121.537606 },
+    { lat: 25.035251, lng:121.537610 },
+    { lat: 25.035475, lng:121.537576 },
+    { lat: 25.036092, lng:121.537452 },
+    { lat: 25.037408, lng:121.537468},
+    { lat: 25.037678, lng:121.537619 },
+    { lat: 25.038073, lng:121.537686 },
+    { lat: 25.048409, lng:121.536962 },
+    { lat: 25.048256, lng:121.543976 },
+    { lat: 25.048248, lng:121.546305 },
+    { lat: 25.048235, lng:121.546427 },
+    { lat: 25.048224, lng:121.547455 },
+    { lat: 25.048218, lng:121.547911 },
+    { lat: 25.048213, lng:121.548015 },
+    { lat: 25.048207, lng:121.553280 },
+    { lat: 25.048051, lng:121.556256 },
+    { lat: 25.048206, lng:121.557830},
+    { lat: 25.048696, lng:121.562705},
+    { lat: 25.049510, lng:121.569585},
+    { lat: 25.049749, lng:121.570170},
+    { lat: 25.049832, lng:121.570544},
+    { lat: 25.049889, lng:121.571996},
+    { lat: 25.049979, lng:121.572141},
+    { lat: 25.05011611459548, lng:121.57765111609234},
+    { lat: 25.050229, lng:121.577709},
+    { lat: 25.050580, lng:121.577659},
+    { lat: 25.050779, lng:121.577647},
+    { lat: 25.050862, lng:121.577665},
+    { lat: 25.050928, lng:121.577690}, // 終點：饒河街觀光夜市座標
+  ];
+    polyOptions: google.maps.PolylineOptions = {
+    strokeColor: '#40809d',
+    strokeOpacity: 1,
+    strokeWeight: 10,
+    // icons: [
+    //   {
+    //     icon: {
+    //       path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+    //     },
+    //     offset: '100%',
+    //   },
+    // ],
+  };
+  @ViewChild(MapInfoWindow, {static: false}) info!:MapInfoWindow
+  @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   products: any = products;
   selectedProduct: any;
   carGroups: any = [
@@ -72,7 +119,7 @@ export class MainComponent implements OnInit {
     disableDoubleClickZoom: true,
     mapTypeId: 'terrain',
     maxZoom: 18,
-    minZoom: 8,
+    minZoom: 12,
   }
   zoom = 15;
   infoContent = ''
