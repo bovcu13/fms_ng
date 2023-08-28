@@ -20,7 +20,7 @@ export class MonitorComponent implements OnInit {
   totalItems: number = 4;
   rows: number = Math.ceil(Math.sqrt(this.totalItems));
   cols: number = Math.ceil(this.totalItems / this.rows);
-  layout: number[]= [];
+  layout: number[] = [];
 
   constructor() {
     console.log('每列 ' + this.rows + ' 個\n' + '共 ' + this.cols + ' 列')
@@ -56,24 +56,28 @@ export class MonitorComponent implements OnInit {
     this.currentVideo = item;
   }
 
-  count(){
-    this.rows = Math.floor(Math.sqrt(this.totalItems));
+  count() {
+    this.rows = Math.ceil(Math.sqrt(this.totalItems));
     this.cols = Math.ceil(this.totalItems / this.rows);
     console.log('每列 ' + this.rows + ' 個\n' + '共 ' + this.cols + ' 列')
   }
 
   plus() {
-    this.totalItems++;
+    if (this.totalItems < 16) {
+      this.totalItems++;
+      this.layout.push(this.totalItems - 1);
+    }
     console.log(this.totalItems);
-    this.layout.push(this.totalItems-1);
     console.log('layout ' + this.layout);
     this.count();
   }
 
   minus() {
-    this.totalItems--;
-    console.log(this.totalItems);
-    this.layout.pop();
+    if (this.totalItems > 0) {
+      this.totalItems--;
+      this.layout.pop();
+    }
+    console.log(this.totalItems)
     console.log('layout ' + this.layout)
     this.count();
   }
