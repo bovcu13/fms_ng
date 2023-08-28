@@ -15,6 +15,7 @@
             </map-marker>
 
             <map-info-window>{{ infoContent }}</map-info-window>
+            <map-polyline [options]="polyOptions" [path]="polyPath"></map-polyline>
           </google-map>
         </ng-template>
         <ng-template pTemplate>
