@@ -50,7 +50,7 @@ export class MainComponent implements OnInit {
   carPosition: google.maps.LatLngLiteral = this.startCoordinate; // 初始化為起點位置
 
   polyOptions: google.maps.PolylineOptions = {
-    strokeColor: '#40809d',
+    strokeColor: '#06b0ff',
     strokeOpacity: 1,
     strokeWeight: 5,
     // icons: [
@@ -98,7 +98,7 @@ export class MainComponent implements OnInit {
     // 建立 Directions Service
     const directionsService = new google.maps.DirectionsService();
 
-    // 設定起點、終點和中途站點（產品座標）
+    // 設定起點、終點和中途站點
     const waypoints: google.maps.DirectionsWaypoint[] = products.map(product => ({
       location: new google.maps.LatLng(product.position.lat, product.position.lng),
       stopover: true
@@ -178,8 +178,8 @@ export class MainComponent implements OnInit {
 
   //初始地圖地點
   center: google.maps.LatLngLiteral = {
-    lat: 25.0336962,
-    lng: 121.5643673
+    lat: 25.11450302362639,
+    lng: 121.5222738032652
   };
   options: google.maps.MapOptions = {
     //google map提供的放大縮小
