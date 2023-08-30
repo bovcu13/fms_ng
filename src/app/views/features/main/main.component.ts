@@ -9,12 +9,12 @@ import { GoogleMap, MapInfoWindow, MapMarker } from "@angular/google-maps";
 })
 export class MainComponent implements OnInit {
 
-  startCoordinate: google.maps.LatLngLiteral = { lat: 25.03280092118552, lng: 121.56348748779168 };
-  endCoordinate: google.maps.LatLngLiteral = { lat: 25.050928, lng: 121.577690 };
+  startCoordinate: google.maps.LatLngLiteral = products[0].position;
+  endCoordinate: google.maps.LatLngLiteral = products[products.length - 1].position;
 
   polyPath: google.maps.LatLngLiteral[] = [
-    this.startCoordinate, // 起點
-    this.endCoordinate, // 終點
+    // this.startCoordinate, // 起點
+    // this.endCoordinate, // 終點
     // { lat: 25.03280092118552, lng: 121.56348748779168 },// 起點：大安森林公園座標
     // { lat: 25.033452, lng:121.537594 },
     // { lat: 25.033681, lng:121.537606 },
@@ -52,7 +52,7 @@ export class MainComponent implements OnInit {
   polyOptions: google.maps.PolylineOptions = {
     strokeColor: '#40809d',
     strokeOpacity: 1,
-    strokeWeight: 10,
+    strokeWeight: 5,
     // icons: [
     //   {
     //     icon: {
@@ -88,14 +88,28 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // 初始化標記
+    this.markers = products.map(product => ({
+      position: product.position,
+      icon: { url: product.url, scaledSize: new google.maps.Size(50, 50) },
+      label: { text: product.label.text }
+    }));
+
     // 建立 Directions Service
     const directionsService = new google.maps.DirectionsService();
+
+    // 設定起點、終點和中途站點（產品座標）
+    const waypoints: google.maps.DirectionsWaypoint[] = products.map(product => ({
+      location: new google.maps.LatLng(product.position.lat, product.position.lng),
+      stopover: true
+    }));
 
     // 設定 Directions Request
     const request: google.maps.DirectionsRequest = {
       origin: this.startCoordinate,
       destination: this.endCoordinate,
-      travelMode: google.maps.TravelMode.DRIVING, // 或其他適當的 travelMode
+      waypoints: waypoints,
+      travelMode: google.maps.TravelMode.DRIVING,
     };
 
     // 發送 Directions Request
@@ -116,20 +130,11 @@ export class MainComponent implements OnInit {
     });
 
 
+    // 初始化車輛標記
     this.markers.push({
       position: this.carPosition,
-      icon: { url: 'src/assets/image/car2.png', scaledSize: new google.maps.Size(30, 30) }
+      icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) }
     });
-
-    setInterval(() => {
-      // 根據路線更新車輛的位置
-      // 你可以使用迴圈或索引來沿著路線移動
-      // 根據需要計算新的車輛位置
-      this.carPosition = // 計算下一個位置
-
-        // 更新標記的位置
-        this.markers[0].position = this.carPosition;
-    }, 1000);
 
     // this.http.get('https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js').subscribe({
     //   next: res => {
@@ -140,12 +145,12 @@ export class MainComponent implements OnInit {
     //   }
     // });
 
-    this.markers = products.map(product => ({
-      position: { lat: product.position.lat, lng: product.position.lng }, // 假設 products 有經緯度資訊
-      title: product.label.text, // 使用產品名稱作為標記/標題
-      icon: { url: product.url, scaledSize: new google.maps.Size(50, 50) },
-      label: { text: product.label.text } // 使用產品描述作為標記標籤內容
-    }));
+    // this.markers = products.map(product => ({
+    //   position: { lat: product.position.lat, lng: product.position.lng }, // 假設 products 有經緯度資訊
+    //   title: product.label.text, // 使用產品名稱作為標記/標題
+    //   icon: { url: product.url, scaledSize: new google.maps.Size(50, 50) },
+    //   label: { text: product.label.text } // 使用產品描述作為標記標籤內容
+    // }));
 
     // this.markers = [
     // new google.maps.Polygon({paths: [
@@ -164,10 +169,10 @@ export class MainComponent implements OnInit {
     setInterval(() => {
       if (index < routeCoordinates.length) {
         this.carPosition = routeCoordinates[index];
-        this.markers[0].position = this.carPosition;
+        this.markers[this.markers.length - 1].position = this.carPosition; // 更新車輛標記位置
         index++;
       }
-    }, 1000); // 設定適當的時間間隔
+    }, 1000); // 每隔1秒更新一次位置
   }
 
 
