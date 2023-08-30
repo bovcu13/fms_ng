@@ -97,7 +97,7 @@ export class MainComponent implements OnInit,OnDestroy {
         // 更新 polyPath 以顯示實際路線
         this.polyPath = this.routeCoordinates;
         // 開始模擬車輛移動
-        // this.simulateCarMovement(this.routeCoordinates);
+        this.simulateCarMovement(this.routeCoordinates);
       }
     });
 
@@ -154,7 +154,6 @@ export class MainComponent implements OnInit,OnDestroy {
     // 更新地圖的程式碼，包括模擬車輛位置等
 
     // 模擬車輛每一秒更新一次位置
-    this.simulateCarMovement(this.routeCoordinates);
   }
 
   ngOnDestroy(): void {
