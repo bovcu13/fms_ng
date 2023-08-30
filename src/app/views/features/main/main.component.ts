@@ -1,52 +1,24 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { products } from "../../../shared/data/products";
 import { GoogleMap, MapInfoWindow, MapMarker } from "@angular/google-maps";
+import { Subscription, interval } from 'rxjs';
+
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit,OnDestroy {
+  countdownSeconds = 30;
+  countdownSubscription: Subscription | undefined;
 
   startCoordinate: google.maps.LatLngLiteral = products[0].position;
   endCoordinate: google.maps.LatLngLiteral = products[products.length - 1].position;
+  // 定義用來儲存路線座標的變數
+  routeCoordinates: google.maps.LatLngLiteral[] = [];
 
-  polyPath: google.maps.LatLngLiteral[] = [
-    // this.startCoordinate, // 起點
-    // this.endCoordinate, // 終點
-    // { lat: 25.03280092118552, lng: 121.56348748779168 },// 起點：大安森林公園座標
-    // { lat: 25.033452, lng:121.537594 },
-    // { lat: 25.033681, lng:121.537606 },
-    // { lat: 25.035251, lng:121.537610 },
-    // { lat: 25.035475, lng:121.537576 },
-    // { lat: 25.036092, lng:121.537452 },
-    // { lat: 25.037408, lng:121.537468},
-    // { lat: 25.037678, lng:121.537619 },
-    // { lat: 25.038073, lng:121.537686 },
-    // { lat: 25.048409, lng:121.536962 },
-    // { lat: 25.048256, lng:121.543976 },
-    // { lat: 25.048248, lng:121.546305 },
-    // { lat: 25.048235, lng:121.546427 },
-    // { lat: 25.048224, lng:121.547455 },
-    // { lat: 25.048218, lng:121.547911 },
-    // { lat: 25.048213, lng:121.548015 },
-    // { lat: 25.048207, lng:121.553280 },
-    // { lat: 25.048051, lng:121.556256 },
-    // { lat: 25.048206, lng:121.557830},
-    // { lat: 25.048696, lng:121.562705},
-    // { lat: 25.049510, lng:121.569585},
-    // { lat: 25.049749, lng:121.570170},
-    // { lat: 25.049832, lng:121.570544},
-    // { lat: 25.049889, lng:121.571996},
-    // { lat: 25.049979, lng:121.572141},
-    // { lat: 25.05011611459548, lng:121.57765111609234},
-    // { lat: 25.050229, lng:121.577709},
-    // { lat: 25.050580, lng:121.577659},
-    // { lat: 25.050779, lng:121.577647},
-    // { lat: 25.050862, lng:121.577665},
-    // { lat: 25.050928, lng:121.577690}, // 終點：饒河街觀光夜市座標
-  ];
+  polyPath: google.maps.LatLngLiteral[] = [];
   carPosition: google.maps.LatLngLiteral = this.startCoordinate; // 初始化為起點位置
 
   polyOptions: google.maps.PolylineOptions = {
@@ -116,16 +88,16 @@ export class MainComponent implements OnInit {
     directionsService.route(request, (result, status) => {
       if (status === google.maps.DirectionsStatus.OK) {
         // 取得路線資料
-        const routeCoordinates: google.maps.LatLngLiteral[] = result!.routes[0].overview_path.map(
+        this.routeCoordinates = result!.routes[0].overview_path.map(
           (latLng: google.maps.LatLng) => ({
             lat: latLng.lat(),
             lng: latLng.lng()
           })
         );
         // 更新 polyPath 以顯示實際路線
-        this.polyPath = routeCoordinates;
+        this.polyPath = this.routeCoordinates;
         // 開始模擬車輛移動
-        this.simulateCarMovement(routeCoordinates);
+        // this.simulateCarMovement(this.routeCoordinates);
       }
     });
 
@@ -160,9 +132,38 @@ export class MainComponent implements OnInit {
     // new google.maps.Circle({center: {lat: 25.03396, lng: 121.56446}, fillColor: '#1976D2', fillOpacity: 0.35, strokeWeight: 1, radius: 1500}),
     // new google.maps.Polyline({path: [{lat: 25.03421, lng: 121.57612}, {lat: 25.03351, lng: 121.58693}], geodesic: true, strokeColor: '#FF0000', strokeOpacity: 0.5, strokeWeight: 2})
     // ];
+
     console.log(this.markers)
+
+    //30s更新一次
+    this.startMapUpdateTimer();
   }
 
+  startMapUpdateTimer(): void {
+    this.updateMap(); // 第一次更新地圖
+    this.countdownSubscription = interval(1000).subscribe(() => {
+      this.countdownSeconds--;
+      if (this.countdownSeconds === 0) {
+        this.countdownSeconds = 30;
+        this.updateMap(); // 每30秒更新地圖
+      }
+    });
+  }
+
+  updateMap(): void {
+    // 更新地圖的程式碼，包括模擬車輛位置等
+
+    // 模擬車輛每一秒更新一次位置
+    this.simulateCarMovement(this.routeCoordinates);
+  }
+
+  ngOnDestroy(): void {
+    if (this.countdownSubscription) {
+      this.countdownSubscription.unsubscribe();
+    }
+  }
+
+  //車輛更新
   simulateCarMovement(routeCoordinates: google.maps.LatLngLiteral[]): void {
     let index = 0;
 
