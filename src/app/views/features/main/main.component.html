@@ -8,6 +8,7 @@
                       (mapClick)="moveMap($event)"  (mapMousemove)="move($event)">
             <div class="countdown flex">
               {{ countdownSeconds }}
+              <button (click)="toggleTraffic()">切換即時路況</button>
             </div>
             <div class="kmh flex justify-content-between">
               0km/h
@@ -23,7 +24,9 @@
               [icon]="marker.icon"
               (mapClick)="openInfo(markerElem, marker.label.text)">
             </map-marker>
-
+            <ng-container *ngIf="trafficVisable">
+            <map-traffic-layer  [autoRefresh]="true"></map-traffic-layer>
+            </ng-container>
             <map-info-window>{{ infoContent }}</map-info-window>
             <map-polyline [options]="polyOptions" [path]="polyPath"></map-polyline>
           </google-map>
