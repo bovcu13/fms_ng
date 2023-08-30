@@ -106,5 +106,9 @@ export const sidebarMenu = [
     },
     url: 'https://docs.google.com/spreadsheets/d/1E3c_g36atRFDkZRQkvwTOzWWXnATkNnwX0bcMW5atL0/edit#gid=0'
   },
-
+  {
+    label: 'rtsp測試',
+    icon: 'pi pi-code',
+    routerLink: '/test'
+  }
 ]
