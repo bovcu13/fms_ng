@@ -3,8 +3,19 @@
     <div class="col-12 h-screen">
       <p-splitter [panelSizes]="[70, 30]" [style]="{ height: '100%' }">
         <ng-template pTemplate>
-          <google-map class="w-full" height="100%" width="100%" [center]="center" [zoom]="zoom" [options]="options"
+          <google-map class="w-full" height="100%" width="100%"
+                      [center]="center" [zoom]="zoom" [options]="options"
                       (mapClick)="moveMap($event)"  (mapMousemove)="move($event)">
+            <div class="countdown flex">
+              {{ countdownSeconds }}
+              <button (click)="toggleTraffic()">切換即時路況</button>
+            </div>
+            <div class="kmh flex justify-content-between">
+              0km/h
+              <div class="circle">
+                50
+              </div>
+            </div>
             <map-marker
               #markerElem="mapMarker"
               *ngFor="let marker of markers"
@@ -13,7 +24,9 @@
               [icon]="marker.icon"
               (mapClick)="openInfo(markerElem, marker.label.text)">
             </map-marker>
-
+            <ng-container *ngIf="trafficVisable">
+            <map-traffic-layer  [autoRefresh]="true"></map-traffic-layer>
+            </ng-container>
             <map-info-window>{{ infoContent }}</map-info-window>
             <map-polyline [options]="polyOptions" [path]="polyPath"></map-polyline>
           </google-map>

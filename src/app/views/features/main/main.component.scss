@@ -10,12 +10,57 @@
   background-color: rgba(199, 193, 193, 0.7);
 }
 
-::ng-deep{
+::ng-deep {
   .gm-style .gm-style-iw-d::-webkit-scrollbar-track,
   .gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece {
     background: none;
   }
+
   .gm-style .gm-style-iw {
-  font-size: 20px;
+    font-size: 20px;
   }
+}
+
+
+.countdown {
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  top: 6rem;
+  left: 1rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  color: #FFFFFF;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.kmh {
+  position: absolute;
+  width: 8rem;
+  height: 3rem;
+  top: 6rem;
+  left: 5rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  color: #FFFFFF;
+  text-align: left;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid #9F353A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #000000;
 }
