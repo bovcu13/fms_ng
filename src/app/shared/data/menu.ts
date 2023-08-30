@@ -6,7 +6,10 @@ export const sidebarMenu = [
       {
         label: '影像監控',
         icon: 'pi pi-fw pi-video',
-        routerLink: '/monitor'
+        routerLink: '/monitor',
+        style: {
+          background: 'rgba(250,245,200,0.6)'
+        },
       },
       {
         label: '區域監控',
@@ -82,16 +85,25 @@ export const sidebarMenu = [
   {
     label: '權限管理',
     icon: 'pi pi-shield',
-    routerLink: '/role'
+    routerLink: '/role',
+    style: {
+      background: 'rgba(250,245,200,0.6)',
+    },
   },
   {
     label: '更新日誌',
     icon: 'pi pi-book',
-    routerLink: '/log'
+    routerLink: '/log',
+    style: {
+      background: 'rgba(220,250,220,0.6)',
+    },
   },
   {
-    label: '文件',
+    label: 'FMP-功能清單',
     icon: 'pi pi-google',
+    style: {
+      background: 'rgba(220,250,220,0.6)',
+    },
     url: 'https://docs.google.com/spreadsheets/d/1E3c_g36atRFDkZRQkvwTOzWWXnATkNnwX0bcMW5atL0/edit#gid=0'
   },
 
