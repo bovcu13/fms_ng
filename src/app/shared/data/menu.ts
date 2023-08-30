@@ -83,5 +83,16 @@ export const sidebarMenu = [
     label: '權限管理',
     icon: 'pi pi-shield',
     routerLink: '/role'
-  }
+  },
+  {
+    label: '更新日誌',
+    icon: 'pi pi-book',
+    routerLink: '/log'
+  },
+  {
+    label: '文件',
+    icon: 'pi pi-google',
+    url: 'https://docs.google.com/spreadsheets/d/1E3c_g36atRFDkZRQkvwTOzWWXnATkNnwX0bcMW5atL0/edit#gid=0'
+  },
+
 ]
