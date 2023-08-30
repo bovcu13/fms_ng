@@ -5,13 +5,14 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ContainerComponent} from './container.component';
 import {ContainerRoutingModule} from './container-routing.module';
 import {GoogleMapsModule} from "@angular/google-maps";
-import {StreamComponent} from "../features/stream/stream.component";
 
 // Component
 import {RoleComponent} from '../features/role/role.component';
 import {MainComponent} from '../features/main/main.component';
 import {SidebarComponent} from "../components/sidebar/sidebar.component";
 import {MonitorComponent} from "../features/monitor/monitor.component";
+import {StreamComponent} from "../features/stream/stream.component";
+import {LogComponent} from "../features/log/log.component";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {MonitorComponent} from "../features/monitor/monitor.component";
     MainComponent,
     MonitorComponent,
     SidebarComponent,
-    StreamComponent
+    StreamComponent,
+    LogComponent
   ],
   imports: [
     CommonModule,
