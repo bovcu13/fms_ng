@@ -3,6 +3,9 @@
     <div class="col-12 h-screen">
       <p-splitter [panelSizes]="[70, 30]" [style]="{ height: '100%' }">
         <ng-template pTemplate>
+          <div class="countdown">
+            {{ countdownSeconds }}
+          </div>
           <google-map class="w-full" height="100%" width="100%"
                       [center]="center" [zoom]="zoom" [options]="options"
                       (mapClick)="moveMap($event)"  (mapMousemove)="move($event)">
