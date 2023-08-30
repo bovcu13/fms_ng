@@ -47,6 +47,7 @@ import {BadgeModule} from "primeng/badge";
 import {TreeModule} from "primeng/tree";
 import {AccordionModule} from 'primeng/accordion';
 import {ToolbarModule} from "primeng/toolbar";
+import {SpeedDialModule} from "primeng/speeddial";
 
 
 export const ngModule = [
@@ -98,6 +99,7 @@ export const ngModule = [
   BadgeModule,
   TreeModule,
   AccordionModule,
-  ToolbarModule
+  ToolbarModule,
+  SpeedDialModule
 ]
 
