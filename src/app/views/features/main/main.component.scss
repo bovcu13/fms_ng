@@ -31,6 +31,7 @@
   background-color: rgba(0, 0, 0, 0.7);
   padding: 10px;
   color: #FFFFFF;
+  display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -48,6 +49,7 @@
   color: #FFFFFF;
   text-align: left;
   border-radius: 10px;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -63,4 +65,10 @@
   align-items: center;
   text-align: center;
   color: #000000;
+}
+
+.func {
+  position: absolute;
+  top: 3rem;
+  left: 20rem;
 }
