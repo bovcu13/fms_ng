@@ -9,18 +9,21 @@ import { Subscription, interval } from 'rxjs';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit,OnDestroy {
+export class MainComponent implements OnInit, OnDestroy {
   countdownSeconds = 30;
   countdownSubscription: Subscription | undefined;
 
   startCoordinate: google.maps.LatLngLiteral = products[0].position;
   endCoordinate: google.maps.LatLngLiteral = products[products.length - 1].position;
+
   // 定義用來儲存路線座標的變數
   routeCoordinates: google.maps.LatLngLiteral[] = [];
 
   polyPath: google.maps.LatLngLiteral[] = [];
+
   carPosition: google.maps.LatLngLiteral = this.startCoordinate; // 初始化為起點位置
 
+  //路徑樣式
   polyOptions: google.maps.PolylineOptions = {
     strokeColor: '#06b0ff',
     strokeOpacity: 1,
@@ -34,10 +37,13 @@ export class MainComponent implements OnInit,OnDestroy {
     //   },
     // ],
   };
+
   @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
+
   products: any = products;
   selectedProduct: any;
+
   carGroups: any = [
     { name: '車隊(A)', code: 'A' },
     { name: '車隊(B)', code: 'B' },
@@ -51,6 +57,7 @@ export class MainComponent implements OnInit,OnDestroy {
     { name: 'C-123', code: 'C' },
     { name: 'D-123', code: 'D' },
   ]
+
   markers: any[] = []
 
   Select() {
@@ -160,6 +167,12 @@ export class MainComponent implements OnInit,OnDestroy {
     if (this.countdownSubscription) {
       this.countdownSubscription.unsubscribe();
     }
+  }
+
+  trafficVisable: boolean = false;
+  //開啟或關閉路況
+  toggleTraffic() {
+    this.trafficVisable = !this.trafficVisable
   }
 
   //車輛更新
