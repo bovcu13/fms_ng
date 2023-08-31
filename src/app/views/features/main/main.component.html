@@ -5,10 +5,12 @@
         <ng-template pTemplate>
           <google-map class="w-full" height="100%" width="100%"
                       [center]="center" [zoom]="zoom" [options]="options"
-                      (mapClick)="moveMap($event)"  (mapMousemove)="move($event)">
-            <div class="countdown flex">
+                      (mapClick)="moveMap($event)" (mapMousemove)="move($event)">
+            <div class="func">
+                <p-speedDial [model]="items" direction="right"></p-speedDial>
+            </div>
+            <div class="countdown">
               {{ countdownSeconds }}
-              <button (click)="toggleTraffic()">切換即時路況</button>
             </div>
             <div class="kmh flex justify-content-between">
               0km/h
@@ -25,7 +27,7 @@
               (mapClick)="openInfo(markerElem, marker.label.text)">
             </map-marker>
             <ng-container *ngIf="trafficVisable">
-            <map-traffic-layer  [autoRefresh]="true"></map-traffic-layer>
+              <map-traffic-layer [autoRefresh]="true"></map-traffic-layer>
             </ng-container>
             <map-info-window>{{ infoContent }}</map-info-window>
             <map-polyline [options]="polyOptions" [path]="polyPath"></map-polyline>
@@ -49,7 +51,8 @@
                     <p-calendar [showTime]="true" placeholder="選擇結束時間"></p-calendar>
                   </div>
                 </div>
-                <p-table [value]="products" [paginator]="true" [rows]="5" selectionMode="single" [(selection)]="selectedProduct"
+                <p-table [value]="products" [paginator]="true" [rows]="5" selectionMode="single"
+                         [(selection)]="selectedProduct"
                          [tableStyle]="{ 'min-width': '33rem'}" (onRowSelect)="Select()">
                   <ng-template pTemplate="header">
                     <tr>

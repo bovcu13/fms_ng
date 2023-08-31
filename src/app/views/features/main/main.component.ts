@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { products } from "../../../shared/data/products";
 import { GoogleMap, MapInfoWindow, MapMarker } from "@angular/google-maps";
 import { Subscription, interval } from 'rxjs';
+import { MenuItem } from 'primeng/api'
 
 
 @Component({
@@ -10,6 +11,9 @@ import { Subscription, interval } from 'rxjs';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit, OnDestroy {
+  //功能列
+  items!: MenuItem[];
+
   countdownSeconds = 30;
   countdownSubscription: Subscription | undefined;
 
@@ -67,6 +71,24 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.items = [
+      {
+        icon: 'pi pi-truck',
+        command: () => {
+          this.toggleTraffic()
+        }
+      },
+      {
+        icon: 'pi pi-refresh',
+        command: () => {
+        }
+      },
+      {
+        icon: 'pi pi-trash',
+        command: () => {
+        }
+      }
+    ];
     // 初始化標記
     this.markers = products.map(product => ({
       position: product.position,
@@ -170,6 +192,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   trafficVisable: boolean = false;
+
   //開啟或關閉路況
   toggleTraffic() {
     this.trafficVisable = !this.trafficVisable
