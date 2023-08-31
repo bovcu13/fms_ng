@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { products } from "../../../shared/data/products";
-import { GoogleMap, MapInfoWindow, MapMarker } from "@angular/google-maps";
-import { Subscription, interval } from 'rxjs';
-import { MenuItem } from 'primeng/api'
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
+import {products} from "../../../shared/data/products";
+import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
+import {Subscription, interval} from 'rxjs';
+import {MenuItem} from 'primeng/api'
 
 
 @Component({
@@ -42,24 +42,24 @@ export class MainComponent implements OnInit, OnDestroy {
     // ],
   };
 
-  @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow
-  @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
+  @ViewChild(MapInfoWindow, {static: false}) info!: MapInfoWindow
+  @ViewChild(GoogleMap, {static: false}) map!: GoogleMap;
 
   products: any = products;
   selectedProduct: any;
 
   carGroups: any = [
-    { name: '車隊(A)', code: 'A' },
-    { name: '車隊(B)', code: 'B' },
-    { name: '車隊(C)', code: 'C' },
-    { name: '車隊(D)', code: 'D' },
+    {name: '車隊(A)', code: 'A'},
+    {name: '車隊(B)', code: 'B'},
+    {name: '車隊(C)', code: 'C'},
+    {name: '車隊(D)', code: 'D'},
   ]
 
   cars: any = [
-    { name: 'A-123', code: 'A' },
-    { name: 'B-123', code: 'B' },
-    { name: 'C-123', code: 'C' },
-    { name: 'D-123', code: 'D' },
+    {name: 'A-123', code: 'A'},
+    {name: 'B-123', code: 'B'},
+    {name: 'C-123', code: 'C'},
+    {name: 'D-123', code: 'D'},
   ]
 
   markers: any[] = []
@@ -68,6 +68,13 @@ export class MainComponent implements OnInit, OnDestroy {
     if (this.selectedProduct) {
       this.center = this.selectedProduct.position;
     }
+  }
+
+  //開啟標記標籤的內容
+  openInfo(marker: MapMarker, content: string) {
+    this.infoContent = content;
+    this.info.open(marker)
+    console.log(marker)
   }
 
   ngOnInit(): void {
@@ -92,10 +99,13 @@ export class MainComponent implements OnInit, OnDestroy {
     // 初始化標記
     this.markers = products.map(product => ({
       position: product.position,
-      icon: { url: product.url, scaledSize: new google.maps.Size(50, 50) },
-      label: { text: product.label.text }
+      icon: {url: product.url, scaledSize: new google.maps.Size(50, 50)},
+      label: {text: product.label.text},
     }));
-
+    this.markers.forEach(marker => {
+      marker.infoWindowOpened = true;
+      // this.openInfo(marker, marker.label.text);
+    });
     // 建立 Directions Service
     const directionsService = new google.maps.DirectionsService();
 
@@ -134,7 +144,7 @@ export class MainComponent implements OnInit, OnDestroy {
     // 初始化車輛標記
     this.markers.push({
       position: this.carPosition,
-      icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) }
+      icon: {url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50)}
     });
 
     // this.http.get('https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js').subscribe({
@@ -229,13 +239,7 @@ export class MainComponent implements OnInit, OnDestroy {
     minZoom: 12,
   }
   zoom = 15;
-  infoContent = ''
-
-  //開啟標記標籤的內容
-  openInfo(marker: MapMarker, content: string) {
-    this.infoContent = content;
-    this.info.open(marker)
-  }
+  infoContent :any = ''
 
   //點擊地圖會在中間
   moveMap(event: google.maps.MapMouseEvent) {
