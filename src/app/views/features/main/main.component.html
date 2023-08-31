@@ -6,11 +6,12 @@
           <google-map class="w-full" height="100%" width="100%"
                       [center]="center" [zoom]="zoom" [options]="options"
                       (mapClick)="moveMap($event)" (mapMousemove)="move($event)">
-            <div class="func">
-                <p-speedDial [model]="items" direction="right"></p-speedDial>
-            </div>
-            <div class="countdown">
+            <div class="num">
               {{ countdownSeconds }}
+            </div>
+            <div class="func">
+              <p-speedDial showIcon="pi pi-map" buttonClassName="p-button-secondary"
+                           direction="right" [model]="items"></p-speedDial>
             </div>
             <div class="kmh flex justify-content-between">
               0km/h
