@@ -48,6 +48,10 @@
   .p-button:enabled:hover, .p-splitbutton.p-button-secondary > .p-button:enabled:hover {
     background: rgba(120, 125, 123, 0.7);
   }
+
+  .p-card {
+    min-width: 33rem;
+  }
 }
 
 .num {
