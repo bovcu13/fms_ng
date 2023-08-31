@@ -5,7 +5,7 @@
         <ng-template pTemplate>
           <google-map class="w-full" height="100%" width="100%"
                       [center]="center" [zoom]="zoom" [options]="options"
-                      (mapClick)="moveMap($event)" (mapMousemove)="move($event)">
+                      (mapClick)="moveMap($event)" (mapMousemove)="move($event)" #map>
             <div class="num">
               {{ countdownSeconds }}
             </div>
@@ -20,20 +20,16 @@
               </div>
             </div>
 
-            <map-marker
-              #markerElem="mapMarker"
+            <map-marker #markerElem= "mapMarker"
               *ngFor="let marker of markers"
               [position]="marker.position"
               [title]="marker.title"
-              [icon]="marker.icon">
-              <map-info-window>
-                {{marker.label}}
-              </map-info-window>
+              [icon]="marker.icon" (mapClick)="openInfo(markerElem,marker.label?.text)">
             </map-marker>
+            <map-info-window>{{infoContent}}</map-info-window>
             <ng-container *ngIf="trafficVisable">
               <map-traffic-layer [autoRefresh]="true"></map-traffic-layer>
             </ng-container>
-<!--            <map-info-window>{{ infoContent }}</map-info-window>-->
             <map-polyline [options]="polyOptions" [path]="polyPath"></map-polyline>
           </google-map>
         </ng-template>
