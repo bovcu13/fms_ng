@@ -14,6 +14,7 @@ import {MonitorComponent} from "../features/monitor/monitor.component";
 import {StreamComponent} from "../features/stream/stream.component";
 import {LogComponent} from "../features/log/log.component";
 import {MaaaapComponent} from "../features/main/maaaap/maaaap.component";
+import {MultipleCarsComponent} from "../features/multiple-cars/multiple-cars.component";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {MaaaapComponent} from "../features/main/maaaap/maaaap.component";
     SidebarComponent,
     StreamComponent,
     LogComponent,
-    MaaaapComponent
+    MaaaapComponent,
+    MultipleCarsComponent
   ],
   imports: [
     CommonModule,

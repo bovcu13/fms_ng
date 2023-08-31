@@ -8,6 +8,7 @@ import {MonitorComponent} from "../features/monitor/monitor.component";
 import {StreamComponent} from "../features/stream/stream.component";
 import {LogComponent} from "../features/log/log.component";
 import {MaaaapComponent} from "../features/main/maaaap/maaaap.component";
+import {MultipleCarsComponent} from "../features/multiple-cars/multiple-cars.component";
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
       {path: 'test', component: StreamComponent, canActivate: [AuthGuard]},
       {path: 'log', component: LogComponent, canActivate: [AuthGuard]},
       {path: 'map', component: MaaaapComponent, canActivate: [AuthGuard]},
+      {path: 'multiCars', component: MultipleCarsComponent, canActivate: [AuthGuard]},
     ],
   },
 ];
