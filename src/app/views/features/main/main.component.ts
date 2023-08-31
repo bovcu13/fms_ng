@@ -247,4 +247,6 @@ export class MainComponent implements OnInit, OnDestroy {
   move(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.display = event.latLng.toJSON();
   }
+
+  oddTem: number = 1;
 }
