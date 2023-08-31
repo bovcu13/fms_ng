@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {products} from "../../../shared/data/products";
-import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
+import {MapInfoWindow, MapMarker} from "@angular/google-maps";
 import {Subscription, interval} from 'rxjs';
 import {MenuItem} from 'primeng/api'
 
@@ -43,8 +43,8 @@ export class MainComponent implements OnInit, OnDestroy {
   };
 
   @ViewChild(MapInfoWindow, {static: false}) info!: MapInfoWindow
-  @ViewChild(GoogleMap, {static: false}) map!: GoogleMap;
-
+  @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
+  @ViewChild('map', { static: false }) map: any;
   products: any = products;
   selectedProduct: any;
 
@@ -74,9 +74,7 @@ export class MainComponent implements OnInit, OnDestroy {
   openInfo(marker: MapMarker, content: string) {
     this.infoContent = content;
     this.info.open(marker)
-    console.log(marker)
   }
-
   ngOnInit(): void {
     this.items = [
       {
@@ -101,11 +99,8 @@ export class MainComponent implements OnInit, OnDestroy {
       position: product.position,
       icon: {url: product.url, scaledSize: new google.maps.Size(50, 50)},
       label: {text: product.label.text},
+      infoWindowContent: product.label.text
     }));
-    this.markers.forEach(marker => {
-      marker.infoWindowOpened = true;
-      // this.openInfo(marker, marker.label.text);
-    });
     // 建立 Directions Service
     const directionsService = new google.maps.DirectionsService();
 
@@ -139,8 +134,6 @@ export class MainComponent implements OnInit, OnDestroy {
         this.simulateCarMovement(this.routeCoordinates);
       }
     });
-
-
     // 初始化車輛標記
     this.markers.push({
       position: this.carPosition,
@@ -177,7 +170,21 @@ export class MainComponent implements OnInit, OnDestroy {
     //30s更新一次
     this.startMapUpdateTimer();
   }
-
+  //測試openInfo自己網頁在加載時被顯示出來
+  ngAfterViewInit(): void {
+    this.map.googleMap.addListener('tilesloaded', () => {
+      this.openInfoWindows();
+    });
+  }
+  //測試openInfo自己網頁在加載時被顯示出來
+  openInfoWindows(): void {
+    this.markers.forEach(marker => {
+      const infoWindow = new google.maps.InfoWindow({
+        content: marker.infoWindowContent
+      });
+      infoWindow.open(this.map.googleMap, marker._marker);
+    });
+  }
   startMapUpdateTimer(): void {
     this.updateMap(); // 第一次更新地圖
     this.countdownSubscription = interval(1000).subscribe(() => {
