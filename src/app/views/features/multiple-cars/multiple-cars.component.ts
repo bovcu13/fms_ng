@@ -8,12 +8,12 @@ import { products } from "../../../shared/data/products";
   styleUrls: ['./multiple-cars.component.scss']
 })
 export class MultipleCarsComponent implements OnInit {
-  selectedProduct: any;
-  Select() {
-    if (this.selectedProduct) {
-      this.center = this.selectedProduct.position;
-    }
-  }
+  selectedProduct!: any;
+  // Select() {
+  //   if (this.selectedProduct) {
+  //     this.center = this.selectedProduct.position;
+  //   }
+  // }
 
   polyPath: google.maps.LatLngLiteral[] = [];
 
