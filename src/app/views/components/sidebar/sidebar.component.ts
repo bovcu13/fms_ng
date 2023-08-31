@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {MenuItem} from "primeng/api";
-import {sidebarMenu} from "../../../shared/data/menu";
+import {sidebarMenu, testMenu} from "../../../shared/data/menu";
 
 @Component({
   selector: 'app-sidebar',
@@ -9,6 +9,7 @@ import {sidebarMenu} from "../../../shared/data/menu";
 })
 export class SidebarComponent {
 
-  items: MenuItem[] = sidebarMenu;
+  sidebarMenu: MenuItem[] = sidebarMenu;
+  testMenu: MenuItem[] = testMenu;
   sideVisible: boolean = false;
 }

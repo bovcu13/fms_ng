@@ -9,10 +9,12 @@
     </div>
     <p-button icon="pi pi-times" styleClass="p-button-secondary p-button-text" (click)="sideVisible = false"></p-button>
   </div>
-  <p-panelMenu [model]="items"></p-panelMenu>
+  <p-panelMenu [model]="sidebarMenu"></p-panelMenu>
   <div class="mt-5">
     <span class="pi pi-circle-fill text-green-400 mr-1">已完成</span>
     <span class="pi pi-circle-fill text-yellow-400 mr-1">未完成</span>
-    <span class="pi pi-circle">未開發</span>
+    <span class="pi pi-circle mr-3">未開發</span>
+    <p-button icon="pi pi-user" (click)="menu.toggle($event)" styleClass="text-white p-button-rounded p-button-info p-button-text"></p-button>
   </div>
 </p-sidebar>
+<p-menu #menu [model]="testMenu" [popup]="true"></p-menu>

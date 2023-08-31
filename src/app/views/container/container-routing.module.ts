@@ -19,7 +19,7 @@ const routes: Routes = [
       {path: 'main', component: MainComponent, canActivate: [AuthGuard]},
       {path: 'role', component: RoleComponent, canActivate: [AuthGuard]},
       {path: 'monitor', component: MonitorComponent, canActivate: [AuthGuard]},
-      {path: 'test', component: StreamComponent, canActivate: [AuthGuard]},
+      {path: 'stream', component: StreamComponent, canActivate: [AuthGuard]},
       {path: 'log', component: LogComponent, canActivate: [AuthGuard]},
       {path: 'map', component: MaaaapComponent, canActivate: [AuthGuard]},
       {path: 'multiCars', component: MultipleCarsComponent, canActivate: [AuthGuard]},

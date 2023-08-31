@@ -9,7 +9,8 @@ export const sidebarMenu = [
       },
       {
         label: '多車監控',
-        icon: 'pi pi-fw pi-box'
+        icon: 'pi pi-fw pi-box',
+        routerLink: '/multiCars',
       },
       {
         label: '影像監控',
@@ -215,4 +216,10 @@ export const sidebarMenu = [
   //   icon: 'pi pi-code',
   //   routerLink: '/test'
   // }
+]
+export const testMenu=[
+  {
+    label:'rtsp',
+    routerLink:'/stream'
+  }
 ]
