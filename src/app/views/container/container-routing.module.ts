@@ -7,6 +7,7 @@ import {AuthGuard} from "../../shared/guard/auth.guard";
 import {MonitorComponent} from "../features/monitor/monitor.component";
 import {StreamComponent} from "../features/stream/stream.component";
 import {LogComponent} from "../features/log/log.component";
+import {MaaaapComponent} from "../features/main/maaaap/maaaap.component";
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
       {path: 'monitor', component: MonitorComponent, canActivate: [AuthGuard]},
       {path: 'test', component: StreamComponent, canActivate: [AuthGuard]},
       {path: 'log', component: LogComponent, canActivate: [AuthGuard]},
+      {path: 'map', component: MaaaapComponent, canActivate: [AuthGuard]},
     ],
   },
 ];
