@@ -49,8 +49,31 @@
     background: rgba(120, 125, 123, 0.7);
   }
 
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+    box-shadow: none;
+  }
+
   .p-card {
     min-width: 33rem;
+    height: 95vh;
+  }
+
+  .p-card .p-card-content {
+    padding: 0;
+  }
+
+  .p-tag.p-tag-danger {
+    background-color: #D32F2F;
+    color: #ffffff;
+    width: 1rem;
+    height: 1rem;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .p-splitter {
+    border: 0;
   }
 }
 
