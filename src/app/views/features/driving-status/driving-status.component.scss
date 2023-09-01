@@ -1,0 +1,10 @@
+:host ::ng-deep {
+  .p-sidebar {
+    background-color:rgba(255, 255, 0, 0);;
+    margin-top: 6.5rem;
+    margin-left: 0.5rem;
+    flex: 1;
+    box-shadow: 0 0 0;
+    z-index: 1;
+  }
+}
