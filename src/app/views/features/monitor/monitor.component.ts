@@ -16,21 +16,32 @@ export class MonitorComponent implements OnInit {
   activeIndex = 0;
   currentVideo = this.videoItems[this.activeIndex];
   data: any;
-
-  totalItems: number = 4;
-  rows: number = Math.ceil(Math.sqrt(this.totalItems));
+  totalItems: number = 8;
+  rows: number = Math.ceil(Math.sqrt(this.totalItems)) + 1;
   cols: number = Math.ceil(this.totalItems / this.rows);
   layout: number[] = [];
+  value: number = 4;
+  height: string = 'h1-2'
+  paymentOptions: any[] = [
+    {name: '1', value: 0, row: 1, height: 'h1-1'},
+    {name: '2', value: 1, row: 2, height: 'h1-1'},
+    {name: '4', value: 2, row: 2, height: 'h1-2'},
+    {name: '6', value: 3, row: 3, height: 'h1-2'},
+    {name: '8', value: 4, row: 4, height: 'h1-2'},
+    {name: '12', value: 5, row: 4, height: 'h1-3'},
+    {name: '16', value: 6, row: 4, height: 'h1-4'}
+  ];
 
   constructor() {
     console.log('每列 ' + this.rows + ' 個\n' + '共 ' + this.cols + ' 列')
-    for (let i = 0; i < this.rows * this.cols; i++) {
+    for (let i = 0; i < this.totalItems; i++) {
       this.layout.push(i);
     }
     console.log('layout ' + this.layout)
   }
 
   ngOnInit(): void {
+    console.log(this.totalItems)
   }
 
   videoPlayerInit(data: any) {
@@ -56,11 +67,11 @@ export class MonitorComponent implements OnInit {
     this.currentVideo = item;
   }
 
-  count() {
-    this.rows = Math.ceil(Math.sqrt(this.totalItems));
-    this.cols = Math.ceil(this.totalItems / this.rows);
-    console.log('每列 ' + this.rows + ' 個\n' + '共 ' + this.cols + ' 列')
-  }
+  // count() {
+  //   this.rows = Math.ceil(Math.sqrt(this.totalItems));
+  //   this.cols = Math.ceil(this.totalItems / this.rows);
+  //   console.log('每列 ' + this.rows + ' 個\n' + '共 ' + this.cols + ' 列')
+  // }
 
   plus() {
     if (this.totalItems < 16) {
@@ -69,7 +80,7 @@ export class MonitorComponent implements OnInit {
     }
     console.log(this.totalItems);
     console.log('layout ' + this.layout);
-    this.count();
+    // this.count();
   }
 
   minus() {
@@ -79,6 +90,14 @@ export class MonitorComponent implements OnInit {
     }
     console.log(this.totalItems)
     console.log('layout ' + this.layout)
-    this.count();
+    // this.count();
   }
+
+  changeRow() {
+    this.height = this.paymentOptions[this.value].height;
+    this.rows = this.paymentOptions[this.value].row;
+    this.cols = Math.ceil(this.totalItems / this.rows);
+    console.log(' col: ' + this.cols + '\n row: ' + this.rows + '\n height: ' + this.height)
+  }
+
 }

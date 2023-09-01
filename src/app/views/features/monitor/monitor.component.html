@@ -1,38 +1,61 @@
-<div class="grid flex justify-content-center">
-  <div class="col-12 flex justify-content-center">
-    <p-button class="mr-2" (click)="plus()" label="Add" icon="pi pi-plus"></p-button>
-    <p-button (click)="minus()" label="Remove" icon="pi pi-minus"></p-button>
-  </div>
-  <ng-container *ngIf="12 % rows != 0">
-    <div class="grid">
-      <ng-container *ngFor="let item of layout">
-        <div class="col-3">
-          <vg-player>
-            <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>
-              <!--      <source src="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4" type="video/mp4">-->
-              <source src="assets/vdo/winnie.mp4" type="video/mp4">
-            </video>
-          </vg-player>
-          <span>{{item + 1}}</span>
-        </div>
-      </ng-container>
+<div class="flex justify-content-center">
+  <div class="col-12">
+    <div class="flex justify-content-between">
+      <div></div>
+      <div></div>
+      <div>
+        <p-button class="mr-2" (click)="plus()" label="Add" icon="pi pi-plus"></p-button>
+        <p-button class="mr-5" (click)="minus()" label="Remove" icon="pi pi-minus"></p-button>
+      </div>
+      <div>
+        <p-selectButton [options]="paymentOptions" [(ngModel)]="value" optionLabel="name" optionValue="value" (onChange)="changeRow()"></p-selectButton>
+      </div>
     </div>
-  </ng-container>
-  <ng-container *ngIf="12 % rows == 0">
-    <div class="col-12">
+    <div class="col-12 mt-2">
       <div class="grid">
         <ng-container *ngFor="let item of layout">
           <div class="col-{{12/rows}}">
-            <vg-player>
+            <vg-player class="{{height}}">
               <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>
                 <!--      <source src="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4" type="video/mp4">-->
                 <source src="assets/vdo/winnie.mp4" type="video/mp4">
               </video>
             </vg-player>
-            <span>{{item + 1}}</span>
           </div>
         </ng-container>
       </div>
     </div>
-  </ng-container>
+    <!--  <ng-container *ngIf="12 % rows != 0">-->
+    <!--    <div class="grid">-->
+    <!--      <ng-container *ngFor="let item of layout">-->
+    <!--        <div class="col-3">-->
+    <!--          <vg-player>-->
+    <!--            <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>-->
+    <!--              &lt;!&ndash;      <source src="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4" type="video/mp4">&ndash;&gt;-->
+    <!--              <source src="assets/vdo/winnie.mp4" type="video/mp4">-->
+    <!--            </video>-->
+    <!--          </vg-player>-->
+    <!--          <span>{{item + 1}}</span>-->
+    <!--        </div>-->
+    <!--      </ng-container>-->
+    <!--    </div>-->
+    <!--  </ng-container>-->
+    <!--  <ng-container *ngIf="12 % rows == 0">-->
+    <!--    <div class="col-12">-->
+    <!--      <div class="grid">-->
+    <!--        <ng-container *ngFor="let item of layout">-->
+    <!--          <div class="col-{{12/rows}}">-->
+    <!--            <vg-player>-->
+    <!--              <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>-->
+    <!--                &lt;!&ndash;      <source src="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4" type="video/mp4">&ndash;&gt;-->
+    <!--                <source src="assets/vdo/winnie.mp4" type="video/mp4">-->
+    <!--              </video>-->
+    <!--            </vg-player>-->
+    <!--            <span>{{item + 1}}</span>-->
+    <!--          </div>-->
+    <!--        </ng-container>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--  </ng-container>-->
+  </div>
 </div>
