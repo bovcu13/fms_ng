@@ -8,12 +8,16 @@ import { products } from "../../../shared/data/products";
   styleUrls: ['./multiple-cars.component.scss']
 })
 export class MultipleCarsComponent implements OnInit {
-  selectedProduct!: any;
+  selectedProduct: any[] = [];
   // Select() {
   //   if (this.selectedProduct) {
   //     this.center = this.selectedProduct.position;
   //   }
   // }
+
+  onSelectionChange(event: any[]) {
+    this.selectedProduct = event;
+  }
 
   polyPath: google.maps.LatLngLiteral[] = [];
 
@@ -23,7 +27,19 @@ export class MultipleCarsComponent implements OnInit {
 
   markers: any[] = []
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.markers = products.map(product => ({
+      position: product.position,
+      icon: { url: product.url, scaledSize: new google.maps.Size(50, 50) },
+      label: { text: product.label.text },
+      infoWindowContent: product.label.text
+    }));
+    console.log(this.markers)
+    // 在初始化時預設打開第一個標記的標籤內容
+    if (this.markers.length > 0) {
+      this.openInfo(this.markers[0], this.markers[0].infoWindowContent);
+    }
+  }
 
 
   //初始地圖地點
