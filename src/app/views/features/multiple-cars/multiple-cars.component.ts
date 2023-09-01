@@ -8,12 +8,22 @@ import { products } from "../../../shared/data/products";
   styleUrls: ['./multiple-cars.component.scss']
 })
 export class MultipleCarsComponent implements OnInit {
-  selectedProduct!: any;
+  selectedProduct: any[] = [];
   // Select() {
   //   if (this.selectedProduct) {
   //     this.center = this.selectedProduct.position;
   //   }
   // }
+
+  onSelectionChange(event: any[]) {
+    this.selectedProduct = event;
+    this.markers = products.map(product => ({
+      position: product.position,
+      icon: {url: product.url, scaledSize: new google.maps.Size(50, 50)},
+      label: {text: product.label.text},
+      infoWindowContent: product.label.text
+    }));
+  }
 
   polyPath: google.maps.LatLngLiteral[] = [];
 
@@ -23,7 +33,9 @@ export class MultipleCarsComponent implements OnInit {
 
   markers: any[] = []
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  }
 
 
   //初始地圖地點
