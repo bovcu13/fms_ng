@@ -11,6 +11,9 @@ export const sidebarMenu = [
         label: '多車監控',
         icon: 'pi pi-fw pi-box',
         routerLink: '/multiCars',
+        style: {
+          background: 'rgba(250,245,200,0.6)'
+        },
       },
       {
         label: '影像監控',
