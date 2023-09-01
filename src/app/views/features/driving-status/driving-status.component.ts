@@ -18,7 +18,7 @@ export class DrivingStatusComponent {
 
   getMiddleDivClass() {
     if (this.sidebarRightOpen) {
-      return 'col-12 md:col-12 lg:col-5 ml-3';
+      return 'col-12 md:col-12 lg:col-5';
     } else {
       return 'col-12 md:col-12 lg:col-12';
     }

@@ -1,60 +1,65 @@
 <div class="overflow-x-hidden">
-<div class="grid">
-  <div class="col-12">
-    <p-table>
-      <ng-template pTemplate="caption">
-        <div class="flex align-items-center justify-content-between">
-          行駛狀態表
-<!--          <p-button (click)="toggleSidebar()" icon="pi pi-filter" label="篩選器"-->
-<!--                    styleClass="p-button-secondary p-button-text mb-2"></p-button>-->
-          <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right" class="mb-2"
-                          [ngModel]="false"
-                          (ngModelChange)="toggleSidebar()"></p-toggleButton>
-        </div>
-      </ng-template>
-    </p-table>
-  </div>
-  <div [ngClass]="getMiddleDivClass()">
-    <p-card>
-      <p-table [value]="status" [tableStyle]="{ 'min-width': '40rem' }">
-        <ng-template pTemplate="header">
-          <tr>
-            <th>車牌</th>
-            <th>駕駛人</th>
-            <th>用車時間</th>
-            <th>開車時間</th>
-            <th>行駛里程</th>
-            <th *ngIf="sidebarRightOpen === false">開始時間</th>
-            <th *ngIf="sidebarRightOpen === false">結束時間</th>
-            <th *ngIf="sidebarRightOpen === false">停不熄火時間</th>
-            <th *ngIf="sidebarRightOpen === false">超速時間</th>
-            <th *ngIf="sidebarRightOpen === false">熄火時間</th>
-            <th *ngIf="sidebarRightOpen === false">連續用車次數</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-status>
-          <tr>
-            <td>{{ status.plate }}</td>
-            <td>{{ status.driver }}</td>
-            <td>{{ status.usage_time }}</td>
-            <td>{{ status.driving_time }}</td>
-            <td>{{ status.mileage }}</td>
-            <td *ngIf="sidebarRightOpen === false">{{ status.start_time }}</td>
-            <td *ngIf="sidebarRightOpen === false">{{ status.end_time }}</td>
-            <td *ngIf="sidebarRightOpen === false">{{ status.idle_time }}</td>
-            <td *ngIf="sidebarRightOpen === false">{{ status.over_speed_time }}</td>
-            <td *ngIf="sidebarRightOpen === false">{{ status.engine_off_time }}</td>
-            <td *ngIf="sidebarRightOpen === false">{{ status.continuous }}</td>
-          </tr>
+
+    <div class="col-12">
+      <p-table>
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+            行駛狀態表
+            <!--          <p-button (click)="toggleSidebar()" icon="pi pi-filter" label="篩選器"-->
+            <!--                    styleClass="p-button-secondary p-button-text mb-2"></p-button>-->
+            <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right" class="mb-2"
+                            [ngModel]="false"
+                            (ngModelChange)="toggleSidebar()"></p-toggleButton>
+          </div>
         </ng-template>
       </p-table>
-    </p-card>
-  </div>
-  <div class="col-12 md:col-12 lg:col-7" *ngIf="sidebarRightOpen">
-    <div [ngClass]="{'sidebar-open': sidebarRightOpen}">
-      <p-sidebar [(visible)]="sidebarRightOpen" styleClass="w-7" [showCloseIcon]="false"
-                 [modal]="false" position="right">
-        <p-card>
+    </div>
+  <div class="flex justify-content-between">
+    <div [ngClass]="getMiddleDivClass()">
+      <p-card>
+        <p-table [value]="status" [tableStyle]="{ 'min-width': '40rem' }">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>車牌</th>
+              <th>駕駛人</th>
+              <th>用車時間</th>
+              <th>開車時間</th>
+              <th>行駛里程</th>
+              <ng-container *ngIf="sidebarRightOpen === false">
+                <th>開始時間</th>
+                <th>結束時間</th>
+                <th>停不熄火時間</th>
+                <th>超速時間</th>
+                <th>熄火時間</th>
+                <th>連續用車次數</th>
+              </ng-container>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-status>
+            <tr>
+              <td>{{ status.plate }}</td>
+              <td>{{ status.driver }}</td>
+              <td>{{ status.usage_time }}</td>
+              <td>{{ status.driving_time }}</td>
+              <td>{{ status.mileage }}</td>
+              <ng-container *ngIf="sidebarRightOpen === false">
+                <td>{{ status.start_time }}</td>
+                <td>{{ status.end_time }}</td>
+                <td>{{ status.idle_time }}</td>
+                <td>{{ status.over_speed_time }}</td>
+                <td>{{ status.engine_off_time }}</td>
+                <td>{{ status.continuous }}</td>
+              </ng-container>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </div>
+    <div class="col-12 md:col-12 lg:col-7" *ngIf="sidebarRightOpen">
+      <div [ngClass]="{'sidebar-open': sidebarRightOpen}">
+        <!--      <p-sidebar [(visible)]="sidebarRightOpen"  [showCloseIcon]="false"-->
+        <!--                 [modal]="false" position="right">-->
+        <p-card *ngIf="sidebarRightOpen">
           <p-table [value]="status" [tableStyle]="{ 'min-width': '40rem' }">
             <ng-template pTemplate="header">
               <tr>
@@ -68,8 +73,8 @@
             </ng-template>
           </p-table>
         </p-card>
-      </p-sidebar>
+        <!--      </p-sidebar>-->
+      </div>
     </div>
   </div>
-</div>
 </div>
