@@ -9,6 +9,7 @@ import {StreamComponent} from "../features/stream/stream.component";
 import {LogComponent} from "../features/log/log.component";
 import {MaaaapComponent} from "../features/main/maaaap/maaaap.component";
 import {MultipleCarsComponent} from "../features/multiple-cars/multiple-cars.component";
+import {DrivingStatusComponent} from "../features/driving-status/driving-status.component";
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
       {path: 'log', component: LogComponent, canActivate: [AuthGuard]},
       {path: 'map', component: MaaaapComponent, canActivate: [AuthGuard]},
       {path: 'multiCars', component: MultipleCarsComponent, canActivate: [AuthGuard]},
+      {path: 'driving_status', component: DrivingStatusComponent, canActivate: [AuthGuard]},
     ],
   },
 ];

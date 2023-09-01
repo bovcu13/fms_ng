@@ -25,7 +25,11 @@ export const sidebarMenu = [
       },
       {
         label: '行駛狀態表',
-        icon: 'pi pi-fw pi-box'
+        icon: 'pi pi-fw pi-box',
+        routerLink: '/driving_status',
+        style: {
+          background: 'rgba(250,245,200,0.6)'
+        },
       },
       {
         label: '歷史軌跡',
