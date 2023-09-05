@@ -16,6 +16,7 @@ import {LogComponent} from "../features/log/log.component";
 import {MaaaapComponent} from "../features/main/maaaap/maaaap.component";
 import {MultipleCarsComponent} from "../features/multiple-cars/multiple-cars.component";
 import {DrivingStatusComponent} from "../features/driving-status/driving-status.component";
+import {DrawComponent} from "../features/test/draw/draw.component";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {DrivingStatusComponent} from "../features/driving-status/driving-status.
     LogComponent,
     MaaaapComponent,
     MultipleCarsComponent,
-    DrivingStatusComponent
+    DrivingStatusComponent,
+    DrawComponent
   ],
   imports: [
     CommonModule,
