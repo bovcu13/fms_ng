@@ -1,103 +1,197 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {products} from "../../../shared/data/products";
+import {MapInfoWindow, MapMarker} from "@angular/google-maps";
+import {interval, Subscription} from 'rxjs';
+import {monitorStatus} from "../../../shared/data/monitor";
 
 @Component({
-  selector: 'app-monitor',
-  templateUrl: './monitor.component.html',
-  styleUrls: ['./monitor.component.scss']
+    selector: 'app-monitor',
+    templateUrl: './monitor.component.html',
+    styleUrls: ['./monitor.component.scss']
 })
-export class MonitorComponent implements OnInit {
-  videoItems = [
-    {
-      name: 'Video one',
-      src: 'assets/vdo/swimming.mp4',
-      type: 'video/mp4'
+export class MonitorComponent implements OnInit, OnDestroy {
+    videoItems = [
+        {
+            name: 'Video one',
+            src: 'assets/vdo/swimming.mp4',
+            type: 'video/mp4'
+        }
+    ];
+    sidebarRightOpen = true;
+    mapOpen = true;
+    activeIndex = 0;
+    currentVideo = this.videoItems[this.activeIndex];
+    data: any;
+    totalItems: number = 8;
+    rows: number = Math.ceil(Math.sqrt(this.totalItems)) + 1;
+    cols: number = Math.ceil(this.totalItems / this.rows);
+    layout: number[] = [];
+    value: number = 4;
+    height: string = 'h1-2'
+    selectedCar: any = [];
+    scrollHeight: string = '350px';
+    markers: any[] = [];
+    paymentOptions: any[] = [
+        {name: '1', value: 0, row: 1, height: 'h1-1'},
+        {name: '2', value: 1, row: 2, height: 'h1-1'},
+        {name: '4', value: 2, row: 2, height: 'h1-2'},
+        {name: '6', value: 3, row: 3, height: 'h1-2'},
+        {name: '8', value: 4, row: 4, height: 'h1-2'},
+        {name: '12', value: 5, row: 4, height: 'h1-3'},
+        {name: '16', value: 6, row: 4, height: 'h1-4'}
+    ];
+
+    carGroups: any = [
+        {name: '車隊(A)', code: 'A'},
+        {name: '車隊(B)', code: 'B'},
+        {name: '車隊(C)', code: 'C'},
+        {name: '車隊(D)', code: 'D'},
+    ]
+
+    monitorStatus: any = monitorStatus;
+
+    @ViewChild(MapInfoWindow, {static: false}) info!: MapInfoWindow
+    @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
+    @ViewChild('map', {static: false}) map: any;
+    products: any[] = products;
+    selectedProduct: any;
+
+    // google map
+    polyPath: google.maps.LatLngLiteral[] = [
+        {lat: 25.03280092118552, lng: 121.56348748779168},
+        {lat: 25.03587797931996, lng: 121.56351157458673},
+        {lat: 25.03583432131525, lng: 121.56543846794476},
+        {lat: 25.033019138809674, lng: 121.56546250540032},
+        {lat: 25.033062791203154, lng: 121.56201826717597},
+    ];
+    center: google.maps.LatLngLiteral = {
+        lat: 25.0336962,
+        lng: 121.5643673,
+    };
+    zoom = 17;
+    options: google.maps.MapOptions = {
+        disableDefaultUI: true,
+        backgroundColor: '#126df5',
+        clickableIcons: false,
+        disableDoubleClickZoom: true,
+        draggable: true,
+        zoomControl: true,
+    };
+
+    constructor() {
+        console.log('每列 ' + this.rows + ' 個\n' + '共 ' + this.cols + ' 列')
+        for (let i = 0; i < this.totalItems; i++) {
+            this.layout.push(i);
+        }
+        console.log('layout ' + this.layout)
     }
-  ];
-  activeIndex = 0;
-  currentVideo = this.videoItems[this.activeIndex];
-  data: any;
-  totalItems: number = 8;
-  rows: number = Math.ceil(Math.sqrt(this.totalItems)) + 1;
-  cols: number = Math.ceil(this.totalItems / this.rows);
-  layout: number[] = [];
-  value: number = 4;
-  height: string = 'h1-2'
-  paymentOptions: any[] = [
-    {name: '1', value: 0, row: 1, height: 'h1-1'},
-    {name: '2', value: 1, row: 2, height: 'h1-1'},
-    {name: '4', value: 2, row: 2, height: 'h1-2'},
-    {name: '6', value: 3, row: 3, height: 'h1-2'},
-    {name: '8', value: 4, row: 4, height: 'h1-2'},
-    {name: '12', value: 5, row: 4, height: 'h1-3'},
-    {name: '16', value: 6, row: 4, height: 'h1-4'}
-  ];
 
-  constructor() {
-    console.log('每列 ' + this.rows + ' 個\n' + '共 ' + this.cols + ' 列')
-    for (let i = 0; i < this.totalItems; i++) {
-      this.layout.push(i);
+    ngOnDestroy(): void {
+        throw new Error('Method not implemented.');
     }
-    console.log('layout ' + this.layout)
-  }
 
-  ngOnInit(): void {
-    console.log(this.totalItems)
-  }
-
-  videoPlayerInit(data: any) {
-    this.data = data;
-    this.data.getDefaultMedia().subscriptions.loadedMetadata.subscribe(this.initVdo.bind(this));
-    this.data.getDefaultMedia().subscriptions.ended.subscribe(this.nextVideo.bind(this));
-  }
-
-  nextVideo() {
-    this.activeIndex++;
-    if (this.activeIndex === this.videoItems.length) {
-      this.activeIndex = 0;
+    ngOnInit(): void {
+        console.log(this.totalItems)
+        this.markers = products.map(product => ({
+            position: product.position,
+            icon: {url: product.url, scaledSize: new google.maps.Size(50, 50)},
+            label: {text: product.label.text},
+            infoWindowContent: product.label.text
+        }));
     }
-    this.currentVideo = this.videoItems[this.activeIndex];
-  }
 
-  initVdo() {
-    this.data.play();
-  }
-
-  startPlaylistVdo(item: any, index: number) {
-    this.activeIndex = index;
-    this.currentVideo = item;
-  }
-
-  // count() {
-  //   this.rows = Math.ceil(Math.sqrt(this.totalItems));
-  //   this.cols = Math.ceil(this.totalItems / this.rows);
-  //   console.log('每列 ' + this.rows + ' 個\n' + '共 ' + this.cols + ' 列')
-  // }
-
-  plus() {
-    if (this.totalItems < 16) {
-      this.totalItems++;
-      this.layout.push(this.totalItems - 1);
+    videoPlayerInit(data: any) {
+        this.data = data;
+        this.data.getDefaultMedia().subscriptions.loadedMetadata.subscribe(this.initVdo.bind(this));
+        this.data.getDefaultMedia().subscriptions.ended.subscribe(this.nextVideo.bind(this));
     }
-    console.log(this.totalItems);
-    console.log('layout ' + this.layout);
-    // this.count();
-  }
 
-  minus() {
-    if (this.totalItems > 0) {
-      this.totalItems--;
-      this.layout.pop();
+    nextVideo() {
+        this.activeIndex++;
+        if (this.activeIndex === this.videoItems.length) {
+            this.activeIndex = 0;
+        }
+        this.currentVideo = this.videoItems[this.activeIndex];
     }
-    console.log(this.totalItems)
-    console.log('layout ' + this.layout)
-    // this.count();
-  }
 
-  changeRow() {
-    this.height = this.paymentOptions[this.value].height;
-    this.rows = this.paymentOptions[this.value].row;
-    this.cols = Math.ceil(this.totalItems / this.rows);
-    console.log(' col: ' + this.cols + '\n row: ' + this.rows + '\n height: ' + this.height)
-  }
+    initVdo() {
+        this.data.play();
+    }
 
+    startPlaylistVdo(item: any, index: number) {
+        this.activeIndex = index;
+        this.currentVideo = item;
+    }
+
+    // count() {
+    //   this.rows = Math.ceil(Math.sqrt(this.totalItems));
+    //   this.cols = Math.ceil(this.totalItems / this.rows);
+    //   console.log('每列 ' + this.rows + ' 個\n' + '共 ' + this.cols + ' 列')
+    // }
+
+    plus() {
+        if (this.totalItems < 16) {
+            this.totalItems++;
+            this.layout.push(this.totalItems - 1);
+        }
+        console.log(this.totalItems);
+        console.log('layout ' + this.layout);
+        // this.count();
+    }
+
+    minus() {
+        if (this.totalItems > 0) {
+            this.totalItems--;
+            this.layout.pop();
+        }
+        console.log(this.totalItems)
+        console.log('layout ' + this.layout)
+        // this.count();
+    }
+
+    changeRow() {
+        this.height = this.paymentOptions[this.value].height;
+        this.rows = this.paymentOptions[this.value].row;
+        this.cols = Math.ceil(this.totalItems / this.rows);
+        console.log(' col: ' + this.cols + '\n row: ' + this.rows + '\n height: ' + this.height)
+    }
+
+    toggleSidebar() {
+        this.sidebarRightOpen = !this.sidebarRightOpen;
+    }
+
+    toggleMap() {
+        this.mapOpen = !this.mapOpen;
+        if (this.mapOpen) {
+            this.scrollHeight = '350px'
+        } else {
+            this.scrollHeight = '520px'
+        }
+    }
+
+    getMiddleDivClass() {
+        if (this.sidebarRightOpen) {
+            return 'col-12 md:col-12 lg:col-8';
+        } else {
+            return 'col-12 md:col-12 lg:col-12';
+        }
+    }
+
+    //點擊地圖會在中間
+    moveMap(event: google.maps.MapMouseEvent) {
+        if (event.latLng != null) this.center = (event.latLng.toJSON());
+    }
+
+    display: any
+
+    move(event: google.maps.MapMouseEvent) {
+        if (event.latLng != null) this.display = event.latLng.toJSON();
+    }
+
+    infoContent: any = ''
+    //開啟標記標籤的內容
+    openInfo(marker: MapMarker, content: string) {
+        this.infoContent = content;
+        this.info.open(marker)
+    }
 }
