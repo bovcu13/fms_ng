@@ -14,3 +14,19 @@
 .h1-4 {
   height: 20vh;
 }
+
+:host ::ng-deep {
+
+  .toggleMap {
+    .p-togglebutton.p-button.p-highlight {
+      width: 70vh;
+      height: 1rem;
+    }
+
+    .p-togglebutton.p-button {
+      width: 70vh;
+      height: 1rem;
+    }
+  }
+
+}
