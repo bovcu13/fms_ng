@@ -18,6 +18,7 @@ import {MultipleCarsComponent} from "../features/multiple-cars/multiple-cars.com
 import {DrivingStatusComponent} from "../features/driving-status/driving-status.component";
 import {DrawComponent} from "../features/test/draw/draw.component";
 import {InfoComponent} from "../features/test/info/info.component";
+import {HistoryComponent} from "../features/history/history.component";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {InfoComponent} from "../features/test/info/info.component";
     MultipleCarsComponent,
     DrivingStatusComponent,
     DrawComponent,
-    InfoComponent
+    InfoComponent,
+    HistoryComponent
   ],
   imports: [
     CommonModule,

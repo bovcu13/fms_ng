@@ -1,0 +1,98 @@
+<div class="overflow-x-hidden flex justify-content-between">
+          <div id="map" style="height: 95vh; width: 100%;"></div>
+      <div class="col-4">
+          <p-card class=" mr-2 ml-2 mb-2">
+            <p-tabView>
+              <p-tabPanel>
+                <ng-template pTemplate="header">
+                  <span>車隊查詢</span>
+                </ng-template>
+                <div class="grid">
+                  <div class="col-6">
+                    <p-dropdown [options]="carGroups" optionLabel="name" placeholder="選擇車隊"></p-dropdown>
+                  </div>
+                  <div class="col-6">
+                    <p-dropdown [options]="cars" optionLabel="name" placeholder="選擇車牌"></p-dropdown>
+                  </div>
+                  <div class="col-6">
+                    <p-calendar [showTime]="true" placeholder="選擇開始時間"></p-calendar>
+                  </div>
+                  <div class="col-6">
+                    <p-calendar [showTime]="true" placeholder="選擇結束時間"></p-calendar>
+                  </div>
+                </div>
+                <p-table [value]="products" [paginator]="true" [rows]="5" selectionMode="single"
+                         [(selection)]="selectedProduct"
+                         (onRowSelect)="Select()">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>狀態累積</th>
+                      <th>狀態</th>
+                      <th>速度</th>
+                      <th>地址</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-product>
+                    <tr [pSelectableRow]="product">
+                      <td>{{ product.statetime }}</td>
+                      <td>{{ product.state }}</td>
+                      <td>{{ product.speed }}</td>
+                      <td>{{ product.addr }}</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </p-tabPanel>
+              <p-tabPanel>
+                <ng-template pTemplate="header">
+                  <span>異常中心</span>
+                  <p-tag *ngIf="oddTem > 0" severity="danger" value="{{oddTem}}"></p-tag>
+                </ng-template>
+                <p-accordion [activeIndex]="0">
+                  <div class="flex justify-content-center">
+                    <div class="grid">
+                      <div class="col-12 flex justify-content-between">
+                        <h2 class="text-center">溫度異常</h2>
+                        <h2 class="text-center">{{oddTem}}</h2><br>
+                        <h2 class="text-center">台</h2>
+                      </div>
+                      <div class="col-12">
+                        <p-table [value]="products" [paginator]="true" [rows]="5" selectionMode="single"
+                                 [(selection)]="selectedProduct"
+                                 (onRowSelect)="Select()">
+                          <ng-template pTemplate="header">
+                            <tr>
+                              <th>狀態累積</th>
+                              <th>狀態</th>
+                              <th>速度</th>
+                              <th>地址</th>
+                            </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-product>
+                            <tr [pSelectableRow]="product">
+                              <td>{{ product.statetime }}</td>
+                              <td>{{ product.state }}</td>
+                              <td>{{ product.speed }}</td>
+                              <td>{{ product.addr }}</td>
+                            </tr>
+                          </ng-template>
+                        </p-table>
+                      </div>
+                    </div>
+                  </div>
+                </p-accordion>
+              </p-tabPanel>
+              <p-tabPanel>
+                <ng-template pTemplate="header">
+                  <span>功能A</span>
+                </ng-template>
+
+              </p-tabPanel>
+              <p-tabPanel>
+                <ng-template pTemplate="header">
+                  <span>功能B</span>
+                </ng-template>
+              </p-tabPanel>
+            </p-tabView>
+          </p-card>
+      </div>
+</div>
