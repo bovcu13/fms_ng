@@ -48,7 +48,7 @@ export class DrawComponent implements OnInit {
         ],
       },
       polygonOptions: {
-        strokeColor: '#00ff00',
+        strokeColor: '#E3916E',
       },
     };
     this.drawingManager = new google.maps.drawing.DrawingManager(drawingOptions);
