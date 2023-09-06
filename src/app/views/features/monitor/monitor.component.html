@@ -43,7 +43,7 @@
             <div class="col-12">
                 <p-table [value]="monitorStatus" selectionMode="single" [(selection)]="selectedCar"
                          [scrollable]="true" scrollHeight="{{scrollHeight}}"
-                         [tableStyle]="{ 'min-width': '40rem' }">
+                         [tableStyle]="{ 'min-width': '40rem' }" (onRowSelect)="Select()">
                     <ng-template pTemplate="header">
                         <tr>
                             <th>狀態</th>
@@ -62,7 +62,7 @@
                             <td>{{car.driverName}}</td>
                             <td>{{car.vehicleName}}</td>
                             <td>{{car.camera}}</td>
-                            <td>{{car.location}}</td>
+                            <td>{{car.addr}}</td>
                             <td>{{car.speed}}</td>
                         <tr>
                     </ng-template>
