@@ -148,23 +148,6 @@ export class MainComponent implements OnInit, OnDestroy {
     this.startMapUpdateTimer();
   }
 
-  //測試openInfo自己網頁在加載時被顯示出來
-  ngAfterViewInit(): void {
-    this.map.googleMap.addListener('tilesloaded', () => {
-      this.openInfoWindows();
-    });
-  }
-
-  //測試openInfo自己網頁在加載時被顯示出來
-  openInfoWindows(): void {
-    this.markers.forEach(marker => {
-      const infoWindow = new google.maps.InfoWindow({
-        content: marker.infoWindowContent
-      });
-      infoWindow.open(this.map.googleMap, marker._marker);
-    });
-  }
-
   startMapUpdateTimer(): void {
     this.updateMap(); // 第一次更新地圖
     this.countdownSubscription = interval(1000).subscribe(() => {
