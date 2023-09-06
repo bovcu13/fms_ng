@@ -11,6 +11,7 @@ import { MaaaapComponent } from "../features/main/maaaap/maaaap.component";
 import { MultipleCarsComponent } from "../features/multiple-cars/multiple-cars.component";
 import { DrivingStatusComponent } from "../features/driving-status/driving-status.component";
 import { DrawComponent } from "../features/test/draw/draw.component";
+import { InfoComponent } from "../features/test/info/info.component";
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
       //test
       { path: 'map', component: MaaaapComponent, canActivate: [AuthGuard] },
       { path: 'draw', component: DrawComponent, canActivate: [AuthGuard] },
+      { path: 'info', component: InfoComponent, canActivate: [AuthGuard] },
     ],
   },
 ];

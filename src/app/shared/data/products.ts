@@ -5,6 +5,7 @@ export const products = [
     "speed": "10",
     "addr": "明德路, 台北市北投區",
     "position": {"lat": 25.11450302362639, "lng": 121.5222738032652},
+    "infoWindowContent": "一萱博物館",
     "label": {
       "color": "red",
       "text": "一萱博物館"
@@ -17,6 +18,7 @@ export const products = [
     "speed": "20",
     "addr": "中山路，台北市中正區",
     "position": {"lat": 25.036941, "lng": 121.518108},
+    "infoWindowContent": "一萱博物館",
     "label": {
       "color": "red",
       "text": "台北101大樓"
@@ -29,6 +31,7 @@ export const products = [
     "speed": "5",
     "addr": "信義路，台北市信義區",
     "position": {"lat": 25.033964, "lng": 121.562874},
+    "infoWindowContent": "一萱博物館",
     "label": {
       "color": "red",
       "text": "象山捷運站"
@@ -41,6 +44,7 @@ export const products = [
     "speed": "15",
     "addr": "光復南路，台北市大安區",
     "position": {"lat": 25.026852, "lng": 121.537694},
+    "infoWindowContent": "一萱博物館",
     "label": {
       "color": "red",
       "text": "國立中興大學"
@@ -53,6 +57,7 @@ export const products = [
     "speed": "25",
     "addr": "忠孝東路，台北市大安區",
     "position": {"lat": 25.040824, "lng": 121.556745},
+    "infoWindowContent": "一萱博物館",
     "label": {
       "color": "red",
       "text": "圓環"
