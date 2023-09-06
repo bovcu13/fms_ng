@@ -14,16 +14,6 @@ export class InfoComponent implements OnInit {
     lat: 25.11450302362639,
     lng: 121.5222738032652
   };
-  options: google.maps.MapOptions = {
-    //google map提供的放大縮小
-    zoomControl: true,
-    //按ctrl是否可以放大縮小
-    scrollwheel: true,
-    //點兩下地圖是否可以放大縮小
-    disableDoubleClickZoom: true,
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    maxZoom: 18,
-  }
 
   // 創建標記
   markers: any[] = []
@@ -47,7 +37,7 @@ export class InfoComponent implements OnInit {
     // 定義地圖相關設定
     const mapOptions = {
       zoom: 14,
-      center: new google.maps.LatLng(25.11450, 121.52227),
+      center: this.center,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
@@ -71,10 +61,6 @@ export class InfoComponent implements OnInit {
       //開info
       google.maps.event.addListener(marker, 'click', () => {
         infowindow.open(map, marker);
-      });
-
-      //點擊會到中心
-      marker.addListener("click", () => {
         map.setZoom(14);
         map.setCenter(marker.getPosition() as google.maps.LatLng);
       });
