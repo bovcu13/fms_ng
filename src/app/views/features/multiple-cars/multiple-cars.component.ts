@@ -1,21 +1,28 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
 import {products} from "../../../shared/data/products";
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-multiple-cars',
   templateUrl: './multiple-cars.component.html',
-  styleUrls: ['./multiple-cars.component.scss']
+  styleUrls: ['./multiple-cars.component.scss'],
+  providers: [MessageService]
 })
 export class MultipleCarsComponent implements OnInit {
   selectedProduct: any[] = [];
   sidebarRightOpen = true;
   products: any = products;
-  mapHeight:string='100vh';
 
   onSelectionChange(event: any[]) {
     this.selectedProduct = event;
     console.log(this.selectedProduct.length)
+    if (this.selectedProduct.length > 24) {
+      this.messageService.clear();
+      this.messageService.add({ severity: 'warn', summary: '資訊', detail: '已選擇 24 台車，超過上限！' });
+      // 如果超過24筆，取消最後一次選擇的項目
+      this.selectedProduct.pop();
+    }
   }
 
   showLayout(){
@@ -47,6 +54,9 @@ export class MultipleCarsComponent implements OnInit {
   @ViewChild(GoogleMap, {static: false}) map!: GoogleMap;
 
   markers: any[] = []
+
+  constructor(private messageService: MessageService) {
+  }
 
   ngOnInit(): void {
     this.markers = products.map(product => ({

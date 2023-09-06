@@ -26,6 +26,7 @@
           <ng-template pTemplate="header">
             <span>車隊查詢</span>
           </ng-template>
+          <p-toast></p-toast>
           <p-table [value]="products" [rows]="5" selectionMode="multiple" [scrollable]="true" scrollHeight="90vh"
                    [(selection)]="selectedProduct" (selectionChange)="onSelectionChange($event)">
             <ng-template pTemplate="header">
