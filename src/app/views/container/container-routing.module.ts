@@ -12,6 +12,7 @@ import { MultipleCarsComponent } from "../features/multiple-cars/multiple-cars.c
 import { DrivingStatusComponent } from "../features/driving-status/driving-status.component";
 import { DrawComponent } from "../features/test/draw/draw.component";
 import { InfoComponent } from "../features/test/info/info.component";
+import {HistoryComponent} from "../features/history/history.component";
 
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
       { path: 'log', component: LogComponent, canActivate: [AuthGuard] },
       { path: 'multiCars', component: MultipleCarsComponent, canActivate: [AuthGuard] },
       { path: 'driving_status', component: DrivingStatusComponent, canActivate: [AuthGuard] },
+      { path: 'history', component: HistoryComponent, canActivate: [AuthGuard] },
       //test
       { path: 'map', component: MaaaapComponent, canActivate: [AuthGuard] },
       { path: 'draw', component: DrawComponent, canActivate: [AuthGuard] },
