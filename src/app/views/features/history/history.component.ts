@@ -13,6 +13,13 @@ export class HistoryComponent implements OnInit {
   //起點、終點
   startCoordinate: google.maps.LatLngLiteral = products[0].position;
   endCoordinate: google.maps.LatLngLiteral = products[products.length - 1].position;
+  // 初始化車車的位置為起點位置
+  carPosition: google.maps.LatLngLiteral = {
+    lat: this.startCoordinate.lat,
+    lng: this.startCoordinate.lng,
+  }
+  // 定義用來儲存路線座標的變數
+  routeCoordinates: google.maps.LatLngLiteral[] = [];
 
   //初始地圖地點
   center: google.maps.LatLngLiteral = {
@@ -30,18 +37,19 @@ export class HistoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // 創建標記
-    this.markers = products.map((location) => {
-      const marker = {
-        position: new google.maps.LatLng(location.position.lat, location.position.lng),
-        title: location.addr,
-        icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
-        infoWindowText: location.infoWindowContent, // info window 內容
-        infoWindowOptions: { maxWidth: 200 }, // info window 選項
-      };
 
-      return marker;
-    });
+    // // 創建標記
+    // this.markers = products.map((location) => {
+    //   const marker = {
+    //     position: new google.maps.LatLng(location.position.lat, location.position.lng),
+    //     title: location.addr,
+    //     icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
+    //     infoWindowText: location.infoWindowContent, // info window 內容
+    //     infoWindowOptions: { maxWidth: 200 }, // info window 選項
+    //   };
+    //
+    //   return marker;
+    // });
 
     // 定義地圖相關設定
     this.mapOptions = {
@@ -83,11 +91,13 @@ export class HistoryComponent implements OnInit {
       infowindow.open(this.map, marker);
 
       this.markers.push(marker);
+
+
     }
 
     // this.geocodePositions()
 
-    // 建立 Directions Service
+// 建立 Directions Service
     const directionsService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer(
       {
@@ -114,11 +124,37 @@ export class HistoryComponent implements OnInit {
     // 發送 Directions Request
     directionsService.route(request, (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus) => {
       if (status === google.maps.DirectionsStatus.OK) {
+        // 取得路線資料
+        this.routeCoordinates = result!.routes[0].overview_path.map(
+          (latLng: google.maps.LatLng) => ({
+            lat: latLng.lat(),
+            lng: latLng.lng()
+          })
+        );
         // 顯示路線
         directionsRenderer.setDirections(result);
+        // 開始模擬車輛移動
+        this.simulateCarMovement(this.routeCoordinates);
       }
     });
+  }
 
+  //車輛更新
+  simulateCarMovement(routeCoordinates: google.maps.LatLngLiteral[]): void {
+    let index = 0;
+    const car = new google.maps.Marker({
+      position: this.carPosition,
+      map: this.map,
+      icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
+    });
+
+    setInterval(() => {
+      if (index < routeCoordinates.length) {
+        this.carPosition = routeCoordinates[index];
+        car.setPosition(this.carPosition); // 更新車輛標記位置
+        index++;
+      }
+    }, 1000); // 每隔1秒更新一次位置
   }
 
   private previousMarker: google.maps.Marker | null = null;
