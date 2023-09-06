@@ -1,10 +1,1 @@
-<div id="map" style="height: 400px; width: 75%;"></div>
-<google-map #googleMap class="w-full" height="400px" width="75%"
-            [center]="center" [zoom]="zoom" [options]="options"
-            (mapClick)="moveMap($event)" (mapMousemove)="move($event)">
-  <map-marker *ngFor="let marker of markers"
-              [position]="marker.position"
-              [title]="marker.title"
-              [icon]="marker.icon">
-  </map-marker>
-</google-map>
+<div id="map" style="height: 95vh; width: 100%;"></div>
