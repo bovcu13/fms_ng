@@ -58,7 +58,14 @@ export class SidebarComponent implements OnInit {
           },
           {
             label: '歷史軌跡',
-            icon: 'pi pi-fw pi-box'
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/history',
+            command:() =>{
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
+            },
           }
         ]
       },

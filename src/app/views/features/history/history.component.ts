@@ -10,6 +10,10 @@ declare var google: any;
 })
 export class HistoryComponent implements OnInit {
 
+  //起點、終點
+  startCoordinate: google.maps.LatLngLiteral = products[0].position;
+  endCoordinate: google.maps.LatLngLiteral = products[products.length - 1].position;
+
   //初始地圖地點
   center: google.maps.LatLngLiteral = {
     lat: 25.11450302362639,
@@ -82,6 +86,39 @@ export class HistoryComponent implements OnInit {
     }
 
     // this.geocodePositions()
+
+    // 建立 Directions Service
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer(
+      {
+        suppressMarkers: true
+      });
+
+    // 添加到 map
+    directionsRenderer.setMap(this.map);
+
+    // 設定起點、終點和中途站點
+    const waypoints: google.maps.DirectionsWaypoint[] = products.map(product => ({
+      location: new google.maps.LatLng(product.position.lat, product.position.lng),
+      stopover: true,
+    }));
+
+    // 設定 Directions Request
+    const request = {
+      origin: this.startCoordinate, // 起點
+      destination: this.endCoordinate, // 終點
+      waypoints: waypoints, // 中間站
+      travelMode: google.maps.TravelMode.DRIVING, // 導航方式
+    };
+
+    // 發送 Directions Request
+    directionsService.route(request, (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus) => {
+      if (status === google.maps.DirectionsStatus.OK) {
+        // 顯示路線
+        directionsRenderer.setDirections(result);
+      }
+    });
+
   }
 
   private previousMarker: google.maps.Marker | null = null;
