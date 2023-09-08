@@ -5,36 +5,41 @@ declare var google: any;
 
 @Component({
   selector: 'app-history',
-  templateUrl: './history.component.html',
-  styleUrls: ['./history.component.scss']
+  templateUrl: './history-path.component.html',
+  styleUrls: ['./history-path.component.scss']
 })
-export class HistoryComponent implements OnInit {
+export class HistoryPathComponent implements OnInit {
   sliderValue: number = 0; // 初始化滑塊的值
+  totalTime: number = 0;
   isPlaying: boolean = true;
   intervalId: any;
 
   formatTime(seconds: number): string {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    const hours = Math.floor(seconds / 3600); // 計算小時數
+    const minutes = Math.floor((seconds % 3600) / 60); // 計算分鐘數
+    const remainingSeconds = seconds % 60; // 計算剩餘的秒數
+
+    // 格式化時間，確保分鐘和秒數始終有兩位數
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 
   togglePlay() {
-    //isPlaying flase -> icon暫停; true -> icon播放，預設為true點下變成false時需播放
-    if (!this.isPlaying) { //false,icon為播放
-      // 點下開始播放
+    if (!this.isPlaying) { // false, icon為播放,點下會暫停
       clearInterval(this.intervalId);
+      this.pauseCarMovement();
     } else {
       // 如果未播放，則開始播放
       this.intervalId = setInterval(() => {
         this.sliderValue++;
-        if (this.sliderValue > 120) {
+        if (this.sliderValue > this.totalTime) {
           clearInterval(this.intervalId);
           this.isPlaying = false;
         }
-      }, 1000); // 更新每秒
+      }, 100); // 每秒更新
+      // 開始模擬車輛移動
+      this.simulateCarMovement(this.routeCoordinates);
     }
-    this.isPlaying = !this.isPlaying; // 切換播放狀態
+    this.isPlaying = !this.isPlaying; // 切換按鈕狀態
   }
 
   //起點、終點
@@ -58,13 +63,13 @@ export class HistoryComponent implements OnInit {
   markers: any[] = []
 
   map: any
-  mapOptions:any
+  mapOptions: any
 
-  constructor( private renderer: Renderer2, private el: ElementRef ) {
+  constructor(private renderer: Renderer2, private el: ElementRef) {
   }
 
   ngOnInit(): void {
-
+    this.geocodePositions()
     // // 創建標記
     // this.markers = products.map((location) => {
     //   const marker = {
@@ -110,7 +115,7 @@ export class HistoryComponent implements OnInit {
       });
 
       //可以按兩下
-      this.map.addListener("click", (e:any) => {
+      this.map.addListener("click", (e: any) => {
         this.placeMarkerAndPanTo(e.latLng, this.map);
       });
 
@@ -122,7 +127,7 @@ export class HistoryComponent implements OnInit {
 
     // this.geocodePositions()
 
-// 建立 Directions Service
+    // 建立 Directions Service
     const directionsService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer(
       {
@@ -158,28 +163,47 @@ export class HistoryComponent implements OnInit {
         );
         // 顯示路線
         directionsRenderer.setDirections(result);
-        // 開始模擬車輛移動
-        this.simulateCarMovement(this.routeCoordinates);
+        // 獲取總時間
+        this.totalTime = result.routes[0].legs.reduce(
+          (total, leg) => total + (leg.duration?.value || 0), // 使用可選鏈接運算符處理可能為 undefined 的情況
+          0
+        );
+
+        console.log('總時間：', this.formatTime(this.totalTime));
       }
     });
   }
 
   //車輛更新
+  carMovementInterval: any; // 存儲車輛定時器ID
+  car: google.maps.Marker | null = null; // 存儲車輛標記
+  index: number = 0; //記錄位置
   simulateCarMovement(routeCoordinates: google.maps.LatLngLiteral[]): void {
-    let index = 0;
-    const car = new google.maps.Marker({
+    // 清除之前的車輛標記
+    if (this.car !== null) {
+      this.car.setMap(null);
+    }
+    // 建立新的車輛圖示
+    this.car = new google.maps.Marker({
       position: this.carPosition,
       map: this.map,
       icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
     });
-
-    setInterval(() => {
-      if (index < routeCoordinates.length) {
-        this.carPosition = routeCoordinates[index];
-        car.setPosition(this.carPosition); // 更新車輛標記位置
-        index++;
+    //車輛移動
+    this.carMovementInterval = setInterval(() => {
+      if (this.index < routeCoordinates.length) {
+        this.carPosition = routeCoordinates[this.index];
+        this.car?.setPosition(this.carPosition); // 更新車輛位置
+        this.index++;
+      } else {
+        clearInterval(this.carMovementInterval); // 所有座標都跑完，清除定時器
       }
-    }, 1000); // 每隔1秒更新一次位置
+    }, 100); // 每隔1秒更新一次位置
+  }
+
+  // 暫停車輛
+  pauseCarMovement(): void {
+    clearInterval(this.carMovementInterval);
   }
 
   private previousMarker: google.maps.Marker | null = null;
@@ -226,34 +250,34 @@ export class HistoryComponent implements OnInit {
     }
   }
 
-  // geocodePositions() {
-  //   const geocoder = new google.maps.Geocoder();
-  //
-  //   this.products.forEach(product => {
-  //     const latlng = new google.maps.LatLng(product.position.lat, product.position.lng);
-  //
-  //     geocoder.geocode({ location: latlng }, (results, status) => {
-  //       if (status === google.maps.GeocoderStatus.OK) {
-  //         let addressFound = false;
-  //         if (results && results.length > 0) {
-  //           for (let i = 0; i < results.length; i++) {
-  //             const formattedAddress = results[i].formatted_address;
-  //             if (!formattedAddress.match(/\b\w+\+\w+\b/)) {
-  //               product.addr = formattedAddress;
-  //               addressFound = true;
-  //               break; // 找到非 Plus Code 地址後跳出迴圈
-  //             }
-  //           }
-  //         }
-  //         if (!addressFound) {
-  //           product.addr = '找不到地址';
-  //         }
-  //       } else {
-  //         product.addr = '編碼錯誤';
-  //       }
-  //     });
-  //   });
-  // }
+  geocodePositions() {
+    const geocoder = new google.maps.Geocoder();
+
+    this.products.forEach(product => {
+      const latlng = new google.maps.LatLng(product.position.lat, product.position.lng);
+
+      geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+          let addressFound = false;
+          if (results && results.length > 0) {
+            for (let i = 0; i < results.length; i++) {
+              const formattedAddress = results[i].formatted_address;
+              if (!formattedAddress.match(/\b\w+\+\w+\b/)) {
+                product.addr = formattedAddress;
+                addressFound = true;
+                break; // 找到非 Plus Code 地址後跳出迴圈
+              }
+            }
+          }
+          if (!addressFound) {
+            product.addr = '找不到地址';
+          }
+        } else {
+          product.addr = '編碼錯誤';
+        }
+      });
+    });
+  }
 
   oddTem: number = 1;
 }

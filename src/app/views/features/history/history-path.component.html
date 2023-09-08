@@ -27,14 +27,14 @@
               </div>
               <div class="col-11 ml-2 mt-5 mb-2">
                 <div class="slider-container">
-                  <p-slider [(ngModel)]="sliderValue" [min]="0" [max]="120"></p-slider>
-                  <div class="slider-label" [style.left.%]="(sliderValue / 120) * 100">
+                  <p-slider [(ngModel)]="sliderValue" [min]="0" [max]="totalTime"></p-slider>
+                  <div class="slider-label" [style.left.%]="(sliderValue / totalTime) * 100">
                     {{ formatTime(sliderValue) }}
                   </div>
                 </div>
                 <div class="mt-2 flex justify-content-end">
-                  <div [style.left.%]="(sliderValue / 120) * 100">
-                    {{ formatTime(120) }}
+                  <div>
+                    {{ formatTime(totalTime) }}
                   </div>
                 </div>
               </div>
