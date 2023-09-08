@@ -35,11 +35,27 @@ export class HistoryPathComponent implements OnInit {
           clearInterval(this.intervalId);
           this.isPlaying = false;
         }
-      }, 100); // 每秒更新
+      }, 1000); // 每秒更新
       // 開始模擬車輛移動
       this.simulateCarMovement(this.routeCoordinates);
     }
     this.isPlaying = !this.isPlaying; // 切換按鈕狀態
+  }
+
+  onSliderChange(event: any) {
+    // 清除之前的車輛標記
+    if (this.car !== null) {
+      this.car.setMap(null);
+    }
+    this.index = event.value;
+    this.carPosition = this.routeCoordinates[this.index];
+    this.car?.setPosition(this.carPosition); // 更新車輛位置
+// 建立新的車輛圖示
+    this.car = new google.maps.Marker({
+      position: this.carPosition,
+      map: this.map,
+      icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
+    });
   }
 
   //起點、終點
@@ -161,14 +177,15 @@ export class HistoryPathComponent implements OnInit {
             lng: latLng.lng()
           })
         );
+        console.log(this.routeCoordinates)
         // 顯示路線
         directionsRenderer.setDirections(result);
         // 獲取總時間
-        this.totalTime = result.routes[0].legs.reduce(
-          (total, leg) => total + (leg.duration?.value || 0), // 使用可選鏈接運算符處理可能為 undefined 的情況
-          0
-        );
-
+        // this.totalTime = result.routes[0].legs.reduce(
+        //   (total, leg) => total + (leg.duration?.value || 0), // 使用可選鏈接運算符處理可能為 undefined 的情況
+        //   0
+        // );
+        this.totalTime = this.routeCoordinates.length
         console.log('總時間：', this.formatTime(this.totalTime));
       }
     });
@@ -192,13 +209,14 @@ export class HistoryPathComponent implements OnInit {
     //車輛移動
     this.carMovementInterval = setInterval(() => {
       if (this.index < routeCoordinates.length) {
+        console.log(this.index)
         this.carPosition = routeCoordinates[this.index];
         this.car?.setPosition(this.carPosition); // 更新車輛位置
         this.index++;
       } else {
         clearInterval(this.carMovementInterval); // 所有座標都跑完，清除定時器
       }
-    }, 100); // 每隔1秒更新一次位置
+    }, 1000); // 每隔1秒更新一次位置
   }
 
   // 暫停車輛
@@ -206,8 +224,7 @@ export class HistoryPathComponent implements OnInit {
     clearInterval(this.carMovementInterval);
   }
 
-  private previousMarker: google.maps.Marker | null = null;
-
+  previousMarker: google.maps.Marker | null = null;
   placeMarkerAndPanTo(latLng: google.maps.LatLng, map: google.maps.Map) {
     // 清除之前的標記
     if (this.previousMarker) {
