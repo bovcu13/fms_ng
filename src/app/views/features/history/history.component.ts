@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { products } from "../../../shared/data/products";
 
 declare var google: any;
@@ -9,6 +9,33 @@ declare var google: any;
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit {
+  sliderValue: number = 0; // 初始化滑塊的值
+  isPlaying: boolean = true;
+  intervalId: any;
+
+  formatTime(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+  }
+
+  togglePlay() {
+    //isPlaying flase -> icon暫停; true -> icon播放，預設為true點下變成false時需播放
+    if (!this.isPlaying) { //false,icon為播放
+      // 點下開始播放
+      clearInterval(this.intervalId);
+    } else {
+      // 如果未播放，則開始播放
+      this.intervalId = setInterval(() => {
+        this.sliderValue++;
+        if (this.sliderValue > 120) {
+          clearInterval(this.intervalId);
+          this.isPlaying = false;
+        }
+      }, 1000); // 更新每秒
+    }
+    this.isPlaying = !this.isPlaying; // 切換播放狀態
+  }
 
   //起點、終點
   startCoordinate: google.maps.LatLngLiteral = products[0].position;
@@ -33,7 +60,7 @@ export class HistoryComponent implements OnInit {
   map: any
   mapOptions:any
 
-  constructor() {
+  constructor( private renderer: Renderer2, private el: ElementRef ) {
   }
 
   ngOnInit(): void {
@@ -91,8 +118,6 @@ export class HistoryComponent implements OnInit {
       infowindow.open(this.map, marker);
 
       this.markers.push(marker);
-
-
     }
 
     // this.geocodePositions()
