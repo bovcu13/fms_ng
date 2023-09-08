@@ -4,7 +4,7 @@ export const products = [
     "state": "green",
     "speed": "10",
     "addr": "明德路, 台北市北投區",
-    "position": {"lat": 25.11450302362639, "lng": 121.5222738032652},
+    "position": {"lat": 25.114503, "lng": 121.522273},
     "infoWindowContent": "一萱博物館",
     "label": {
       "color": "red",
