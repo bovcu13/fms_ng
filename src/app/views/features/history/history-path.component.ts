@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { products } from "../../../shared/data/products";
 
 declare var google: any;
@@ -35,11 +35,27 @@ export class HistoryPathComponent implements OnInit {
           clearInterval(this.intervalId);
           this.isPlaying = false;
         }
-      }, 100); // 每秒更新
+      }, 1000); // 每秒更新
       // 開始模擬車輛移動
       this.simulateCarMovement(this.routeCoordinates);
     }
     this.isPlaying = !this.isPlaying; // 切換按鈕狀態
+  }
+
+  onSliderChange(event: any) {
+    // 清除之前的車輛標記
+    if (this.car !== null) {
+      this.car.setMap(null);
+    }
+    this.index = event.value;
+    this.carPosition = this.routeCoordinates[this.index];
+    this.car?.setPosition(this.carPosition); // 更新車輛位置
+// 建立新的車輛圖示
+    this.car = new google.maps.Marker({
+      position: this.carPosition,
+      map: this.map,
+      icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
+    });
   }
 
   //起點、終點
@@ -65,11 +81,10 @@ export class HistoryPathComponent implements OnInit {
   map: any
   mapOptions: any
 
-  constructor(private renderer: Renderer2, private el: ElementRef) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.geocodePositions()
     // // 創建標記
     // this.markers = products.map((location) => {
     //   const marker = {
@@ -161,17 +176,25 @@ export class HistoryPathComponent implements OnInit {
             lng: latLng.lng()
           })
         );
+        // 處理路線座標
+        this.geocodeCoordinates();
+        console.log(this.routeCoordinates)
         // 顯示路線
         directionsRenderer.setDirections(result);
         // 獲取總時間
-        this.totalTime = result.routes[0].legs.reduce(
-          (total, leg) => total + (leg.duration?.value || 0), // 使用可選鏈接運算符處理可能為 undefined 的情況
-          0
-        );
-
+        // this.totalTime = result.routes[0].legs.reduce(
+        //   (total, leg) => total + (leg.duration?.value || 0), // 使用可選鏈接運算符處理可能為 undefined 的情況
+        //   0
+        // );
+        this.totalTime = this.routeCoordinates.length
         console.log('總時間：', this.formatTime(this.totalTime));
+      } else {
+        console.error('獲取路線失敗：', status);
       }
     });
+    // this.geocodePositions(products,(result) => {
+    //   console.log(result);
+    // });
   }
 
   //車輛更新
@@ -192,13 +215,14 @@ export class HistoryPathComponent implements OnInit {
     //車輛移動
     this.carMovementInterval = setInterval(() => {
       if (this.index < routeCoordinates.length) {
+        console.log(this.index)
         this.carPosition = routeCoordinates[this.index];
         this.car?.setPosition(this.carPosition); // 更新車輛位置
         this.index++;
       } else {
         clearInterval(this.carMovementInterval); // 所有座標都跑完，清除定時器
       }
-    }, 100); // 每隔1秒更新一次位置
+    }, 1000); // 每隔1秒更新一次位置
   }
 
   // 暫停車輛
@@ -206,8 +230,7 @@ export class HistoryPathComponent implements OnInit {
     clearInterval(this.carMovementInterval);
   }
 
-  private previousMarker: google.maps.Marker | null = null;
-
+  previousMarker: google.maps.Marker | null = null;
   placeMarkerAndPanTo(latLng: google.maps.LatLng, map: google.maps.Map) {
     // 清除之前的標記
     if (this.previousMarker) {
@@ -250,30 +273,66 @@ export class HistoryPathComponent implements OnInit {
     }
   }
 
-  geocodePositions() {
+  addr:any[] =[]
+  // geocodePositions(data: any[], callback: (data: any) => void) {
+  //   const geocoder = new google.maps.Geocoder();
+  //
+  //   data.forEach(item => {
+  //     let lat, lng;
+  //     if (item.position) {
+  //       lat = item.position.lat;
+  //       lng = item.position.lng;
+  //     } else if (item.lat && item.lng) {
+  //       lat = item.lat;
+  //       lng = item.lng;
+  //     } else {
+  //       item.addr = '缺少位置資訊';
+  //       callback(item);
+  //       return;
+  //     }
+  //
+  //     const latlng = new google.maps.LatLng(lat, lng);
+  //
+  //     geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
+  //       if (status === google.maps.GeocoderStatus.OK) {
+  //         let addressFound = false;
+  //         if (results && results.length > 0) {
+  //           for (let i = 0; i < results.length; i++) {
+  //             const formattedAddress = results[i].formatted_address;
+  //             if (!formattedAddress.match(/\b\w+\+\w+\b/)) {
+  //               item.addr = formattedAddress;
+  //               addressFound = true;
+  //               break;
+  //             }
+  //           }
+  //         }
+  //         if (!addressFound) {
+  //           item.addr = '找不到地址';
+  //         }
+  //       } else {
+  //         item.addr = '編碼錯誤';
+  //       }
+  //       callback(item);
+  //     });
+  //   });
+  // }
+
+  geocodeCoordinates() {
     const geocoder = new google.maps.Geocoder();
 
-    this.products.forEach(product => {
-      const latlng = new google.maps.LatLng(product.position.lat, product.position.lng);
+    const coordinatesToProcess = this.routeCoordinates;
 
+    coordinatesToProcess.forEach(latlng => {
       geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
         if (status === google.maps.GeocoderStatus.OK) {
-          let addressFound = false;
-          if (results && results.length > 0) {
-            for (let i = 0; i < results.length; i++) {
-              const formattedAddress = results[i].formatted_address;
-              if (!formattedAddress.match(/\b\w+\+\w+\b/)) {
-                product.addr = formattedAddress;
-                addressFound = true;
-                break; // 找到非 Plus Code 地址後跳出迴圈
-              }
-            }
-          }
-          if (!addressFound) {
-            product.addr = '找不到地址';
+          if (results[0]) {
+            const address = results[0].formatted_address;
+            console.log('中文地址：', address);
+          } else {
+            console.error('找不到地址');
           }
         } else {
-          product.addr = '編碼錯誤';
+          console.error('地理編碼失敗，錯誤代碼：', status);
         }
       });
     });
