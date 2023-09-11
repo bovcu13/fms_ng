@@ -17,9 +17,11 @@ export class MultipleCarsComponent implements OnInit {
   Panels: any[] = [1];
   countPanels: number = 1;
   selectPanel: number = 0;
+  trafficVisable: boolean = false;
 
   onSelectionChange(event: any[]) {
     this.selectedProduct = event;
+    // 將選擇資料存進二維陣列
     this.saveSelectedProduct[this.selectPanel] = this.selectedProduct;
     console.log(this.saveSelectedProduct)
     if (this.selectedProduct.length > 24) {
@@ -33,6 +35,7 @@ export class MultipleCarsComponent implements OnInit {
   check(e: any) {
     console.log(e)
     this.selectPanel = e.index;
+    // 將二微陣列的值呼叫到 selectedProduct
     this.selectedProduct = this.saveSelectedProduct[e.index];
     console.log(e.originalEvent.target.innerText)
     if (this.Panels) {
