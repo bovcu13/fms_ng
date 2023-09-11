@@ -86,6 +86,8 @@ export class HistoryPathComponent implements OnInit {
   //功能列
   items!: MenuItem[];
 
+  isInfoVisible = false;
+
   constructor() {
   }
 
@@ -93,8 +95,12 @@ export class HistoryPathComponent implements OnInit {
     this.items = [
       {
         icon: 'pi pi-truck',
+        tooltipOptions: {
+          tooltipLabel: "路況顯示",
+          tooltipPosition: "bottom"
+        },
         command: () => {
-          // this.toggleTraffic()
+          this.toggleTraffic()
         }
       },
       {
@@ -148,13 +154,8 @@ export class HistoryPathComponent implements OnInit {
       //開info
       google.maps.event.addListener(marker, 'click', () => {
         infowindow.open(this.map, marker);
-        this.map.setZoom(14);
-        this.map.setCenter(marker.getPosition() as google.maps.LatLng);
-      });
-
-      //可以按兩下
-      this.map.addListener("click", (e: any) => {
-        this.placeMarkerAndPanTo(e.latLng, this.map);
+        // this.map.setZoom(14);
+        // this.map.setCenter(marker.getPosition() as google.maps.LatLng);
       });
 
       // 一開始就顯示資訊窗口
@@ -162,6 +163,62 @@ export class HistoryPathComponent implements OnInit {
 
       this.markers.push(marker);
     }
+
+    //標記
+    this.map.addListener("contextmenu", (e: any) => {
+      this.placeMarkerAndPanTo(e.latLng, this.map);
+      const customButton = document.getElementById('custom-button');
+      // 檢查 customButton 是否為 null
+      if (customButton) {
+        customButton.style.display = 'block';
+
+        // 設定按鈕位置在地圖中心點的下方
+        const buttonLeft = (this.map.getDiv().offsetWidth / 2 - 30) + 'px';
+        const buttonTop = (this.map.getDiv().offsetHeight / 2 + 50) + 'px';
+
+        customButton.style.left = buttonLeft;
+        customButton.style.top = buttonTop;
+
+        // 設定 isInfoVisible 為 true
+        this.isInfoVisible = true;
+
+        // 此處可以為按鈕添加點擊事件處理程序，執行相應的操作
+      }
+    });
+
+    // 監聽地圖的點擊事件
+    this.map.addListener("click", (e: any) => {
+      // 清除之前的標記
+      if (this.previousMarker) {
+        this.previousMarker.setMap(null);
+      }
+      // 檢查 isInfoVisible 是否為 true，如果是就隱藏座標和按鈕
+      if (this.isInfoVisible) {
+        const customButton = document.getElementById('custom-button');
+        if (customButton) {
+          customButton.style.display = 'none';
+        }
+        // 將 isInfoVisible 設定為 false
+        this.isInfoVisible = false;
+      }
+    });
+
+    // 監聽地圖的拖動事件
+    this.map.addListener("drag", () => {
+      // 清除之前的標記
+      if (this.previousMarker) {
+        this.previousMarker.setMap(null);
+      }
+      // 檢查 isInfoVisible 是否為 true，如果是就隱藏座標和按鈕
+      if (this.isInfoVisible) {
+        const customButton = document.getElementById('custom-button');
+        if (customButton) {
+          customButton.style.display = 'none';
+        }
+        // 將 isInfoVisible 設定為 false
+        this.isInfoVisible = false;
+      }
+    });
 
     // 建立 Directions Service
     const directionsService = new google.maps.DirectionsService();
@@ -215,10 +272,19 @@ export class HistoryPathComponent implements OnInit {
       }
     });
 
-    //建立路況圖層
-    const trafficLayer = new google.maps.TrafficLayer();
+  }
 
-    trafficLayer.setMap(this.map);
+  //路況圖層開關
+  trafficLayer = new google.maps.TrafficLayer();
+
+  toggleTraffic() {
+    if (this.trafficLayer.getMap()) {
+      // 如果交通圖層已經可見，則隱藏它
+      this.trafficLayer.setMap(null);
+    } else {
+      // 如果交通圖層未可見，則顯示它
+      this.trafficLayer.setMap(this.map);
+    }
   }
 
   //車車
@@ -257,6 +323,7 @@ export class HistoryPathComponent implements OnInit {
 
   // 點擊地圖座標跑至中心
   previousMarker: google.maps.Marker | null = null;
+
   placeMarkerAndPanTo(latLng: google.maps.LatLng, map: google.maps.Map) {
     // 清除之前的標記
     if (this.previousMarker) {
@@ -341,7 +408,8 @@ export class HistoryPathComponent implements OnInit {
   //     });
   //   });
   // }
-  addr: any[] =[]
+  addr: any[] = []
+
   geocodeCoordinates() {
     const geocoder = new google.maps.Geocoder();
 

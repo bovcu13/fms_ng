@@ -1,8 +1,10 @@
 <div class="overflow-x-hidden flex justify-content-between">
-  <div id="map" style="height: 95vh; width: 100%;"></div>
+  <div id="map" style="height: 95vh; width: 100%;position: relative"></div>
+  <p-button label="123" id="custom-button"></p-button>
   <div class="func">
     <p-speedDial showIcon="pi pi-map" buttonClassName="p-button-secondary"
-                 direction="right" [model]="items"></p-speedDial>
+                 direction="right" [model]="items">
+    </p-speedDial>
   </div>
   <div class="col-4">
     <p-card class="">
