@@ -83,10 +83,16 @@ export class HistoryPathComponent implements OnInit {
   map: any
   mapOptions: any
 
-  //功能列
+  // 功能列
   items!: MenuItem[];
 
-  isInfoVisible = false;
+  // 地標按鈕顯示
+  landmarkButt = false;
+  markDialog: boolean = false;
+
+  showMarkDialog() {
+    this.markDialog = true;
+  }
 
   constructor() {
   }
@@ -131,7 +137,8 @@ export class HistoryPathComponent implements OnInit {
     this.mapOptions = {
       zoom: 14,
       center: this.center,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeControl: true,
+      scaleControl: true,
     };
 
     // 創建地圖實例
@@ -164,7 +171,7 @@ export class HistoryPathComponent implements OnInit {
       this.markers.push(marker);
     }
 
-    //標記
+    //建立點的按鈕 -> 右鍵生成地標
     this.map.addListener("contextmenu", (e: any) => {
       this.placeMarkerAndPanTo(e.latLng, this.map);
       const customButton = document.getElementById('custom-button');
@@ -173,14 +180,14 @@ export class HistoryPathComponent implements OnInit {
         customButton.style.display = 'block';
 
         // 設定按鈕位置在地圖中心點的下方
-        const buttonLeft = (this.map.getDiv().offsetWidth / 2 - 30) + 'px';
+        const buttonLeft = (this.map.getDiv().offsetWidth / 2 - 45) + 'px';
         const buttonTop = (this.map.getDiv().offsetHeight / 2 + 50) + 'px';
 
         customButton.style.left = buttonLeft;
         customButton.style.top = buttonTop;
 
-        // 設定 isInfoVisible 為 true
-        this.isInfoVisible = true;
+        // 設定 landmarkButt 為 true
+        this.landmarkButt = true;
 
         // 此處可以為按鈕添加點擊事件處理程序，執行相應的操作
       }
@@ -191,15 +198,16 @@ export class HistoryPathComponent implements OnInit {
       // 清除之前的標記
       if (this.previousMarker) {
         this.previousMarker.setMap(null);
+        this.previousMarker.setPosition(null);
       }
-      // 檢查 isInfoVisible 是否為 true，如果是就隱藏座標和按鈕
-      if (this.isInfoVisible) {
+      // 檢查 landmarkButt 是否為 true，如果是就隱藏座標和按鈕
+      if (this.landmarkButt) {
         const customButton = document.getElementById('custom-button');
         if (customButton) {
           customButton.style.display = 'none';
         }
-        // 將 isInfoVisible 設定為 false
-        this.isInfoVisible = false;
+        // 將 landmarkButt 設定為 false
+        this.landmarkButt = false;
       }
     });
 
@@ -208,16 +216,27 @@ export class HistoryPathComponent implements OnInit {
       // 清除之前的標記
       if (this.previousMarker) {
         this.previousMarker.setMap(null);
+        this.previousMarker.setPosition(null);
       }
-      // 檢查 isInfoVisible 是否為 true，如果是就隱藏座標和按鈕
-      if (this.isInfoVisible) {
+      // 檢查 landmarkButt 是否為 true，如果是就隱藏座標和按鈕
+      if (this.landmarkButt) {
         const customButton = document.getElementById('custom-button');
         if (customButton) {
           customButton.style.display = 'none';
         }
-        // 將 isInfoVisible 設定為 false
-        this.isInfoVisible = false;
+        // 將 landmarkButt 設定為 false
+        this.landmarkButt = false;
       }
+    });
+
+    //如果中心點偏移，會回到標記的位置
+    this.map.addListener("center_changed", () => {
+        window.setTimeout(() => {
+          if (this.previousMarker) {
+            this.map.panTo(this.previousMarker.getPosition() as google.maps.LatLng);
+          }
+        }, 0);
+
     });
 
     // 建立 Directions Service
@@ -433,4 +452,10 @@ export class HistoryPathComponent implements OnInit {
   }
 
   oddTem: number = 1;
+
+  markType: any[] = [
+    { name: 'Home', icon: 'pi pi-home', code: 'Home' },
+    { name: 'Star', icon: 'pi pi-star-fill', code: 'Star' },
+    { name: 'Company', icon: 'pi pi-building', code: 'Company' },
+  ];
 }
