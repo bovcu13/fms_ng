@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit {
     private recaptchaV3Service: ReCaptchaV3Service
   ) {
     this.login_form = this.fb.group({
-      company: ['A12345', [Validators.required]],
-      account: ['admin', [Validators.required]],
+      fleet_code: ['A12345', [Validators.required]],
+      user_name: ['admin', [Validators.required]],
       password: ['12345', [Validators.required]],
       recaptcha: ['', Validators.required]
     });
@@ -41,10 +41,10 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    let company = this.login_form.get('company')?.value
-    let account = this.login_form.get('account')?.value
+    let fleet_code = this.login_form.get('fleet_code')?.value
+    let user_name = this.login_form.get('user_name')?.value
     let password = this.login_form.get('password')?.value
-    if (this.authService.login(company, account, password)) {
+    if (this.authService.login(fleet_code, user_name, password)) {
       const currentUser = this.authService.getCurrentUser();
       if (currentUser.role === 'admin') {
         this.router.navigate(['/main']);

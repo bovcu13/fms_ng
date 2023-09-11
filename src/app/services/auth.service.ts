@@ -1,4 +1,12 @@
 import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+
+const AUTH_API = 'https://fmp.t.api.jinher-net.com/fms';
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 @Injectable({
   providedIn: 'root'
@@ -6,15 +14,15 @@ import {Injectable} from '@angular/core';
 export class AuthService {
 
   private users = [
-    {company: 'A12345', account: 'admin', password: '12345', role: 'admin'},
-    {company: 'B00001', account: 'user1', password: '12345', role: 'user'}
+    {fleet_code: 'A12345', user_name: 'admin', password: '12345', role: 'admin'},
+    {fleet_code: 'B00001', user_name: 'user1', password: '12345', role: 'user'}
   ];
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
-  login(company: string, account: string, password: string): boolean {
-    const user = this.users.find(u => u.company === company && u.account === account && u.password === password);
+  login(fleet_code: string, user_name: string, password: string): boolean {
+    const user = this.users.find(u => u.fleet_code === fleet_code && u.user_name === user_name && u.password === password);
     if (user) {
       localStorage.setItem('currentUser', JSON.stringify(user));
       return true;
@@ -22,8 +30,32 @@ export class AuthService {
     return false;
   }
 
+  // 登入
+  // login(body: any): Observable<any> {
+  //   const url = `${AUTH_API}/web/v1.0/login`;
+  //   return this.http.post(url, body, httpOptions);
+  // }
+
+  // 登出
+  signOut(): void {
+    window.sessionStorage.clear();
+  }
+
   logout(): void {
     localStorage.removeItem('currentUser');
+  }
+
+  register(username: string, email: string, password: string): Observable<any> {
+    return this.http.post(AUTH_API + '/web/v1.0/users', {
+      username,
+      email,
+      password
+    }, httpOptions);
+  }
+
+  refreshToken(token: string) {
+    const url = `${AUTH_API}/web/v1.0/refresh`;
+    return this.http.post(url, {refresh_token: token}, httpOptions);
   }
 
   getCurrentUser(): any {
