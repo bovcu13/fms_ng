@@ -1,7 +1,11 @@
 <div class="overflow-x-hidden flex justify-content-between">
   <div id="map" style="height: 95vh; width: 100%;"></div>
+  <div class="func">
+    <p-speedDial showIcon="pi pi-map" buttonClassName="p-button-secondary"
+                 direction="right" [model]="items"></p-speedDial>
+  </div>
   <div class="col-4">
-    <p-card class=" mr-2 ml-2 mb-2">
+    <p-card class="">
       <p-tabView>
         <p-tabPanel>
           <ng-template pTemplate="header">
