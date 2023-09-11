@@ -26,22 +26,76 @@ export class HistoryPathComponent implements OnInit {
   }
 
   togglePlay() {
-    if (!this.isPlaying) { // false, icon為播放,點下會暫停
+    // if (!this.isPlaying) { // false, icon為播放,點下會暫停
+    //   clearInterval(this.intervalId);
+    //   this.pauseCarMovement();
+    // } else {
+    //   // 如果未播放，則開始播放
+    //   this.intervalId = setInterval(() => {
+    //     this.sliderValue++;
+    //     if (this.sliderValue > this.totalTime) {
+    //       clearInterval(this.intervalId);
+    //       this.isPlaying = false;
+    //     }
+    //   }, 1000); // 每秒更新
+    //   // 開始模擬車輛移動
+    //   this.simulateCarMovement(this.routeCoordinates);
+    // }
+    // this.isPlaying = !this.isPlaying; // 切換按鈕狀態
+    if (!this.isPlaying) {
       clearInterval(this.intervalId);
       this.pauseCarMovement();
     } else {
-      // 如果未播放，則開始播放
+      // 計算新的間隔時間以達到所選的速率
+      const newInterval = 1000 / this.speedRate;
+
       this.intervalId = setInterval(() => {
         this.sliderValue++;
         if (this.sliderValue > this.totalTime) {
           clearInterval(this.intervalId);
           this.isPlaying = false;
         }
-      }, 1000); // 每秒更新
-      // 開始模擬車輛移動
+      }, newInterval);
+
       this.simulateCarMovement(this.routeCoordinates);
     }
-    this.isPlaying = !this.isPlaying; // 切換按鈕狀態
+    this.isPlaying = !this.isPlaying;
+  }
+
+  speedRate: number = 1;
+  changeSpeed() {
+    // 切換速率
+    switch (this.speedRate) {
+      case 1:
+        this.speedRate = 2;
+        break;
+      case 2:
+        this.speedRate = 5;
+        break;
+      case 5:
+        this.speedRate = 10;
+        break;
+      case 10:
+        this.speedRate = 0.5;
+        break;
+      case 0.5:
+        this.speedRate = 1;
+        break;
+      default:
+        this.speedRate = 1;
+        break;
+    }
+    if (!this.isPlaying) {
+      clearInterval(this.intervalId);
+      const newInterval = 1000 / this.speedRate;
+      this.intervalId = setInterval(() => {
+        this.sliderValue++;
+        if (this.sliderValue > this.totalTime) {
+          clearInterval(this.intervalId);
+          this.isPlaying = false;
+        }
+      }, newInterval);
+    }
   }
 
   onSliderChange(event: any) {
