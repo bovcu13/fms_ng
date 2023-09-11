@@ -340,9 +340,51 @@ export class HistoryPathComponent implements OnInit {
     clearInterval(this.carMovementInterval);
   }
 
-  // 點擊地圖座標跑至中心
-  previousMarker: google.maps.Marker | null = null;
+  poiMarker = google.maps.LatLngLiteral
+  //新增地標的按鈕
+  addLandMark() {
+    const svgMarker = {
+      path: "M19,11v9h-5v-6h-4v6H5v-9H3.6L12,3.4l8.4,7.6H19z",
+      fillColor: "red",
+      fillOpacity: 0.8,
+      strokeWeight: 0,
+      rotation: 0,
+      scale: 1,
+      anchor: new google.maps.Point(0, 20),
+    };
 
+    this.poiMarker = this.previousMarker
+    // 創建新的標記
+    const marker = new google.maps.Marker({
+      position: this.poiMarker.getPosition(),
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      icon: svgMarker,
+      // icon: {
+      //   url: 'assets/image/car2.png',
+      //   scaledSize: new google.maps.Size(50, 50)
+      // }
+    });
+
+    this.markDialog = false;
+    // 清除之前的標記
+    if (this.previousMarker) {
+      this.previousMarker.setMap(null);
+      this.previousMarker.setPosition(null);
+    }
+    // 檢查 landmarkButt 是否為 true，如果是就隱藏座標和按鈕
+    if (this.landmarkButt) {
+      const customButton = document.getElementById('custom-button');
+      if (customButton) {
+        customButton.style.display = 'none';
+      }
+      // 將 landmarkButt 設定為 false
+      this.landmarkButt = false;
+    }
+  }
+
+  previousMarker: google.maps.Marker | null = null;
+  // 點擊地圖座標跑至中心
   placeMarkerAndPanTo(latLng: google.maps.LatLng, map: google.maps.Map) {
     // 清除之前的標記
     if (this.previousMarker) {
@@ -353,6 +395,7 @@ export class HistoryPathComponent implements OnInit {
     const marker = new google.maps.Marker({
       position: latLng,
       map: map,
+      animation: google.maps.Animation.DROP,
     });
 
     // 設定地圖中心為新位置
