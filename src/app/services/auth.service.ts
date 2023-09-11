@@ -6,15 +6,15 @@ import {Injectable} from '@angular/core';
 export class AuthService {
 
   private users = [
-    {company: 'A12345', account: 'admin', password: '12345', role: 'admin'},
-    {company: 'B00001', account: 'user1', password: '12345', role: 'user'}
+    {fleet_code: 'A12345', user_name: 'admin', password: '12345', role: 'admin'},
+    {fleet_code: 'B00001', user_name: 'user1', password: '12345', role: 'user'}
   ];
 
   constructor() {
   }
 
-  login(company: string, account: string, password: string): boolean {
-    const user = this.users.find(u => u.company === company && u.account === account && u.password === password);
+  login(fleet_code: string, user_name: string, password: string): boolean {
+    const user = this.users.find(u => u.fleet_code === fleet_code && u.user_name === user_name && u.password === password);
     if (user) {
       localStorage.setItem('currentUser', JSON.stringify(user));
       return true;
