@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { products } from "../../../shared/data/products";
+import { MenuItem } from 'primeng/api'
 
 declare var google: any;
 
@@ -14,6 +15,7 @@ export class HistoryPathComponent implements OnInit {
   isPlaying: boolean = true;
   intervalId: any;
 
+  //num -> 時間 小時：分鐘：秒
   formatTime(seconds: number): string {
     const hours = Math.floor(seconds / 3600); // 計算小時數
     const minutes = Math.floor((seconds % 3600) / 60); // 計算分鐘數
@@ -50,7 +52,7 @@ export class HistoryPathComponent implements OnInit {
     this.index = event.value;
     this.carPosition = this.routeCoordinates[this.index];
     this.car?.setPosition(this.carPosition); // 更新車輛位置
-// 建立新的車輛圖示
+    // 建立新的車輛圖示
     this.car = new google.maps.Marker({
       position: this.carPosition,
       map: this.map,
@@ -66,7 +68,7 @@ export class HistoryPathComponent implements OnInit {
     lat: this.startCoordinate.lat,
     lng: this.startCoordinate.lng,
   }
-  // 定義用來儲存路線座標的變數
+  // 用來儲存路線座標的變數
   routeCoordinates: google.maps.LatLngLiteral[] = [];
 
   //初始地圖地點
@@ -81,10 +83,31 @@ export class HistoryPathComponent implements OnInit {
   map: any
   mapOptions: any
 
+  //功能列
+  items!: MenuItem[];
+
   constructor() {
   }
 
   ngOnInit(): void {
+    this.items = [
+      {
+        icon: 'pi pi-truck',
+        command: () => {
+          // this.toggleTraffic()
+        }
+      },
+      {
+        icon: 'pi pi-refresh',
+        command: () => {
+        }
+      },
+      {
+        icon: 'pi pi-trash',
+        command: () => {
+        }
+      }
+    ];
     // // 創建標記
     // this.markers = products.map((location) => {
     //   const marker = {
@@ -108,7 +131,7 @@ export class HistoryPathComponent implements OnInit {
     // 創建地圖實例
     this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
 
-    // 資訊窗口
+    // info window
     for (const location of products) {
       const marker = new google.maps.Marker({
         position: new google.maps.LatLng(location.position.lat, location.position.lng),
@@ -139,8 +162,6 @@ export class HistoryPathComponent implements OnInit {
 
       this.markers.push(marker);
     }
-
-    // this.geocodePositions()
 
     // 建立 Directions Service
     const directionsService = new google.maps.DirectionsService();
@@ -178,6 +199,7 @@ export class HistoryPathComponent implements OnInit {
         );
         // 處理路線座標
         this.geocodeCoordinates();
+        console.log(this.addr)
         console.log(this.routeCoordinates)
         // 顯示路線
         directionsRenderer.setDirections(result);
@@ -192,15 +214,18 @@ export class HistoryPathComponent implements OnInit {
         console.error('獲取路線失敗：', status);
       }
     });
-    // this.geocodePositions(products,(result) => {
-    //   console.log(result);
-    // });
+
+    //建立路況圖層
+    const trafficLayer = new google.maps.TrafficLayer();
+
+    trafficLayer.setMap(this.map);
   }
 
-  //車輛更新
-  carMovementInterval: any; // 存儲車輛定時器ID
-  car: google.maps.Marker | null = null; // 存儲車輛標記
+  //車車
+  carMovementInterval: any; // 車車定時器ID
+  car: google.maps.Marker | null = null; // 車輛標記
   index: number = 0; //記錄位置
+  //車輛更新
   simulateCarMovement(routeCoordinates: google.maps.LatLngLiteral[]): void {
     // 清除之前的車輛標記
     if (this.car !== null) {
@@ -230,6 +255,7 @@ export class HistoryPathComponent implements OnInit {
     clearInterval(this.carMovementInterval);
   }
 
+  // 點擊地圖座標跑至中心
   previousMarker: google.maps.Marker | null = null;
   placeMarkerAndPanTo(latLng: google.maps.LatLng, map: google.maps.Map) {
     // 清除之前的標記
@@ -273,7 +299,6 @@ export class HistoryPathComponent implements OnInit {
     }
   }
 
-  addr:any[] =[]
   // geocodePositions(data: any[], callback: (data: any) => void) {
   //   const geocoder = new google.maps.Geocoder();
   //
@@ -316,7 +341,7 @@ export class HistoryPathComponent implements OnInit {
   //     });
   //   });
   // }
-
+  addr: any[] =[]
   geocodeCoordinates() {
     const geocoder = new google.maps.Geocoder();
 
@@ -327,7 +352,8 @@ export class HistoryPathComponent implements OnInit {
         if (status === google.maps.GeocoderStatus.OK) {
           if (results[0]) {
             const address = results[0].formatted_address;
-            console.log('中文地址：', address);
+            this.addr.push(address)
+            // console.log('中文地址：', this.addr);
           } else {
             console.error('找不到地址');
           }
