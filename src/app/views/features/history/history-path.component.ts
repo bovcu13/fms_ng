@@ -83,8 +83,16 @@ export class HistoryPathComponent implements OnInit {
   map: any
   mapOptions: any
 
-  //功能列
+  // 功能列
   items!: MenuItem[];
+
+  // 地標按鈕顯示
+  landmarkButt = false;
+  markDialog: boolean = false;
+
+  showMarkDialog() {
+    this.markDialog = true;
+  }
 
   constructor() {
   }
@@ -93,8 +101,12 @@ export class HistoryPathComponent implements OnInit {
     this.items = [
       {
         icon: 'pi pi-truck',
+        tooltipOptions: {
+          tooltipLabel: "路況顯示",
+          tooltipPosition: "bottom"
+        },
         command: () => {
-          // this.toggleTraffic()
+          this.toggleTraffic()
         }
       },
       {
@@ -125,7 +137,8 @@ export class HistoryPathComponent implements OnInit {
     this.mapOptions = {
       zoom: 14,
       center: this.center,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeControl: true,
+      scaleControl: true,
     };
 
     // 創建地圖實例
@@ -148,13 +161,8 @@ export class HistoryPathComponent implements OnInit {
       //開info
       google.maps.event.addListener(marker, 'click', () => {
         infowindow.open(this.map, marker);
-        this.map.setZoom(14);
-        this.map.setCenter(marker.getPosition() as google.maps.LatLng);
-      });
-
-      //可以按兩下
-      this.map.addListener("click", (e: any) => {
-        this.placeMarkerAndPanTo(e.latLng, this.map);
+        // this.map.setZoom(14);
+        // this.map.setCenter(marker.getPosition() as google.maps.LatLng);
       });
 
       // 一開始就顯示資訊窗口
@@ -162,6 +170,74 @@ export class HistoryPathComponent implements OnInit {
 
       this.markers.push(marker);
     }
+
+    //建立點的按鈕 -> 右鍵生成地標
+    this.map.addListener("contextmenu", (e: any) => {
+      this.placeMarkerAndPanTo(e.latLng, this.map);
+      const customButton = document.getElementById('custom-button');
+      // 檢查 customButton 是否為 null
+      if (customButton) {
+        customButton.style.display = 'block';
+
+        // 設定按鈕位置在地圖中心點的下方
+        const buttonLeft = (this.map.getDiv().offsetWidth / 2 - 45) + 'px';
+        const buttonTop = (this.map.getDiv().offsetHeight / 2 + 50) + 'px';
+
+        customButton.style.left = buttonLeft;
+        customButton.style.top = buttonTop;
+
+        // 設定 landmarkButt 為 true
+        this.landmarkButt = true;
+
+        // 此處可以為按鈕添加點擊事件處理程序，執行相應的操作
+      }
+    });
+
+    // 監聽地圖的點擊事件
+    this.map.addListener("click", (e: any) => {
+      // 清除之前的標記
+      if (this.previousMarker) {
+        this.previousMarker.setMap(null);
+        this.previousMarker.setPosition(null);
+      }
+      // 檢查 landmarkButt 是否為 true，如果是就隱藏座標和按鈕
+      if (this.landmarkButt) {
+        const customButton = document.getElementById('custom-button');
+        if (customButton) {
+          customButton.style.display = 'none';
+        }
+        // 將 landmarkButt 設定為 false
+        this.landmarkButt = false;
+      }
+    });
+
+    // 監聽地圖的拖動事件
+    this.map.addListener("drag", () => {
+      // 清除之前的標記
+      if (this.previousMarker) {
+        this.previousMarker.setMap(null);
+        this.previousMarker.setPosition(null);
+      }
+      // 檢查 landmarkButt 是否為 true，如果是就隱藏座標和按鈕
+      if (this.landmarkButt) {
+        const customButton = document.getElementById('custom-button');
+        if (customButton) {
+          customButton.style.display = 'none';
+        }
+        // 將 landmarkButt 設定為 false
+        this.landmarkButt = false;
+      }
+    });
+
+    //如果中心點偏移，會回到標記的位置
+    this.map.addListener("center_changed", () => {
+        window.setTimeout(() => {
+          if (this.previousMarker) {
+            this.map.panTo(this.previousMarker.getPosition() as google.maps.LatLng);
+          }
+        }, 0);
+
+    });
 
     // 建立 Directions Service
     const directionsService = new google.maps.DirectionsService();
@@ -215,10 +291,19 @@ export class HistoryPathComponent implements OnInit {
       }
     });
 
-    //建立路況圖層
-    const trafficLayer = new google.maps.TrafficLayer();
+  }
 
-    trafficLayer.setMap(this.map);
+  //路況圖層開關
+  trafficLayer = new google.maps.TrafficLayer();
+
+  toggleTraffic() {
+    if (this.trafficLayer.getMap()) {
+      // 如果交通圖層已經可見，則隱藏它
+      this.trafficLayer.setMap(null);
+    } else {
+      // 如果交通圖層未可見，則顯示它
+      this.trafficLayer.setMap(this.map);
+    }
   }
 
   //車車
@@ -255,8 +340,51 @@ export class HistoryPathComponent implements OnInit {
     clearInterval(this.carMovementInterval);
   }
 
-  // 點擊地圖座標跑至中心
+  poiMarker = google.maps.LatLngLiteral
+  //新增地標的按鈕
+  addLandMark() {
+    const svgMarker = {
+      path: "M19,11v9h-5v-6h-4v6H5v-9H3.6L12,3.4l8.4,7.6H19z",
+      fillColor: "red",
+      fillOpacity: 0.8,
+      strokeWeight: 0,
+      rotation: 0,
+      scale: 1,
+      anchor: new google.maps.Point(0, 20),
+    };
+
+    this.poiMarker = this.previousMarker
+    // 創建新的標記
+    const marker = new google.maps.Marker({
+      position: this.poiMarker.getPosition(),
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      icon: svgMarker,
+      // icon: {
+      //   url: 'assets/image/car2.png',
+      //   scaledSize: new google.maps.Size(50, 50)
+      // }
+    });
+
+    this.markDialog = false;
+    // 清除之前的標記
+    if (this.previousMarker) {
+      this.previousMarker.setMap(null);
+      this.previousMarker.setPosition(null);
+    }
+    // 檢查 landmarkButt 是否為 true，如果是就隱藏座標和按鈕
+    if (this.landmarkButt) {
+      const customButton = document.getElementById('custom-button');
+      if (customButton) {
+        customButton.style.display = 'none';
+      }
+      // 將 landmarkButt 設定為 false
+      this.landmarkButt = false;
+    }
+  }
+
   previousMarker: google.maps.Marker | null = null;
+  // 點擊地圖座標跑至中心
   placeMarkerAndPanTo(latLng: google.maps.LatLng, map: google.maps.Map) {
     // 清除之前的標記
     if (this.previousMarker) {
@@ -267,6 +395,7 @@ export class HistoryPathComponent implements OnInit {
     const marker = new google.maps.Marker({
       position: latLng,
       map: map,
+      animation: google.maps.Animation.DROP,
     });
 
     // 設定地圖中心為新位置
@@ -341,7 +470,8 @@ export class HistoryPathComponent implements OnInit {
   //     });
   //   });
   // }
-  addr: any[] =[]
+  addr: any[] = []
+
   geocodeCoordinates() {
     const geocoder = new google.maps.Geocoder();
 
@@ -365,4 +495,10 @@ export class HistoryPathComponent implements OnInit {
   }
 
   oddTem: number = 1;
+
+  markType: any[] = [
+    { name: 'Home', icon: 'pi pi-home', code: 'Home' },
+    { name: 'Star', icon: 'pi pi-star-fill', code: 'Star' },
+    { name: 'Company', icon: 'pi pi-building', code: 'Company' },
+  ];
 }

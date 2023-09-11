@@ -1,8 +1,11 @@
 <div class="overflow-x-hidden flex justify-content-between">
-  <div id="map" style="height: 95vh; width: 100%;"></div>
+  <div id="map" style="height: 95vh; width: 100%;position: relative"></div>
+  <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button"
+            styleClass="p-button-sm bg-white p-button-raised p-button-text p-button-info"></p-button>
   <div class="func">
     <p-speedDial showIcon="pi pi-map" buttonClassName="p-button-secondary"
-                 direction="right" [model]="items"></p-speedDial>
+                 direction="right" [model]="items">
+    </p-speedDial>
   </div>
   <div class="col-4">
     <p-card class="">
@@ -31,7 +34,8 @@
               </div>
               <div class="col-11 ml-2 mt-5 mb-2">
                 <div class="slider-container">
-                  <p-slider (onChange)="onSliderChange($event)" [(ngModel)]="sliderValue" [min]="0" [max]="totalTime"></p-slider>
+                  <p-slider (onChange)="onSliderChange($event)" [(ngModel)]="sliderValue" [min]="0"
+                            [max]="totalTime"></p-slider>
                   <div class="slider-label" [style.left.%]="(sliderValue / totalTime) * 100">
                     {{ formatTime(sliderValue) }}
                   </div>
@@ -120,3 +124,66 @@
     </p-card>
   </div>
 </div>
+
+<p-dialog header="地標資料" [(visible)]="markDialog" [modal]="true" [style]="{ width: '20vw' }" [draggable]="false"
+          [resizable]="false">
+  <div class="grid">
+    <div class="col-4 flex align-items-center">
+      <label>地標類型</label>
+    </div>
+    <div class="col-8">
+      <p-dropdown [options]="markType" optionLabel="name" [appendTo]="'body'">
+        <ng-template pTemplate="option" let-option>
+        <span>
+          <i class="{{ option.icon }} mr-2"></i>
+          {{ option.name }}
+        </span>
+        </ng-template>
+        <ng-template pTemplate="selectedItem" let-selectedItem>
+          <i class="{{ selectedItem.icon }} mr-2"></i>
+          {{ selectedItem.name }}
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>地標名稱</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText />
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>客戶編號</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText />
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>電話</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText />
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>範圍</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText />
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>描述</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText />
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>子公司分享</label>
+    </div>
+    <div class="col-8">
+      <p-inputSwitch></p-inputSwitch>
+    </div>
+    <div class="col-12 flex justify-content-end">
+      <p-button label="取消" styleClass="p-button-outlined p-button-secondary mr-2"></p-button>
+      <p-button label="新增" (click)="addLandMark()"></p-button>
+    </div>
+  </div>
+</p-dialog>

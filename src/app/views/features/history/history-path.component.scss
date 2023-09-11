@@ -77,6 +77,13 @@
   }
 }
 
+#custom-button {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: none; /* 隱藏按鈕，待右鍵點擊時再顯示 */
+}
+
 .num {
   position: absolute;
   width: 3rem;
