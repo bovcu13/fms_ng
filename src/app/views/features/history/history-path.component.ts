@@ -88,6 +88,7 @@ export class HistoryPathComponent implements OnInit {
     }
     if (!this.isPlaying) {
       clearInterval(this.intervalId);
+      this.pauseCarMovement();
       const newInterval = 1000 / this.speedRate;
       this.intervalId = setInterval(() => {
         this.sliderValue++;
@@ -96,6 +97,7 @@ export class HistoryPathComponent implements OnInit {
           this.isPlaying = false;
         }
       }, newInterval);
+      this.simulateCarMovement(this.routeCoordinates);
     }
   }
 
@@ -190,43 +192,7 @@ export class HistoryPathComponent implements OnInit {
     //   return marker;
     // });
 
-    // 定義地圖相關設定
-    this.mapOptions = {
-      zoom: 14,
-      center: this.center,
-      mapTypeControl: true,
-      scaleControl: true,
-    };
-
-    // 創建地圖實例
-    this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
-
-    // info window
-    for (const location of products) {
-      const marker = new google.maps.Marker({
-        position: new google.maps.LatLng(location.position.lat, location.position.lng),
-        map: this.map,
-        title: location.addr,
-        icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
-        // options: { animation: google.maps.Animation.BOUNCE },
-      });
-
-      const infowindow = new google.maps.InfoWindow({
-        content: location.infoWindowContent
-      });
-
-      //開info
-      google.maps.event.addListener(marker, 'click', () => {
-        infowindow.open(this.map, marker);
-        // this.map.setZoom(14);
-        // this.map.setCenter(marker.getPosition() as google.maps.LatLng);
-      });
-
-      // 一開始就顯示資訊窗口
-      infowindow.open(this.map, marker);
-
-      this.markers.push(marker);
-    }
+    this.mapInit()
 
     //建立點的按鈕 -> 右鍵生成地標
     this.map.addListener("contextmenu", (e: any) => {
@@ -350,6 +316,46 @@ export class HistoryPathComponent implements OnInit {
     });
   }
 
+  mapInit() {
+    // 定義地圖相關設定
+    this.mapOptions = {
+      zoom: 14,
+      center: this.center,
+      mapTypeControl: true,
+      scaleControl: true,
+    };
+
+    // 創建地圖實例
+    this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
+
+    // 預設顯示所有 info window
+    for (const location of products) {
+      const marker = new google.maps.Marker({
+        position: new google.maps.LatLng(location.position.lat, location.position.lng),
+        map: this.map,
+        title: location.addr,
+        icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
+        // options: { animation: google.maps.Animation.BOUNCE },
+      });
+
+      const infowindow = new google.maps.InfoWindow({
+        content: location.infoWindowContent
+      });
+
+      //開info
+      google.maps.event.addListener(marker, 'click', () => {
+        infowindow.open(this.map, marker);
+        // this.map.setZoom(14);
+        // this.map.setCenter(marker.getPosition() as google.maps.LatLng);
+      });
+
+      // 一開始就顯示資訊窗口
+      infowindow.open(this.map, marker);
+
+      this.markers.push(marker);
+    }
+  }
+
   transformedData: any[] = []; // 存轉換後
   locations: { lat: number; lng: number }[] = []; // 存地址
   // 取得全部車輛狀態
@@ -423,9 +429,11 @@ export class HistoryPathComponent implements OnInit {
       map: this.map,
       icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
     });
+    const newInterval = 1000 / this.speedRate;
     //車輛移動
     this.carMovementInterval = setInterval(() => {
       if (this.index < routeCoordinates.length) {
+        // 計算新的間隔時間以達到所選的速率
         console.log(this.index)
         this.carPosition = routeCoordinates[this.index];
         this.car?.setPosition(this.carPosition); // 更新車輛位置
@@ -433,7 +441,7 @@ export class HistoryPathComponent implements OnInit {
       } else {
         clearInterval(this.carMovementInterval); // 所有座標都跑完，清除定時器
       }
-    }, 1000); // 每隔1秒更新一次位置
+    }, newInterval); // 每隔1秒更新一次位置
   }
 
   // 暫停車輛
