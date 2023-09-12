@@ -60,9 +60,9 @@ export class LoginComponent implements OnInit {
         console.log(data)
         this.tokenStorage.saveToken(data.body.access_token);
         this.tokenStorage.saveRefreshToken(data.body.refresh_token);
-        this.tokenStorage.saveUser(data);
-        this.roles = this.tokenStorage.getUser().roles;
-        if (this.roles === 'admin') {
+        this.tokenStorage.saveUser(data.body.role);
+        this.roles = this.tokenStorage.getUser();
+        if (this.roles === "admin") {
           this.router.navigate(['/main']);
           this.showSuccess();
         } else {
