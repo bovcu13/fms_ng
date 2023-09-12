@@ -144,7 +144,7 @@ export class MainComponent implements OnInit {
       this.markers.push(marker);
     }
 
-    //建立點的按鈕 -> 右鍵生成地標
+    // 點右鍵生成地標
     this.map.addListener("contextmenu", (e: any) => {
       this.placeMarkerAndPanTo(e.latLng, this.map);
       const customButton = document.getElementById('custom-button');
@@ -166,7 +166,7 @@ export class MainComponent implements OnInit {
       }
     });
 
-    // 監聽地圖的點擊事件
+    // 監聽地圖的點擊事件，清空地標
     this.map.addListener("click", (e: any) => {
       // 清除之前的標記
       if (this.previousMarker) {
@@ -184,7 +184,7 @@ export class MainComponent implements OnInit {
       }
     });
 
-    // 監聽地圖的拖動事件
+    // 監聽地圖的拖動事件，清空地標
     this.map.addListener("drag", () => {
       // 清除之前的標記
       if (this.previousMarker) {
@@ -202,14 +202,13 @@ export class MainComponent implements OnInit {
       }
     });
 
-    //如果中心點偏移，會回到標記的位置
+    // 固定標記顯示在中間
     this.map.addListener("center_changed", () => {
       window.setTimeout(() => {
         if (this.previousMarker) {
           this.map.panTo(this.previousMarker.getPosition() as google.maps.LatLng);
         }
       }, 0);
-
     });
   }
 
@@ -274,7 +273,8 @@ export class MainComponent implements OnInit {
           },
           url: "assets/image/warehouse.png",
           addr:"",
-          lng: item.lon
+          lng: item.lon,
+          infoWindowContent: "9901CA15",
         }));
         console.log("轉換後資料:",this.transformedData);
 
@@ -286,14 +286,31 @@ export class MainComponent implements OnInit {
         // 轉換成中文地址
         this.geocodePositions();
 
-        //標記
+        // 預設顯示所有 info window
         for (const location of this.transformedData) {
+          //標記
           const marker = new google.maps.Marker({
             position: new google.maps.LatLng(location.position.lat, location.position.lng),
             map: this.map,
             title: location.addr,
             // icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
           });
+
+          // const infowindow = new google.maps.InfoWindow({
+          //   content: location.infoWindowContent
+          // });
+          //
+          // //開info
+          // google.maps.event.addListener(marker, 'click', () => {
+          //   infowindow.open(this.map, marker);
+          //   // this.map.setZoom(14);
+          //   // this.map.setCenter(marker.getPosition() as google.maps.LatLng);
+          // });
+          //
+          // // 一開始就顯示資訊窗口
+          // infowindow.open(this.map, marker);
+          //
+          // this.markers.push(marker);
         }
       },
       error: (err) => {

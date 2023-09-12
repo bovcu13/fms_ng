@@ -88,6 +88,7 @@ export class HistoryPathComponent implements OnInit {
     }
     if (!this.isPlaying) {
       clearInterval(this.intervalId);
+      this.pauseCarMovement();
       const newInterval = 1000 / this.speedRate;
       this.intervalId = setInterval(() => {
         this.sliderValue++;
@@ -96,6 +97,7 @@ export class HistoryPathComponent implements OnInit {
           this.isPlaying = false;
         }
       }, newInterval);
+      this.simulateCarMovement(this.routeCoordinates);
     }
   }
 
@@ -427,9 +429,11 @@ export class HistoryPathComponent implements OnInit {
       map: this.map,
       icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
     });
+    const newInterval = 1000 / this.speedRate;
     //車輛移動
     this.carMovementInterval = setInterval(() => {
       if (this.index < routeCoordinates.length) {
+        // 計算新的間隔時間以達到所選的速率
         console.log(this.index)
         this.carPosition = routeCoordinates[this.index];
         this.car?.setPosition(this.carPosition); // 更新車輛位置
@@ -437,7 +441,7 @@ export class HistoryPathComponent implements OnInit {
       } else {
         clearInterval(this.carMovementInterval); // 所有座標都跑完，清除定時器
       }
-    }, 1000); // 每隔1秒更新一次位置
+    }, newInterval); // 每隔1秒更新一次位置
   }
 
   // 暫停車輛
