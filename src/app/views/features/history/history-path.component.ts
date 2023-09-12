@@ -153,6 +153,8 @@ export class HistoryPathComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAllGpsRequest("9901CA15")
+    // this.geocodePositions()
     this.items = [
       {
         icon: 'pi pi-truck',
@@ -328,10 +330,11 @@ export class HistoryPathComponent implements OnInit {
             lng: latLng.lng()
           })
         );
+
         // 處理路線座標
-        this.geocodeCoordinates();
-        console.log(this.addr)
-        console.log(this.routeCoordinates)
+        // this.geocodeCoordinates();
+        console.log("轉換地址:",this.addr)
+
         // 顯示路線
         directionsRenderer.setDirections(result);
         // 獲取總時間
@@ -345,16 +348,16 @@ export class HistoryPathComponent implements OnInit {
         console.error('獲取路線失敗：', status);
       }
     });
-
   }
 
-  transformedData: any[] =[]
+  transformedData: any[] = []; // 存轉換後
+  locations: { lat: number; lng: number }[] = []; // 存地址
   // 取得全部車輛狀態
   getAllGpsRequest(id: any) {
     this.carServ.getAllGpsRequest(id).subscribe({
       next: (res) => {
         this.products = res.body.gps;
-        console.log(res.body.gps);
+        console.log("來源資料:",res.body.gps);
         this.transformedData = this.products.map(item => ({
           ...item,
           position: {
@@ -363,8 +366,27 @@ export class HistoryPathComponent implements OnInit {
           },
           url: "assets/image/warehouse.png",
           addr:"",
+          lng: item.lon
         }));
-        console.log(this.transformedData);
+        console.log("轉換後資料:",this.transformedData);
+
+        // 提取經緯度 創建 locations 數組
+        this.locations = this.transformedData.map(item => ({
+          lat: item.position.lat,
+          lng: item.position.lng
+        }));
+        // 轉換成中文地址
+        this.geocodePositions();
+
+        //標記
+        for (const location of this.transformedData) {
+          const marker = new google.maps.Marker({
+            position: new google.maps.LatLng(location.position.lat, location.position.lng),
+            map: this.map,
+            title: location.addr,
+            // icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
+          });
+        }
       },
       error: (err) => {
         console.log(err);
@@ -549,12 +571,44 @@ export class HistoryPathComponent implements OnInit {
   //     });
   //   });
   // }
+
+  // 加到addr
+  geocodePositions() {
+    const geocoder = new google.maps.Geocoder();
+
+    this.transformedData.forEach(product => {
+      const latlng = new google.maps.LatLng(product.position.lat, product.position.lng);
+
+      geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+          let addressFound = false;
+          if (results && results.length > 0) {
+            for (let i = 0; i < results.length; i++) {
+              const formattedAddress = results[i].formatted_address;
+              if (!formattedAddress.match(/\b\w+\+\w+\b/)) {
+                product.addr = formattedAddress;
+                addressFound = true;
+                break; // 找到非 Plus Code 地址後跳出迴圈
+              }
+            }
+          }
+          if (!addressFound) {
+            product.addr = '找不到地址';
+          }
+        } else {
+          product.addr = '編碼錯誤';
+        }
+      });
+    });
+  }
+
   addr: any[] = []
 
+  // 只有lat, lng
   geocodeCoordinates() {
     const geocoder = new google.maps.Geocoder();
 
-    const coordinatesToProcess = this.routeCoordinates;
+    const coordinatesToProcess = this.locations;
 
     coordinatesToProcess.forEach(latlng => {
       geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
@@ -562,7 +616,6 @@ export class HistoryPathComponent implements OnInit {
           if (results[0]) {
             const address = results[0].formatted_address;
             this.addr.push(address)
-            // console.log('中文地址：', this.addr);
           } else {
             console.error('找不到地址');
           }
