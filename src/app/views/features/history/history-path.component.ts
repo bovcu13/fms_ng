@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { products } from "../../../shared/data/products";
 import { MenuItem } from 'primeng/api'
+import { CarService } from "../../../services/car.service";
 
 declare var google: any;
 
@@ -148,7 +149,7 @@ export class HistoryPathComponent implements OnInit {
     this.markDialog = true;
   }
 
-  constructor() {
+  constructor(private carServ: CarService) {
   }
 
   ngOnInit(): void {
@@ -345,6 +346,30 @@ export class HistoryPathComponent implements OnInit {
       }
     });
 
+  }
+
+  transformedData: any[] =[]
+  // 取得全部車輛狀態
+  getAllGpsRequest(id: any) {
+    this.carServ.getAllGpsRequest(id).subscribe({
+      next: (res) => {
+        this.products = res.body.gps;
+        console.log(res.body.gps);
+        this.transformedData = this.products.map(item => ({
+          ...item,
+          position: {
+            lat: item.lat,
+            lng: item.lon
+          },
+          url: "assets/image/warehouse.png",
+          addr:"",
+        }));
+        console.log(this.transformedData);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   //路況圖層開關
