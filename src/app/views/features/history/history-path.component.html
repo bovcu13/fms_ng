@@ -53,7 +53,7 @@
             </div>
           </div>
 
-          <p-table [value]="products" [paginator]="true" [rows]="5" selectionMode="single"
+          <p-table [value]="transformedData" [paginator]="true" [rows]="5" selectionMode="single"
                    [(selection)]="selectedProduct"
                    (onRowSelect)="Select()">
             <ng-template pTemplate="header">
