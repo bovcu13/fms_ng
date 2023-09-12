@@ -54,8 +54,8 @@
                     <p-calendar [showTime]="true" placeholder="選擇結束時間"></p-calendar>
                   </div>
                 </div>
-                <p-table [value]="products" [paginator]="true" [rows]="5" selectionMode="single"
-                         [(selection)]="selectedProduct"
+                <p-table [value]="transformedData" [rows]="5" selectionMode="single"
+                         [(selection)]="selectedProduct" [scrollable]="true" scrollHeight="70vh"
                          (onRowSelect)="Select()">
                   <ng-template pTemplate="header">
                     <tr>
@@ -68,8 +68,8 @@
                   <ng-template pTemplate="body" let-product>
                     <tr [pSelectableRow]="product">
                       <td>{{ product.statetime }}</td>
-                      <td>{{ product.state }}</td>
-                      <td>{{ product.speed }}</td>
+                      <td>{{ product.server_time | date:'yyyy-MM-dd HH:MM:SS' }}</td>
+                      <td>{{ product.date_time | date:'yyyy-MM-dd HH:MM:SS' }}</td>
                       <td>{{ product.addr }}</td>
                     </tr>
                   </ng-template>

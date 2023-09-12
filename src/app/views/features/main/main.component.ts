@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { products } from "../../../shared/data/products";
-import { MapInfoWindow, MapMarker } from "@angular/google-maps";
-import { interval, Subscription } from 'rxjs';
-import { MenuItem } from 'primeng/api'
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {products} from "../../../shared/data/products";
+import {MapInfoWindow, MapMarker} from "@angular/google-maps";
+import {interval, Subscription} from 'rxjs';
+import {MenuItem} from 'primeng/api'
+import {CarService} from "../../../services/car.service";
 
 
 @Component({
@@ -12,9 +13,9 @@ import { MenuItem } from 'primeng/api'
 })
 export class MainComponent implements OnInit, OnDestroy {
 
-  @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow
+  @ViewChild(MapInfoWindow, {static: false}) info!: MapInfoWindow
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
-  @ViewChild('map', { static: false }) map: any;
+  @ViewChild('map', {static: false}) map: any;
 
   //功能列
   items!: MenuItem[];
@@ -45,19 +46,20 @@ export class MainComponent implements OnInit, OnDestroy {
   markers: any[] = []
 
   products: any[] = products;
+  transformedData: any[] = [];
   selectedProduct: any;
 
   carGroups: any = [
-    { name: '車隊(A)', code: 'A' },
-    { name: '車隊(B)', code: 'B' },
-    { name: '車隊(C)', code: 'C' },
-    { name: '車隊(D)', code: 'D' },
+    {name: '車隊(A)', code: 'A'},
+    {name: '車隊(B)', code: 'B'},
+    {name: '車隊(C)', code: 'C'},
+    {name: '車隊(D)', code: 'D'},
   ]
   cars: any = [
-    { name: 'A-123', code: 'A' },
-    { name: 'B-123', code: 'B' },
-    { name: 'C-123', code: 'C' },
-    { name: 'D-123', code: 'D' },
+    {name: 'A-123', code: 'A'},
+    {name: 'B-123', code: 'B'},
+    {name: 'C-123', code: 'C'},
+    {name: 'D-123', code: 'D'},
   ]
 
   Select() {
@@ -72,7 +74,11 @@ export class MainComponent implements OnInit, OnDestroy {
     this.info.open(marker)
   }
 
+  constructor(private carServ: CarService) {
+  }
+
   ngOnInit(): void {
+    this.getAllGpsRequest('9901CA15');
     this.items = [
       {
         icon: 'pi pi-truck',
@@ -91,16 +97,14 @@ export class MainComponent implements OnInit, OnDestroy {
         }
       }
     ];
-
-    this.geocodePositions();
-
     // 初始化標記
-    this.markers = products.map(product => ({
+    this.markers = this.transformedData.map(product => ({
       position: product.position,
-      icon: { url: product.url, scaledSize: new google.maps.Size(50, 50) },
-      label: { text: product.label.text },
-      infoWindowContent: product.label.text
+      icon: {url: product.url, scaledSize: new google.maps.Size(50, 50)},
+      // label: {text: product.label.text},
+      // infoWindowContent: product.label.text
     }));
+    console.log(this.markers)
 
     // 建立 Directions Service
     const directionsService = new google.maps.DirectionsService();
@@ -139,13 +143,37 @@ export class MainComponent implements OnInit, OnDestroy {
     // 初始化車輛標記
     this.markers.push({
       position: this.carPosition,
-      icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) }
+      icon: {url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50)}
     });
 
     console.log(this.markers)
 
     //30s更新一次
     this.startMapUpdateTimer();
+  }
+
+  // 取得全部車輛狀態
+  getAllGpsRequest(id: any) {
+    this.carServ.getAllGpsRequest(id).subscribe({
+      next: (res) => {
+        this.products = res.body.gps;
+        console.log(res.body.gps);
+        this.transformedData = this.products.map(item => ({
+          ...item,
+          position: {
+            lat: item.lat,
+            lng: item.lon
+          },
+          url: 'assets/image/warehouse.png',
+          addr:'',
+        }));
+        console.log(this.transformedData);
+        this.geocodePositions();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   startMapUpdateTimer(): void {
@@ -213,11 +241,9 @@ export class MainComponent implements OnInit, OnDestroy {
 
   geocodePositions() {
     const geocoder = new google.maps.Geocoder();
-
-    this.products.forEach(product => {
+    this.transformedData.forEach(product => {
       const latlng = new google.maps.LatLng(product.position.lat, product.position.lng);
-
-      geocoder.geocode({ location: latlng }, (results, status) => {
+      geocoder.geocode({location: latlng}, (results, status) => {
         if (status === google.maps.GeocoderStatus.OK) {
           let addressFound = false;
           if (results && results.length > 0) {
