@@ -97,20 +97,52 @@ export class MainComponent implements OnInit {
         }
       }
     ];
-    // // 創建標記
-    // this.markers = products.map((location) => {
-    //   const marker = {
-    //     position: new google.maps.LatLng(location.position.lat, location.position.lng),
-    //     title: location.addr,
-    //     icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
-    //     infoWindowText: location.infoWindowContent, // info window 內容
-    //     infoWindowOptions: { maxWidth: 200 }, // info window 選項
-    //   };
-    //
-    //   return marker;
-    // });
 
     this.mapInit()
+
+    // 建立 Directions Service
+    this.createDirectionsService()
+
+  }
+
+  mapInit() {
+    // 定義地圖相關設定
+    this.mapOptions = {
+      zoom: 14,
+      center: this.center,
+      mapTypeControl: true,
+      scaleControl: true,
+    };
+
+    // 創建地圖實例
+    this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
+
+    // 預設顯示所有 info window
+    for (const location of products) {
+      const marker = new google.maps.Marker({
+        position: new google.maps.LatLng(location.position.lat, location.position.lng),
+        map: this.map,
+        title: location.addr,
+        icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
+        // options: { animation: google.maps.Animation.BOUNCE },
+      });
+
+      const infowindow = new google.maps.InfoWindow({
+        content: location.infoWindowContent
+      });
+
+      //開info
+      google.maps.event.addListener(marker, 'click', () => {
+        infowindow.open(this.map, marker);
+        // this.map.setZoom(14);
+        // this.map.setCenter(marker.getPosition() as google.maps.LatLng);
+      });
+
+      // 一開始就顯示資訊窗口
+      infowindow.open(this.map, marker);
+
+      this.markers.push(marker);
+    }
 
     //建立點的按鈕 -> 右鍵生成地標
     this.map.addListener("contextmenu", (e: any) => {
@@ -179,8 +211,10 @@ export class MainComponent implements OnInit {
       }, 0);
 
     });
+  }
 
-    // 建立 Directions Service
+  // 建立 Directions Service
+  createDirectionsService() {
     const directionsService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer(
       {
@@ -215,10 +249,6 @@ export class MainComponent implements OnInit {
           })
         );
 
-        // 處理路線座標
-        // this.geocodeCoordinates();
-        console.log("轉換地址:",this.addr)
-
         // 顯示路線
         directionsRenderer.setDirections(result);
       } else {
@@ -227,48 +257,9 @@ export class MainComponent implements OnInit {
     });
   }
 
-  mapInit() {
-    // 定義地圖相關設定
-    this.mapOptions = {
-      zoom: 14,
-      center: this.center,
-      mapTypeControl: true,
-      scaleControl: true,
-    };
-
-    // 創建地圖實例
-    this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
-
-    // 預設顯示所有 info window
-    for (const location of products) {
-      const marker = new google.maps.Marker({
-        position: new google.maps.LatLng(location.position.lat, location.position.lng),
-        map: this.map,
-        title: location.addr,
-        icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
-        // options: { animation: google.maps.Animation.BOUNCE },
-      });
-
-      const infowindow = new google.maps.InfoWindow({
-        content: location.infoWindowContent
-      });
-
-      //開info
-      google.maps.event.addListener(marker, 'click', () => {
-        infowindow.open(this.map, marker);
-        // this.map.setZoom(14);
-        // this.map.setCenter(marker.getPosition() as google.maps.LatLng);
-      });
-
-      // 一開始就顯示資訊窗口
-      infowindow.open(this.map, marker);
-
-      this.markers.push(marker);
-    }
-  }
-
   transformedData: any[] = []; // 存轉換後
   locations: { lat: number; lng: number }[] = []; // 存地址
+
   // 取得全部車輛狀態
   getAllGpsRequest(id: any) {
     this.carServ.getAllGpsRequest(id).subscribe({
@@ -328,6 +319,7 @@ export class MainComponent implements OnInit {
   carMovementInterval: any; // 車車定時器ID
   car: google.maps.Marker | null = null; // 車輛標記
   index: number = 0; //記錄位置
+
   //車輛更新
   simulateCarMovement(routeCoordinates: google.maps.LatLngLiteral[]): void {
     // 清除之前的車輛標記
@@ -423,6 +415,8 @@ export class MainComponent implements OnInit {
     this.previousMarker = marker;
   }
 
+  addr: any[] = []
+
   // 加到addr
   geocodePositions() {
     const geocoder = new google.maps.Geocoder();
@@ -453,8 +447,6 @@ export class MainComponent implements OnInit {
     });
   }
 
-  addr: any[] = []
-
   // 只有lat, lng
   geocodeCoordinates() {
     const geocoder = new google.maps.Geocoder();
@@ -477,6 +469,7 @@ export class MainComponent implements OnInit {
     });
   }
 
+  // 溫度異常台數
   oddTem: number = 1;
 
   markType: any[] = [
