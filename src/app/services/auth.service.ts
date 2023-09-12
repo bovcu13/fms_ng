@@ -21,20 +21,11 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  login(fleet_code: string, user_name: string, password: string): boolean {
-    const user = this.users.find(u => u.fleet_code === fleet_code && u.user_name === user_name && u.password === password);
-    if (user) {
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      return true;
-    }
-    return false;
-  }
-
   // 登入
-  // login(body: any): Observable<any> {
-  //   const url = `${AUTH_API}/web/v1.0/login`;
-  //   return this.http.post(url, body, httpOptions);
-  // }
+  login(body: any): Observable<any> {
+    const url = `${AUTH_API}/web/v1.0/login`;
+    return this.http.post(url, body, httpOptions);
+  }
 
   // 登出
   signOut(): void {

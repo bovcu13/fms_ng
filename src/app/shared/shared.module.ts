@@ -11,6 +11,8 @@ import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import {VgStreamingModule} from "@videogular/ngx-videogular/streaming";
+import {HttpInterceptorService} from "../services/http-interceptor.service";
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 @NgModule({
   declarations: [],
@@ -34,6 +36,11 @@ import {VgStreamingModule} from "@videogular/ngx-videogular/streaming";
     {
       provide: RECAPTCHA_V3_SITE_KEY,
       useValue: environment.recaptcha.siteKey,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true,
     },
   ],
 })
