@@ -1,24 +1,24 @@
-::ng-deep .gm-style .gm-style-iw-c {
-  background-color: rgba(199, 193, 193, 0.7); /* 設定透明度 */
-  color: #000000; /* 文字顏色，你可以根據需要調整 */
-  padding: 10px; /* 調整內距，使內容不會貼緊邊界 */
-  border: none; /* 移除邊框，如果需要的話 */
-  box-shadow: none; /* 移除陰影，如果需要的話 */
-}
-
-::ng-deep.gm-style .gm-style-iw-tc::after {
-  background-color: rgba(199, 193, 193, 0.7);
-}
+//::ng-deep .gm-style .gm-style-iw-c {
+//  background-color: rgba(199, 193, 193, 0.7); /* 設定透明度 */
+//  color: #000000; /* 文字顏色，你可以根據需要調整 */
+//  padding: 10px; /* 調整內距，使內容不會貼緊邊界 */
+//  border: none; /* 移除邊框，如果需要的話 */
+//  box-shadow: none; /* 移除陰影，如果需要的話 */
+//}
+//
+//::ng-deep.gm-style .gm-style-iw-tc::after {
+//  background-color: rgba(199, 193, 193, 0.7);
+//}
 
 ::ng-deep {
-  .gm-style .gm-style-iw-d::-webkit-scrollbar-track,
-  .gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece {
-    background: none;
-  }
-
-  .gm-style .gm-style-iw {
-    font-size: 20px;
-  }
+  //.gm-style .gm-style-iw-d::-webkit-scrollbar-track,
+  //.gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece {
+  //  background: none;
+  //}
+  //
+  //.gm-style .gm-style-iw {
+  //  font-size: 20px;
+  //}
 
   .p-button.p-button-secondary, .p-buttonset.p-button-secondary >
   .p-button, .p-splitbutton.p-button-secondary > .p-button {
@@ -77,6 +77,13 @@
   }
 }
 
+#custom-button {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: none; /* 隱藏按鈕，待右鍵點擊時再顯示 */
+}
+
 .num {
   position: absolute;
   width: 3rem;
@@ -126,4 +133,19 @@
   position: absolute;
   bottom: 4rem;
   left: 1rem;
+}
+
+.slider-container {
+  position: relative;
+}
+
+.slider-label {
+  position: absolute;
+  top: -2.5rem; /* 調整label的垂直位置 */
+  text-align: center;
+  width: 5rem; /* 調整label的寬度 */
+  background-color: #007bff; /* 調整label的背景顏色 */
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
 }
