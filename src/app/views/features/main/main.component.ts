@@ -30,7 +30,7 @@ export class MainComponent implements OnInit {
 
   Select() {
     if (this.selectedProduct) {
-      this.center = this.selectedProduct.position;
+      this.center = this.selectedProduct;
       this.map.setCenter(new google.maps.LatLng(this.center.lat, this.center.lng));
     }
   }
@@ -74,8 +74,9 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllGpsRequest("9901CA15")
+    // this.getAllGpsRequest("9901CA15")
     // this.geocodePositions()
+    this.getAllNewGpsRequest();
     this.items = [
       {
         icon: 'pi pi-truck',
@@ -205,7 +206,7 @@ export class MainComponent implements OnInit {
         position: new google.maps.LatLng(location.position.lat, location.position.lng),
         map: this.map,
         title: location.addr,
-        icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
+        icon: {url: location.url, scaledSize: new google.maps.Size(50, 50)},
         // options: { animation: google.maps.Animation.BOUNCE },
       });
 
@@ -328,6 +329,7 @@ export class MainComponent implements OnInit {
 
   // 測量模式是否開啟
   isRanging = false
+
   toggleIsRanging() {
     this.isRanging = !this.isRanging;
     // 啟用模式才可畫線
@@ -400,12 +402,60 @@ export class MainComponent implements OnInit {
   transformedData: any[] = []; // 存轉換後
   locations: { lat: number; lng: number }[] = []; // 存地址
 
-  // 取得全部車輛狀態
+  // 取得即時車輛位置
+  getAllNewGpsRequest() {
+    this.carServ.getAllNewGpsRequest().subscribe({
+      next: res => {
+        this.products = res.body.gps;
+        console.log(res);
+        this.transformedData = this.products.map(item => ({
+          ...item,
+          url: "assets/image/warehouse.png",
+          addr: "",
+          infoWindowContent: item.sid,
+        }));
+        // 轉換成中文地址
+        this.geocodePositions();
+        console.log(this.transformedData)
+        // 預設顯示所有 info window
+        for (const location of this.transformedData) {
+          //標記
+          const marker = new google.maps.Marker({
+            position: new google.maps.LatLng(location.lat, location.lng),
+            map: this.map,
+            title: location.addr,
+            icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
+          });
+
+          const infowindow = new google.maps.InfoWindow({
+            content: location.infoWindowContent
+          });
+
+          //開info
+          google.maps.event.addListener(marker, 'click', () => {
+            infowindow.open(this.map, marker);
+            // this.map.setZoom(14);
+            // this.map.setCenter(marker.getPosition() as google.maps.LatLng);
+          });
+
+          // 一開始就顯示資訊窗口
+          infowindow.open(this.map, marker);
+
+          this.markers.push(marker);
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  // 取得全部車輛歷史紀錄
   getAllGpsRequest(id: any) {
     this.carServ.getAllGpsRequest(id).subscribe({
       next: (res) => {
         this.products = res.body.gps;
-        console.log("來源資料:",res.body.gps);
+        console.log("來源資料:", res.body.gps);
         this.transformedData = this.products.map(item => ({
           ...item,
           position: {
@@ -413,11 +463,11 @@ export class MainComponent implements OnInit {
             lng: item.lon
           },
           url: "assets/image/warehouse.png",
-          addr:"",
+          addr: "",
           lng: item.lon,
           infoWindowContent: "9901CA15",
         }));
-        console.log("轉換後資料:",this.transformedData);
+        console.log("轉換後資料:", this.transformedData);
 
         // 提取經緯度 創建 locations 數組
         this.locations = this.transformedData.map(item => ({
@@ -488,7 +538,7 @@ export class MainComponent implements OnInit {
     this.car = new google.maps.Marker({
       position: this.carPosition,
       map: this.map,
-      icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
+      icon: {url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50)},
     });
     //車輛移動
     this.carMovementInterval = setInterval(() => {
@@ -509,6 +559,7 @@ export class MainComponent implements OnInit {
   }
 
   poiMarker = google.maps.LatLngLiteral
+
   //新增地標的按鈕
   addLandMark() {
     const svgMarker = {
@@ -552,6 +603,7 @@ export class MainComponent implements OnInit {
   }
 
   previousMarker: google.maps.Marker | null = null;
+
   // 點擊地圖座標跑至中心
   placeMarkerAndPanTo(latLng: google.maps.LatLng, map: google.maps.Map) {
     // 清除之前的標記
@@ -580,9 +632,9 @@ export class MainComponent implements OnInit {
     const geocoder = new google.maps.Geocoder();
 
     this.transformedData.forEach(product => {
-      const latlng = new google.maps.LatLng(product.position.lat, product.position.lng);
-
-      geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
+      const latlng = new google.maps.LatLng(product.lat, product.lng);
+      console.log("latlng " + latlng);
+      geocoder.geocode({location: latlng}, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
         if (status === google.maps.GeocoderStatus.OK) {
           let addressFound = false;
           if (results && results.length > 0) {
@@ -609,10 +661,13 @@ export class MainComponent implements OnInit {
   geocodeCoordinates() {
     const geocoder = new google.maps.Geocoder();
 
-    const coordinatesToProcess = this.locations;
+    const coordinatesToProcess = this.transformedData.map(item => ({
+      lat: item.position.lat,
+      lng: item.position.lng
+    }));
 
     coordinatesToProcess.forEach(latlng => {
-      geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
+      geocoder.geocode({location: latlng}, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
         if (status === google.maps.GeocoderStatus.OK) {
           if (results[0]) {
             const address = results[0].formatted_address;
@@ -631,8 +686,8 @@ export class MainComponent implements OnInit {
   oddTem: number = 1;
 
   markType: any[] = [
-    { name: 'Home', icon: 'pi pi-home', code: 'Home' },
-    { name: 'Star', icon: 'pi pi-star-fill', code: 'Star' },
-    { name: 'Company', icon: 'pi pi-building', code: 'Company' },
+    {name: 'Home', icon: 'pi pi-home', code: 'Home'},
+    {name: 'Star', icon: 'pi pi-star-fill', code: 'Star'},
+    {name: 'Company', icon: 'pi pi-building', code: 'Company'},
   ];
 }

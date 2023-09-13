@@ -8,7 +8,8 @@
     </p-speedDial>
   </div>
   <div class="rang">
-    <p-toggleButton (onChange)="toggleIsRanging()" onIcon="fas fa-ruler-horizontal" offIcon="fas fa-ruler-horizontal" [style]="{ width: '3em',height:'2.5rem' }"></p-toggleButton>
+    <p-toggleButton (onChange)="toggleIsRanging()" onIcon="fas fa-ruler-horizontal" offIcon="fas fa-ruler-horizontal"
+                    [style]="{ width: '3em',height:'2.5rem' }"></p-toggleButton>
   </div>
   <div *ngIf="recordDistances.length >= 2" class="kmh">{{distanceText}}</div>
   <div class="col-4">
@@ -37,7 +38,7 @@
                    (onRowSelect)="Select()">
             <ng-template pTemplate="header">
               <tr>
-                <th>狀態累積</th>
+                <th>車牌</th>
                 <th>狀態</th>
                 <th>速度</th>
                 <th>地址</th>
@@ -45,9 +46,9 @@
             </ng-template>
             <ng-template pTemplate="body" let-product>
               <tr [pSelectableRow]="product">
-                <td>{{ product.statetime }}</td>
-                <td>{{ product.server_time | date:'yyyy-MM-dd HH:MM:SS' }}</td>
-                <td>{{ product.date_time | date:'yyyy-MM-dd HH:MM:SS' }}</td>
+                <td>{{ product.sid }}</td>
+                <td></td>
+                <td>{{ product.speed }}</td>
                 <td>{{ product.addr }}</td>
               </tr>
             </ng-template>
