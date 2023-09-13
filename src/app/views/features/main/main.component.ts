@@ -57,6 +57,7 @@ export class MainComponent implements OnInit {
 
   map: any
   mapOptions: any
+  poly = google.maps.Polyline;
 
   // 功能列
   items!: MenuItem[];
@@ -112,6 +113,87 @@ export class MainComponent implements OnInit {
       center: this.center,
       mapTypeControl: true,
       scaleControl: true,
+      // dark 模式
+      // styles: [
+      //   { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+      //   { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+      //   { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+      //   {
+      //     featureType: "administrative.locality",
+      //     elementType: "labels.text.fill",
+      //     stylers: [{ color: "#d59563" }],
+      //   },
+      //   {
+      //     featureType: "poi",
+      //     elementType: "labels.text.fill",
+      //     stylers: [{ color: "#d59563" }],
+      //   },
+      //   {
+      //     featureType: "poi.park",
+      //     elementType: "geometry",
+      //     stylers: [{ color: "#263c3f" }],
+      //   },
+      //   {
+      //     featureType: "poi.park",
+      //     elementType: "labels.text.fill",
+      //     stylers: [{ color: "#6b9a76" }],
+      //   },
+      //   {
+      //     featureType: "road",
+      //     elementType: "geometry",
+      //     stylers: [{ color: "#38414e" }],
+      //   },
+      //   {
+      //     featureType: "road",
+      //     elementType: "geometry.stroke",
+      //     stylers: [{ color: "#212a37" }],
+      //   },
+      //   {
+      //     featureType: "road",
+      //     elementType: "labels.text.fill",
+      //     stylers: [{ color: "#9ca5b3" }],
+      //   },
+      //   {
+      //     featureType: "road.highway",
+      //     elementType: "geometry",
+      //     stylers: [{ color: "#746855" }],
+      //   },
+      //   {
+      //     featureType: "road.highway",
+      //     elementType: "geometry.stroke",
+      //     stylers: [{ color: "#1f2835" }],
+      //   },
+      //   {
+      //     featureType: "road.highway",
+      //     elementType: "labels.text.fill",
+      //     stylers: [{ color: "#f3d19c" }],
+      //   },
+      //   {
+      //     featureType: "transit",
+      //     elementType: "geometry",
+      //     stylers: [{ color: "#2f3948" }],
+      //   },
+      //   {
+      //     featureType: "transit.station",
+      //     elementType: "labels.text.fill",
+      //     stylers: [{ color: "#d59563" }],
+      //   },
+      //   {
+      //     featureType: "water",
+      //     elementType: "geometry",
+      //     stylers: [{ color: "#17263c" }],
+      //   },
+      //   {
+      //     featureType: "water",
+      //     elementType: "labels.text.fill",
+      //     stylers: [{ color: "#515c6d" }],
+      //   },
+      //   {
+      //     featureType: "water",
+      //     elementType: "labels.text.stroke",
+      //     stylers: [{ color: "#17263c" }],
+      //   },
+      // ],
     };
 
     // 創建地圖實例
@@ -144,7 +226,7 @@ export class MainComponent implements OnInit {
       this.markers.push(marker);
     }
 
-    // 點右鍵生成地標
+    // 點右鍵生成標記以新增地標
     this.map.addListener("contextmenu", (e: any) => {
       this.placeMarkerAndPanTo(e.latLng, this.map);
       const customButton = document.getElementById('custom-button');
@@ -161,8 +243,6 @@ export class MainComponent implements OnInit {
 
         // 設定 landmarkButt 為 true
         this.landmarkButt = true;
-
-        // 此處可以為按鈕添加點擊事件處理程序，執行相應的操作
       }
     });
 
@@ -202,7 +282,7 @@ export class MainComponent implements OnInit {
       }
     });
 
-    // 固定標記顯示在中間
+    // 右鍵新增的標記顯示在中間
     this.map.addListener("center_changed", () => {
       window.setTimeout(() => {
         if (this.previousMarker) {
@@ -210,6 +290,51 @@ export class MainComponent implements OnInit {
         }
       }, 0);
     });
+
+    // 設置座標點及線條紀錄距離
+    this.poly = new google.maps.Polyline({
+      strokeColor: "#000000",
+      strokeOpacity: 1.0,
+      strokeWeight: 3,
+    });
+    this.poly.setMap(this.map);
+  }
+
+  recordDistances: google.maps.Marker[] = [];
+  // 透過點擊加入座標點
+  addLatLng = (event: google.maps.MapMouseEvent) => {
+    const path = this.poly.getPath();
+
+    // 加入座標至地圖
+    path.push(event.latLng as google.maps.LatLng);
+
+    // 創建新的標記並將其存入陣列
+    const marker = new google.maps.Marker({
+      position: event.latLng,
+      title: "#" + path.getLength(),
+      map: this.map,
+    });
+    this.recordDistances.push(marker);
+  }
+
+  // 測量模式是否開啟
+  isRanging = false
+  toggleIsRanging() {
+    this.isRanging = !this.isRanging;
+    // 啟用模式才可畫線
+    if (this.isRanging) {
+      this.map.addListener("click", this.addLatLng.bind(this));
+    } else {
+      // 如果按鈕被關閉，則移除點擊事件監聽器
+      google.maps.event.clearListeners(this.map, "click");
+      this.poly.setMap(null)
+      // 迭代並移除所有標記
+      for (const marker of this.recordDistances) {
+        marker.setMap(null);
+      }
+      // 清空陣列
+      this.recordDistances = [];
+    }
   }
 
   // 建立 Directions Service

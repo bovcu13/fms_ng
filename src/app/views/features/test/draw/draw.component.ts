@@ -1,9 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { GoogleMap } from "@angular/google-maps";
-import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 
 declare var google: any;
 
@@ -14,44 +9,107 @@ declare var google: any;
 })
 export class DrawComponent implements OnInit {
 
-  @ViewChild(GoogleMap, { static: false }) set map(m: GoogleMap) {
-    if (m) {
-      this.initDrawingManager(m);
-    }
-  }
+  poly= google.maps.Polyline;
+  map= google.maps.Map;
 
-  apiLoaded: Observable<boolean>;
-  drawingManager: any;
+  initMap(): void {
+    this.map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+      zoom: 7,
+      center: { lat: 41.879, lng: -87.624 }, // Center the map on Chicago, USA.
+    });
 
-  options: google.maps.MapOptions = {
-    center: { lat: 64.79728743642762, lng: -150.995535452303 },
-    zoom: 7,
-  };
+    this.poly = new google.maps.Polyline({
+      strokeColor: "#000000",
+      strokeOpacity: 1.0,
+      strokeWeight: 3,
+    });
+    this.poly.setMap(this.map);
 
-  ngOnInit(): void { }
-  constructor(httpClient: HttpClient) {
-    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyB1hde-5CDelK8n5aMiRecPOcl4i_nx0EE&libraries=drawing', 'callback')
-                               .pipe(
-                                 map(() => true),
-                                 catchError(() => of(false)),
-                               );
-  }
+    // Add a listener for the click event
+    this.map.addListener("click", this.addLatLng.bind(this));
 
-  initDrawingManager(map: GoogleMap) {
-    const drawingOptions: google.maps.drawing.DrawingManagerOptions = {
-      drawingMode: google.maps.drawing.OverlayType.POLYGON,
+    const drawingManager = new google.maps.drawing.DrawingManager({
+      // drawingMode: google.maps.drawing.OverlayType.RECTANGLE, //預設的模式
       drawingControl: true,
       drawingControlOptions: {
         position: google.maps.ControlPosition.TOP_CENTER,
         drawingModes: [
+          // google.maps.drawing.OverlayType.MARKER,
+          google.maps.drawing.OverlayType.CIRCLE,
           google.maps.drawing.OverlayType.POLYGON,
+          google.maps.drawing.OverlayType.POLYLINE,
+          google.maps.drawing.OverlayType.RECTANGLE,
         ],
       },
-      polygonOptions: {
-        strokeColor: '#E3916E',
+      // markerOptions: {
+      //   icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+      // },
+      circleOptions: {
+        fillColor: "#E9CD4C",
+        fillOpacity: 0.6,
+        strokeWeight: 1,
+        clickable: false,
+        editable: true,
+        zIndex: 1,
       },
-    };
-    this.drawingManager = new google.maps.drawing.DrawingManager(drawingOptions);
-    this.drawingManager.setMap(map.googleMap);
+    });
+
+    drawingManager.setMap(this.map);
+  }
+
+  // 在 addLatLng 方法中使用箭頭函數，以確保保留正確的上下文
+  addLatLng = (event: google.maps.MapMouseEvent) => {
+    const path = this.poly.getPath();
+
+    // Because path is an MVCArray, we can simply append a new coordinate
+    // and it will automatically appear.
+    path.push(event.latLng as google.maps.LatLng);
+
+    // Add a new marker at the new plotted point on the polyline.
+    new google.maps.Marker({
+      position: event.latLng,
+      title: "#" + path.getLength(),
+      map: this.map,
+    });
+  }
+
+    // const map = new google.maps.Map(
+    //   document.getElementById("map") as HTMLElement,
+    //   {
+    //     center: { lat: -34.397, lng: 150.644 },
+    //     zoom: 8,
+    //   }
+    // );
+    //
+    // const drawingManager = new google.maps.drawing.DrawingManager({
+    //   drawingMode: google.maps.drawing.OverlayType.MARKER,
+    //   drawingControl: true,
+    //   drawingControlOptions: {
+    //     position: google.maps.ControlPosition.TOP_CENTER,
+    //     drawingModes: [
+    //       google.maps.drawing.OverlayType.MARKER,
+    //       google.maps.drawing.OverlayType.CIRCLE,
+    //       google.maps.drawing.OverlayType.POLYGON,
+    //       google.maps.drawing.OverlayType.POLYLINE,
+    //       google.maps.drawing.OverlayType.RECTANGLE,
+    //     ],
+    //   },
+    //   markerOptions: {
+    //     icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+    //   },
+    //   circleOptions: {
+    //     fillColor: "#E9CD4C",
+    //     fillOpacity: 0.6,
+    //     strokeWeight: 1,
+    //     clickable: false,
+    //     editable: true,
+    //     zIndex: 1,
+    //   },
+    // });
+    //
+    // drawingManager.setMap(map);
+
+  ngOnInit(): void {
+    this.initMap()
   }
 }
