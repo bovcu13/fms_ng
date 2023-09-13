@@ -40,11 +40,14 @@ export class MultipleCarsComponent implements OnInit {
     console.log(e.originalEvent.target.innerText)
     if (this.Panels) {
       if (e.originalEvent.target.innerText == '+') {
-        if (this.countPanels < 11) {
+        if (this.countPanels < 10) {
           this.Panels.push(this.Panels.length + 1);
           this.countPanels++;
           this.sidebarRightOpen = false;
           console.log('Panels.length: ' + this.Panels.length + '\ncountPanels: ' + this.countPanels)
+        }
+        else{
+          this.messageService.add({severity: 'warn', summary: '資訊', detail: '最多開啟 10 筆查詢！'});
         }
       } else {
         this.sidebarRightOpen = true;
@@ -66,6 +69,8 @@ export class MultipleCarsComponent implements OnInit {
   close(e: any) {
     console.log(e)
     this.countPanels--;
+    this.saveSelectedProduct[e.index]=[];
+    console.log(this.saveSelectedProduct)
     console.log('Panels.length: ' + this.Panels.length + '\ncountPanels: ' + this.countPanels)
     // if (this.Panels.length > 0) {
     //     this.Panels.pop();

@@ -19,7 +19,7 @@
       <p-tabView (onChange)="check($event)" (onClose)="close($event)" [selectOnFocus]="true">
         <p-tabPanel *ngFor="let search of Panels; let i = index" [closable]="closable()">
           <ng-template pTemplate="header">
-            <span>多車查詢{{search}}</span>
+            <span>查詢{{search}}</span>
           </ng-template>
           <div class="grid">
             <ng-container *ngFor="let selected of selectedProduct">
