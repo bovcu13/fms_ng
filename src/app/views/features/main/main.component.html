@@ -8,8 +8,9 @@
     </p-speedDial>
   </div>
   <div class="rang">
-    <p-toggleButton (click)="toggleIsRanging()" onIcon="pi pi-arrows-h" offIcon="pi pi-arrows-h" [style]="{ width: '3em' }"></p-toggleButton>
+    <p-toggleButton (onChange)="toggleIsRanging()" onIcon="fas fa-ruler-horizontal" offIcon="fas fa-ruler-horizontal" [style]="{ width: '3em',height:'2.5rem' }"></p-toggleButton>
   </div>
+  <div *ngIf="recordDistances.length >= 2" class="kmh">{{distanceText}}</div>
   <div class="col-4">
     <p-card>
       <p-tabView>

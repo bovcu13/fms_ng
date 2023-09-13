@@ -84,10 +84,11 @@
   display: none; /* 隱藏按鈕，待右鍵點擊時再顯示 */
 }
 
+// 測量距離的按鈕
 .rang {
   position: absolute;
-  top: 6rem;
-  left: 0.2rem;
+  top: 2.5rem;
+  left: 12rem;
   padding: 10px;
   color: #FFFFFF;
   display: flex;
@@ -100,17 +101,18 @@
 .kmh {
   position: absolute;
   width: 8rem;
-  height: 3rem;
-  top: 6rem;
-  left: 5rem;
-  background-color: rgba(0, 0, 0, 0.7);
+  top: 3.5rem;
+  height: 2rem;
+  left: 59rem;
+  background-color: rgba(300, 300, 300, 0.7);
+  border: 1px solid #ced4da;
   padding: 10px;
-  color: #FFFFFF;
-  text-align: left;
-  border-radius: 10px;
+  color: #000000;
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 2px;
 }
 
 .circle {
