@@ -46,6 +46,11 @@ export class CarService {
     return this.http.get<any>(url);
   }
 
+  getAllNewGpsRequest(): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/gps/list`;
+    return this.http.get<any>(url);
+  }
+
   getOneGpsRequest(id:any): Observable<any> {
     const url = `${BaseUrl}/web/v1.0/gps/${id}`;
     return this.http.get<any>(url);
