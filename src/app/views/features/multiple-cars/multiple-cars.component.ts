@@ -38,35 +38,29 @@ export class MultipleCarsComponent implements OnInit {
     // 將二微陣列的值呼叫到 selectedProduct
     this.selectedProduct = this.saveSelectedProduct[e.index];
     console.log(e.originalEvent.target.innerText)
-    // if (this.Panels) {
-    //   if (e.originalEvent.target.innerText == '+') {
-    //     if (this.countPanels < 11) {
-    //       this.Panels.push(this.Panels.length + 1);
-    //       this.countPanels++;
-    //       this.sidebarRightOpen = false;
-    //       console.log('Panels.length: ' + this.Panels.length + '\ncountPanels: ' + this.countPanels)
-    //     }
-    //   } else {
-    //     this.sidebarRightOpen = true;
-    //   }
-    // }
-  }
-  activeTabIndex = 0
-  addNewTab() {
-    this.selectPanel = this.selectPanel+1
     if (this.Panels) {
+      if (e.originalEvent.target.innerText == '+') {
         if (this.countPanels < 11) {
           this.Panels.push(this.Panels.length + 1);
           this.countPanels++;
           this.sidebarRightOpen = false;
           console.log('Panels.length: ' + this.Panels.length + '\ncountPanels: ' + this.countPanels)
         }
-       else {
+      } else {
         this.sidebarRightOpen = true;
       }
     }
-    this.activeTabIndex = this.countPanels - 2
-    console.log(this.activeTabIndex)
+  }
+
+  addNewTab() {
+    this.selectPanel = this.selectPanel + 1
+    if (this.Panels) {
+      if (this.countPanels < 10) {
+        this.Panels.push(this.Panels.length + 1);
+        this.countPanels++;
+        console.log('Panels.length: ' + this.Panels.length + '\ncountPanels: ' + this.countPanels)
+      }
+    }
   }
 
   close(e: any) {
@@ -117,7 +111,6 @@ export class MultipleCarsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activeTabIndex = 0
     this.markers = products.map(product => ({
       position: product.position,
       icon: {url: product.url, scaledSize: new google.maps.Size(50, 50)},
