@@ -291,16 +291,10 @@ export class MainComponent implements OnInit {
       }, 0);
     });
 
-    // 設置座標點及線條紀錄距離
-    this.poly = new google.maps.Polyline({
-      strokeColor: "#000000",
-      strokeOpacity: 1.0,
-      strokeWeight: 3,
-    });
-    this.poly.setMap(this.map);
   }
 
   recordDistances: google.maps.Marker[] = [];
+  distanceText: string | null = null;
   // 透過點擊加入座標點
   addLatLng = (event: google.maps.MapMouseEvent) => {
     const path = this.poly.getPath();
@@ -315,6 +309,17 @@ export class MainComponent implements OnInit {
       map: this.map,
     });
     this.recordDistances.push(marker);
+
+    // 如果陣列中有至少兩個標記，計算並顯示距離
+    if (this.recordDistances.length >= 2) {
+      const firstMarker = this.recordDistances[0];
+      const lastMarker = this.recordDistances[this.recordDistances.length - 1];
+      const distance = google.maps.geometry.spherical.computeDistanceBetween(
+        firstMarker.getPosition(),
+        lastMarker.getPosition()
+      );
+      this.distanceText = `${distance.toFixed(2)} 公尺`;
+    }
   }
 
   // 測量模式是否開啟
@@ -323,6 +328,13 @@ export class MainComponent implements OnInit {
     this.isRanging = !this.isRanging;
     // 啟用模式才可畫線
     if (this.isRanging) {
+      // 設置線條紀錄距離
+      this.poly = new google.maps.Polyline({
+        strokeColor: "#000000",
+        strokeOpacity: 1.0,
+        strokeWeight: 3,
+      });
+      this.poly.setMap(this.map);
       this.map.addListener("click", this.addLatLng.bind(this));
     } else {
       // 如果按鈕被關閉，則移除點擊事件監聽器
