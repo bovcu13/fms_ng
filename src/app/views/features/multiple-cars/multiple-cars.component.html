@@ -1,12 +1,22 @@
 <div class="col-12">
-  <div class="flex justify-content-end">
-    <p-button label="+" (click)="addNewTab()"></p-button>
-    <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right"
-                    [ngModel]="false" (ngModelChange)="toggleSidebar()"></p-toggleButton>
-  </div>
+  <p-table>
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <div>
+          多車監控
+<!--          <p-button icon="pi pi-plus" styleClass="p-button-text"-->
+<!--                    (click)="addNewTab()"></p-button>-->
+        </div>
+        <div>
+          <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right"
+                          [ngModel]="false" (ngModelChange)="toggleSidebar()"></p-toggleButton>
+        </div>
+      </div>
+    </ng-template>
+  </p-table>
   <div class="grid">
     <div [ngClass]="getMiddleDivClass()">
-      <p-tabView (onChange)="check($event)" (onClose)="close($event)" [selectOnFocus]="true" [activeIndex]="activeTabIndex">
+      <p-tabView (onChange)="check($event)" (onClose)="close($event)" [selectOnFocus]="true">
         <p-tabPanel *ngFor="let search of Panels; let i = index" [closable]="closable()">
           <ng-template pTemplate="header">
             <span>多車查詢{{search}}</span>
@@ -29,11 +39,11 @@
             </ng-container>
           </div>
         </p-tabPanel>
-<!--        <p-tabPanel>-->
-<!--          <ng-template pTemplate="header">-->
-<!--            <label (click)="addNewTab()">+</label>-->
-<!--          </ng-template>-->
-<!--        </p-tabPanel>-->
+        <p-tabPanel>
+          <ng-template pTemplate="header">
+            <label>+</label>
+          </ng-template>
+        </p-tabPanel>
       </p-tabView>
     </div>
     <div class="col-12 md:col-12 lg:col-4" *ngIf="sidebarRightOpen">
@@ -48,7 +58,8 @@
                    [(selection)]="selectedProduct" (selectionChange)="onSelectionChange($event)">
             <ng-template pTemplate="caption">
               <div class="flex justify-content-start">
-                <p-toggleButton pTooltip="顯示路況" styleClass="border-circle" [(ngModel)]="trafficVisable" onIcon="pi pi-truck" offIcon="pi pi-truck"></p-toggleButton>
+                <p-toggleButton pTooltip="顯示路況" styleClass="border-circle" [(ngModel)]="trafficVisable"
+                                onIcon="pi pi-truck" offIcon="pi pi-truck"></p-toggleButton>
               </div>
             </ng-template>
             <ng-template pTemplate="header">

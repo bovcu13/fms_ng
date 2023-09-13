@@ -1,25 +1,31 @@
 <div class="flex justify-content-center">
     <div class="grid">
         <div class="col-12">
-            <div class="flex justify-content-between">
-                <div></div>
+          <p-table>
+            <ng-template pTemplate="caption">
+              <div class="flex align-items-center justify-content-between">
+                <div>
+                  影像監控
+                </div>
                 <div></div>
                 <div></div>
                 <div></div>
                 <div>
-                    <p-button class="mr-2" (click)="plus()" label="Add" icon="pi pi-plus"></p-button>
-                    <p-button class="mr-5" (click)="minus()" label="Remove" icon="pi pi-minus"></p-button>
+                  <p-button class="mr-2" (click)="plus()" label="Add" icon="pi pi-plus"></p-button>
+                  <p-button class="mr-5" (click)="minus()" label="Remove" icon="pi pi-minus"></p-button>
                 </div>
                 <div></div>
                 <div>
-                    <p-selectButton [options]="paymentOptions" [(ngModel)]="value"
-                                    optionLabel="name" optionValue="value" (onChange)="changeRow()"></p-selectButton>
+                  <p-selectButton [options]="paymentOptions" [(ngModel)]="value"
+                                  optionLabel="name" optionValue="value" (onChange)="changeRow()"></p-selectButton>
                 </div>
                 <div>
-                    <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right"
-                                    [ngModel]="false" (ngModelChange)="toggleSidebar()"></p-toggleButton>
+                  <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right"
+                                  [ngModel]="false" (ngModelChange)="toggleSidebar()"></p-toggleButton>
                 </div>
-            </div>
+              </div>
+            </ng-template>
+          </p-table>
         </div>
 
         <div class="mt-2" [ngClass]="getMiddleDivClass()">
