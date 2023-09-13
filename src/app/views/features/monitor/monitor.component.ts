@@ -26,7 +26,7 @@ export class MonitorComponent implements OnInit {
   value: number = 4;
   height: string = 'h1-2'
   selectedCar: any = [];
-  scrollHeight: string = '350px';
+  scrollHeight: string = '40vh';
   markers: any[] = [];
 
   // 調整視窗顯示排版 & 高度
@@ -144,9 +144,9 @@ export class MonitorComponent implements OnInit {
   toggleMap() {
     this.mapOpen = !this.mapOpen;
     if (this.mapOpen) {
-      this.scrollHeight = '350px'
+      this.scrollHeight = '40vh'
     } else {
-      this.scrollHeight = '520px'
+      this.scrollHeight = '70vh'
     }
   }
 
