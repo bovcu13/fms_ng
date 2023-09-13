@@ -1,9 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { GoogleMap } from "@angular/google-maps";
-import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 
 declare var google: any;
 
@@ -14,44 +9,52 @@ declare var google: any;
 })
 export class DrawComponent implements OnInit {
 
-  @ViewChild(GoogleMap, { static: false }) set map(m: GoogleMap) {
-    if (m) {
-      this.initDrawingManager(m);
-    }
-  }
+  marker1= google.maps.Marker
+  marker2= google.maps.Marker
+  poly= google.maps.Polyline
+  geodesicPoly= google.maps.Polyline
 
-  apiLoaded: Observable<boolean>;
-  drawingManager: any;
+  initMap(): void {
 
-  options: google.maps.MapOptions = {
-    center: { lat: 64.79728743642762, lng: -150.995535452303 },
-    zoom: 7,
-  };
+    const map = new google.maps.Map(
+      document.getElementById("map") as HTMLElement,
+      {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 8,
+      }
+    );
 
-  ngOnInit(): void { }
-  constructor(httpClient: HttpClient) {
-    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyB1hde-5CDelK8n5aMiRecPOcl4i_nx0EE&libraries=drawing', 'callback')
-                               .pipe(
-                                 map(() => true),
-                                 catchError(() => of(false)),
-                               );
-  }
-
-  initDrawingManager(map: GoogleMap) {
-    const drawingOptions: google.maps.drawing.DrawingManagerOptions = {
-      drawingMode: google.maps.drawing.OverlayType.POLYGON,
+    const drawingManager = new google.maps.drawing.DrawingManager({
+      drawingMode: google.maps.drawing.OverlayType.MARKER,
       drawingControl: true,
       drawingControlOptions: {
         position: google.maps.ControlPosition.TOP_CENTER,
         drawingModes: [
+          google.maps.drawing.OverlayType.MARKER,
+          google.maps.drawing.OverlayType.CIRCLE,
           google.maps.drawing.OverlayType.POLYGON,
+          google.maps.drawing.OverlayType.POLYLINE,
+          google.maps.drawing.OverlayType.RECTANGLE,
         ],
       },
-      polygonOptions: {
-        strokeColor: '#E3916E',
+      markerOptions: {
+        icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
       },
-    };
-    this.drawingManager = new google.maps.drawing.DrawingManager(drawingOptions);
-    this.drawingManager.setMap(map.googleMap);
+      circleOptions: {
+        fillColor: "#E9CD4C",
+        fillOpacity: 0.6,
+        strokeWeight: 1,
+        clickable: false,
+        editable: true,
+        zIndex: 1,
+      },
+    });
+
+    drawingManager.setMap(map);
+
+  }
+
+  ngOnInit(): void {
+    this.initMap()
   }
 }
