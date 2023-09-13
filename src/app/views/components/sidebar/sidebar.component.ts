@@ -21,7 +21,14 @@ export class SidebarComponent implements OnInit {
         items: [
           {
             label: '區域監控',
-            icon: 'pi pi-fw pi-box'
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/main',
+            command:() =>{
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
+            },
           },
           {
             label: '多車監控',
