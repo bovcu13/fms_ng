@@ -312,13 +312,17 @@ export class MainComponent implements OnInit {
 
     // 如果陣列中有至少兩個標記，計算並顯示距離
     if (this.recordDistances.length >= 2) {
-      const firstMarker = this.recordDistances[0];
-      const lastMarker = this.recordDistances[this.recordDistances.length - 1];
-      const distance = google.maps.geometry.spherical.computeDistanceBetween(
-        firstMarker.getPosition(),
-        lastMarker.getPosition()
-      );
-      this.distanceText = `${distance.toFixed(2)} 公尺`;
+      let totalDistance = 0;
+      for (let i = 0; i < this.recordDistances.length - 1; i++) {
+        const startMarker = this.recordDistances[i];
+        const endMarker = this.recordDistances[i + 1];
+        const distance = google.maps.geometry.spherical.computeDistanceBetween(
+          startMarker.getPosition(),
+          endMarker.getPosition()
+        );
+        totalDistance += distance;
+      }
+      this.distanceText = `${totalDistance.toFixed(2)} 公尺`;
     }
   }
 
