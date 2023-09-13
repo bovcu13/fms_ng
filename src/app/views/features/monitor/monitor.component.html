@@ -27,8 +27,7 @@
             </ng-template>
           </p-table>
         </div>
-
-        <div class="mt-2" [ngClass]="getMiddleDivClass()">
+        <div [ngClass]="getMiddleDivClass()">
             <div class="grid">
                 <ng-container *ngFor="let item of layout">
                     <div class="col-{{12/rows}}">
@@ -79,7 +78,7 @@
                                 [ngModel]="true" (ngModelChange)="toggleMap()" class="toggleMap"></p-toggleButton>
             </div>
             <ng-container *ngIf="mapOpen">
-                <google-map class="w-full" height="170px" width="100%"
+                <google-map class="w-full" height="35vh" width="100%"
                             [center]="center" [zoom]="zoom" [options]="options"
                             (mapClick)="moveMap($event)" (mapMousemove)="move($event)" #map>
                     <map-marker #markerElem="mapMarker"

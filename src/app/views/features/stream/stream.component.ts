@@ -1,5 +1,5 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-declare var JSMpeg: any;
+import {Component, OnInit} from '@angular/core';
+import * as flvjs from 'flv.js';
 
 @Component({
   selector: 'app-stream',
@@ -12,36 +12,53 @@ export class StreamComponent implements OnInit {
   constructor() {
   }
 
-  options = 'rtptransport=tcp&timeout=60&width=0&height=0&bitrate=0&rotation=0';
-  streamDisplayStyle = 'none';
+  title = 'app';
+  player: any;
+  flvPlayer: any;
+  isPlay: boolean = false;
 
   ngOnInit(): void {
-    // this.initJsmpegPlayer();
-    const messageElement = document.getElementById('message');
-    const streamElement = document.getElementById('stream');
+    // 獲取DOM對象
+    this.player = document.getElementById('videoElement');
 
-    customElements.whenDefined('webrtc-streamer').then(() => {
-      const params = new URLSearchParams(window.location.search);
-      if (params.has('options')) {
-        this.options = params.get('options')!;
-      }
+    if (flvjs.default.isSupported()) {
+      // 創建flvjs對象
+      this.flvPlayer = flvjs.default.createPlayer({
+        type: 'flv',        // 指定視頻類型
+        isLive: true,       // 開啓直播
+        hasAudio: false,    // 關閉聲音
+        cors: true,         // 開啓跨域訪問
+        url: 'http://127.0.0.1:8080/live?port=1935&app=Mylive&stream=test',   // 指定流鏈接
+      });
 
-      const url = {
-        video: params.get('video') || 'rtsp://localhost:554/test',
-      };
+      // 將flvjs對象和DOM對象綁定
+      this.flvPlayer.attachMediaElement(this.player);
+      // 加載視頻
+      this.flvPlayer.load();
+      // 播放視頻
+      this.flvPlayer.play();
+    }
 
-      streamElement!.setAttribute('options', this.options);
-      streamElement!.setAttribute('url', JSON.stringify(url));
-      this.streamDisplayStyle = 'block';
-    }).catch((e) => {
-      messageElement!.innerText =
-        'webrtc-streamer webcomponent fails to initialize error:' + e;
-    });
+    console.log(flvjs.default.getFeatureList());
   }
 
-  // initJsmpegPlayer(): void {
-  //   const canvas = document.getElementById('videoCanvas') as HTMLCanvasElement;
-  //   const url = 'rtsp://localhost:554/test'; // rtsp websocket path
-  //   const player = new JSMpeg.Player(url, { canvas });
-  // }
+  control(): void {
+    if(this.isPlay){
+      this.flvPlayer.pause();
+      this.isPlay = !this.isPlay;
+    }
+    else{
+      this.flvPlayer.play();
+      this.isPlay = !this.isPlay;
+    }
+  }
+
+  stop(): void {
+    this.flvPlayer.pause();
+    this.flvPlayer.unload();
+    // 卸載DOM對象
+    this.flvPlayer.detachMediaElement();
+    // 銷燬flvjs對象
+    this.flvPlayer.destroy();
+  }
 }
