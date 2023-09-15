@@ -84,6 +84,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     // this.getAllGpsRequest("9901CA15")
     // this.geocodePositions()
 
@@ -266,6 +267,7 @@ export class MainComponent implements OnInit {
         map: this.map,
         title: location.addr,
         icon: {url: location.url, scaledSize: new google.maps.Size(50, 50)},
+        animation: google.maps.Animation.DROP,
         // options: { animation: google.maps.Animation.BOUNCE },
       });
 
@@ -483,6 +485,7 @@ export class MainComponent implements OnInit {
             map: this.map,
             title: location.addr,
             icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
+            animation: google.maps.Animation.DROP,
           });
 
           const infowindow = new google.maps.InfoWindow({
@@ -607,8 +610,13 @@ export class MainComponent implements OnInit {
     const marker = new google.maps.Marker({
       position: this.poiMarker.getPosition(),
       map: this.map,
-      animation: google.maps.Animation.DROP,
-      icon: svgMarker,
+      label: {
+        text: "\ue88a", // codepoint from https://fonts.google.com/icons
+        fontFamily: "Material Icons",
+        color: "#ffffff",
+        fontSize: "18px",
+      },
+      // icon: svgMarker,
       // icon: {
       //   url: 'assets/image/car2.png',
       //   scaledSize: new google.maps.Size(50, 50)
@@ -645,7 +653,6 @@ export class MainComponent implements OnInit {
     const marker = new google.maps.Marker({
       position: latLng,
       map: map,
-      animation: google.maps.Animation.DROP,
     });
 
     // 設定地圖中心為新位置
