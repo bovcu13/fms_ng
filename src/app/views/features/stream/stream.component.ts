@@ -18,28 +18,7 @@ export class StreamComponent implements OnInit {
   isPlay: boolean = false;
 
   ngOnInit(): void {
-    // 獲取DOM對象
-    this.player = document.getElementById('videoElement');
 
-    if (flvjs.default.isSupported()) {
-      // 創建flvjs對象
-      this.flvPlayer = flvjs.default.createPlayer({
-        type: 'flv',        // 指定視頻類型
-        isLive: true,       // 開啓直播
-        hasAudio: false,    // 關閉聲音
-        cors: true,         // 開啓跨域訪問
-        url: 'http://127.0.0.1:8080/live?port=1935&app=Mylive&stream=test',   // 指定流鏈接
-      });
-
-      // 將flvjs對象和DOM對象綁定
-      this.flvPlayer.attachMediaElement(this.player);
-      // 加載視頻
-      this.flvPlayer.load();
-      // 播放視頻
-      this.flvPlayer.play();
-    }
-
-    console.log(flvjs.default.getFeatureList());
   }
 
   control(): void {
