@@ -35,6 +35,14 @@ export class MainComponent implements OnInit {
     }
   }
 
+
+  // 地圖
+  map: any
+  mapOptions: any
+  // 標記
+  markers: any[] = []
+  // 線條
+  poly = google.maps.Polyline;
   //起點、終點
   startCoordinate: google.maps.LatLngLiteral = products[0].position;
   endCoordinate: google.maps.LatLngLiteral = products[products.length - 1].position;
@@ -52,17 +60,11 @@ export class MainComponent implements OnInit {
     lng: 121.5222738032652
   };
 
-  // 創建標記
-  markers: any[] = []
-
-  map: any
-  mapOptions: any
-  poly = google.maps.Polyline;
 
   // 功能列
   items!: MenuItem[];
 
-  // 地標按鈕顯示
+  // 按下右鍵的地標按鈕顯示
   landmarkButt = false;
   markDialog: boolean = false;
 
@@ -76,6 +78,19 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     // this.getAllGpsRequest("9901CA15")
     // this.geocodePositions()
+
+    this.itemInit()
+
+    this.mapInit()
+
+    // 建立 Directions Service
+    this.createDirectionsService()
+
+    this.getAllNewGpsRequest();
+
+  }
+
+  itemInit() {
     this.items = [
       {
         icon: 'pi pi-truck',
@@ -98,14 +113,6 @@ export class MainComponent implements OnInit {
         }
       }
     ];
-
-    this.mapInit()
-
-    // 建立 Directions Service
-    this.createDirectionsService()
-
-    this.getAllNewGpsRequest();
-
   }
 
   mapInit() {
@@ -295,9 +302,10 @@ export class MainComponent implements OnInit {
 
   }
 
+
+  // 計算距離
   recordDistances: google.maps.Marker[] = [];
   distanceText: string | null = null;
-  // 透過點擊加入座標點
   addLatLng = (event: google.maps.MapMouseEvent) => {
     const path = this.poly.getPath();
 
@@ -327,10 +335,8 @@ export class MainComponent implements OnInit {
       this.distanceText = `${totalDistance.toFixed(2)} 公尺`;
     }
   }
-
   // 測量模式是否開啟
   isRanging = false
-
   toggleIsRanging() {
     this.isRanging = !this.isRanging;
     // 啟用模式才可畫線
@@ -484,9 +490,8 @@ export class MainComponent implements OnInit {
     });
   }
 
-  //路況圖層開關
+  // 路況圖層開關
   trafficLayer = new google.maps.TrafficLayer();
-
   toggleTraffic() {
     if (this.trafficLayer.getMap()) {
       // 如果交通圖層已經可見，則隱藏它
