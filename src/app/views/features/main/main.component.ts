@@ -76,7 +76,6 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     // this.getAllGpsRequest("9901CA15")
     // this.geocodePositions()
-    this.getAllNewGpsRequest();
     this.items = [
       {
         icon: 'pi pi-truck',
@@ -104,6 +103,8 @@ export class MainComponent implements OnInit {
 
     // 建立 Directions Service
     this.createDirectionsService()
+
+    this.getAllNewGpsRequest();
 
   }
 
@@ -476,33 +477,6 @@ export class MainComponent implements OnInit {
         }));
         // 轉換成中文地址
         this.geocodePositions();
-
-        // 預設顯示所有 info window
-        for (const location of this.transformedData) {
-          //標記
-          const marker = new google.maps.Marker({
-            position: new google.maps.LatLng(location.position.lat, location.position.lng),
-            map: this.map,
-            title: location.addr,
-            // icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
-          });
-
-          // const infowindow = new google.maps.InfoWindow({
-          //   content: location.infoWindowContent
-          // });
-          //
-          // //開info
-          // google.maps.event.addListener(marker, 'click', () => {
-          //   infowindow.open(this.map, marker);
-          //   // this.map.setZoom(14);
-          //   // this.map.setCenter(marker.getPosition() as google.maps.LatLng);
-          // });
-          //
-          // // 一開始就顯示資訊窗口
-          // infowindow.open(this.map, marker);
-          //
-          // this.markers.push(marker);
-        }
       },
       error: (err) => {
         console.log(err);
