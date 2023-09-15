@@ -1,9 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {products} from "../../../shared/data/products";
 import {MenuItem} from 'primeng/api'
 import {CarService} from "../../../services/car.service";
 
 declare var google: any;
+
+interface Column {
+  field: string;
+  header: string;
+}
 
 @Component({
   selector: 'app-main',
@@ -14,6 +19,9 @@ export class MainComponent implements OnInit {
 
   products: any[] = products;
   selectedProduct: any;
+
+  cols!: Column[];
+  _selectedColumns!: Column[];
 
   carGroups: any = [
     {name: '車隊(A)', code: 'A'},
@@ -35,6 +43,14 @@ export class MainComponent implements OnInit {
     }
   }
 
+
+  // 地圖
+  map: any
+  mapOptions: any
+  // 標記
+  markers: any[] = []
+  // 線條
+  poly = google.maps.Polyline;
   //起點、終點
   startCoordinate: google.maps.LatLngLiteral = products[0].position;
   endCoordinate: google.maps.LatLngLiteral = products[products.length - 1].position;
@@ -52,17 +68,11 @@ export class MainComponent implements OnInit {
     lng: 121.5222738032652
   };
 
-  // 創建標記
-  markers: any[] = []
-
-  map: any
-  mapOptions: any
-  poly = google.maps.Polyline;
 
   // 功能列
   items!: MenuItem[];
 
-  // 地標按鈕顯示
+  // 按下右鍵的地標按鈕顯示
   landmarkButt = false;
   markDialog: boolean = false;
 
@@ -74,8 +84,65 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     // this.getAllGpsRequest("9901CA15")
     // this.geocodePositions()
+
+    this.colsInit()
+
+    this.itemInit()
+
+    this.mapInit()
+
+    // 建立 Directions Service
+    this.createDirectionsService()
+
+    this.getAllNewGpsRequest();
+
+  }
+
+  @Input() get selectedColumns(): any[] {
+    return this._selectedColumns;
+  }
+
+  set selectedColumns(val: any[]) {
+    //restore original order
+    this._selectedColumns = this.cols.filter((col) => val.includes(col));
+  }
+
+  clearMultiSelect() {
+    // onClear事件
+    this._selectedColumns = [];
+  }
+
+  colsInit() {
+    this.cols = [
+      { field: 'state', header: '狀態' },
+      { field: 'sid', header: '車牌' },
+      { field: 'speed', header: '時速' },
+      { field: 'vehicleName', header: '車輛名稱' },
+      { field: 'name', header: '姓名' },
+      { field: 'addr', header: '地址/地標' },
+      { field: 'statusAccumulated', header: '狀態累積' },
+      { field: 'departureTime', header: '出車時間' },
+      { field: 'drivingTime', header: '開車時間' },
+      { field: 'temperature1', header: '溫度1' },
+      { field: 'direction', header: '方向' },
+      { field: 'returnTime', header: '回傳時間' },
+      { field: 'phoneNumber1', header: '手機號碼1' },
+      { field: 'phoneNumber2', header: '手機號碼2' }
+    ];
+
+    this._selectedColumns = [
+      { field: 'state', header: '狀態' },
+      { field: 'sid', header: '車牌' },
+      { field: 'speed', header: '時速' },
+      { field: 'name', header: '姓名' },
+      { field: 'addr', header: '地址/地標' },
+    ]
+  }
+
+  itemInit() {
     this.items = [
       {
         icon: 'pi pi-truck',
@@ -98,14 +165,6 @@ export class MainComponent implements OnInit {
         }
       }
     ];
-
-    this.mapInit()
-
-    // 建立 Directions Service
-    this.createDirectionsService()
-
-    this.getAllNewGpsRequest();
-
   }
 
   mapInit() {
@@ -208,6 +267,7 @@ export class MainComponent implements OnInit {
         map: this.map,
         title: location.addr,
         icon: {url: location.url, scaledSize: new google.maps.Size(50, 50)},
+        animation: google.maps.Animation.DROP,
         // options: { animation: google.maps.Animation.BOUNCE },
       });
 
@@ -295,9 +355,10 @@ export class MainComponent implements OnInit {
 
   }
 
+
+  // 計算距離
   recordDistances: google.maps.Marker[] = [];
   distanceText: string | null = null;
-  // 透過點擊加入座標點
   addLatLng = (event: google.maps.MapMouseEvent) => {
     const path = this.poly.getPath();
 
@@ -327,10 +388,8 @@ export class MainComponent implements OnInit {
       this.distanceText = `${totalDistance.toFixed(2)} 公尺`;
     }
   }
-
   // 測量模式是否開啟
   isRanging = false
-
   toggleIsRanging() {
     this.isRanging = !this.isRanging;
     // 啟用模式才可畫線
@@ -426,6 +485,7 @@ export class MainComponent implements OnInit {
             map: this.map,
             title: location.addr,
             icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
+            animation: google.maps.Animation.DROP,
           });
 
           const infowindow = new google.maps.InfoWindow({
@@ -484,9 +544,8 @@ export class MainComponent implements OnInit {
     });
   }
 
-  //路況圖層開關
+  // 路況圖層開關
   trafficLayer = new google.maps.TrafficLayer();
-
   toggleTraffic() {
     if (this.trafficLayer.getMap()) {
       // 如果交通圖層已經可見，則隱藏它
@@ -551,8 +610,13 @@ export class MainComponent implements OnInit {
     const marker = new google.maps.Marker({
       position: this.poiMarker.getPosition(),
       map: this.map,
-      animation: google.maps.Animation.DROP,
-      icon: svgMarker,
+      label: {
+        text: "\ue88a", // codepoint from https://fonts.google.com/icons
+        fontFamily: "Material Icons",
+        color: "#ffffff",
+        fontSize: "18px",
+      },
+      // icon: svgMarker,
       // icon: {
       //   url: 'assets/image/car2.png',
       //   scaledSize: new google.maps.Size(50, 50)
@@ -589,7 +653,6 @@ export class MainComponent implements OnInit {
     const marker = new google.maps.Marker({
       position: latLng,
       map: map,
-      animation: google.maps.Animation.DROP,
     });
 
     // 設定地圖中心為新位置
