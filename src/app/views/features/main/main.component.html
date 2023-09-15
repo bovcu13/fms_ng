@@ -33,23 +33,26 @@
               <p-calendar [showTime]="true" placeholder="選擇結束時間"></p-calendar>
             </div>
           </div>
-          <p-table [value]="transformedData" [rows]="5" selectionMode="single"
+          <p-table [columns]="selectedColumns" [value]="transformedData" [rows]="5" selectionMode="single"
                    [(selection)]="selectedProduct" [scrollable]="true" scrollHeight="70vh"
                    (onRowSelect)="Select()">
-            <ng-template pTemplate="header">
+            <ng-template pTemplate="caption">
+              <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns"
+                             (onClear)="clearMultiSelect()" [showClear]="true" [maxSelectedLabels]="4"
+                             optionLabel="header" selectedItemsLabel="已選擇 {0} 個欄位" placeholder="點擊選擇要顯示的欄位"></p-multiSelect>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
               <tr>
-                <th>車牌</th>
-                <th>狀態</th>
-                <th>速度</th>
-                <th>地址</th>
+                <th *ngFor="let col of columns">
+                  {{col.header}}
+                </th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-product>
+            <ng-template pTemplate="body" let-product let-columns="columns">
               <tr [pSelectableRow]="product">
-                <td>{{ product.sid }}</td>
-                <td></td>
-                <td>{{ product.speed }}</td>
-                <td>{{ product.addr }}</td>
+                <td *ngFor="let col of columns">
+                  {{product[col.field]}}
+                </td>
               </tr>
             </ng-template>
           </p-table>

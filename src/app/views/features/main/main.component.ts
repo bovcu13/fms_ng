@@ -1,9 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {products} from "../../../shared/data/products";
 import {MenuItem} from 'primeng/api'
 import {CarService} from "../../../services/car.service";
 
 declare var google: any;
+
+interface Column {
+  field: string;
+  header: string;
+}
 
 @Component({
   selector: 'app-main',
@@ -14,6 +19,9 @@ export class MainComponent implements OnInit {
 
   products: any[] = products;
   selectedProduct: any;
+
+  cols!: Column[];
+  _selectedColumns!: Column[];
 
   carGroups: any = [
     {name: '車隊(A)', code: 'A'},
@@ -79,6 +87,8 @@ export class MainComponent implements OnInit {
     // this.getAllGpsRequest("9901CA15")
     // this.geocodePositions()
 
+    this.colsInit()
+
     this.itemInit()
 
     this.mapInit()
@@ -88,6 +98,47 @@ export class MainComponent implements OnInit {
 
     this.getAllNewGpsRequest();
 
+  }
+
+  @Input() get selectedColumns(): any[] {
+    return this._selectedColumns;
+  }
+
+  set selectedColumns(val: any[]) {
+    //restore original order
+    this._selectedColumns = this.cols.filter((col) => val.includes(col));
+  }
+
+  clearMultiSelect() {
+    // onClear事件
+    this._selectedColumns = [];
+  }
+
+  colsInit() {
+    this.cols = [
+      { field: 'state', header: '狀態' },
+      { field: 'sid', header: '車牌' },
+      { field: 'speed', header: '時速' },
+      { field: 'vehicleName', header: '車輛名稱' },
+      { field: 'name', header: '姓名' },
+      { field: 'addr', header: '地址/地標' },
+      { field: 'statusAccumulated', header: '狀態累積' },
+      { field: 'departureTime', header: '出車時間' },
+      { field: 'drivingTime', header: '開車時間' },
+      { field: 'temperature1', header: '溫度1' },
+      { field: 'direction', header: '方向' },
+      { field: 'returnTime', header: '回傳時間' },
+      { field: 'phoneNumber1', header: '手機號碼1' },
+      { field: 'phoneNumber2', header: '手機號碼2' }
+    ];
+
+    this._selectedColumns = [
+      { field: 'state', header: '狀態' },
+      { field: 'sid', header: '車牌' },
+      { field: 'speed', header: '時速' },
+      { field: 'name', header: '姓名' },
+      { field: 'addr', header: '地址/地標' },
+    ]
   }
 
   itemInit() {
