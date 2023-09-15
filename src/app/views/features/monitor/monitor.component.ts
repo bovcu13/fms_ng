@@ -1,6 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MapInfoWindow, MapMarker} from "@angular/google-maps";
-import {monitorStatus} from "../../../shared/data/monitor";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MapInfoWindow, MapMarker } from "@angular/google-maps";
+import { monitorStatus } from "../../../shared/data/monitor";
+import * as flvjs from 'flv.js';
 
 @Component({
   selector: 'app-monitor',
@@ -31,33 +32,72 @@ export class MonitorComponent implements OnInit {
 
   // 調整視窗顯示排版 & 高度
   paymentOptions: any[] = [
-    {name: '1', value: 0, row: 1, height: 'h1-1'},
-    {name: '2', value: 1, row: 2, height: 'h1-1'},
-    {name: '4', value: 2, row: 2, height: 'h1-2'},
-    {name: '6', value: 3, row: 3, height: 'h1-2'},
-    {name: '8', value: 4, row: 4, height: 'h1-2'},
-    {name: '12', value: 5, row: 4, height: 'h1-3'},
-    {name: '16', value: 6, row: 4, height: 'h1-4'}
+    {
+      name: '1',
+      value: 0,
+      row: 1,
+      height: 'h1-1'
+    },
+    {
+      name: '2',
+      value: 1,
+      row: 2,
+      height: 'h1-1'
+    },
+    {
+      name: '4',
+      value: 2,
+      row: 2,
+      height: 'h1-2'
+    },
+    {
+      name: '6',
+      value: 3,
+      row: 3,
+      height: 'h1-2'
+    },
+    {
+      name: '8',
+      value: 4,
+      row: 4,
+      height: 'h1-2',
+    },
+    {
+      name: '12',
+      value: 5,
+      row: 4,
+      height: 'h1-3',
+      command:() =>{
+        this.totalItems = 12
+        this.layout.push(this.totalItems - 1);
+      },
+    },
+    {
+      name: '16',
+      value: 6,
+      row: 4,
+      height: 'h1-4'
+    }
   ];
 
   carGroups: any = [
-    {name: '車隊(A)', code: 'A'},
-    {name: '車隊(B)', code: 'B'},
-    {name: '車隊(C)', code: 'C'},
-    {name: '車隊(D)', code: 'D'},
+    { name: '車隊(A)', code: 'A' },
+    { name: '車隊(B)', code: 'B' },
+    { name: '車隊(C)', code: 'C' },
+    { name: '車隊(D)', code: 'D' },
   ]
 
-  @ViewChild(MapInfoWindow, {static: false}) info!: MapInfoWindow
+  @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
-  @ViewChild('map', {static: false}) map: any;
+  @ViewChild('map', { static: false }) map: any;
 
   // google map
   polyPath: google.maps.LatLngLiteral[] = [
-    {lat: 25.03280092118552, lng: 121.56348748779168},
-    {lat: 25.03587797931996, lng: 121.56351157458673},
-    {lat: 25.03583432131525, lng: 121.56543846794476},
-    {lat: 25.033019138809674, lng: 121.56546250540032},
-    {lat: 25.033062791203154, lng: 121.56201826717597},
+    { lat: 25.03280092118552, lng: 121.56348748779168 },
+    { lat: 25.03587797931996, lng: 121.56351157458673 },
+    { lat: 25.03583432131525, lng: 121.56543846794476 },
+    { lat: 25.033019138809674, lng: 121.56546250540032 },
+    { lat: 25.033062791203154, lng: 121.56201826717597 },
   ];
   center: google.maps.LatLngLiteral = {
     lat: 25.0336962,
@@ -82,14 +122,44 @@ export class MonitorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.vedioInit()
     console.log(this.totalItems)
     this.geocodePositions();
     this.markers = monitorStatus.map((car: { position: any; url: any; label: { text: any; }; }) => ({
       position: car.position,
-      icon: {url: car.url, scaledSize: new google.maps.Size(50, 50)},
-      label: {text: car.label.text},
+      icon: { url: car.url, scaledSize: new google.maps.Size(50, 50) },
+      label: { text: car.label.text },
       infoWindowContent: car.label.text
     }));
+  }
+
+  player: any;
+  flvPlayer: any;
+  isPlay: boolean = false;
+
+  vedioInit() {
+    // 獲取DOM對象
+    this.player = document.getElementById('videoElement');
+
+    if (flvjs.default.isSupported()) {
+      // 創建flvjs對象
+      this.flvPlayer = flvjs.default.createPlayer({
+        type: 'flv',        // 指定視頻類型
+        isLive: true,       // 開啓直播
+        hasAudio: false,    // 關閉聲音
+        cors: true,         // 開啓跨域訪問
+        url: 'http://127.0.0.1:8080/live?port=1935&app=Mylive&stream=test',   // 指定流鏈接
+      });
+
+      // 將flvjs對象和DOM對象綁定
+      this.flvPlayer.attachMediaElement(this.player);
+      // 加載視頻
+      this.flvPlayer.load();
+      // 播放視頻
+      this.flvPlayer.play();
+    }
+
+    console.log(flvjs.default.getFeatureList());
   }
 
   // 點擊表格內容，地圖跳轉到該地點
@@ -129,6 +199,20 @@ export class MonitorComponent implements OnInit {
 
   // 選擇 selectButton
   changeRow() {
+    if (this.paymentOptions[this.value].name == 12) {
+      this.totalItems = 12
+      this.layout=[]
+      for (let i = 0; i < this.totalItems; i++) {
+        this.layout.push(this.totalItems - 1);
+      }
+    }
+    if (this.paymentOptions[this.value].name == 16) {
+      this.totalItems = 16
+      this.layout=[]
+      for (let i = 0; i < this.totalItems; i++) {
+        this.layout.push(this.totalItems - 1);
+      }
+    }
     this.height = this.paymentOptions[this.value].height;
     this.rows = this.paymentOptions[this.value].row;
     this.cols = Math.ceil(this.totalItems / this.rows);
@@ -182,10 +266,16 @@ export class MonitorComponent implements OnInit {
   geocodePositions() {
     const geocoder = new google.maps.Geocoder();
 
-    this.monitorStatus.forEach((car: { position: { lat: number | google.maps.LatLngLiteral | google.maps.LatLng; lng: number | boolean | null | undefined; }; addr: string; }) => {
+    this.monitorStatus.forEach((car: {
+      position: {
+        lat: number | google.maps.LatLngLiteral | google.maps.LatLng;
+        lng: number | boolean | null | undefined;
+      };
+      addr: string;
+    }) => {
       const latlng = new google.maps.LatLng(car.position.lat, car.position.lng);
 
-      geocoder.geocode({location: latlng}, (results, status) => {
+      geocoder.geocode({ location: latlng }, (results, status) => {
         if (status === google.maps.GeocoderStatus.OK) {
           let addressFound = false;
           if (results && results.length > 0) {
