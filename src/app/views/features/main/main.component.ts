@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {products} from "../../../shared/data/products";
-import {MenuItem} from 'primeng/api'
-import {CarService} from "../../../services/car.service";
+import { products } from "../../../shared/data/products";
+import { MenuItem } from 'primeng/api'
+import { CarService } from "../../../services/car.service";
 
 declare var google: any;
 
@@ -24,16 +24,16 @@ export class MainComponent implements OnInit {
   _selectedColumns!: Column[];
 
   carGroups: any = [
-    {name: '車隊(A)', code: 'A'},
-    {name: '車隊(B)', code: 'B'},
-    {name: '車隊(C)', code: 'C'},
-    {name: '車隊(D)', code: 'D'},
+    { name: '車隊(A)', code: 'A' },
+    { name: '車隊(B)', code: 'B' },
+    { name: '車隊(C)', code: 'C' },
+    { name: '車隊(D)', code: 'D' },
   ]
   cars: any = [
-    {name: 'A-123', code: 'A'},
-    {name: 'B-123', code: 'B'},
-    {name: 'C-123', code: 'C'},
-    {name: 'D-123', code: 'D'},
+    { name: 'A-123', code: 'A' },
+    { name: 'B-123', code: 'B' },
+    { name: 'C-123', code: 'C' },
+    { name: 'D-123', code: 'D' },
   ]
 
   Select() {
@@ -97,8 +97,10 @@ export class MainComponent implements OnInit {
     // 建立 Directions Service
     this.createDirectionsService()
 
-    this.getAllNewGpsRequest();
+    this.getAllNewGpsRequest()
 
+    this.getDefaultStartDate()
+    this.getDefaultEndDate()
   }
 
   @Input() get selectedColumns(): any[] {
@@ -266,8 +268,8 @@ export class MainComponent implements OnInit {
         position: new google.maps.LatLng(location.position.lat, location.position.lng),
         map: this.map,
         title: location.addr,
-        icon: {url: location.url, scaledSize: new google.maps.Size(50, 50)},
-        animation: google.maps.Animation.DROP,
+        icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
+        // animation: google.maps.Animation.DROP,
         // options: { animation: google.maps.Animation.BOUNCE },
       });
 
@@ -278,8 +280,8 @@ export class MainComponent implements OnInit {
       //開info
       google.maps.event.addListener(marker, 'click', () => {
         infowindow.open(this.map, marker);
-        // this.map.setZoom(14);
-        // this.map.setCenter(marker.getPosition() as google.maps.LatLng);
+        this.map.setZoom(14);
+        this.map.setCenter(marker.getPosition() as google.maps.LatLng);
       });
 
       // 一開始就顯示資訊窗口
@@ -390,6 +392,7 @@ export class MainComponent implements OnInit {
   }
   // 測量模式是否開啟
   isRanging = false
+
   toggleIsRanging() {
     this.isRanging = !this.isRanging;
     // 啟用模式才可畫線
@@ -485,7 +488,7 @@ export class MainComponent implements OnInit {
             map: this.map,
             title: location.addr,
             icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
-            animation: google.maps.Animation.DROP,
+            // animation: google.maps.Animation.DROP,
           });
 
           const infowindow = new google.maps.InfoWindow({
@@ -495,8 +498,8 @@ export class MainComponent implements OnInit {
           //開info
           google.maps.event.addListener(marker, 'click', () => {
             infowindow.open(this.map, marker);
-            // this.map.setZoom(14);
-            // this.map.setCenter(marker.getPosition() as google.maps.LatLng);
+            this.map.setZoom(14);
+            this.map.setCenter(marker.getPosition() as google.maps.LatLng);
           });
 
           // 一開始就顯示資訊窗口
@@ -504,6 +507,10 @@ export class MainComponent implements OnInit {
 
           this.markers.push(marker);
         }
+        // 設定地圖的中心點
+        this.map.setZoom(8);
+        const centerLatLng = new google.maps.LatLng(23.83876, 120.9876);
+        this.map.setCenter(centerLatLng);
       },
       error: (err) => {
         console.log(err);
@@ -546,6 +553,7 @@ export class MainComponent implements OnInit {
 
   // 路況圖層開關
   trafficLayer = new google.maps.TrafficLayer();
+
   toggleTraffic() {
     if (this.trafficLayer.getMap()) {
       // 如果交通圖層已經可見，則隱藏它
@@ -571,7 +579,7 @@ export class MainComponent implements OnInit {
     this.car = new google.maps.Marker({
       position: this.carPosition,
       map: this.map,
-      icon: {url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50)},
+      icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
     });
     //車輛移動
     this.carMovementInterval = setInterval(() => {
@@ -671,7 +679,7 @@ export class MainComponent implements OnInit {
     this.transformedData.forEach(product => {
       const latlng = new google.maps.LatLng(product.lat, product.lng);
       console.log("latlng " + latlng);
-      geocoder.geocode({location: latlng}, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
+      geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
         if (status === google.maps.GeocoderStatus.OK) {
           let addressFound = false;
           if (results && results.length > 0) {
@@ -704,7 +712,7 @@ export class MainComponent implements OnInit {
     }));
 
     coordinatesToProcess.forEach(latlng => {
-      geocoder.geocode({location: latlng}, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
+      geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
         if (status === google.maps.GeocoderStatus.OK) {
           if (results[0]) {
             const address = results[0].formatted_address;
@@ -723,8 +731,21 @@ export class MainComponent implements OnInit {
   oddTem: number = 1;
 
   markType: any[] = [
-    {name: 'Home', icon: 'pi pi-home', code: 'Home'},
-    {name: 'Star', icon: 'pi pi-star-fill', code: 'Star'},
-    {name: 'Company', icon: 'pi pi-building', code: 'Company'},
+    { name: 'Home', icon: 'pi pi-home', code: 'Home' },
+    { name: 'Star', icon: 'pi pi-star-fill', code: 'Star' },
+    { name: 'Company', icon: 'pi pi-building', code: 'Company' },
   ];
+
+  startDate : any
+  getDefaultStartDate() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to 00:00:00.000
+    this.startDate = today
+  }
+  endDate : any
+  getDefaultEndDate() {
+    const today = new Date();
+    today.setHours(23, 59, 59, 999); // Set to 23:59:59.999
+    this.endDate = today
+  }
 }
