@@ -97,6 +97,7 @@ export class MainComponent implements OnInit {
     // 建立 Directions Service
     this.createDirectionsService()
 
+    this.getAllNewGpsRequest()
     // 每20秒get
     setInterval(() => {
       this.getAllNewGpsRequest();
