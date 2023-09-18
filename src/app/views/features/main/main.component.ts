@@ -97,7 +97,10 @@ export class MainComponent implements OnInit {
     // 建立 Directions Service
     this.createDirectionsService()
 
-    this.getAllNewGpsRequest()
+    // 每20秒get
+    setInterval(() => {
+      this.getAllNewGpsRequest();
+    }, 20000); // 20000毫秒等於20秒
 
     this.getDefaultStartDate()
     this.getDefaultEndDate()
@@ -173,7 +176,6 @@ export class MainComponent implements OnInit {
     // 定義地圖相關設定
     this.mapOptions = {
       zoom: 14,
-      center: this.center,
       mapTypeControl: true,
       scaleControl: true,
       // dark 模式
@@ -390,9 +392,9 @@ export class MainComponent implements OnInit {
       this.distanceText = `${totalDistance.toFixed(2)} 公尺`;
     }
   }
+
   // 測量模式是否開啟
   isRanging = false
-
   toggleIsRanging() {
     this.isRanging = !this.isRanging;
     // 啟用模式才可畫線
@@ -460,6 +462,7 @@ export class MainComponent implements OnInit {
         console.error('獲取路線失敗：', status);
       }
     });
+
   }
 
   transformedData: any[] = []; // 存轉換後
