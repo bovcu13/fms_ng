@@ -748,17 +748,4 @@ export class MainComponent implements OnInit {
     today.setHours(23, 59, 59, 999); // Set to 23:59:59.999
     this.endDate = today
   }
-
-  getDisabledDates(): any[] {
-    const today = new Date();
-    const disabledDates = [];
-
-    // Generate disabled dates from tomorrow onwards
-    for (let i = today.getDate() + 1; i <= 31; i++) {
-      const disabledDate = new Date(today.getFullYear(), today.getMonth(), i);
-      disabledDates.push({ date: disabledDate });
-    }
-
-    return disabledDates;
-  }
 }

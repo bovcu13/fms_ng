@@ -27,22 +27,6 @@ export class HistoryPathComponent implements OnInit {
   }
 
   togglePlay() {
-    // if (!this.isPlaying) { // false, icon為播放,點下會暫停
-    //   clearInterval(this.intervalId);
-    //   this.pauseCarMovement();
-    // } else {
-    //   // 如果未播放，則開始播放
-    //   this.intervalId = setInterval(() => {
-    //     this.sliderValue++;
-    //     if (this.sliderValue > this.totalTime) {
-    //       clearInterval(this.intervalId);
-    //       this.isPlaying = false;
-    //     }
-    //   }, 1000); // 每秒更新
-    //   // 開始模擬車輛移動
-    //   this.simulateCarMovement(this.routeCoordinates);
-    // }
-    // this.isPlaying = !this.isPlaying; // 切換按鈕狀態
     if (!this.isPlaying) {
       clearInterval(this.intervalId);
       this.pauseCarMovement();
@@ -156,7 +140,17 @@ export class HistoryPathComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllGpsRequest("9901CA15")
-    // this.geocodePositions()
+    this.itemInit()
+
+    this.mapInit()
+
+    this.createDirectionServ()
+
+    this.getDefaultStartDate()
+    this.getDefaultEndDate()
+  }
+
+  itemInit() {
     this.items = [
       {
         icon: 'pi pi-truck',
@@ -179,20 +173,46 @@ export class HistoryPathComponent implements OnInit {
         }
       }
     ];
-    // // 創建標記
-    // this.markers = products.map((location) => {
-    //   const marker = {
-    //     position: new google.maps.LatLng(location.position.lat, location.position.lng),
-    //     title: location.addr,
-    //     icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
-    //     infoWindowText: location.infoWindowContent, // info window 內容
-    //     infoWindowOptions: { maxWidth: 200 }, // info window 選項
-    //   };
-    //
-    //   return marker;
-    // });
+  }
 
-    this.mapInit()
+  mapInit() {
+    // 定義地圖相關設定
+    this.mapOptions = {
+      zoom: 14,
+      center: this.center,
+      mapTypeControl: true,
+      scaleControl: true,
+    };
+
+    // 創建地圖實例
+    this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
+
+    // 預設顯示所有 info window
+    for (const location of products) {
+      const marker = new google.maps.Marker({
+        position: new google.maps.LatLng(location.position.lat, location.position.lng),
+        map: this.map,
+        title: location.addr,
+        icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
+        // options: { animation: google.maps.Animation.BOUNCE },
+      });
+
+      const infowindow = new google.maps.InfoWindow({
+        content: location.infoWindowContent
+      });
+
+      //開info
+      google.maps.event.addListener(marker, 'click', () => {
+        infowindow.open(this.map, marker);
+        this.map.setZoom(14);
+        this.map.setCenter(marker.getPosition() as google.maps.LatLng);
+      });
+
+      // 一開始就顯示資訊窗口
+      infowindow.open(this.map, marker);
+
+      this.markers.push(marker);
+    }
 
     //建立點的按鈕 -> 右鍵生成地標
     this.map.addListener("contextmenu", (e: any) => {
@@ -211,8 +231,6 @@ export class HistoryPathComponent implements OnInit {
 
         // 設定 landmarkButt 為 true
         this.landmarkButt = true;
-
-        // 此處可以為按鈕添加點擊事件處理程序，執行相應的操作
       }
     });
 
@@ -254,15 +272,16 @@ export class HistoryPathComponent implements OnInit {
 
     //如果中心點偏移，會回到標記的位置
     this.map.addListener("center_changed", () => {
-        window.setTimeout(() => {
-          if (this.previousMarker) {
-            this.map.panTo(this.previousMarker.getPosition() as google.maps.LatLng);
-          }
-        }, 0);
-
+      window.setTimeout(() => {
+        if (this.previousMarker) {
+          this.map.panTo(this.previousMarker.getPosition() as google.maps.LatLng);
+        }
+      }, 0);
     });
+  }
 
-    // 建立 Directions Service
+  // 建立 Directions Service
+  createDirectionServ() {
     const directionsService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer(
       {
@@ -316,46 +335,6 @@ export class HistoryPathComponent implements OnInit {
     });
   }
 
-  mapInit() {
-    // 定義地圖相關設定
-    this.mapOptions = {
-      zoom: 14,
-      center: this.center,
-      mapTypeControl: true,
-      scaleControl: true,
-    };
-
-    // 創建地圖實例
-    this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
-
-    // 預設顯示所有 info window
-    for (const location of products) {
-      const marker = new google.maps.Marker({
-        position: new google.maps.LatLng(location.position.lat, location.position.lng),
-        map: this.map,
-        title: location.addr,
-        icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
-        // options: { animation: google.maps.Animation.BOUNCE },
-      });
-
-      const infowindow = new google.maps.InfoWindow({
-        content: location.infoWindowContent
-      });
-
-      //開info
-      google.maps.event.addListener(marker, 'click', () => {
-        infowindow.open(this.map, marker);
-        // this.map.setZoom(14);
-        // this.map.setCenter(marker.getPosition() as google.maps.LatLng);
-      });
-
-      // 一開始就顯示資訊窗口
-      infowindow.open(this.map, marker);
-
-      this.markers.push(marker);
-    }
-  }
-
   transformedData: any[] = []; // 存轉換後
   locations: { lat: number; lng: number }[] = []; // 存地址
   // 取得全部車輛狀態
@@ -383,6 +362,11 @@ export class HistoryPathComponent implements OnInit {
             // icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
           });
         }
+
+        // 設定地圖的中心點
+        this.map.setZoom(8);
+        const centerLatLng = new google.maps.LatLng(23.83876, 120.9876);
+        this.map.setCenter(centerLatLng);
       },
       error: (err) => {
         console.log(err);
@@ -631,4 +615,17 @@ export class HistoryPathComponent implements OnInit {
     { name: 'Star', icon: 'pi pi-star-fill', code: 'Star' },
     { name: 'Company', icon: 'pi pi-building', code: 'Company' },
   ];
+
+  startDate : any
+  getDefaultStartDate() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to 00:00:00.000
+    this.startDate = today
+  }
+  endDate : any
+  getDefaultEndDate() {
+    const today = new Date();
+    today.setHours(23, 59, 59, 999); // Set to 23:59:59.999
+    this.endDate = today
+  }
 }
