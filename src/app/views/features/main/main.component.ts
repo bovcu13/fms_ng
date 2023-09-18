@@ -97,8 +97,10 @@ export class MainComponent implements OnInit {
     // 建立 Directions Service
     this.createDirectionsService()
 
-    this.getAllNewGpsRequest();
+    this.getAllNewGpsRequest()
 
+    this.getDefaultStartDate()
+    this.getDefaultEndDate()
   }
 
   @Input() get selectedColumns(): any[] {
@@ -733,4 +735,30 @@ export class MainComponent implements OnInit {
     { name: 'Star', icon: 'pi pi-star-fill', code: 'Star' },
     { name: 'Company', icon: 'pi pi-building', code: 'Company' },
   ];
+
+  startDate : any
+  getDefaultStartDate() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to 00:00:00.000
+    this.startDate = today
+  }
+  endDate : any
+  getDefaultEndDate() {
+    const today = new Date();
+    today.setHours(23, 59, 59, 999); // Set to 23:59:59.999
+    this.endDate = today
+  }
+
+  getDisabledDates(): any[] {
+    const today = new Date();
+    const disabledDates = [];
+
+    // Generate disabled dates from tomorrow onwards
+    for (let i = today.getDate() + 1; i <= 31; i++) {
+      const disabledDate = new Date(today.getFullYear(), today.getMonth(), i);
+      disabledDates.push({ date: disabledDate });
+    }
+
+    return disabledDates;
+  }
 }
