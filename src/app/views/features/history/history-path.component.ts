@@ -366,28 +366,18 @@ export class HistoryPathComponent implements OnInit {
         console.log("來源資料:",res.body.gps);
         this.transformedData = this.products.map(item => ({
           ...item,
-          position: {
-            lat: item.lat,
-            lng: item.lon
-          },
           url: "assets/image/warehouse.png",
           addr:"",
-          lng: item.lon
         }));
         console.log("轉換後資料:",this.transformedData);
 
-        // 提取經緯度 創建 locations 數組
-        this.locations = this.transformedData.map(item => ({
-          lat: item.position.lat,
-          lng: item.position.lng
-        }));
         // 轉換成中文地址
         this.geocodePositions();
 
         //標記
         for (const location of this.transformedData) {
           const marker = new google.maps.Marker({
-            position: new google.maps.LatLng(location.position.lat, location.position.lng),
+            position: new google.maps.LatLng(location.lat, location.lng),
             map: this.map,
             title: location.addr,
             // icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
@@ -532,7 +522,7 @@ export class HistoryPathComponent implements OnInit {
 
   Select() {
     if (this.selectedProduct) {
-      this.center = this.selectedProduct.position;
+      this.center = this.selectedProduct;
       this.map.setCenter(new google.maps.LatLng(this.center.lat, this.center.lng));
     }
   }
@@ -585,7 +575,7 @@ export class HistoryPathComponent implements OnInit {
     const geocoder = new google.maps.Geocoder();
 
     this.transformedData.forEach(product => {
-      const latlng = new google.maps.LatLng(product.position.lat, product.position.lng);
+      const latlng = new google.maps.LatLng(product.lat, product.lng);
 
       geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
         if (status === google.maps.GeocoderStatus.OK) {
