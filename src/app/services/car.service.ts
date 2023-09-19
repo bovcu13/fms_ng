@@ -41,9 +41,9 @@ export class CarService {
 
   //--車輛狀態------------------------------------------------------------------------------------------------
 
-  getAllGpsRequest(id:any): Observable<any> {
+  getAllGpsRequest(id:any, body:any): Observable<any> {
     const url = `${BaseUrl}/web/v1.0/gps/list/${id}`;
-    return this.http.get<any>(url);
+    return this.http.post<any>(url, body);
   }
 
   getAllNewGpsRequest(): Observable<any> {
