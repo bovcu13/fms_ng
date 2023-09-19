@@ -516,24 +516,24 @@ export class MainComponent implements OnInit {
   }
 
   // 取得全部車輛歷史紀錄
-  getAllGpsRequest(id: any) {
-    this.carServ.getAllGpsRequest(id).subscribe({
-      next: (res) => {
-        this.products = res.body.gps;
-        console.log("來源資料:", res.body.gps);
-        this.transformedData = this.products.map(item => ({
-          ...item,
-          url: "assets/image/warehouse.png",
-          addr: "",
-          infoWindowContent: item.sid,
-        }));
-        // 轉換成中文地址
-        this.geocodePositions();
-        console.log("轉換後資料:", this.transformedData);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
+  // getAllGpsRequest(id: any) {
+  //   this.carServ.getAllGpsRequest(id).subscribe({
+  //     next: (res) => {
+  //       this.products = res.body.gps;
+  //       console.log("來源資料:", res.body.gps);
+  //       this.transformedData = this.products.map(item => ({
+  //         ...item,
+  //         url: "assets/image/warehouse.png",
+  //         addr: "",
+  //         infoWindowContent: item.sid,
+  //       }));
+  //       // 轉換成中文地址
+  //       this.geocodePositions();
+  //       console.log("轉換後資料:", this.transformedData);
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     },
+  //   });
+  // }
 }

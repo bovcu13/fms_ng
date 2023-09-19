@@ -48,6 +48,7 @@ export class HistoryPathComponent implements OnInit {
   }
 
   speedRate: number = 1;
+
   changeSpeed() {
     // 切換速率
     switch (this.speedRate) {
@@ -85,6 +86,7 @@ export class HistoryPathComponent implements OnInit {
     }
   }
 
+  // 作用在時間條的拉取
   onSliderChange(event: any) {
     // 清除之前的車輛標記
     if (this.car !== null) {
@@ -101,22 +103,17 @@ export class HistoryPathComponent implements OnInit {
     });
   }
 
-  //起點、終點
-  startCoordinate: google.maps.LatLngLiteral = products[0].position;
-  endCoordinate: google.maps.LatLngLiteral = products[products.length - 1].position;
-  // 初始化車車的位置為起點位置
-  carPosition: google.maps.LatLngLiteral = {
-    lat: this.startCoordinate.lat,
-    lng: this.startCoordinate.lng,
-  }
   // 用來儲存路線座標的變數
   routeCoordinates: google.maps.LatLngLiteral[] = [];
 
-  //初始地圖地點
+  //初始地圖地點 ->在南投
   center: google.maps.LatLngLiteral = {
-    lat: 25.11450302362639,
-    lng: 121.5222738032652
+    lat: 23.83876,
+    lng: 120.9876
   };
+
+  // 初始化車的位置為起點位置
+  carPosition: google.maps.LatLngLiteral = this.routeCoordinates[0];
 
   // 創建標記
   markers: any[] = []
@@ -139,15 +136,12 @@ export class HistoryPathComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllGpsRequest("9901CA15")
+
     this.itemInit()
 
     this.mapInit()
 
-    this.createDirectionServ()
-
-    this.getDefaultStartDate()
-    this.getDefaultEndDate()
+    this.getDefaultDate()
   }
 
   itemInit() {
@@ -178,7 +172,7 @@ export class HistoryPathComponent implements OnInit {
   mapInit() {
     // 定義地圖相關設定
     this.mapOptions = {
-      zoom: 14,
+      zoom: 8,
       center: this.center,
       mapTypeControl: true,
       scaleControl: true,
@@ -186,33 +180,6 @@ export class HistoryPathComponent implements OnInit {
 
     // 創建地圖實例
     this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
-
-    // 預設顯示所有 info window
-    for (const location of products) {
-      const marker = new google.maps.Marker({
-        position: new google.maps.LatLng(location.position.lat, location.position.lng),
-        map: this.map,
-        title: location.addr,
-        icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
-        // options: { animation: google.maps.Animation.BOUNCE },
-      });
-
-      const infowindow = new google.maps.InfoWindow({
-        content: location.infoWindowContent
-      });
-
-      //開info
-      google.maps.event.addListener(marker, 'click', () => {
-        infowindow.open(this.map, marker);
-        this.map.setZoom(14);
-        this.map.setCenter(marker.getPosition() as google.maps.LatLng);
-      });
-
-      // 一開始就顯示資訊窗口
-      infowindow.open(this.map, marker);
-
-      this.markers.push(marker);
-    }
 
     //建立點的按鈕 -> 右鍵生成地標
     this.map.addListener("contextmenu", (e: any) => {
@@ -280,93 +247,66 @@ export class HistoryPathComponent implements OnInit {
     });
   }
 
-  // 建立 Directions Service
-  createDirectionServ() {
-    const directionsService = new google.maps.DirectionsService();
-    const directionsRenderer = new google.maps.DirectionsRenderer(
-      {
-        suppressMarkers: true
-      });
+  // 處理路徑需花費的時間
+  calculatePathTime() {
+    this.totalTime = this.routeCoordinates.length
+    console.log('總時間：', this.formatTime(this.totalTime));
+  }
 
-    // 添加到 map
-    directionsRenderer.setMap(this.map);
-
-    // 設定起點、終點和中途站點
-    const waypoints: google.maps.DirectionsWaypoint[] = products.map(product => ({
-      location: new google.maps.LatLng(product.position.lat, product.position.lng),
-      stopover: true,
-    }));
-
-    // 設定 Directions Request
-    const request = {
-      origin: this.startCoordinate, // 起點
-      destination: this.endCoordinate, // 終點
-      waypoints: waypoints, // 中間站
-      travelMode: google.maps.TravelMode.DRIVING, // 導航方式
-    };
-
-    // 發送 Directions Request
-    directionsService.route(request, (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus) => {
-      if (status === google.maps.DirectionsStatus.OK) {
-        // 取得路線資料
-        this.routeCoordinates = result!.routes[0].overview_path.map(
-          (latLng: google.maps.LatLng) => ({
-            lat: latLng.lat(),
-            lng: latLng.lng()
-          })
-        );
-
-        // 處理路線座標
-        // this.geocodeCoordinates();
-        console.log("轉換地址:",this.addr)
-
-        // 顯示路線
-        directionsRenderer.setDirections(result);
-        // 獲取總時間
-        // this.totalTime = result.routes[0].legs.reduce(
-        //   (total, leg) => total + (leg.duration?.value || 0), // 使用可選鏈接運算符處理可能為 undefined 的情況
-        //   0
-        // );
-        this.totalTime = this.routeCoordinates.length
-        console.log('總時間：', this.formatTime(this.totalTime));
-      } else {
-        console.error('獲取路線失敗：', status);
-      }
-    });
+  searchPath() {
+    this.getAllGpsRequest("3246844970", { filter: { start_time: this.startDate, end_time: this.endDate } })
+    console.log("開始：",this.startDate,"結束：",this.endDate)
   }
 
   transformedData: any[] = []; // 存轉換後
-  locations: { lat: number; lng: number }[] = []; // 存地址
+
   // 取得全部車輛狀態
-  getAllGpsRequest(id: any) {
-    this.carServ.getAllGpsRequest(id).subscribe({
+  getAllGpsRequest(id: any, body: any) {
+    this.carServ.getAllGpsRequest(id, body).subscribe({
       next: (res) => {
         this.products = res.body.gps;
-        console.log("來源資料:",res.body.gps);
+        console.log("來源資料:", res.body.gps);
         this.transformedData = this.products.map(item => ({
           ...item,
           url: "assets/image/warehouse.png",
-          addr:"",
+          addr: "",
         }));
-        console.log("轉換後資料:",this.transformedData);
+        // 單獨取得路徑
+        this.routeCoordinates = this.products.map(item => ({
+          lat: item.lat,
+          lng: item.lng
+        }));
+        // 計算路徑時間
+        this.calculatePathTime()
+
+        console.log("轉換後資料:", this.transformedData);
 
         // 轉換成中文地址
         this.geocodePositions();
 
-        //標記
-        for (const location of this.transformedData) {
-          const marker = new google.maps.Marker({
-            position: new google.maps.LatLng(location.lat, location.lng),
-            map: this.map,
-            title: location.addr,
-            // icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
-          });
-        }
-
         // 設定地圖的中心點
-        this.map.setZoom(8);
-        const centerLatLng = new google.maps.LatLng(23.83876, 120.9876);
-        this.map.setCenter(centerLatLng);
+        this.map.setZoom(14);
+        this.map.setCenter(this.routeCoordinates[0]);
+
+        // 顯示路徑
+        const historyPath = new google.maps.Polyline({
+          path: this.routeCoordinates,
+          geodesic: true,
+          strokeColor: "#77428D",
+          strokeOpacity: 1.0,
+          strokeWeight: 5,
+        });
+        historyPath.setMap(this.map);
+
+        // 建立車輛圖示
+        if (this.car !== null) {
+          this.car.setMap(null);
+        }
+        this.car = new google.maps.Marker({
+          position: this.routeCoordinates[0],
+          map: this.map,
+          icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
+        });
       },
       error: (err) => {
         console.log(err);
@@ -424,6 +364,7 @@ export class HistoryPathComponent implements OnInit {
   }
 
   poiMarker = google.maps.LatLngLiteral
+
   //新增地標的按鈕
   addLandMark() {
     const svgMarker = {
@@ -467,6 +408,7 @@ export class HistoryPathComponent implements OnInit {
   }
 
   previousMarker: google.maps.Marker | null = null;
+
   // 點擊地圖座標跑至中心
   placeMarkerAndPanTo(latLng: google.maps.LatLng, map: google.maps.Map) {
     // 清除之前的標記
@@ -511,48 +453,7 @@ export class HistoryPathComponent implements OnInit {
     }
   }
 
-  // geocodePositions(data: any[], callback: (data: any) => void) {
-  //   const geocoder = new google.maps.Geocoder();
-  //
-  //   data.forEach(item => {
-  //     let lat, lng;
-  //     if (item.position) {
-  //       lat = item.position.lat;
-  //       lng = item.position.lng;
-  //     } else if (item.lat && item.lng) {
-  //       lat = item.lat;
-  //       lng = item.lng;
-  //     } else {
-  //       item.addr = '缺少位置資訊';
-  //       callback(item);
-  //       return;
-  //     }
-  //
-  //     const latlng = new google.maps.LatLng(lat, lng);
-  //
-  //     geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
-  //       if (status === google.maps.GeocoderStatus.OK) {
-  //         let addressFound = false;
-  //         if (results && results.length > 0) {
-  //           for (let i = 0; i < results.length; i++) {
-  //             const formattedAddress = results[i].formatted_address;
-  //             if (!formattedAddress.match(/\b\w+\+\w+\b/)) {
-  //               item.addr = formattedAddress;
-  //               addressFound = true;
-  //               break;
-  //             }
-  //           }
-  //         }
-  //         if (!addressFound) {
-  //           item.addr = '找不到地址';
-  //         }
-  //       } else {
-  //         item.addr = '編碼錯誤';
-  //       }
-  //       callback(item);
-  //     });
-  //   });
-  // }
+  addr: any[] = []
 
   // 加到addr
   geocodePositions() {
@@ -584,30 +485,6 @@ export class HistoryPathComponent implements OnInit {
     });
   }
 
-  addr: any[] = []
-
-  // 只有lat, lng
-  geocodeCoordinates() {
-    const geocoder = new google.maps.Geocoder();
-
-    const coordinatesToProcess = this.locations;
-
-    coordinatesToProcess.forEach(latlng => {
-      geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
-        if (status === google.maps.GeocoderStatus.OK) {
-          if (results[0]) {
-            const address = results[0].formatted_address;
-            this.addr.push(address)
-          } else {
-            console.error('找不到地址');
-          }
-        } else {
-          console.error('地理編碼失敗，錯誤代碼：', status);
-        }
-      });
-    });
-  }
-
   oddTem: number = 1;
 
   markType: any[] = [
@@ -617,15 +494,20 @@ export class HistoryPathComponent implements OnInit {
   ];
 
   startDate : any
-  getDefaultStartDate() {
+  endDate : any
+  maxDate = new Date()
+  getDefaultDate() {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Set to 00:00:00.000
     this.startDate = today
+    this.endDate = new Date();
   }
-  endDate : any
-  getDefaultEndDate() {
-    const today = new Date();
-    today.setHours(23, 59, 59, 999); // Set to 23:59:59.999
-    this.endDate = today
+
+  onStartDateChange(event: any) {
+    this.startDate = event;
+  }
+
+  onEndDateChange(event: any) {
+    this.endDate = event;
   }
 }
