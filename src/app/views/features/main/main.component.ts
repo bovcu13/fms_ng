@@ -163,8 +163,15 @@ export class MainComponent implements OnInit {
         }
       },
       {
-        icon: 'pi pi-refresh',
+        icon: 'fas fa-compress-arrows-alt',
+        tooltipOptions: {
+          tooltipLabel: "全景地圖",
+          tooltipPosition: "bottom"
+        },
         command: () => {
+          const centerLatLng = new google.maps.LatLng(23.83876, 120.9876);
+          this.map.setCenter(centerLatLng);
+          this.map.setZoom(8);
         }
       },
       {
