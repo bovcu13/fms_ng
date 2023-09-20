@@ -37,7 +37,7 @@
             <div class="col-12 flex justify-content-between">
               <div class="col-1 mt-3">
                 <p-toggleButton [ngModel]="isPlaying" (onChange)="togglePlay()" onIcon="pi pi-caret-right"
-                                offIcon="pi pi-pause"></p-toggleButton>
+                                offIcon="pi pi-pause" [disabled]="playable"></p-toggleButton>
               </div>
               <div class="col-11 ml-2 mt-5">
                 <div class="slider-container">
@@ -61,9 +61,13 @@
                         [style]="{ width: '4em' }"></p-button>
             </div>
           </div>
-          <p-table [value]="transformedData" [paginator]="true" [rows]="5" selectionMode="single"
+          <p-table [value]="transformedData"
+                   [rows]="5"
+                   selectionMode="single"
                    [(selection)]="selectedProduct"
-                   (onRowSelect)="Select()">
+                   (onRowSelect)="Select()"
+                   [scrollable]="true"
+                   scrollHeight="50vh">
             <ng-template pTemplate="header">
               <tr>
                 <th>狀態累積</th>
@@ -74,7 +78,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-product>
               <tr [pSelectableRow]="product">
-                <td>{{ product.statetime }}</td>
+                <td>{{ product.date_time | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                 <td>{{ product.state }}</td>
                 <td>{{ product.speed }}</td>
                 <td>{{ product.addr }}</td>
