@@ -61,9 +61,13 @@
                         [style]="{ width: '4em' }"></p-button>
             </div>
           </div>
-          <p-table [value]="transformedData" [paginator]="true" [rows]="5" selectionMode="single"
+          <p-table [value]="transformedData"
+                   [rows]="5"
+                   selectionMode="single"
                    [(selection)]="selectedProduct"
-                   (onRowSelect)="Select()">
+                   (onRowSelect)="Select()"
+                   [scrollable]="true"
+                   scrollHeight="50vh">
             <ng-template pTemplate="header">
               <tr>
                 <th>狀態累積</th>
@@ -74,7 +78,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-product>
               <tr [pSelectableRow]="product">
-                <td>{{ product.statetime }}</td>
+                <td>{{ product.date_time | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                 <td>{{ product.state }}</td>
                 <td>{{ product.speed }}</td>
                 <td>{{ product.addr }}</td>

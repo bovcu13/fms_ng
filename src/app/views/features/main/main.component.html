@@ -37,8 +37,13 @@
                           placeholder="選擇結束時間"></p-calendar>
             </div>
           </div>
-          <p-table [columns]="selectedColumns" [value]="transformedData" [rows]="5" selectionMode="single"
-                   [(selection)]="selectedProduct" [scrollable]="true" scrollHeight="70vh"
+          <p-table [columns]="selectedColumns"
+                   [value]="transformedData"
+                   [rows]="5"
+                   selectionMode="single"
+                   [(selection)]="selectedProduct"
+                   [scrollable]="true"
+                   scrollHeight="70vh"
                    (onRowSelect)="Select()">
             <ng-template pTemplate="caption">
               <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns"

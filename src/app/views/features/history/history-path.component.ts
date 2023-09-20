@@ -157,13 +157,15 @@ export class HistoryPathComponent implements OnInit {
         }
       },
       {
-        icon: 'pi pi-refresh',
+        icon: 'fas fa-compress-arrows-alt',
+        tooltipOptions: {
+          tooltipLabel: "全景地圖",
+          tooltipPosition: "bottom"
+        },
         command: () => {
-        }
-      },
-      {
-        icon: 'pi pi-trash',
-        command: () => {
+          const centerLatLng = new google.maps.LatLng(23.83876, 120.9876);
+          this.map.setCenter(centerLatLng);
+          this.map.setZoom(8);
         }
       }
     ];
@@ -173,9 +175,7 @@ export class HistoryPathComponent implements OnInit {
     // 定義地圖相關設定
     this.mapOptions = {
       zoom: 8,
-      center: this.center,
-      mapTypeControl: true,
-      scaleControl: true,
+      center: this.center
     };
 
     // 創建地圖實例
@@ -283,10 +283,6 @@ export class HistoryPathComponent implements OnInit {
 
         // 轉換成中文地址
         this.geocodePositions();
-
-        // 設定地圖的中心點
-        this.map.setZoom(14);
-        this.map.setCenter(this.routeCoordinates[0]);
 
         // 顯示路徑
         const historyPath = new google.maps.Polyline({
