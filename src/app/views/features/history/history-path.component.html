@@ -37,7 +37,7 @@
             <div class="col-12 flex justify-content-between">
               <div class="col-1 mt-3">
                 <p-toggleButton [ngModel]="isPlaying" (onChange)="togglePlay()" onIcon="pi pi-caret-right"
-                                offIcon="pi pi-pause"></p-toggleButton>
+                                offIcon="pi pi-pause" [disabled]="playable"></p-toggleButton>
               </div>
               <div class="col-11 ml-2 mt-5">
                 <div class="slider-container">

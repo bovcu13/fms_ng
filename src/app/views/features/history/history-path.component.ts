@@ -26,6 +26,8 @@ export class HistoryPathComponent implements OnInit {
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 
+  playable: boolean = true
+
   togglePlay() {
     if (!this.isPlaying) {
       clearInterval(this.intervalId);
@@ -33,7 +35,7 @@ export class HistoryPathComponent implements OnInit {
     } else {
       // 計算新的間隔時間以達到所選的速率
       const newInterval = 1000 / this.speedRate;
-
+      console.log('play-slider:',this.sliderValue)
       this.intervalId = setInterval(() => {
         this.sliderValue++;
         if (this.sliderValue > this.totalTime) {
@@ -92,8 +94,8 @@ export class HistoryPathComponent implements OnInit {
     if (this.car !== null) {
       this.car.setMap(null);
     }
-    this.index = event.value;
-    this.carPosition = this.routeCoordinates[this.index];
+    this.selectedProductIndex = event.value;
+    this.carPosition = this.routeCoordinates[this.selectedProductIndex];
     this.car?.setPosition(this.carPosition); // 更新車輛位置
     // 建立新的車輛圖示
     this.car = new google.maps.Marker({
@@ -101,6 +103,100 @@ export class HistoryPathComponent implements OnInit {
       map: this.map,
       icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
     });
+  }
+
+  products: any[] = products;
+  selectedProduct: any;
+
+  carGroups: any = [
+    { name: '車隊(A)', code: 'A' },
+    { name: '車隊(B)', code: 'B' },
+    { name: '車隊(C)', code: 'C' },
+    { name: '車隊(D)', code: 'D' },
+  ]
+  cars: any = [
+    { name: 'A-123', code: 'A' },
+    { name: 'B-123', code: 'B' },
+    { name: 'C-123', code: 'C' },
+    { name: 'D-123', code: 'D' },
+  ]
+
+  selectedProductIndex: number = 0;
+  Select() {
+    if (this.selectedProduct) {
+      console.log(this.selectedProduct)
+      this.center = this.selectedProduct;
+      this.map.setCenter(new google.maps.LatLng(this.center.lat, this.center.lng));
+    }
+    if (this.selectedProduct) {
+      // 找index
+      const selectedIndex = this.transformedData.findIndex(
+        product => product === this.selectedProduct
+      );
+
+      // 是否被找到
+      if (selectedIndex !== -1) {
+        // 儲存index
+        this.selectedProductIndex = selectedIndex;
+        console.log('index:', this.selectedProductIndex);
+
+        // 清除之前的車輛標記
+        if (this.car !== null) {
+          this.car.setMap(null);
+        }
+        this.sliderValue = this.selectedProductIndex
+        console.log('table-slider:',this.sliderValue)
+        this.carPosition = this.routeCoordinates[this.selectedProductIndex];
+        this.car?.setPosition(this.carPosition); // 更新車輛位置
+        // 建立新的車輛圖示
+        this.car = new google.maps.Marker({
+          position: this.carPosition,
+          map: this.map,
+          icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
+        });
+      } else {
+        console.log('錯誤');
+      }
+    }
+  }
+
+  //車車
+  carMovementInterval: any; // 車車定時器ID
+  car: google.maps.Marker | null = null; // 車輛標記
+
+  //車輛更新
+  simulateCarMovement(routeCoordinates: google.maps.LatLngLiteral[]): void {
+    // 清除之前的車輛標記
+    if (this.car !== null) {
+      this.car.setMap(null);
+    }
+    // 建立新的車輛圖示
+    this.car = new google.maps.Marker({
+      position: this.carPosition,
+      map: this.map,
+      icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
+    });
+    const newInterval = 1000 / this.speedRate;
+    //車輛移動
+    this.carMovementInterval = setInterval(() => {
+      if (this.selectedProductIndex < routeCoordinates.length) {
+        // 計算新的間隔時間以達到所選的速率
+        console.log(this.selectedProductIndex)
+        // 表格會跟著動
+        this.selectedProduct = this.transformedData[this.selectedProductIndex]
+
+        this.carPosition = routeCoordinates[this.selectedProductIndex];
+        this.car?.setPosition(this.carPosition); // 更新車輛位置
+        this.selectedProductIndex++;
+      } else {
+        clearInterval(this.carMovementInterval); // 所有座標都跑完，清除定時器
+      }
+    }, newInterval); // 每隔1秒更新一次位置
+  }
+
+  // 暫停車輛
+  pauseCarMovement(): void {
+    clearInterval(this.carMovementInterval);
   }
 
   // 用來儲存路線座標的變數
@@ -303,6 +399,9 @@ export class HistoryPathComponent implements OnInit {
           map: this.map,
           icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
         });
+
+        // 啟動播放鈕
+        this.playable = false
       },
       error: (err) => {
         console.log(err);
@@ -321,42 +420,6 @@ export class HistoryPathComponent implements OnInit {
       // 如果交通圖層未可見，則顯示它
       this.trafficLayer.setMap(this.map);
     }
-  }
-
-  //車車
-  carMovementInterval: any; // 車車定時器ID
-  car: google.maps.Marker | null = null; // 車輛標記
-  index: number = 0; //記錄位置
-  //車輛更新
-  simulateCarMovement(routeCoordinates: google.maps.LatLngLiteral[]): void {
-    // 清除之前的車輛標記
-    if (this.car !== null) {
-      this.car.setMap(null);
-    }
-    // 建立新的車輛圖示
-    this.car = new google.maps.Marker({
-      position: this.carPosition,
-      map: this.map,
-      icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
-    });
-    const newInterval = 1000 / this.speedRate;
-    //車輛移動
-    this.carMovementInterval = setInterval(() => {
-      if (this.index < routeCoordinates.length) {
-        // 計算新的間隔時間以達到所選的速率
-        console.log(this.index)
-        this.carPosition = routeCoordinates[this.index];
-        this.car?.setPosition(this.carPosition); // 更新車輛位置
-        this.index++;
-      } else {
-        clearInterval(this.carMovementInterval); // 所有座標都跑完，清除定時器
-      }
-    }, newInterval); // 每隔1秒更新一次位置
-  }
-
-  // 暫停車輛
-  pauseCarMovement(): void {
-    clearInterval(this.carMovementInterval);
   }
 
   poiMarker = google.maps.LatLngLiteral
@@ -424,29 +487,6 @@ export class HistoryPathComponent implements OnInit {
 
     // 將新標記設為上一個標記
     this.previousMarker = marker;
-  }
-
-  products: any[] = products;
-  selectedProduct: any;
-
-  carGroups: any = [
-    { name: '車隊(A)', code: 'A' },
-    { name: '車隊(B)', code: 'B' },
-    { name: '車隊(C)', code: 'C' },
-    { name: '車隊(D)', code: 'D' },
-  ]
-  cars: any = [
-    { name: 'A-123', code: 'A' },
-    { name: 'B-123', code: 'B' },
-    { name: 'C-123', code: 'C' },
-    { name: 'D-123', code: 'D' },
-  ]
-
-  Select() {
-    if (this.selectedProduct) {
-      this.center = this.selectedProduct;
-      this.map.setCenter(new google.maps.LatLng(this.center.lat, this.center.lng));
-    }
   }
 
   addr: any[] = []
