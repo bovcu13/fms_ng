@@ -109,10 +109,10 @@ export class MainComponent implements OnInit {
   colsInit() {
     this.cols = [
       { field: 'state', header: '狀態' },
-      { field: 'sid', header: '車牌' },
+      { field: 'license_plate', header: '車牌' },
       { field: 'speed', header: '時速' },
-      { field: 'vehicleName', header: '車輛名稱' },
-      { field: 'name', header: '姓名' },
+      { field: 'vehicle_name', header: '車輛名稱' },
+      { field: 'driver', header: '姓名' },
       { field: 'addr', header: '地址/地標' },
       { field: 'statusAccumulated', header: '狀態累積' },
       { field: 'departureTime', header: '出車時間' },
@@ -126,9 +126,9 @@ export class MainComponent implements OnInit {
 
     this._selectedColumns = [
       { field: 'state', header: '狀態' },
-      { field: 'sid', header: '車牌' },
+      { field: 'license_plate', header: '車牌' },
       { field: 'speed', header: '時速' },
-      { field: 'name', header: '姓名' },
+      { field: 'driver', header: '姓名' },
       { field: 'addr', header: '地址/地標' },
     ]
   }
@@ -433,7 +433,6 @@ export class MainComponent implements OnInit {
   }
 
   transformedData: any[] = []; // 存轉換後api資料
-  locations: { lat: number; lng: number }[] = []; // 存地址
 
   // init - 取得All車輛即時位置
   getAllNewGpsRequest() {
@@ -445,11 +444,11 @@ export class MainComponent implements OnInit {
           ...item,
           url: "assets/image/warehouse.png",
           addr: "",
-          infoWindowContent: item.sid,
+          infoWindowContent: item.license_plate +''+ item.driver,
         }));
         this.cars = this.products.map(item => ({
-          name: item.sid,
-          code: item.sid
+          name: item.license_plate,
+          code: item.license_plate
         }));
         // 轉換成中文地址
         this.geocodePositions();
@@ -473,11 +472,20 @@ export class MainComponent implements OnInit {
               title: location.addr,
               icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
               center: this.center
-              // animation: google.maps.Animation.DROP,
             });
 
+            const licensePlate = location.license_plate;
+            const driver = location.driver;
+
+            const content = `
+                                    <div class="text-center">
+                                    <label>${licensePlate}</label>
+                                    <br>
+                                    <label>${driver}</label>
+                                    </div>
+                                    `;
             const infowindow = new google.maps.InfoWindow({
-              content: location.infoWindowContent
+              content: content,
             });
 
             // 一開始就顯示資訊窗口
@@ -510,11 +518,11 @@ export class MainComponent implements OnInit {
           ...item,
           url: "assets/image/warehouse.png",
           addr: "",
-          infoWindowContent: item.sid,
+          infoWindowContent: item.license_plate + item.driver,
         }));
         this.cars = this.products.map(item => ({
-          name: item.sid,
-          code: item.sid
+          name: item.license_plate,
+          code: item.license_plate
         }));
         // 轉換成中文地址
         this.geocodePositions();
@@ -537,8 +545,18 @@ export class MainComponent implements OnInit {
               icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
             });
 
+            const licensePlate = location.license_plate;
+            const driver = location.driver;
+
+            const content = `
+                                    <div class="text-center">
+                                    <label>${licensePlate}</label>
+                                    <br>
+                                    <label>${driver}</label>
+                                    </div>
+                                    `;
             const infowindow = new google.maps.InfoWindow({
-              content: location.infoWindowContent
+              content: content,
             });
 
             // 一開始就顯示資訊窗口
