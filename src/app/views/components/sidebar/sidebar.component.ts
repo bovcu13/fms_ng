@@ -228,18 +228,32 @@ export class SidebarComponent implements OnInit {
         ]
       },
       {
-        label: 'Admin',
+        label: '車隊管理',
         icon: 'pi pi-shield',
+        expanded: true,
         items: [
           {
-            label: '權限管理',
+            label: '司機',
             icon: 'pi pi-shield',
             routerLink: '/role',
             command:() =>{
               this.sideVisible = false
             },
-            style: {
-              background: 'rgba(250,245,200,0.6)',
+          },
+          {
+            label: '車輛',
+            icon: 'pi pi-shield',
+            routerLink: '/role',
+            command:() =>{
+              this.sideVisible = false
+            },
+          },
+          {
+            label: '付費訂閱',
+            icon: 'pi pi-shield',
+            routerLink: '/role',
+            command:() =>{
+              this.sideVisible = false
             },
           },
         ]
