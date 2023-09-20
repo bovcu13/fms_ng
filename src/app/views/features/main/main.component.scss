@@ -60,6 +60,45 @@
     display: flex;
     align-items: center;
   }
+
+// info的x按鈕
+  button.gm-ui-hover-effect {
+    visibility: hidden;
+  }
+
+// info
+  .gm-style .gm-style-iw-c {
+    position: absolute;
+    box-sizing: border-box;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    transform: translate3d(-50%,-100%,0);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: none;
+  }
+
+  // info的三角形
+  .gm-style .gm-style-iw-tc::after {
+    background: transparent;
+    clip-path: polygon(0 0,50% 100%,100% 0);
+    content: "";
+    height: 12px;
+    left: 0;
+    position: absolute;
+    top: -1px;
+    width: 25px;
+  }
+
+  // info font
+  .gm-style .gm-style-iw {
+    font-weight: bold;
+    font-size: 13px;
+    overflow: hidden;
+  }
 }
 
 #custom-button {
