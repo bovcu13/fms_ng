@@ -173,11 +173,6 @@ export class MainComponent implements OnInit {
           this.map.setCenter(centerLatLng);
           this.map.setZoom(8);
         }
-      },
-      {
-        icon: 'pi pi-trash',
-        command: () => {
-        }
       }
     ];
   }
