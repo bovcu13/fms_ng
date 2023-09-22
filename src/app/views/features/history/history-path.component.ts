@@ -114,12 +114,7 @@ export class HistoryPathComponent implements OnInit {
     { name: '車隊(C)', code: 'C' },
     { name: '車隊(D)', code: 'D' },
   ]
-  cars: any = [
-    { name: 'A-123', code: 'A' },
-    { name: 'B-123', code: 'B' },
-    { name: 'C-123', code: 'C' },
-    { name: 'D-123', code: 'D' },
-  ]
+  cars: any[] = [];
 
   selectedProductIndex: number = 0;
 
@@ -237,6 +232,8 @@ export class HistoryPathComponent implements OnInit {
     this.itemInit()
 
     this.mapInit()
+
+    this.getAllVehiclesRequest()
 
     this.getDefaultDate()
   }
@@ -356,8 +353,28 @@ export class HistoryPathComponent implements OnInit {
   }
 
   transformedData: any[] = []; // 存轉換後
+
+  vehiclesData: any[] = []; // 存轉換後
+
+  // 取得車牌
+  getAllVehiclesRequest() {
+    this.carServ.getAllVehiclesRequest().subscribe({
+      next: res => {
+        this.vehiclesData = res.body.vehicles;
+        this.cars = this.vehiclesData.map(item => ({
+          name: item.license_plate,
+          code: item.license_plate
+        }));
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
   historyPath: any; // 歷史路徑
-  // 取得全部車輛狀態
+
+  // 取得車輛歷史資料
   getAllGpsRequest(id: any, body: any) {
     this.carServ.getAllGpsRequest(id, body).subscribe({
       next: (res) => {
