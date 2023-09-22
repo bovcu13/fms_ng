@@ -35,7 +35,7 @@ export class HistoryPathComponent implements OnInit {
     } else {
       // 計算新的間隔時間以達到所選的速率
       const newInterval = 1000 / this.speedRate;
-      console.log('play-slider:',this.sliderValue)
+      console.log('play-slider:', this.sliderValue)
       this.intervalId = setInterval(() => {
         this.sliderValue++;
         if (this.sliderValue > this.totalTime) {
@@ -122,6 +122,7 @@ export class HistoryPathComponent implements OnInit {
   ]
 
   selectedProductIndex: number = 0;
+
   Select() {
     if (this.selectedProduct) {
       console.log(this.selectedProduct)
@@ -145,7 +146,7 @@ export class HistoryPathComponent implements OnInit {
           this.car.setMap(null);
         }
         this.sliderValue = this.selectedProductIndex
-        console.log('table-slider:',this.sliderValue)
+        console.log('table-slider:', this.sliderValue)
         this.carPosition = this.routeCoordinates[this.selectedProductIndex];
         this.car?.setPosition(this.carPosition); // 更新車輛位置
         // 建立新的車輛圖示
@@ -350,12 +351,12 @@ export class HistoryPathComponent implements OnInit {
   }
 
   searchPath() {
-    this.getAllGpsRequest("3246844970", { filter: { start_time: this.startDate, end_time: this.endDate } })
-    console.log("開始：",this.startDate,"結束：",this.endDate)
+    this.getAllGpsRequest("8987XC", { filter: { start_time: this.startDate, end_time: this.endDate } })
+    console.log("開始：", this.startDate, "結束：", this.endDate)
   }
 
   transformedData: any[] = []; // 存轉換後
-
+  historyPath: any; // 歷史路徑
   // 取得全部車輛狀態
   getAllGpsRequest(id: any, body: any) {
     this.carServ.getAllGpsRequest(id, body).subscribe({
@@ -380,20 +381,25 @@ export class HistoryPathComponent implements OnInit {
         // 轉換成中文地址
         this.geocodePositions();
 
+        // 清除先前的路徑
+        if (this.historyPath) {
+          this.historyPath.setMap(null);
+        }
         // 顯示路徑
-        const historyPath = new google.maps.Polyline({
+        this.historyPath = new google.maps.Polyline({
           path: this.routeCoordinates,
           geodesic: true,
           strokeColor: "#77428D",
           strokeOpacity: 1.0,
           strokeWeight: 5,
         });
-        historyPath.setMap(this.map);
+        this.historyPath.setMap(this.map);
 
-        // 建立車輛圖示
+        // 清除先前的車輛圖示
         if (this.car !== null) {
           this.car.setMap(null);
         }
+        // 建立車輛圖示
         this.car = new google.maps.Marker({
           position: this.routeCoordinates[0],
           map: this.map,
@@ -529,9 +535,10 @@ export class HistoryPathComponent implements OnInit {
     { name: 'Company', icon: 'pi pi-building', code: 'Company' },
   ];
 
-  startDate : any
-  endDate : any
+  startDate: any
+  endDate: any
   maxDate = new Date()
+
   getDefaultDate() {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Set to 00:00:00.000
