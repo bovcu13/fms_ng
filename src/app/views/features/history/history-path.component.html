@@ -19,7 +19,7 @@
               <p-dropdown [options]="carGroups" optionLabel="name" placeholder="選擇車隊"></p-dropdown>
             </div>
             <div class="col-6">
-              <p-dropdown [options]="cars" optionLabel="name" placeholder="選擇車牌"></p-dropdown>
+              <p-dropdown [options]="cars" (click)="getAllVehiclesRequest()" optionLabel="name" placeholder="選擇車牌"></p-dropdown>
             </div>
             <div class="col-6">
               <p-calendar [showTime]="true" [ngModel]="startDate" (onSelect)="onStartDateChange($event)"
