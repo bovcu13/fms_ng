@@ -101,7 +101,7 @@ export class HistoryPathComponent implements OnInit {
     this.car = new google.maps.Marker({
       position: this.carPosition,
       map: this.map,
-      icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
+      icon: { url: this.transformedData[this.selectedProductIndex].url, scaledSize: new google.maps.Size(50, 50) },
     });
   }
 
@@ -148,7 +148,7 @@ export class HistoryPathComponent implements OnInit {
         this.car = new google.maps.Marker({
           position: this.carPosition,
           map: this.map,
-          icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
+          icon: { url: this.transformedData[this.selectedProductIndex].url, scaledSize: new google.maps.Size(50, 50) },
         });
       } else {
         console.log('錯誤');
@@ -162,16 +162,6 @@ export class HistoryPathComponent implements OnInit {
 
   //車輛更新
   simulateCarMovement(routeCoordinates: google.maps.LatLngLiteral[]): void {
-    // 清除之前的車輛標記
-    if (this.car !== null) {
-      this.car.setMap(null);
-    }
-    // 建立新的車輛圖示
-    this.car = new google.maps.Marker({
-      position: this.carPosition,
-      map: this.map,
-      icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
-    });
     const newInterval = 1000 / this.speedRate;
     //車輛移動
     this.carMovementInterval = setInterval(() => {
@@ -180,7 +170,16 @@ export class HistoryPathComponent implements OnInit {
         console.log(this.selectedProductIndex)
         // 表格會跟著動
         this.selectedProduct = this.transformedData[this.selectedProductIndex]
-
+        // 清除之前的車輛標記
+        if (this.car !== null) {
+          this.car.setMap(null);
+        }
+        // 建立新的車輛圖示
+        this.car = new google.maps.Marker({
+          position: this.carPosition,
+          map: this.map,
+          icon: { url: this.transformedData[this.selectedProductIndex].url, scaledSize: new google.maps.Size(50, 50) },
+        });
         this.carPosition = routeCoordinates[this.selectedProductIndex];
         this.car?.setPosition(this.carPosition); // 更新車輛位置
         this.selectedProductIndex++;
@@ -382,8 +381,9 @@ export class HistoryPathComponent implements OnInit {
         console.log("來源資料:", res.body.gps);
         this.transformedData = this.products.map(item => ({
           ...item,
-          url: "assets/image/warehouse.png",
+          url: this.getUrlByDirection(item.heading),
           addr: "",
+          direction: this.parseHeading(item.heading)
         }));
         // 單獨取得路徑
         this.routeCoordinates = this.products.map(item => ({
@@ -420,7 +420,7 @@ export class HistoryPathComponent implements OnInit {
         this.car = new google.maps.Marker({
           position: this.routeCoordinates[0],
           map: this.map,
-          icon: { url: 'assets/image/sport-car.png', scaledSize: new google.maps.Size(50, 50) },
+          icon: { url: this.transformedData[0].url, scaledSize: new google.maps.Size(50, 50) },
         });
 
         // 啟動播放鈕
@@ -430,6 +430,44 @@ export class HistoryPathComponent implements OnInit {
         console.log(err);
       },
     });
+  }
+
+  getUrlByDirection(heading: number) {
+    let directionUrlMap: { [key: string]: string } = {
+      '北': 'assets/car/normal_n.png',
+      '東北': 'assets/car/normal_ne.png',
+      '東': 'assets/car/normal_e.png',
+      '東南': 'assets/car/normal_se.png',
+      '南': 'assets/car/normal_s.png',
+      '西南': 'assets/car/normal_sw.png',
+      '西': 'assets/car/normal_w.png',
+      '西北': 'assets/car/normal_nw.png'
+    };
+
+    let direction = this.parseHeading(heading);
+    return directionUrlMap[direction] || 'assets/image/warehouse.png'; // Default image if direction is unknown
+  }
+
+  parseHeading(heading: number) {
+    if ((heading >= 0 && heading < 22.5) || (heading >= 337.5 && heading <= 360)) {
+      return '北';
+    } else if (heading >= 22.5 && heading < 67.5) {
+      return '東北';
+    } else if (heading >= 67.5 && heading < 112.5) {
+      return '東';
+    } else if (heading >= 112.5 && heading < 157.5) {
+      return '東南';
+    } else if (heading >= 157.5 && heading < 202.5) {
+      return '南';
+    } else if (heading >= 202.5 && heading < 247.5) {
+      return '西南';
+    } else if (heading >= 247.5 && heading < 292.5) {
+      return '西';
+    } else if (heading >= 292.5 && heading < 337.5) {
+      return '西北';
+    } else {
+      return '未知方位';
+    }
   }
 
   //路況圖層開關
