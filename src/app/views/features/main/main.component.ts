@@ -130,6 +130,7 @@ export class MainComponent implements OnInit {
       { field: 'speed', header: '時速' },
       { field: 'driver', header: '姓名' },
       { field: 'addr', header: '地址/地標' },
+      { field: 'direction', header: '方向' },
     ]
   }
 
@@ -442,9 +443,10 @@ export class MainComponent implements OnInit {
         console.log("來源資料:", res);
         this.transformedData = this.products.map(item => ({
           ...item,
-          url: "assets/image/warehouse.png",
+          url: this.getUrlByDirection(item.heading),
           addr: "",
           infoWindowContent: item.license_plate +''+ item.driver,
+          direction: this.parseHeading(item.heading)
         }));
         this.cars = this.products.map(item => ({
           name: item.license_plate,
@@ -470,7 +472,7 @@ export class MainComponent implements OnInit {
               position: new google.maps.LatLng(location.lat, location.lng),
               map: this.map,
               title: location.addr,
-              icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
+              icon: { url: location.url, scaledSize: new google.maps.Size(75, 75) },
               center: this.center
             });
 
@@ -516,9 +518,10 @@ export class MainComponent implements OnInit {
         this.products = res.body.gps;
         this.transformedData = this.products.map(item => ({
           ...item,
-          url: "assets/image/warehouse.png",
+          url: this.getUrlByDirection(item.heading),
           addr: "",
           infoWindowContent: item.license_plate + item.driver,
+          direction: this.parseHeading(item.heading)
         }));
         this.cars = this.products.map(item => ({
           name: item.license_plate,
@@ -542,7 +545,7 @@ export class MainComponent implements OnInit {
               position: new google.maps.LatLng(location.lat, location.lng),
               map: this.map,
               title: location.addr,
-              icon: { url: location.url, scaledSize: new google.maps.Size(50, 50) },
+              icon: { url: location.url, scaledSize: new google.maps.Size(60, 60) },
             });
 
             const licensePlate = location.license_plate;
@@ -577,6 +580,44 @@ export class MainComponent implements OnInit {
         console.log(err);
       },
     });
+  }
+
+  getUrlByDirection(heading: number) {
+    let directionUrlMap: { [key: string]: string } = {
+      '北': 'assets/car/normal_n.png',
+      '東北': 'assets/car/normal_ne.png',
+      '東': 'assets/car/normal_e.png',
+      '東南': 'assets/car/normal_se.png',
+      '南': 'assets/car/normal_s.png',
+      '西南': 'assets/car/normal_sw.png',
+      '西': 'assets/car/normal_w.png',
+      '西北': 'assets/car/normal_nw.png'
+    };
+
+    let direction = this.parseHeading(heading);
+    return directionUrlMap[direction] || 'assets/image/warehouse.png'; // Default image if direction is unknown
+  }
+
+  parseHeading(heading: number) {
+    if ((heading >= 0 && heading < 22.5) || (heading >= 337.5 && heading <= 360)) {
+      return '北';
+    } else if (heading >= 22.5 && heading < 67.5) {
+      return '東北';
+    } else if (heading >= 67.5 && heading < 112.5) {
+      return '東';
+    } else if (heading >= 112.5 && heading < 157.5) {
+      return '東南';
+    } else if (heading >= 157.5 && heading < 202.5) {
+      return '南';
+    } else if (heading >= 202.5 && heading < 247.5) {
+      return '西南';
+    } else if (heading >= 247.5 && heading < 292.5) {
+      return '西';
+    } else if (heading >= 292.5 && heading < 337.5) {
+      return '西北';
+    } else {
+      return '未知方位';
+    }
   }
 
   // 取得全部車輛歷史紀錄
