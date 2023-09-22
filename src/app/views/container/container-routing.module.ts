@@ -12,7 +12,8 @@ import { MultipleCarsComponent } from "../features/multiple-cars/multiple-cars.c
 import { DrivingStatusComponent } from "../features/driving-status/driving-status.component";
 import { DrawComponent } from "../features/test/draw/draw.component";
 import { InfoComponent } from "../features/test/info/info.component";
-import {HistoryPathComponent} from "../features/history/history-path.component";
+import { HistoryPathComponent } from "../features/history/history-path.component";
+import { RecordComponent } from "../features/statistics/record/record.component";
 
 
 const routes: Routes = [
@@ -23,12 +24,15 @@ const routes: Routes = [
       { path: 'main', component: MainComponent, canActivate: [AuthGuard] },
       { path: 'role', component: RoleComponent, canActivate: [AuthGuard] },
       { path: 'monitor', component: MonitorComponent, canActivate: [AuthGuard] },
-      { path: 'stream', component: StreamComponent, canActivate: [AuthGuard] },
-      { path: 'log', component: LogComponent, canActivate: [AuthGuard] },
       { path: 'multiCars', component: MultipleCarsComponent, canActivate: [AuthGuard] },
       { path: 'driving_status', component: DrivingStatusComponent, canActivate: [AuthGuard] },
       { path: 'history', component: HistoryPathComponent, canActivate: [AuthGuard] },
-      //test
+      // statistics
+      { path: 'record', component: RecordComponent, canActivate: [AuthGuard] },
+      // log
+      { path: 'log', component: LogComponent, canActivate: [AuthGuard] },
+      // test
+      { path: 'stream', component: StreamComponent, canActivate: [AuthGuard] },
       { path: 'map', component: MaaaapComponent, canActivate: [AuthGuard] },
       { path: 'draw', component: DrawComponent, canActivate: [AuthGuard] },
       { path: 'info', component: InfoComponent, canActivate: [AuthGuard] },

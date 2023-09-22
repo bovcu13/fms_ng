@@ -110,7 +110,14 @@ export class SidebarComponent implements OnInit {
         items: [
           {
             label: '紀錄列表',
-            icon: 'pi pi-fw pi-box'
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/record',
+            command:() =>{
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
+            },
           },
           {
             label: '里程統計',

@@ -19,6 +19,7 @@ import {DrivingStatusComponent} from "../features/driving-status/driving-status.
 import {DrawComponent} from "../features/test/draw/draw.component";
 import {InfoComponent} from "../features/test/info/info.component";
 import {HistoryPathComponent} from "../features/history/history-path.component";
+import {RecordComponent} from "../features/statistics/record/record.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {HistoryPathComponent} from "../features/history/history-path.component";
     DrivingStatusComponent,
     DrawComponent,
     InfoComponent,
-    HistoryPathComponent
+    HistoryPathComponent,
+    RecordComponent
   ],
   imports: [
     CommonModule,
