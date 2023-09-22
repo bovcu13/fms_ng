@@ -99,6 +99,12 @@
     font-size: 13px;
     overflow: hidden;
   }
+
+  // chrome info 移除滾輪背景
+  .gm-style .gm-style-iw-d::-webkit-scrollbar-track,
+  .gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece {
+    background: none;
+  }
 }
 
 #custom-button {
