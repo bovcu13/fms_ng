@@ -20,6 +20,7 @@ import {DrawComponent} from "../features/test/draw/draw.component";
 import {InfoComponent} from "../features/test/info/info.component";
 import {HistoryPathComponent} from "../features/history/history-path.component";
 import {RecordComponent} from "../features/statistics/record/record.component";
+import {CakeReportComponent} from "../features/digital-cake/cake-report/cake-report.component";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {RecordComponent} from "../features/statistics/record/record.component";
     DrawComponent,
     InfoComponent,
     HistoryPathComponent,
-    RecordComponent
+    RecordComponent,
+    CakeReportComponent
   ],
   imports: [
     CommonModule,
