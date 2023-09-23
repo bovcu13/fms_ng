@@ -44,16 +44,50 @@
                           optionLabel="name"
                           placeholder="選擇車牌"></p-dropdown>
             </div>
-            <div class="col-6">
-              <p-calendar [showTime]="true" [ngModel]="startDate" (onSelect)="onStartDateChange($event)"
-                          [defaultDate]="startDate" [maxDate]="maxDate"
-                          placeholder="選擇開始時間"></p-calendar>
+            <div class="col-12">
+              <p-calendar [showIcon]="true"
+                          [appendTo]="'body'"
+                          [ngModel]="today"
+                          [dateFormat]="'yy-mm-dd'"
+                          [maxDate]="maxDate"
+                          (onSelect)="onDateChange($event)"
+              ></p-calendar>
             </div>
-            <div class="col-6">
-              <p-calendar [showTime]="true" [ngModel]="endDate" (onSelect)="onEndDateChange($event)"
-                          [defaultDate]="maxDate" [maxDate]="maxDate"
-                          placeholder="選擇結束時間"></p-calendar>
+            <div class="flex justify-content-between">
+            <div class="col-5">
+              <p-calendar placeholder="選擇開始時間"
+                          [timeOnly]="true"
+                          [showTime]="true"
+                          [appendTo]="'body'"
+                          [ngModel]="startTime"
+                          (onSelect)="onStartDateChange($event)"
+                          [defaultDate]="startTime"
+                          [maxDate]="maxDate"></p-calendar>
             </div>
+              <div class="col-2 text-center text-3xl">
+                ~
+              </div>
+            <div class="col-5">
+              <p-calendar placeholder="選擇結束時間"
+                          [timeOnly]="true"
+                          [showTime]="true"
+                          [appendTo]="'body'"
+                          [ngModel]="endTime"
+                          (onSelect)="onEndDateChange($event)"
+                          [defaultDate]="maxDate"
+                          [maxDate]="maxDate"></p-calendar>
+            </div>
+            </div>
+            <!--            <div class="col-6">-->
+            <!--              <p-calendar [showTime]="true" [ngModel]="startDate" (onSelect)="onStartDateChange($event)"-->
+            <!--                          [defaultDate]="startDate" [maxDate]="maxDate"-->
+            <!--                          placeholder="選擇開始時間"></p-calendar>-->
+            <!--            </div>-->
+            <!--            <div class="col-6">-->
+            <!--              <p-calendar [showTime]="true" [ngModel]="endDate" (onSelect)="onEndDateChange($event)"-->
+            <!--                          [defaultDate]="maxDate" [maxDate]="maxDate"-->
+            <!--                          placeholder="選擇結束時間"></p-calendar>-->
+            <!--            </div>-->
             <div class="col-12">
               <label>間隔時間</label>
             </div>

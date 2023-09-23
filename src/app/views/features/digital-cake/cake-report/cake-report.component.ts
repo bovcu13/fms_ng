@@ -22,11 +22,13 @@ export class CakeReportComponent implements OnInit {
   test: any;
   options: any;
   initChart() {
+    // 從文件取特定 CSS
     const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+    const textColor = documentStyle.getPropertyValue('--text-color'); // '--text-color'
+    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary'); // '--text-color-secondary'
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border'); // '--surface-border'
 
+    // 設定圖表資料
     this.data = {
       labels: this.timeData,
       datasets: [
@@ -50,14 +52,18 @@ export class CakeReportComponent implements OnInit {
           }
         },
         zoom: {
+          pan: {
+            enabled:true,
+            mode: 'x'
+          },
           zoom: {
             wheel: {
-              enabled: true,
+              enabled: true, // 啟用使用滾輪縮放
             },
             pinch: {
-              enabled: true
+              enabled: true // 啟用使用捏擠手勢縮放（例如在觸控屏上）
             },
-            mode: 'xy',
+            mode: 'x', // 在 X 軸啟用縮放
           }
         }
       },
@@ -85,8 +91,8 @@ export class CakeReportComponent implements OnInit {
   }
 
   search() {
-    this.getAllGpsRequest('8987XC', { filter: { start_time: this.startDate, end_time: this.endDate } })
-    console.log("開始：", this.startDate, "結束：", this.endDate)
+    this.getAllGpsRequest('8987XC', { filter: { start_time: this.startTime, end_time: this.endTime } })
+    console.log("開始：", this.startTime, "結束：", this.endTime)
   }
 
   data: any
@@ -175,23 +181,36 @@ export class CakeReportComponent implements OnInit {
     }
   }
 
-  startDate: any
-  endDate: any
+  today: any
+  startTime: any
+  endTime: any
   maxDate = new Date()
 
   getDefaultDate() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set to 00:00:00.000
-    this.startDate = today
-    this.endDate = new Date();
+    this.today = new Date();
+    this.today.setHours(0, 0, 0, 0); // Set to 00:00:00.000
+    this.startTime = this.today;
+    this.endTime = new Date();
+  }
+
+  onDateChange(event: any) {
+    this.today = event;
+    this.onStartDateChange(event)
+    this.onEndDateChange(event)
   }
 
   onStartDateChange(event: any) {
-    this.startDate = event;
+    const newStartTime = this.today;
+    newStartTime.setHours(event.getHours(), event.getMinutes());
+    this.startTime = newStartTime;
+    console.log(this.startTime);
   }
 
   onEndDateChange(event: any) {
-    this.endDate = event;
+    const newEndTime = this.today;
+    newEndTime.setHours(event.getHours(), event.getMinutes());
+    this.endTime = newEndTime;
+    console.log(this.endTime);
   }
 
   sidebarRightOpen = true;
