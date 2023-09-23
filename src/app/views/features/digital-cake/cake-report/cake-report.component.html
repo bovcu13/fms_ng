@@ -1,1 +1,109 @@
-<p>cake-report works!</p>
+<div class="overflow-x-hidden">
+  <div class="col-12">
+    <p-table>
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+          數位大餅
+          <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right" class="mb-2"
+                          [ngModel]="false"
+                          (ngModelChange)="toggleSidebar()"></p-toggleButton>
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="flex justify-content-between">
+    <div [ngClass]="getMiddleDivClass()">
+      <p-card>
+        <p-tabView>
+          <p-tabPanel header="傳統大餅">
+            <p>
+              開發中..
+            </p>
+          </p-tabPanel>
+          <p-tabPanel header="數位大餅">
+            <p-chart type="line" [data]="data" [options]="options"></p-chart>
+          </p-tabPanel>
+          <p-tabPanel header="駕駛出勤表">
+            <p>
+              開發中..
+            </p>
+          </p-tabPanel>
+        </p-tabView>
+      </p-card>
+    </div>
+    <div class="col-12 md:col-12 lg:col-3" *ngIf="sidebarRightOpen">
+      <div [ngClass]="{'sidebar-open': sidebarRightOpen}">
+        <p-card *ngIf="sidebarRightOpen" header="車隊查詢">
+          <div class="grid">
+            <div class="col-6">
+              <p-dropdown optionLabel="name" placeholder="選擇車隊"></p-dropdown>
+            </div>
+            <div class="col-6">
+              <p-dropdown [options]="cars"
+                          (click)="getAllVehiclesRequest()"
+                          optionLabel="name"
+                          placeholder="選擇車牌"></p-dropdown>
+            </div>
+            <div class="col-6">
+              <p-calendar [showTime]="true" [ngModel]="startDate" (onSelect)="onStartDateChange($event)"
+                          [defaultDate]="startDate" [maxDate]="maxDate"
+                          placeholder="選擇開始時間"></p-calendar>
+            </div>
+            <div class="col-6">
+              <p-calendar [showTime]="true" [ngModel]="endDate" (onSelect)="onEndDateChange($event)"
+                          [defaultDate]="maxDate" [maxDate]="maxDate"
+                          placeholder="選擇結束時間"></p-calendar>
+            </div>
+            <div class="col-12">
+              <label>間隔時間</label>
+            </div>
+            <div class="col-6">
+              <p-inputNumber [showButtons]="true" suffix=" 分"></p-inputNumber>
+            </div>
+            <div class="col-6">
+              <p-inputNumber [showButtons]="true" suffix=" 秒"></p-inputNumber>
+            </div>
+            <div class="col-12">
+              <label>車速大於</label>
+            </div>
+            <div class="col-12">
+              <p-inputNumber [showButtons]="true" suffix=" 公里" class="w-full"></p-inputNumber>
+            </div>
+            <div class="col-12 flex justify-content-between">
+              <div class="card flex justify-content-center gap-3">
+                <div class="flex align-items-center gap-1">
+                  <p-checkbox value="New York" inputId="ny"></p-checkbox>
+                  <label>顯示經緯度</label>
+                </div>
+                <div class="flex align-items-center gap-1">
+                  <p-checkbox value="San Francisco" inputId="sf"></p-checkbox>
+                  <label>狀態累積</label>
+                </div>
+              </div>
+              <p-button label="查詢" (click)="search()"></p-button>
+            </div>
+            <div class="col-12">
+              <label>狀態</label>
+            </div>
+            <div class="col-12">
+              <div class="card flex justify-content-start gap-3">
+                <div class="flex align-items-center gap-1">
+                  <p-checkbox name="group1" value="New York" inputId="ny"></p-checkbox>
+                  <label>正常</label>
+                </div>
+                <div class="flex align-items-center gap-1">
+                  <p-checkbox name="group1" value="San Francisco" inputId="sf"></p-checkbox>
+                  <label>熄火</label>
+                </div>
+                <div class="flex align-items-center gap-1">
+                  <p-checkbox name="group1" value="Los Angeles" inputId="la"></p-checkbox>
+                  <label>停不熄火</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  </div>
+</div>

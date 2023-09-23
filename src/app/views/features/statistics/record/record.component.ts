@@ -148,5 +148,4 @@ export class RecordComponent implements OnInit {
     }
   }
 
-  protected readonly console = console;
 }
