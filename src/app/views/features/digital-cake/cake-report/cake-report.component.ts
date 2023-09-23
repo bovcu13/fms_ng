@@ -22,11 +22,13 @@ export class CakeReportComponent implements OnInit {
   test: any;
   options: any;
   initChart() {
+    // 從文件取特定 CSS
     const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+    const textColor = documentStyle.getPropertyValue('--text-color'); // '--text-color'
+    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary'); // '--text-color-secondary'
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border'); // '--surface-border'
 
+    // 設定圖表資料
     this.data = {
       labels: this.timeData,
       datasets: [
@@ -52,12 +54,12 @@ export class CakeReportComponent implements OnInit {
         zoom: {
           zoom: {
             wheel: {
-              enabled: true,
+              enabled: true, // 啟用使用滾輪縮放
             },
             pinch: {
-              enabled: true
+              enabled: true // 啟用使用捏擠手勢縮放（例如在觸控屏上）
             },
-            mode: 'xy',
+            mode: 'x', // 在 X 軸啟用縮放
           }
         }
       },
