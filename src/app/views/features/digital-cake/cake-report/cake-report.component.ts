@@ -1,28 +1,83 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService } from "../../../../services/car.service";
 
-declare var google: any;
 
 @Component({
-  selector: 'app-record',
-  templateUrl: './record.component.html',
-  styleUrls: ['./record.component.scss']
+  selector: 'app-cake-report',
+  templateUrl: './cake-report.component.html',
+  styleUrls: ['./cake-report.component.scss']
 })
-export class RecordComponent implements OnInit {
+export class CakeReportComponent implements OnInit {
   constructor(private carServ: CarService) {
   }
 
   ngOnInit() {
-    this.getDefaultDate()
+    this.getDefaultDate();
+
+  }
+
+  test: any;
+  options: any;
+  initChart() {
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+    this.data = {
+      labels: this.timeData,
+      datasets: [
+        {
+          label: 'First Dataset',
+          data: [65, 59, 80, 81, 56, 55, 40],
+          fill: false,
+          borderColor: documentStyle.getPropertyValue('--blue-500'),
+          tension: 0.4
+        }
+      ]
+    };
+
+    this.options = {
+      maintainAspectRatio: false,
+      aspectRatio: 0.6,
+      plugins: {
+        legend: {
+          labels: {
+            color: textColor
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        },
+        y: {
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        }
+      }
+    };
   }
 
   search() {
-    this.getAllGpsRequest('NEM-9335', { filter: { start_time: this.startDate, end_time: this.endDate } })
+    this.getAllGpsRequest('8987XC', { filter: { start_time: this.startDate, end_time: this.endDate } })
     console.log("開始：", this.startDate, "結束：", this.endDate)
   }
 
   data: any
   transformedData: any
+  timeData: any
 
   // 取得車輛歷史資料
   getAllGpsRequest(id: any, body: any) {
@@ -35,15 +90,27 @@ export class RecordComponent implements OnInit {
           addr: "",
           direction: this.parseHeading(item.heading)
         }));
+        this.timeData = this.data.map((item: any) =>
+          this.getTimeFromDateTime(item.date_time)
+        );
         console.log("轉換後資料:", this.transformedData);
-        // 轉換成中文地址
-        this.geocodePositions();
+        console.log("timeData:", this.timeData)
+        this.initChart();
       },
       error: (err) => {
         console.log(err);
       },
     });
   }
+
+  getTimeFromDateTime(dateTimeString: string): string {
+    const date = new Date(dateTimeString);
+    const hours = date.getUTCHours().toString().padStart(2, '0');
+    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+    const seconds = date.getUTCSeconds().toString().padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
 
   cars: any;
   vehiclesData: any;
@@ -103,35 +170,6 @@ export class RecordComponent implements OnInit {
 
   onEndDateChange(event: any) {
     this.endDate = event;
-  }
-
-  geocodePositions() {
-    const geocoder = new google.maps.Geocoder();
-
-    this.transformedData.forEach((product: any) => {
-      const latlng = new google.maps.LatLng(product.lat, product.lng);
-
-      geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
-        if (status === google.maps.GeocoderStatus.OK) {
-          let addressFound = false;
-          if (results && results.length > 0) {
-            for (let i = 0; i < results.length; i++) {
-              const formattedAddress = results[i].formatted_address;
-              if (!formattedAddress.match(/\b\w+\+\w+\b/)) {
-                product.addr = formattedAddress;
-                addressFound = true;
-                break; // 找到非 Plus Code 地址後跳出迴圈
-              }
-            }
-          }
-          if (!addressFound) {
-            product.addr = '找不到地址';
-          }
-        } else {
-          product.addr = '編碼錯誤';
-        }
-      });
-    });
   }
 
   sidebarRightOpen = true;

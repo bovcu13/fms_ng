@@ -14,6 +14,7 @@ import { DrawComponent } from "../features/test/draw/draw.component";
 import { InfoComponent } from "../features/test/info/info.component";
 import { HistoryPathComponent } from "../features/history/history-path.component";
 import { RecordComponent } from "../features/statistics/record/record.component";
+import { CakeReportComponent } from "../features/digital-cake/cake-report/cake-report.component";
 
 
 const routes: Routes = [
@@ -27,6 +28,8 @@ const routes: Routes = [
       { path: 'multiCars', component: MultipleCarsComponent, canActivate: [AuthGuard] },
       { path: 'driving_status', component: DrivingStatusComponent, canActivate: [AuthGuard] },
       { path: 'history', component: HistoryPathComponent, canActivate: [AuthGuard] },
+      // cake
+      { path: 'cake_report', component: CakeReportComponent, canActivate: [AuthGuard] },
       // statistics
       { path: 'record', component: RecordComponent, canActivate: [AuthGuard] },
       // log

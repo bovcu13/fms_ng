@@ -82,7 +82,14 @@ export class SidebarComponent implements OnInit {
         items: [
           {
             label: '大餅報表',
-            icon: 'pi pi-fw pi-chart-bar'
+            icon: 'pi pi-fw pi-chart-bar',
+            routerLink: '/cake_report',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
+            },
           },
           {
             label: '大餅軌跡',
