@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService } from "../../../../services/car.service";
+import { Chart } from 'chart.js';
+import zoomPlugin from 'chartjs-plugin-zoom';
+Chart.register(zoomPlugin);
 
 
 @Component({
@@ -28,8 +31,8 @@ export class CakeReportComponent implements OnInit {
       labels: this.timeData,
       datasets: [
         {
-          label: 'First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40],
+          label: '時速',
+          data: this.speedData,
           fill: false,
           borderColor: documentStyle.getPropertyValue('--blue-500'),
           tension: 0.4
@@ -44,6 +47,17 @@ export class CakeReportComponent implements OnInit {
         legend: {
           labels: {
             color: textColor
+          }
+        },
+        zoom: {
+          zoom: {
+            wheel: {
+              enabled: true,
+            },
+            pinch: {
+              enabled: true
+            },
+            mode: 'xy',
           }
         }
       },
@@ -78,6 +92,7 @@ export class CakeReportComponent implements OnInit {
   data: any
   transformedData: any
   timeData: any
+  speedData: any
 
   // 取得車輛歷史資料
   getAllGpsRequest(id: any, body: any) {
@@ -93,8 +108,12 @@ export class CakeReportComponent implements OnInit {
         this.timeData = this.data.map((item: any) =>
           this.getTimeFromDateTime(item.date_time)
         );
+        this.speedData = this.data.map((item: any) =>
+          item.speed
+        );
         console.log("轉換後資料:", this.transformedData);
         console.log("timeData:", this.timeData)
+        console.log("speedData:", this.speedData)
         this.initChart();
       },
       error: (err) => {
@@ -105,12 +124,15 @@ export class CakeReportComponent implements OnInit {
 
   getTimeFromDateTime(dateTimeString: string): string {
     const date = new Date(dateTimeString);
-    const hours = date.getUTCHours().toString().padStart(2, '0');
-    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
-    const seconds = date.getUTCSeconds().toString().padStart(2, '0');
-    return `${hours}:${minutes}:${seconds}`;
+    const options: Intl.DateTimeFormatOptions = {
+      timeZone: 'Asia/Taipei',
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit' as '2-digit'
+    };
+    return date.toLocaleString('zh-TW', options);
   }
-
 
   cars: any;
   vehiclesData: any;
