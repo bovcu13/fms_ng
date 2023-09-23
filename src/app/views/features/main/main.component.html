@@ -12,6 +12,7 @@
                     [style]="{ width: '3em',height:'2.5rem' }"></p-toggleButton>
   </div>
   <div *ngIf="recordDistances.length >= 2" class="kmh">{{distanceText}}</div>
+  <div *ngIf="selectedProduct" class="addr">{{selectedProduct.addr}}</div>
   <div class="col-4">
     <p-card>
       <p-tabView>

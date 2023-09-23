@@ -144,6 +144,22 @@
   border-radius: 2px;
 }
 
+.addr {
+  position: absolute;
+  top: 3.5rem;
+  height: 2rem;
+  left: 18rem;
+  background-color: rgba(300, 300, 300, 1);
+  border: 1px solid #ced4da;
+  padding: 10px;
+  color: #000000;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+}
+
 .circle {
   width: 2rem;
   height: 2rem;

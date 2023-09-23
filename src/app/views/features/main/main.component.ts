@@ -35,6 +35,7 @@ export class MainComponent implements OnInit {
     if (this.selectedProduct) {
       this.center = this.selectedProduct;
       this.map.setCenter(new google.maps.LatLng(this.center.lat, this.center.lng));
+      this.map.setZoom(20);
     }
   }
 
@@ -134,7 +135,6 @@ export class MainComponent implements OnInit {
       { field: 'license_plate', header: '車牌' },
       { field: 'speed', header: '時速' },
       { field: 'driver', header: '姓名' },
-      { field: 'addr', header: '地址/地標' },
       { field: 'direction', header: '方向' },
     ]
   }
@@ -514,7 +514,7 @@ export class MainComponent implements OnInit {
             // 點擊標記顯示info, 設定中心點
             google.maps.event.addListener(marker, 'click', () => {
               infowindow.open(this.map, marker);
-              this.map.setZoom(17);
+              this.map.setZoom(20);
               this.map.setCenter(marker.getPosition() as google.maps.LatLng);
             });
           }
