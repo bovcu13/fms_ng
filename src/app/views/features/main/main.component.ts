@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { products } from "../../../shared/data/products";
 import { MenuItem } from 'primeng/api'
 import { CarService } from "../../../services/car.service";
@@ -90,6 +90,11 @@ export class MainComponent implements OnInit {
     setInterval(() => {
       this.getAll20s();
     }, 5000);
+
+    // 監聽陣列的變化
+    this.dataSignal.subscribe((value: any) => {
+      this.onDataChange();
+    });
   }
 
   @Input() get selectedColumns(): any[] {
@@ -434,6 +439,17 @@ export class MainComponent implements OnInit {
   }
 
   transformedData: any[] = []; // 存轉換後api資料
+
+  // 使用 Signal 包裝 data 陣列
+  dataSignal:any = signal<any[]>([]);
+
+  onDataChange() {
+    // 計算新增的資料
+    const addedData = this.dataSignal.value.diff(this.transformedData);
+
+    // 更新這些資料
+    this.transformedData = this.transformedData.concat(addedData);
+  }
 
   // init - 取得All車輛即時位置
   getAllNewGpsRequest() {

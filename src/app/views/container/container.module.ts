@@ -21,6 +21,7 @@ import {InfoComponent} from "../features/test/info/info.component";
 import {HistoryPathComponent} from "../features/history/history-path.component";
 import {RecordComponent} from "../features/statistics/record/record.component";
 import {CakeReportComponent} from "../features/digital-cake/cake-report/cake-report.component";
+import {SignalComponent} from "../features/test/signal/signal.component";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {CakeReportComponent} from "../features/digital-cake/cake-report/cake-rep
     InfoComponent,
     HistoryPathComponent,
     RecordComponent,
-    CakeReportComponent
+    CakeReportComponent,
+    SignalComponent
   ],
   imports: [
     CommonModule,

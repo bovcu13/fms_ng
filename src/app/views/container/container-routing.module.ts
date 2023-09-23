@@ -15,6 +15,7 @@ import { InfoComponent } from "../features/test/info/info.component";
 import { HistoryPathComponent } from "../features/history/history-path.component";
 import { RecordComponent } from "../features/statistics/record/record.component";
 import { CakeReportComponent } from "../features/digital-cake/cake-report/cake-report.component";
+import { SignalComponent } from "../features/test/signal/signal.component";
 
 
 const routes: Routes = [
@@ -39,6 +40,7 @@ const routes: Routes = [
       { path: 'map', component: MaaaapComponent, canActivate: [AuthGuard] },
       { path: 'draw', component: DrawComponent, canActivate: [AuthGuard] },
       { path: 'info', component: InfoComponent, canActivate: [AuthGuard] },
+      { path: 'signal', component: SignalComponent, canActivate: [AuthGuard] },
     ],
   },
 ];
