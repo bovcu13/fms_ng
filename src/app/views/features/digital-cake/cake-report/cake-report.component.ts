@@ -52,6 +52,10 @@ export class CakeReportComponent implements OnInit {
           }
         },
         zoom: {
+          pan: {
+            enabled:true,
+            mode: 'x'
+          },
           zoom: {
             wheel: {
               enabled: true, // 啟用使用滾輪縮放
