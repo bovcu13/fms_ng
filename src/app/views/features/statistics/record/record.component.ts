@@ -17,7 +17,7 @@ export class RecordComponent implements OnInit {
   }
 
   search() {
-    this.getAllGpsRequest('NEM-9335', { filter: { start_time: this.startDate, end_time: this.endDate } })
+    this.getAllGpsRequest('AA0000', { filter: { start_time: this.startDate, end_time: this.endDate } })
     console.log("開始：", this.startDate, "結束：", this.endDate)
   }
 

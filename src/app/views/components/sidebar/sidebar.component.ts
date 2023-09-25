@@ -180,10 +180,18 @@ export class SidebarComponent implements OnInit {
       {
         label: '異常報表',
         icon: 'pi pi-fw pi-exclamation-triangle',
+        expanded: true,
         items: [
           {
             label: '異常總表',
-            icon: 'pi pi-fw pi-box'
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/odd_report',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
+            },
           },
           {
             label: '超速時間',
