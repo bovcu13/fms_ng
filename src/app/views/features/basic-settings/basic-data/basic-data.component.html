@@ -1,0 +1,149 @@
+<div class="overflow-x-hidden flex justify-content-center">
+  <div class="col-12">
+    <p-card>
+      <p-tabView>
+        <p-tabPanel header="基本資料">
+          <div class="field grid">
+            <label class="col-fixed" style="width:10rem">使用單位名稱</label>
+            <div class="col-3">
+              <input pInputText/>
+            </div>
+          </div>
+          <div class="field grid">
+            <label class="col-fixed" style="width:10rem">修改登入密碼</label>
+            <div class="col-3">
+              <input pInputText/>
+            </div>
+          </div>
+          <p-divider></p-divider>
+          <div class="field grid">
+            <label class="col-fixed" style="width:10rem">地圖預設載入位置</label>
+            <div class="col-3">
+              <input pInputText/>
+            </div>
+          </div>
+          <div class="field grid">
+            <label class="col-fixed" style="width:10rem">地圖風格</label>
+            <div class="col-3">
+              <input pInputText/>
+            </div>
+          </div>
+          <div class="field grid">
+            <label class="col-fixed" style="width:10rem">國道每日優惠里程</label>
+            <div class="col-3">
+              <input pInputText/>
+            </div>
+          </div>
+          <div class="flex justify-content-start">
+            <p-checkbox></p-checkbox>
+            <label class="col-fixed">自動登入</label>
+          </div>
+        </p-tabPanel>
+        <p-tabPanel header="車輛資料">
+            <p-table [value]="carData" [tableStyle]="{ 'min-width': '50rem' }">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>車輛代號</th>
+                  <th>車輛名稱</th>
+                  <th>車牌</th>
+                  <th>姓名</th>
+                  <th>手機號碼1</th>
+                  <th>手機號碼2</th>
+                  <th>油耗量(公里/升)</th>
+                  <th>油品種類</th>
+                  <th>計費車種</th>
+                  <th>車輛樣式</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-car>
+                <tr>
+                  <td>{{ car.code }}</td>
+                  <td>{{ car.name }}</td>
+                  <td>{{ car.licensePlate }}</td>
+                  <td>{{ car.driver }}</td>
+                  <td>{{ car.phone1 }}</td>
+                  <td>{{ car.phone2 }}</td>
+                  <td>{{ car.fuel }}</td>
+                  <td>{{ car.fuelType }}</td>
+                  <td>{{ car.VehicleType }}</td>
+                  <td>{{ car.vehicleStyle }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel header="保養定檢">
+          <p-table [value]="carData">
+            <ng-template pTemplate="header">
+              <tr>
+                <th colspan="2">基本資料</th>
+                <th colspan="2">車輛資料</th>
+                <th colspan="6">保養狀況</th>
+                <th colspan="6">里程/時數計算</th>
+                <th colspan="2">驗車</th>
+                <th colspan="4">換照</th>
+                <th colspan="2">傳統/數位大餅</th>
+                <th colspan="2">柴油自主檢驗</th>
+                <th colspan="2">尾門保養</th>
+                <th colspan="2">滅火器保養</th>
+              </tr>
+              <tr>
+                <th>車牌</th>
+                <th>姓名</th>
+                <th>出廠日期</th>
+                <th>保險到期日</th>
+                <th>每幾公里保養</th>
+                <th>每幾小時保養</th>
+                <th>保養日期</th>
+                <th>保養當時里程</th>
+                <th>保養當時時數</th>
+                <th>下次保養日</th>
+                <th>累計公里</th>
+                <th>剩餘公里</th>
+                <th>累計小時</th>
+                <th>剩餘小時</th>
+                <th>剩餘提醒公里</th>
+                <th>剩餘提醒小時</th>
+                <th>最近驗車日</th>
+                <th>下次驗車日</th>
+                <th>駕照換照日</th>
+                <th>行照換照日</th>
+                <th>駕照審驗日</th>
+                <th>訓練證有效日</th>
+                <th>最近檢驗日</th>
+                <th>下次檢驗日</th>
+                <th>最近檢驗日</th>
+                <th>下次檢驗日</th>
+                <th>最近檢驗日</th>
+                <th>下次檢驗日</th>
+                <th>最近檢驗日</th>
+                <th>下次檢驗日</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body">
+              <tr>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+        <p-tabPanel header="溫度">
+          <p-table [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>車牌</th>
+                <th>蜂鳴器</th>
+                <th>溫度1名稱</th>
+                <th>溫度1標準線</th>
+                <th>溫度1範圍下限</th>
+                <th>溫度1範圍上界</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body">
+              <tr>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+      </p-tabView>
+    </p-card>
+  </div>
+</div>

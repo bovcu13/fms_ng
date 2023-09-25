@@ -64,4 +64,129 @@ export const products = [
     },
     "url": "assets/image/car2.png",
   }
-]
+];
+
+export const carData = [
+  {
+    code: 'V001',
+    name: '林有成',
+    licensePlate: '123-ABC',
+    driver: '林有成',
+    phone1: '123456789',
+    phone2: '987654321',
+    fuel: '10',
+    fuelType: '柴油',
+    VehicleType: '小型車',
+    vehicleStyle: '汽車'
+  },
+  {
+    code: 'V002',
+    name: '王大明',
+    licensePlate: '456-DEF',
+    driver: '王大明',
+    phone1: '987654321',
+    phone2: '123456789',
+    fuel: '12',
+    fuelType: '汽油',
+    VehicleType: '大型車',
+    vehicleStyle: '卡車'
+  },
+  {
+    code: 'V003',
+    name: '張小華',
+    licensePlate: '789-GHI',
+    driver: '張小華',
+    phone1: '555123456',
+    phone2: '555987654',
+    fuel: '8',
+    fuelType: '汽油',
+    VehicleType: '小型車',
+    vehicleStyle: '轎車'
+  },
+  {
+    code: 'V004',
+    name: '陳阿寶',
+    licensePlate: '987-JKL',
+    driver: '陳阿寶',
+    phone1: '987654321',
+    phone2: '123456789',
+    fuel: '9',
+    fuelType: '柴油',
+    VehicleType: '中型車',
+    vehicleStyle: 'SUV'
+  },
+  {
+    code: 'V005',
+    name: '李小龍',
+    licensePlate: '654-MNO',
+    driver: '李小龍',
+    phone1: '555123456',
+    phone2: '555987654',
+    fuel: '11',
+    fuelType: '汽油',
+    VehicleType: '小型車',
+    vehicleStyle: '掀背車'
+  },
+  {
+    code: 'V006',
+    name: '黃大為',
+    licensePlate: '321-PQR',
+    driver: '黃大為',
+    phone1: '123456789',
+    phone2: '987654321',
+    fuel: '9',
+    fuelType: '柴油',
+    VehicleType: '大型車',
+    vehicleStyle: '卡車'
+  },
+  {
+    code: 'V007',
+    name: '劉小妹',
+    licensePlate: '159-STU',
+    driver: '劉小妹',
+    phone1: '987654321',
+    phone2: '123456789',
+    fuel: '10',
+    fuelType: '汽油',
+    VehicleType: '中型車',
+    vehicleStyle: '轎車'
+  },
+  {
+    code: 'V008',
+    name: '張大力',
+    licensePlate: '753-VWX',
+    driver: '張大力',
+    phone1: '555123456',
+    phone2: '555987654',
+    fuel: '8',
+    fuelType: '柴油',
+    VehicleType: '小型車',
+    vehicleStyle: 'SUV'
+  },
+  {
+    code: 'V009',
+    name: '林小芳',
+    licensePlate: '951-YZ0',
+    driver: '林小芳',
+    phone1: '123456789',
+    phone2: '987654321',
+    fuel: '12',
+    fuelType: '汽油',
+    VehicleType: '大型車',
+    vehicleStyle: '卡車'
+  },
+  {
+    code: 'V010',
+    name: '陳大同',
+    licensePlate: '246-901',
+    driver: '陳大同',
+    phone1: '555123456',
+    phone2: '555987654',
+    fuel: '9',
+    fuelType: '柴油',
+    VehicleType: '小型車',
+    vehicleStyle: '掀背車'
+  }
+];
+
+
