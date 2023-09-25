@@ -27,6 +27,7 @@ import { OddSetComponent } from "../features/basic-settings/odd-set/odd-set.comp
 import { OddReportComponent } from "../features/odd-list/odd-report/odd-report.component";
 import { SpeedingComponent } from "../features/odd-list/speeding/speeding.component";
 import { StallComponent } from "../features/odd-list/stall/stall.component";
+import { OddTempComponent } from "../features/odd-list/odd-temp/odd-temp.component";
 
 @NgModule({
     declarations: [
@@ -50,7 +51,8 @@ import { StallComponent } from "../features/odd-list/stall/stall.component";
         OddSetComponent,
         OddReportComponent,
         SpeedingComponent,
-        StallComponent
+        StallComponent,
+        OddTempComponent
     ],
     imports: [
         CommonModule,
