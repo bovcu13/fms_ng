@@ -21,6 +21,7 @@ import { OddSetComponent } from "../features/basic-settings/odd-set/odd-set.comp
 import { OddReportComponent } from "../features/odd-list/odd-report/odd-report.component";
 import { SpeedingComponent } from "../features/odd-list/speeding/speeding.component";
 import { StallComponent } from "../features/odd-list/stall/stall.component";
+import { OddTempComponent } from "../features/odd-list/odd-temp/odd-temp.component";
 
 
 const routes: Routes = [
@@ -42,6 +43,7 @@ const routes: Routes = [
       { path: 'odd_report', component: OddReportComponent, canActivate: [AuthGuard] },
       { path: 'speeding', component: SpeedingComponent, canActivate: [AuthGuard] },
       { path: 'stall', component: StallComponent, canActivate: [AuthGuard] },
+      { path: 'odd_temp', component: OddTempComponent, canActivate: [AuthGuard] },
       // basic-settings
       { path: 'basic_data', component: BasicDataComponent, canActivate: [AuthGuard] },
       { path: 'odd_set', component: OddSetComponent, canActivate: [AuthGuard] },

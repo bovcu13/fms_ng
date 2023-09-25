@@ -217,7 +217,14 @@ export class SidebarComponent implements OnInit {
           },
           {
             label: '溫度異常',
-            icon: 'pi pi-fw pi-box'
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/odd_temp',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
+            },
           }
         ]
       },

@@ -3,7 +3,7 @@
         <p-table>
             <ng-template pTemplate="caption">
                 <div class="flex align-items-center justify-content-between">
-                    停不熄火
+                    溫度異常
                     <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right" class="mb-2"
                                     [ngModel]="false"
                                     (ngModelChange)="toggleSidebar()"></p-toggleButton>
@@ -55,17 +55,7 @@
                                         [defaultDate]="maxDate" [maxDate]="maxDate"
                                         placeholder="選擇結束時間" [appendTo]="'body'"></p-calendar>
                         </div>
-                        <div class="col-6 flex align-items-center">
-                            <p-inputNumber class="w-full" prefix="時速 " suffix=" km/h" [ngModel]="kmh"></p-inputNumber>
-                        </div>
-                        <div class="col-6 flex align-items-center">
-                            <p-inputNumber class="w-full" prefix="累計 " suffix=" 分鐘以上" [ngModel]="min"></p-inputNumber>
-                        </div>
-                        <div class="col-12 flex justify-content-between">
-                            <div class="flex align-items-center gap-1">
-                                <p-checkbox value="no"></p-checkbox>
-                                <label>未出車顯示</label>
-                            </div>
+                        <div class="col-12 flex justify-content-end">
                             <p-button label="查詢"></p-button>
                         </div>
                     </div>
