@@ -20,6 +20,7 @@ import { BasicDataComponent } from "../features/basic-settings/basic-data/basic-
 import { OddSetComponent } from "../features/basic-settings/odd-set/odd-set.component";
 import { OddReportComponent } from "../features/odd-list/odd-report/odd-report.component";
 import { SpeedingComponent } from "../features/odd-list/speeding/speeding.component";
+import { StallComponent } from "../features/odd-list/stall/stall.component";
 
 
 const routes: Routes = [
@@ -40,6 +41,7 @@ const routes: Routes = [
       // odd-list
       { path: 'odd_report', component: OddReportComponent, canActivate: [AuthGuard] },
       { path: 'speeding', component: SpeedingComponent, canActivate: [AuthGuard] },
+      { path: 'stall', component: StallComponent, canActivate: [AuthGuard] },
       // basic-settings
       { path: 'basic_data', component: BasicDataComponent, canActivate: [AuthGuard] },
       { path: 'odd_set', component: OddSetComponent, canActivate: [AuthGuard] },

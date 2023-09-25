@@ -206,7 +206,14 @@ export class SidebarComponent implements OnInit {
           },
           {
             label: '停不熄火',
-            icon: 'pi pi-fw pi-box'
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/stall',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
+            },
           },
           {
             label: '溫度異常',
