@@ -329,7 +329,7 @@ export class HistoryPathComponent implements OnInit {
   }
 
   searchPath() {
-    this.getAllGpsRequest("8987XC", { filter: { start_time: this.startDate, end_time: this.endDate } })
+    this.getAllGpsRequest("AA0000", { filter: { start_time: this.startDate, end_time: this.endDate } })
     console.log("開始：", this.startDate, "結束：", this.endDate)
   }
 

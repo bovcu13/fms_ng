@@ -23,6 +23,7 @@ import {RecordComponent} from "../features/statistics/record/record.component";
 import {CakeReportComponent} from "../features/digital-cake/cake-report/cake-report.component";
 import {SignalComponent} from "../features/test/signal/signal.component";
 import {BasicDataComponent} from "../features/basic-settings/basic-data/basic-data.component";
+import {OddSetComponent} from "../features/basic-settings/odd-set/odd-set.component";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {BasicDataComponent} from "../features/basic-settings/basic-data/basic-da
     RecordComponent,
     CakeReportComponent,
     SignalComponent,
-    BasicDataComponent
+    BasicDataComponent,
+    OddSetComponent
   ],
   imports: [
     CommonModule,
