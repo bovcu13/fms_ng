@@ -16,17 +16,29 @@
       <p-card>
         <p-tabView>
           <p-tabPanel header="傳統大餅">
-            <p>
-              開發中..
-            </p>
+            <div class="text-center" *ngIf="data == null">
+              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+              <h4>查無資料</h4>
+              <p>請在右側選擇查詢選項</p>
+            </div>
           </p-tabPanel>
           <p-tabPanel header="數位大餅">
+            <div class="text-center" *ngIf="data == null">
+              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+              <h4>查無資料</h4>
+              <p>請在右側選擇查詢選項</p>
+            </div>
             <p-chart type="line" [data]="data" [options]="options"></p-chart>
           </p-tabPanel>
           <p-tabPanel header="駕駛出勤表">
-            <p>
-              開發中..
-            </p>
+            <div class="text-center" *ngIf="data == null">
+              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+              <h4>查無資料</h4>
+              <p>請在右側選擇查詢選項</p>
+            </div>
+
+            <h5 *ngIf="data != null">製表日期: {{today | date:'yyyy-MM-dd'}}</h5>
+            <p-chart type="line" [data]="data" [options]="options"></p-chart>
           </p-tabPanel>
         </p-tabView>
       </p-card>
@@ -54,40 +66,30 @@
               ></p-calendar>
             </div>
             <div class="flex justify-content-between">
-            <div class="col-5">
-              <p-calendar placeholder="選擇開始時間"
-                          [timeOnly]="true"
-                          [showTime]="true"
-                          [appendTo]="'body'"
-                          [ngModel]="startTime"
-                          (onSelect)="onStartDateChange($event)"
-                          [defaultDate]="startTime"
-                          [maxDate]="maxDate"></p-calendar>
-            </div>
+              <div class="col-5">
+                <p-calendar placeholder="選擇開始時間"
+                            [timeOnly]="true"
+                            [showTime]="true"
+                            [appendTo]="'body'"
+                            [ngModel]="startTime"
+                            (onSelect)="onStartDateChange($event)"
+                            [defaultDate]="startTime"
+                            [maxDate]="maxDate"></p-calendar>
+              </div>
               <div class="col-2 text-center text-3xl">
                 ~
               </div>
-            <div class="col-5">
-              <p-calendar placeholder="選擇結束時間"
-                          [timeOnly]="true"
-                          [showTime]="true"
-                          [appendTo]="'body'"
-                          [ngModel]="endTime"
-                          (onSelect)="onEndDateChange($event)"
-                          [defaultDate]="maxDate"
-                          [maxDate]="maxDate"></p-calendar>
+              <div class="col-5">
+                <p-calendar placeholder="選擇結束時間"
+                            [timeOnly]="true"
+                            [showTime]="true"
+                            [appendTo]="'body'"
+                            [ngModel]="endTime"
+                            (onSelect)="onEndDateChange($event)"
+                            [defaultDate]="maxDate"
+                            [maxDate]="maxDate"></p-calendar>
+              </div>
             </div>
-            </div>
-            <!--            <div class="col-6">-->
-            <!--              <p-calendar [showTime]="true" [ngModel]="startDate" (onSelect)="onStartDateChange($event)"-->
-            <!--                          [defaultDate]="startDate" [maxDate]="maxDate"-->
-            <!--                          placeholder="選擇開始時間"></p-calendar>-->
-            <!--            </div>-->
-            <!--            <div class="col-6">-->
-            <!--              <p-calendar [showTime]="true" [ngModel]="endDate" (onSelect)="onEndDateChange($event)"-->
-            <!--                          [defaultDate]="maxDate" [maxDate]="maxDate"-->
-            <!--                          placeholder="選擇結束時間"></p-calendar>-->
-            <!--            </div>-->
             <div class="col-12">
               <label>間隔時間</label>
             </div>

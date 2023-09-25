@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { products } from "../../../shared/data/products";
 import { MenuItem } from 'primeng/api'
 import { CarService } from "../../../services/car.service";
@@ -35,6 +35,7 @@ export class MainComponent implements OnInit {
     if (this.selectedProduct) {
       this.center = this.selectedProduct;
       this.map.setCenter(new google.maps.LatLng(this.center.lat, this.center.lng));
+      this.map.setZoom(20);
     }
   }
 
@@ -90,6 +91,11 @@ export class MainComponent implements OnInit {
     setInterval(() => {
       this.getAll20s();
     }, 5000);
+
+    // 監聽陣列的變化
+    this.dataSignal.subscribe((value: any) => {
+      this.onDataChange();
+    });
   }
 
   @Input() get selectedColumns(): any[] {
@@ -129,7 +135,6 @@ export class MainComponent implements OnInit {
       { field: 'license_plate', header: '車牌' },
       { field: 'speed', header: '時速' },
       { field: 'driver', header: '姓名' },
-      { field: 'addr', header: '地址/地標' },
       { field: 'direction', header: '方向' },
     ]
   }
@@ -435,6 +440,17 @@ export class MainComponent implements OnInit {
 
   transformedData: any[] = []; // 存轉換後api資料
 
+  // 使用 Signal 包裝 data 陣列
+  dataSignal:any = signal<any[]>([]);
+
+  onDataChange() {
+    // 計算新增的資料
+    const addedData = this.dataSignal.value.diff(this.transformedData);
+
+    // 更新這些資料
+    this.transformedData = this.transformedData.concat(addedData);
+  }
+
   // init - 取得All車輛即時位置
   getAllNewGpsRequest() {
     this.carServ.getAllNewGpsRequest().subscribe({
@@ -498,7 +514,7 @@ export class MainComponent implements OnInit {
             // 點擊標記顯示info, 設定中心點
             google.maps.event.addListener(marker, 'click', () => {
               infowindow.open(this.map, marker);
-              this.map.setZoom(17);
+              this.map.setZoom(20);
               this.map.setCenter(marker.getPosition() as google.maps.LatLng);
             });
           }
