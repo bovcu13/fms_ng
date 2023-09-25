@@ -16,6 +16,7 @@ import { HistoryPathComponent } from "../features/history/history-path.component
 import { RecordComponent } from "../features/statistics/record/record.component";
 import { CakeReportComponent } from "../features/digital-cake/cake-report/cake-report.component";
 import { SignalComponent } from "../features/test/signal/signal.component";
+import { BasicDataComponent } from "../features/basic-settings/basic-data/basic-data.component";
 
 
 const routes: Routes = [
@@ -33,6 +34,8 @@ const routes: Routes = [
       { path: 'cake_report', component: CakeReportComponent, canActivate: [AuthGuard] },
       // statistics
       { path: 'record', component: RecordComponent, canActivate: [AuthGuard] },
+      // basic-settings
+      { path: 'basic_data', component: BasicDataComponent, canActivate: [AuthGuard] },
       // log
       { path: 'log', component: LogComponent, canActivate: [AuthGuard] },
       // test

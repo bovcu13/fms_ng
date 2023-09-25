@@ -202,8 +202,14 @@ export class SidebarComponent implements OnInit {
         items: [
           {
             label: '基本資料',
-            icon: 'pi pi-fw pi-box'
-
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/basic_data',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
+            },
           },
           {
             label: '異常設定',
