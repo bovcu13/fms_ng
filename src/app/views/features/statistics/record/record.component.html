@@ -14,7 +14,12 @@
   <div class="flex justify-content-between">
     <div [ngClass]="getMiddleDivClass()">
       <p-card>
-        <p-table [value]="transformedData">
+        <div class="text-center" *ngIf="data == null">
+          <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+          <h4>查無資料</h4>
+          <p>請在右側選擇查詢選項</p>
+        </div>
+        <p-table [value]="transformedData" *ngIf="data != null" >
           <ng-template pTemplate="header">
             <tr>
               <th>定位時間</th>
