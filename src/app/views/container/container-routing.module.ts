@@ -18,6 +18,7 @@ import { CakeReportComponent } from "../features/digital-cake/cake-report/cake-r
 import { SignalComponent } from "../features/test/signal/signal.component";
 import { BasicDataComponent } from "../features/basic-settings/basic-data/basic-data.component";
 import { OddSetComponent } from "../features/basic-settings/odd-set/odd-set.component";
+import { OddReportComponent } from "../features/odd-list/odd-report/odd-report.component";
 
 
 const routes: Routes = [
@@ -35,6 +36,8 @@ const routes: Routes = [
       { path: 'cake_report', component: CakeReportComponent, canActivate: [AuthGuard] },
       // statistics
       { path: 'record', component: RecordComponent, canActivate: [AuthGuard] },
+      // odd-list
+      { path: 'odd_report', component: OddReportComponent, canActivate: [AuthGuard] },
       // basic-settings
       { path: 'basic_data', component: BasicDataComponent, canActivate: [AuthGuard] },
       { path: 'odd_set', component: OddSetComponent, canActivate: [AuthGuard] },
