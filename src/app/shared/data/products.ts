@@ -189,4 +189,23 @@ export const carData = [
   }
 ];
 
+export const odd = [
+  {
+    type: '超速',
+    image: 'assets/car/speeding_e.png',
+  },
+  {
+    type: '停不熄火',
+    image: 'assets/car/stall_e.png',
+  },
+  {
+    type: '溫度異常',
+    image: 'assets/car/temp_odd_e.png',
+  },
+  {
+    type: '失聯',
+    image: 'assets/car/missing_e.png',
+  },
+]
+
 

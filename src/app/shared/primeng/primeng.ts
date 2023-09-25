@@ -49,6 +49,7 @@ import {AccordionModule} from 'primeng/accordion';
 import {ToolbarModule} from "primeng/toolbar";
 import {SpeedDialModule} from "primeng/speeddial";
 import { ChartModule } from 'primeng/chart';
+import { DataViewModule } from "primeng/dataview";
 
 
 export const ngModule = [
@@ -102,6 +103,7 @@ export const ngModule = [
   AccordionModule,
   ToolbarModule,
   SpeedDialModule,
-  ChartModule
+  ChartModule,
+  DataViewModule
 ]
 

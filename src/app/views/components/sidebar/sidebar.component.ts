@@ -18,6 +18,7 @@ export class SidebarComponent implements OnInit {
       {
         label: '監控查詢',
         icon: 'pi pi-fw pi-sitemap',
+        expanded: true,
         items: [
           {
             label: '區域監控',
@@ -79,6 +80,7 @@ export class SidebarComponent implements OnInit {
       {
         label: '數位大餅',
         icon: 'pi pi-fw pi-chart-pie',
+        expanded: true,
         items: [
           {
             label: '大餅報表',
@@ -113,6 +115,7 @@ export class SidebarComponent implements OnInit {
       },
       {
         label: '統計查詢',
+        expanded: true,
         icon: 'pi pi-fw pi-box',
         items: [
           {
@@ -199,6 +202,7 @@ export class SidebarComponent implements OnInit {
       {
         label: '基本設定',
         icon: 'pi pi-fw pi-cog',
+        expanded: true,
         items: [
           {
             label: '基本資料',
@@ -213,7 +217,14 @@ export class SidebarComponent implements OnInit {
           },
           {
             label: '異常設定',
-            icon: 'pi pi-fw pi-box'
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/odd_set',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
+            },
           },
           {
             label: '自建地標',
