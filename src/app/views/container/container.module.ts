@@ -25,6 +25,7 @@ import {SignalComponent} from "../features/test/signal/signal.component";
 import {BasicDataComponent} from "../features/basic-settings/basic-data/basic-data.component";
 import {OddSetComponent} from "../features/basic-settings/odd-set/odd-set.component";
 import {OddReportComponent} from "../features/odd-list/odd-report/odd-report.component";
+import {SpeedingComponent} from "../features/odd-list/speeding/speeding.component";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {OddReportComponent} from "../features/odd-list/odd-report/odd-report.com
     SignalComponent,
     BasicDataComponent,
     OddSetComponent,
-    OddReportComponent
+    OddReportComponent,
+    SpeedingComponent
   ],
   imports: [
     CommonModule,
