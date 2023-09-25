@@ -195,7 +195,14 @@ export class SidebarComponent implements OnInit {
           },
           {
             label: '超速時間',
-            icon: 'pi pi-fw pi-box'
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/speeding',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
+            },
           },
           {
             label: '停不熄火',
