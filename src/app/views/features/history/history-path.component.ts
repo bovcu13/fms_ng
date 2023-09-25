@@ -30,17 +30,13 @@ export class HistoryPathComponent implements OnInit {
 
   togglePlay() {
     if (!this.isPlaying) {
-      clearInterval(this.intervalId);
-      this.pauseCarMovement();
+      this.clearIntervalAndPauseCarMovement();
     } else {
-      // 計算新的間隔時間以達到所選的速率
       const newInterval = 1000 / this.speedRate;
-      console.log('play-slider:', this.sliderValue)
       this.intervalId = setInterval(() => {
         this.sliderValue++;
         if (this.sliderValue > this.totalTime) {
-          clearInterval(this.intervalId);
-          this.isPlaying = false;
+          this.clearIntervalAndPauseCarMovement();
         }
       }, newInterval);
 
@@ -52,40 +48,26 @@ export class HistoryPathComponent implements OnInit {
   speedRate: number = 1;
 
   changeSpeed() {
-    // 切換速率
-    switch (this.speedRate) {
-      case 1:
-        this.speedRate = 2;
-        break;
-      case 2:
-        this.speedRate = 5;
-        break;
-      case 5:
-        this.speedRate = 10;
-        break;
-      case 10:
-        this.speedRate = 0.5;
-        break;
-      case 0.5:
-        this.speedRate = 1;
-        break;
-      default:
-        this.speedRate = 1;
-        break;
-    }
+    const speedRates = [2, 5, 10, 0.5, 1];
+    const currentIndex = speedRates.indexOf(this.speedRate);
+    this.speedRate = speedRates[(currentIndex + 1) % speedRates.length];
+
     if (!this.isPlaying) {
-      clearInterval(this.intervalId);
-      this.pauseCarMovement();
+      this.clearIntervalAndPauseCarMovement();
       const newInterval = 1000 / this.speedRate;
       this.intervalId = setInterval(() => {
         this.sliderValue++;
         if (this.sliderValue > this.totalTime) {
-          clearInterval(this.intervalId);
-          this.isPlaying = false;
+          this.clearIntervalAndPauseCarMovement();
         }
       }, newInterval);
       this.simulateCarMovement(this.routeCoordinates);
     }
+  }
+
+  clearIntervalAndPauseCarMovement() {
+    clearInterval(this.intervalId);
+    this.pauseCarMovement();
   }
 
   // 作用在時間條的拉取
