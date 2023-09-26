@@ -52,8 +52,6 @@ export class HistoryPathComponent implements OnInit {
         } else {
             this.intervalId = setInterval(() => {
                 this.sliderValue++;
-                this.selectedProductIndex++;
-                this.selectedProduct = this.transformedData[this.selectedProductIndex]
                 if (this.sliderValue > this.totalTime) {
                     this.clearIntervalAndPauseCarMovement();
                 }
@@ -106,6 +104,7 @@ export class HistoryPathComponent implements OnInit {
     // }
 
     onSliderChange(event: any) {
+        this.selectedProduct = this.transformedData[event.value]
         const newIndex = event.value; // 取得slider的值作為新的index
         const route = this.routeCoordinates;
 
@@ -250,6 +249,7 @@ export class HistoryPathComponent implements OnInit {
                     route[this.state.index + 1],
                     this.state.progress
                 );
+                this.selectedProduct = this.transformedData[this.state.index]
                 marker.setPosition(newPosition);
                 marker.setIcon({
                     url: this.transformedData[this.state.index].url,
