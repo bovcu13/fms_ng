@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { products } from "../../../shared/data/products";
-import { MenuItem } from 'primeng/api'
-import { CarService } from "../../../services/car.service";
+import { MenuItem } from "primeng/api";
+import { CarService } from "../../../../services/car.service";
+import { products } from "../../../../shared/data/products";
 
 declare var google: any;
 
 @Component({
-  selector: 'app-history',
-  templateUrl: './history-path.component.html',
-  styleUrls: ['./history-path.component.scss']
+  selector: 'app-poly',
+  templateUrl: './poly.component.html',
+  styleUrls: ['./poly.component.scss']
 })
-export class HistoryPathComponent implements OnInit {
+export class PolyComponent implements OnInit {
   sliderValue: number = 0; // 初始化滑塊的值
   totalTime: number = 0;
   isPlaying: boolean = true;
@@ -28,99 +28,13 @@ export class HistoryPathComponent implements OnInit {
 
   playable: boolean = true
 
-  // togglePlay() {
-  //   if (!this.isPlaying) {
-  //     this.clearIntervalAndPauseCarMovement();
-  //   } else {
-  //     const newInterval = 1000 / this.speedRate;
-  //     this.intervalId = setInterval(() => {
-  //       this.sliderValue++;
-  //       if (this.sliderValue > this.totalTime) {
-  //         this.clearIntervalAndPauseCarMovement();
-  //       }
-  //     }, newInterval);
-  //
-  //     this.simulateCarMovement(this.routeCoordinates);
-  //   }
-  //   this.isPlaying = !this.isPlaying;
-  // }
-
   togglePlay() {
     if (!this.isPlaying) {
-      this.pauseCarMovement()
-      clearInterval(this.intervalId);
+
     } else {
-      this.intervalId = setInterval(() => {
-              this.sliderValue++;
-              if (this.sliderValue > this.totalTime) {
-                this.clearIntervalAndPauseCarMovement();
-              }
-            }, 1000);
-      this.animateMarker(this.routeCoordinates,this.car)
+
     }
     this.isPlaying = !this.isPlaying;
-  }
-
-  speedRate: number = 1;
-
-  // changeSpeed() {
-  //   const speedRates = [2, 5, 10, 0.5, 1];
-  //   const currentIndex = speedRates.indexOf(this.speedRate);
-  //   this.speedRate = speedRates[(currentIndex + 1) % speedRates.length];
-  //
-  //   if (!this.isPlaying) {
-  //     this.clearIntervalAndPauseCarMovement();
-  //     const newInterval = 1000 / this.speedRate;
-  //     this.intervalId = setInterval(() => {
-  //       this.sliderValue++;
-  //       if (this.sliderValue > this.totalTime) {
-  //         this.clearIntervalAndPauseCarMovement();
-  //       }
-  //     }, newInterval);
-  //     this.simulateCarMovement(this.routeCoordinates);
-  //   }
-  // }
-
-  clearIntervalAndPauseCarMovement() {
-    clearInterval(this.intervalId);
-    this.pauseCarMovement();
-  }
-
-  // 作用在時間條的拉取
-  // onSliderChange(event: any) {
-  //   // 清除之前的車輛標記
-  //   if (this.car !== null) {
-  //     this.car.setMap(null);
-  //   }
-  //   this.selectedProductIndex = event.value;
-  //   this.carPosition = this.routeCoordinates[this.selectedProductIndex];
-  //   this.car?.setPosition(this.carPosition); // 更新車輛位置
-  //   // 建立新的車輛圖示
-  //   this.car = new google.maps.Marker({
-  //     position: this.carPosition,
-  //     map: this.map,
-  //     icon: { url: this.transformedData[this.selectedProductIndex].url, scaledSize: new google.maps.Size(50, 50) },
-  //   });
-  // }
-
-  onSliderChange(event: any) {
-    const newIndex = event.value; // 取得slider的值作為新的index
-    const route = this.routeCoordinates;
-
-    // 更新marker的位置
-    const newPosition = google.maps.geometry.spherical.interpolate(
-      route[newIndex],
-      route[newIndex + 1],
-      0 // 初始進度為0，即起始位置
-    );
-    if (this.car) {
-      this.car.setPosition(newPosition);
-    }
-
-    // 更新播放狀態
-    this.state.index = newIndex;
-    this.state.progress = 0;
-
   }
 
   products: any[] = products;
@@ -132,9 +46,8 @@ export class HistoryPathComponent implements OnInit {
     { name: '車隊(C)', code: 'C' },
     { name: '車隊(D)', code: 'D' },
   ]
-  cars: any[] = [];
 
-  selectedProductIndex: number = 0;
+  cars: any[] = [];
 
   Select() {
     if (this.selectedProduct) {
@@ -142,113 +55,9 @@ export class HistoryPathComponent implements OnInit {
       this.center = this.selectedProduct;
       this.map.setCenter(new google.maps.LatLng(this.center.lat, this.center.lng));
     }
-    if (this.selectedProduct) {
-      // 找index
-      const selectedIndex = this.transformedData.findIndex(
-        product => product === this.selectedProduct
-      );
-
-      // 是否被找到
-      if (selectedIndex !== -1) {
-        // 儲存index
-        this.selectedProductIndex = selectedIndex;
-        console.log('index:', this.selectedProductIndex);
-
-        // 清除之前的車輛標記
-        if (this.car !== null) {
-          this.car.setMap(null);
-        }
-        this.sliderValue = this.selectedProductIndex
-        console.log('table-slider:', this.sliderValue)
-        this.carPosition = this.routeCoordinates[this.selectedProductIndex];
-        this.car?.setPosition(this.carPosition); // 更新車輛位置
-        // 建立新的車輛圖示
-        this.car = new google.maps.Marker({
-          position: this.carPosition,
-          map: this.map,
-          icon: { url: this.transformedData[this.selectedProductIndex].url, scaledSize: new google.maps.Size(50, 50) },
-        });
-      } else {
-        console.log('錯誤');
-      }
-    }
   }
 
-  //車車
-  carMovementInterval: any; // 車車定時器ID
-  car: google.maps.Marker | null = null; // 車輛標記
-
-  //車輛更新
-  // simulateCarMovement(routeCoordinates: google.maps.LatLngLiteral[]): void {
-  //   const newInterval = 1000 / this.speedRate;
-  //   //車輛移動
-  //   this.carMovementInterval = setInterval(() => {
-  //     if (this.selectedProductIndex < routeCoordinates.length) {
-  //       // 計算新的間隔時間以達到所選的速率
-  //       console.log(this.selectedProductIndex)
-  //       // 表格會跟著動
-  //       this.selectedProduct = this.transformedData[this.selectedProductIndex]
-  //       // 清除之前的車輛標記
-  //       if (this.car !== null) {
-  //         this.car.setMap(null);
-  //       }
-  //       // 建立新的車輛圖示
-  //       this.car = new google.maps.Marker({
-  //         position: this.carPosition,
-  //         map: this.map,
-  //         icon: { url: this.transformedData[this.selectedProductIndex].url, scaledSize: new google.maps.Size(50, 50) },
-  //       });
-  //       this.carPosition = routeCoordinates[this.selectedProductIndex];
-  //       this.car?.setPosition(this.carPosition); // 更新車輛位置
-  //       this.selectedProductIndex++;
-  //     } else {
-  //       clearInterval(this.carMovementInterval); // 所有座標都跑完，清除定時器
-  //     }
-  //   }, newInterval); // 每隔1秒更新一次位置
-  // }
-
-  // 暫停車輛
-  pauseCarMovement(): void {
-    // clearInterval(this.carMovementInterval);
-    clearInterval(this.markerMoveInter);
-  }
-
-  state = {
-    index: 0,
-    progress: 0
-  };
-
-  markerMoveInter: any
-  animateMarker(route: any[], marker: any) {
-    const totalFrames = 100;
-    const frameDuration = 2000 / totalFrames;
-    const step = 1 / totalFrames;
-
-    const animateMarker = () => {
-      this.state.progress += step;
-      if (this.state.progress < 1) {
-        const newPosition = google.maps.geometry.spherical.interpolate(
-          route[this.state.index],
-          route[this.state.index + 1],
-          this.state.progress
-        );
-        marker.setPosition(newPosition);
-        marker.setIcon({
-            url: this.transformedData[this.state.index].url,
-            scaledSize: new google.maps.Size(40, 40)
-        });
-      } else {
-        this.state.index++;
-        if (this.state.index < route.length - 1) {
-          this.state.progress = 0;
-        } else {
-          clearInterval(this.markerMoveInter);
-        }
-      }
-    };
-
-    this.markerMoveInter = setInterval(animateMarker, frameDuration);
-  }
+  car: google.maps.Marker[] = []
 
   // 用來儲存路線座標的變數
   routeCoordinates: google.maps.LatLngLiteral[] = [];
@@ -454,6 +263,12 @@ export class HistoryPathComponent implements OnInit {
         // 轉換成中文地址
         this.geocodePositions();
 
+
+        const lineSymbol = {
+          path: this.transformedData[0].url,
+          scale: 8,
+        };
+
         // 清除先前的路徑
         if (this.historyPath) {
           this.historyPath.setMap(null);
@@ -464,20 +279,58 @@ export class HistoryPathComponent implements OnInit {
           geodesic: true,
           strokeColor: "#77428D",
           strokeOpacity: 1.0,
-          strokeWeight: 3,
+          strokeWeight: 5,
+
+          // icons: [
+          //   {
+          //     icon: lineSymbol,
+          //     offset: "100%",
+          //   }
+          // ]
         });
         this.historyPath.setMap(this.map);
 
-        // 清除先前的車輛圖示
-        if (this.car !== null) {
-          this.car.setMap(null);
-        }
-        // 建立車輛圖示
-        this.car = new google.maps.Marker({
+        // 创建虚拟标记，并将其添加到地图上
+        const virtualMarker = new google.maps.Marker({
+          icon: {
+            url: this.transformedData[0].url, // 标记的图标路径
+            scaledSize: new google.maps.Size(50, 50) // 标记图标的大小
+          },
           position: this.routeCoordinates[0],
-          map: this.map,
-          icon: { url: this.transformedData[0].url, scaledSize: new google.maps.Size(40, 40) },
+          map: this.map
         });
+
+        // 初始化变量
+        let index = 0;
+        let progress = 0;
+        const totalFrames = 100; // 总帧数
+        const frameDuration = 2000 / totalFrames; // 每帧持续时间
+
+        // 计算每帧移动的步长
+        const step = 1 / totalFrames;
+
+        const animateMarker = () => {
+          progress += step;
+          if (progress < 1) {
+            const newPosition = google.maps.geometry.spherical.interpolate(
+              this.routeCoordinates[index],
+              this.routeCoordinates[index + 1],
+              progress
+            );
+            virtualMarker.setPosition(newPosition);
+          } else {
+            // Move to the next segment of the route
+            index++;
+            if (index < this.routeCoordinates.length - 1) {
+              progress = 0;
+            } else {
+              clearInterval(markerMovementInterval);
+            }
+          }
+        };
+
+        // 然后，使用 setInterval 定时器来模拟标记在折线上的流畅移动
+        const markerMovementInterval = setInterval(animateMarker, frameDuration);
 
         // 啟動播放鈕
         this.playable = false
@@ -486,6 +339,19 @@ export class HistoryPathComponent implements OnInit {
         console.log(err);
       },
     });
+  }
+
+  animateMarkers(line: google.maps.Polyline) {
+    let count = 0;
+
+    window.setInterval(() => {
+      count = (count + 1) % 200;
+
+      const icons = line.get("icons");
+
+      icons[0].offset = count / 2 + "%";
+      line.set("icons", icons);
+    }, 20);
   }
 
   getUrlByDirection(heading: number) {

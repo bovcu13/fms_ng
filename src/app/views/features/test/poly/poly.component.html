@@ -41,7 +41,7 @@
               </div>
               <div class="col-11 ml-2 mt-5">
                 <div class="slider-container">
-                  <p-slider (onChange)="onSliderChange($event)" [(ngModel)]="sliderValue" [min]="0"
+                  <p-slider [(ngModel)]="sliderValue" [min]="0"
                             [max]="totalTime"></p-slider>
                   <div class="slider-label" [style.left.%]="(sliderValue / totalTime) * 100">
                     {{ formatTime(sliderValue) }}
@@ -53,12 +53,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-12 flex align-items-center">
-              <label>倍速：</label>
-              <p-button label="{{speedRate}}"
-                        styleClass="ml-3 p-button-sm p-button-outlined p-button-secondary"
-                        [style]="{ width: '4em' }"></p-button>
             </div>
           </div>
           <p-table [value]="transformedData"

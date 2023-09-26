@@ -22,6 +22,7 @@ import { OddReportComponent } from "../features/odd-list/odd-report/odd-report.c
 import { SpeedingComponent } from "../features/odd-list/speeding/speeding.component";
 import { StallComponent } from "../features/odd-list/stall/stall.component";
 import { OddTempComponent } from "../features/odd-list/odd-temp/odd-temp.component";
+import { PolyComponent } from "../features/test/poly/poly.component";
 
 
 const routes: Routes = [
@@ -55,6 +56,7 @@ const routes: Routes = [
       { path: 'draw', component: DrawComponent, canActivate: [AuthGuard] },
       { path: 'info', component: InfoComponent, canActivate: [AuthGuard] },
       { path: 'signal', component: SignalComponent, canActivate: [AuthGuard] },
+      { path: 'poly', component: PolyComponent, canActivate: [AuthGuard] },
     ],
   },
 ];

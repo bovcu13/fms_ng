@@ -1,0 +1,151 @@
+//::ng-deep .gm-style .gm-style-iw-c {
+//  background-color: rgba(199, 193, 193, 0.7); /* 設定透明度 */
+//  color: #000000; /* 文字顏色，你可以根據需要調整 */
+//  padding: 10px; /* 調整內距，使內容不會貼緊邊界 */
+//  border: none; /* 移除邊框，如果需要的話 */
+//  box-shadow: none; /* 移除陰影，如果需要的話 */
+//}
+//
+//::ng-deep.gm-style .gm-style-iw-tc::after {
+//  background-color: rgba(199, 193, 193, 0.7);
+//}
+
+::ng-deep {
+  //.gm-style .gm-style-iw-d::-webkit-scrollbar-track,
+  //.gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece {
+  //  background: none;
+  //}
+  //
+  //.gm-style .gm-style-iw {
+  //  font-size: 20px;
+  //}
+
+  .p-button.p-button-secondary, .p-buttonset.p-button-secondary >
+  .p-button, .p-splitbutton.p-button-secondary > .p-button {
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.7);
+    border: 0;
+  }
+
+  .p-speeddial-button.p-button.p-button-icon-only {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .p-speeddial-action {
+    width: 2rem;
+    height: 2rem;
+    background: #495057;
+    color: #fff;
+  }
+
+  .p-button.p-button-secondary:enabled:focus, .p-buttonset.p-button-secondary >
+  .p-button:enabled:focus, .p-splitbutton.p-button-secondary > .p-button:enabled:focus {
+    box-shadow: none;
+  }
+
+  .p-button.p-button-secondary:enabled:hover, .p-buttonset.p-button-secondary >
+  .p-button:enabled:hover, .p-splitbutton.p-button-secondary > .p-button:enabled:hover {
+    background: rgba(120, 125, 123, 0.7);
+  }
+
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+    box-shadow: none;
+  }
+
+  .p-card {
+    min-width: 33rem;
+    height: 95vh;
+  }
+
+  .p-card .p-card-content {
+    padding: 0;
+  }
+
+  .p-tag.p-tag-danger {
+    background-color: #D32F2F;
+    color: #ffffff;
+    width: 1rem;
+    height: 1rem;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .p-splitter {
+    border: 0;
+  }
+}
+
+#custom-button {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: none; /* 隱藏按鈕，待右鍵點擊時再顯示 */
+}
+
+.num {
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  top: 6rem;
+  left: 1rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  color: #FFFFFF;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.kmh {
+  position: absolute;
+  width: 8rem;
+  height: 3rem;
+  top: 6rem;
+  left: 5rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  color: #FFFFFF;
+  text-align: left;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid #9F353A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+}
+
+.func {
+  position: absolute;
+  bottom: 4rem;
+  left: 1rem;
+}
+
+.slider-container {
+  position: relative;
+}
+
+.slider-label {
+  position: absolute;
+  top: -2.5rem; /* 調整label的垂直位置 */
+  text-align: center;
+  width: 5rem; /* 調整label的寬度 */
+  background-color: #007bff; /* 調整label的背景顏色 */
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
