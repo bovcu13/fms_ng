@@ -56,7 +56,7 @@
             </div>
             <div class="col-12 flex align-items-center">
               <label>倍速：</label>
-              <p-button label="{{speedRate}}"
+              <p-button label="{{speedRate}}" (click)="changeSpeed()"
                         styleClass="ml-3 p-button-sm p-button-outlined p-button-secondary"
                         [style]="{ width: '4em' }"></p-button>
             </div>

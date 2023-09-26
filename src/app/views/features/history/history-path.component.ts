@@ -63,23 +63,23 @@ export class HistoryPathComponent implements OnInit {
 
     speedRate: number = 1;
 
-    // changeSpeed() {
-    //   const speedRates = [2, 5, 10, 0.5, 1];
-    //   const currentIndex = speedRates.indexOf(this.speedRate);
-    //   this.speedRate = speedRates[(currentIndex + 1) % speedRates.length];
-    //
-    //   if (!this.isPlaying) {
-    //     this.clearIntervalAndPauseCarMovement();
-    //     const newInterval = 1000 / this.speedRate;
-    //     this.intervalId = setInterval(() => {
-    //       this.sliderValue++;
-    //       if (this.sliderValue > this.totalTime) {
-    //         this.clearIntervalAndPauseCarMovement();
-    //       }
-    //     }, newInterval);
-    //     this.simulateCarMovement(this.routeCoordinates);
-    //   }
-    // }
+    changeSpeed() {
+      const speedRates = [2, 5, 10, 0.5, 1];
+      const currentIndex = speedRates.indexOf(this.speedRate);
+      this.speedRate = speedRates[(currentIndex + 1) % speedRates.length];
+
+      if (!this.isPlaying) {
+        this.clearIntervalAndPauseCarMovement();
+        const newInterval = 1000 / this.speedRate;
+        this.intervalId = setInterval(() => {
+          this.sliderValue++;
+          if (this.sliderValue > this.totalTime) {
+            this.clearIntervalAndPauseCarMovement();
+          }
+        }, newInterval);
+          this.animateMarker(this.routeCoordinates, this.car)
+      }
+    }
 
     clearIntervalAndPauseCarMovement() {
         clearInterval(this.intervalId);
@@ -238,7 +238,8 @@ export class HistoryPathComponent implements OnInit {
 
     animateMarker(route: any[], marker: any) {
         const totalFrames = 100;
-        const frameDuration = 2000 / totalFrames;
+        // 根據動畫速度調整 frameDuration
+        const frameDuration = (2000 / this.speedRate) / totalFrames;
         const step = 1 / totalFrames;
 
         const animateMarker = () => {
