@@ -29,6 +29,7 @@ import { SpeedingComponent } from "../features/odd-list/speeding/speeding.compon
 import { StallComponent } from "../features/odd-list/stall/stall.component";
 import { OddTempComponent } from "../features/odd-list/odd-temp/odd-temp.component";
 import { PolyComponent } from "../features/test/poly/poly.component";
+import { MileComponent } from "../features/statistics/mile/mile.component";
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { PolyComponent } from "../features/test/poly/poly.component";
     SpeedingComponent,
     StallComponent,
     OddTempComponent,
-    PolyComponent
+    PolyComponent,
+    MileComponent
   ],
   imports: [
     CommonModule,
