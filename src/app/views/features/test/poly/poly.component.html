@@ -1,0 +1,201 @@
+<div class="overflow-x-hidden flex justify-content-between">
+  <div id="map" style="height: 95vh; width: 100%;position: relative"></div>
+  <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button"
+            styleClass="p-button-sm bg-white p-button-raised p-button-text p-button-info"></p-button>
+  <div class="func">
+    <p-speedDial showIcon="pi pi-map" buttonClassName="p-button-secondary"
+                 direction="right" [model]="items">
+    </p-speedDial>
+  </div>
+  <div class="col-4">
+    <p-card>
+      <p-tabView>
+        <p-tabPanel>
+          <ng-template pTemplate="header">
+            <span>車隊查詢</span>
+          </ng-template>
+          <div class="grid">
+            <div class="col-6">
+              <p-dropdown [options]="carGroups" optionLabel="name" placeholder="選擇車隊"></p-dropdown>
+            </div>
+            <div class="col-6">
+              <p-dropdown [options]="cars" (click)="getAllVehiclesRequest()" optionLabel="name" placeholder="選擇車牌"></p-dropdown>
+            </div>
+            <div class="col-6">
+              <p-calendar [showTime]="true" [ngModel]="startDate" (onSelect)="onStartDateChange($event)"
+                          [defaultDate]="startDate" [maxDate]="maxDate"
+                          placeholder="選擇開始時間"></p-calendar>
+            </div>
+            <div class="col-6">
+              <p-calendar [showTime]="true" [ngModel]="endDate" (onSelect)="onEndDateChange($event)"
+                          [defaultDate]="maxDate" [maxDate]="maxDate"
+                          placeholder="選擇結束時間"></p-calendar>
+            </div>
+            <div class="col-12 flex justify-content-end">
+              <p-button label="查詢" icon="pi pi-search" styleClass="p-button-sm" (click)="searchPath()"></p-button>
+            </div>
+            <div class="col-12 flex justify-content-between">
+              <div class="col-1 mt-3">
+                <p-toggleButton [ngModel]="isPlaying" (onChange)="togglePlay()" onIcon="pi pi-caret-right"
+                                offIcon="pi pi-pause" [disabled]="playable"></p-toggleButton>
+              </div>
+              <div class="col-11 ml-2 mt-5">
+                <div class="slider-container">
+                  <p-slider [(ngModel)]="sliderValue" [min]="0"
+                            [max]="totalTime"></p-slider>
+                  <div class="slider-label" [style.left.%]="(sliderValue / totalTime) * 100">
+                    {{ formatTime(sliderValue) }}
+                  </div>
+                </div>
+                <div class="mt-2 flex justify-content-end">
+                  <div>
+                    {{ formatTime(totalTime) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p-table [value]="transformedData"
+                   [rows]="5"
+                   selectionMode="single"
+                   [(selection)]="selectedProduct"
+                   (onRowSelect)="Select()"
+                   [scrollable]="true"
+                   scrollHeight="50vh">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>狀態累積</th>
+                <th>狀態</th>
+                <th>速度</th>
+                <th>地址</th>
+                <th>方向</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+              <tr [pSelectableRow]="product">
+                <td>{{ product.date_time | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                <td>{{ product.state }}</td>
+                <td>{{ product.speed }}</td>
+                <td>{{ product.addr }}</td>
+                <td>{{ product.direction }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+          <ng-template pTemplate="header">
+            <span>異常中心</span>
+            <p-tag *ngIf="oddTem > 0" severity="danger" value="{{oddTem}}"></p-tag>
+          </ng-template>
+          <p-accordion [activeIndex]="0">
+            <div class="flex justify-content-center">
+              <div class="grid">
+                <div class="col-12 flex justify-content-between">
+                  <h2 class="text-center">溫度異常</h2>
+                  <h2 class="text-center">{{oddTem}}</h2><br>
+                  <h2 class="text-center">台</h2>
+                </div>
+                <div class="col-12">
+                  <p-table [value]="products" [paginator]="true" [rows]="5" selectionMode="single"
+                           [(selection)]="selectedProduct"
+                           (onRowSelect)="Select()">
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th>狀態累積</th>
+                        <th>狀態</th>
+                        <th>速度</th>
+                        <th>地址</th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-product>
+                      <tr [pSelectableRow]="product">
+                        <td>{{ product.statetime }}</td>
+                        <td>{{ product.state }}</td>
+                        <td>{{ product.speed }}</td>
+                        <td>{{ product.addr }}</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </div>
+            </div>
+          </p-accordion>
+        </p-tabPanel>
+        <p-tabPanel>
+          <ng-template pTemplate="header">
+            <span>功能A</span>
+          </ng-template>
+
+        </p-tabPanel>
+        <p-tabPanel>
+          <ng-template pTemplate="header">
+            <span>功能B</span>
+          </ng-template>
+        </p-tabPanel>
+      </p-tabView>
+    </p-card>
+  </div>
+</div>
+
+<p-dialog header="地標資料" [(visible)]="markDialog" [modal]="true" [style]="{ width: '20vw' }" [draggable]="false"
+          [resizable]="false">
+  <div class="grid">
+    <div class="col-4 flex align-items-center">
+      <label>地標類型</label>
+    </div>
+    <div class="col-8">
+      <p-dropdown [options]="markType" optionLabel="name" [appendTo]="'body'">
+        <ng-template pTemplate="option" let-option>
+        <span>
+          <i class="{{ option.icon }} mr-2"></i>
+          {{ option.name }}
+        </span>
+        </ng-template>
+        <ng-template pTemplate="selectedItem" let-selectedItem>
+          <i class="{{ selectedItem.icon }} mr-2"></i>
+          {{ selectedItem.name }}
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>地標名稱</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText/>
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>客戶編號</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText/>
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>電話</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText/>
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>範圍</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText/>
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>描述</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText/>
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>子公司分享</label>
+    </div>
+    <div class="col-8">
+      <p-inputSwitch></p-inputSwitch>
+    </div>
+    <div class="col-12 flex justify-content-end">
+      <p-button label="取消" styleClass="p-button-outlined p-button-secondary mr-2"></p-button>
+      <p-button label="新增" (click)="addLandMark()"></p-button>
+    </div>
+  </div>
+</p-dialog>

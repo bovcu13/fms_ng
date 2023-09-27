@@ -236,5 +236,9 @@ export const testMenu=[
   {
     label:'draw',
     routerLink:'/draw'
+  },
+  {
+    label:'poly',
+    routerLink:'/poly'
   }
 ]

@@ -28,41 +28,43 @@ import { OddReportComponent } from "../features/odd-list/odd-report/odd-report.c
 import { SpeedingComponent } from "../features/odd-list/speeding/speeding.component";
 import { StallComponent } from "../features/odd-list/stall/stall.component";
 import { OddTempComponent } from "../features/odd-list/odd-temp/odd-temp.component";
+import { PolyComponent } from "../features/test/poly/poly.component";
 
 @NgModule({
-    declarations: [
-        ContainerComponent,
-        RoleComponent,
-        MainComponent,
-        MonitorComponent,
-        SidebarComponent,
-        StreamComponent,
-        LogComponent,
-        MaaaapComponent,
-        MultipleCarsComponent,
-        DrivingStatusComponent,
-        DrawComponent,
-        InfoComponent,
-        HistoryPathComponent,
-        RecordComponent,
-        CakeReportComponent,
-        SignalComponent,
-        BasicDataComponent,
-        OddSetComponent,
-        OddReportComponent,
-        SpeedingComponent,
-        StallComponent,
-        OddTempComponent
-    ],
-    imports: [
-        CommonModule,
-        ContainerRoutingModule,
-        SharedModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        GoogleMapsModule
-    ]
+  declarations: [
+    ContainerComponent,
+    RoleComponent,
+    MainComponent,
+    MonitorComponent,
+    SidebarComponent,
+    StreamComponent,
+    LogComponent,
+    MaaaapComponent,
+    MultipleCarsComponent,
+    DrivingStatusComponent,
+    DrawComponent,
+    InfoComponent,
+    HistoryPathComponent,
+    RecordComponent,
+    CakeReportComponent,
+    SignalComponent,
+    BasicDataComponent,
+    OddSetComponent,
+    OddReportComponent,
+    SpeedingComponent,
+    StallComponent,
+    OddTempComponent,
+    PolyComponent
+  ],
+  imports: [
+    CommonModule,
+    ContainerRoutingModule,
+    SharedModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    GoogleMapsModule
+  ]
 })
 export class ContainerModule {
 }
