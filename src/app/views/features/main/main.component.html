@@ -31,16 +31,6 @@
               <div class="col-12 md:col-6 lg:col-6">
                 <p-dropdown [options]="cars" optionLabel="name" placeholder="選擇車牌"></p-dropdown>
               </div>
-              <div class="col-12 md:col-6 lg:col-6">
-                <p-calendar [showTime]="true" [ngModel]="startDate"
-                            [defaultDate]="startDate" [maxDate]="endDate"
-                            placeholder="選擇開始時間"></p-calendar>
-              </div>
-              <div class="col-12 md:col-6 lg:col-6">
-                <p-calendar [showTime]="true" [ngModel]="endDate"
-                            [defaultDate]="endDate" [maxDate]="endDate"
-                            placeholder="選擇結束時間"></p-calendar>
-              </div>
             </div>
             <p-table [columns]="selectedColumns"
                      [value]="transformedData"

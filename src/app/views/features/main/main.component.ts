@@ -82,8 +82,6 @@ export class MainComponent implements OnInit {
     this.colsInit();
     this.itemInit();
     this.mapInit();
-    this.getDefaultStartDate();
-    this.getDefaultEndDate();
 
     this.getAllNewGpsRequest();
 
@@ -92,10 +90,6 @@ export class MainComponent implements OnInit {
       this.getAll20s();
     }, 5000);
 
-    // 監聽陣列的變化
-    this.dataSignal.subscribe((value: any) => {
-      this.onDataChange();
-    });
   }
 
   @Input() get selectedColumns(): any[] {
@@ -422,34 +416,7 @@ export class MainComponent implements OnInit {
     });
   }
 
-  startDate: any
-
-  getDefaultStartDate() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set to 00:00:00.000
-    this.startDate = today
-  }
-
-  endDate: any
-
-  getDefaultEndDate() {
-    const today = new Date();
-    today.setHours(23, 59, 59, 999); // Set to 23:59:59.999
-    this.endDate = today
-  }
-
   transformedData: any[] = []; // 存轉換後api資料
-
-  // 使用 Signal 包裝 data 陣列
-  dataSignal:any = signal<any[]>([]);
-
-  onDataChange() {
-    // 計算新增的資料
-    const addedData = this.dataSignal.value.diff(this.transformedData);
-
-    // 更新這些資料
-    this.transformedData = this.transformedData.concat(addedData);
-  }
 
   // init - 取得All車輛即時位置
   getAllNewGpsRequest() {
@@ -563,10 +530,8 @@ export class MainComponent implements OnInit {
               title: location.addr,
               icon: { url: location.url, scaledSize: new google.maps.Size(60, 60) },
             });
-
             const licensePlate = location.license_plate;
             const driver = location.driver;
-
             const content = `
                                     <div class="text-center">
                                     <label>${licensePlate}</label>
@@ -577,12 +542,9 @@ export class MainComponent implements OnInit {
             const infowindow = new google.maps.InfoWindow({
               content: content,
             });
-
             // 一開始就顯示資訊窗口
             infowindow.open(this.map, marker);
-
             this.markers.push(marker);
-
             // 點擊標記顯示info, 設定中心點
             google.maps.event.addListener(marker, 'click', () => {
               infowindow.open(this.map, marker);
@@ -609,9 +571,8 @@ export class MainComponent implements OnInit {
       '西': 'assets/car/normal_w.png',
       '西北': 'assets/car/normal_nw.png'
     };
-
     let direction = this.parseHeading(heading);
-    return directionUrlMap[direction] || 'assets/image/warehouse.png'; // Default image if direction is unknown
+    return directionUrlMap[direction] || 'assets/image/warehouse.png';
   }
 
   parseHeading(heading: number) {
@@ -636,25 +597,4 @@ export class MainComponent implements OnInit {
     }
   }
 
-  // 取得全部車輛歷史紀錄
-  // getAllGpsRequest(id: any) {
-  //   this.carServ.getAllGpsRequest(id).subscribe({
-  //     next: (res) => {
-  //       this.products = res.body.gps;
-  //       console.log("來源資料:", res.body.gps);
-  //       this.transformedData = this.products.map(item => ({
-  //         ...item,
-  //         url: "assets/image/warehouse.png",
-  //         addr: "",
-  //         infoWindowContent: item.sid,
-  //       }));
-  //       // 轉換成中文地址
-  //       this.geocodePositions();
-  //       console.log("轉換後資料:", this.transformedData);
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     },
-  //   });
-  // }
 }
