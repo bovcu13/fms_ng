@@ -20,6 +20,7 @@ export class MileComponent implements OnInit {
   }
 
   cars: any;
+
   vehiclesData: any;
 
   // 取得車牌
