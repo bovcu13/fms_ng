@@ -16,7 +16,7 @@ export class CakeReportComponent implements OnInit {
 
   ngOnInit() {
     this.getDefaultDate();
-
+    this.getAllVehiclesRequest();
   }
 
   test: any;
@@ -91,8 +91,15 @@ export class CakeReportComponent implements OnInit {
   }
 
   search() {
-    this.getAllGpsRequest('AA0000', { filter: { start_time: this.startTime, end_time: this.endTime } })
+    this.getAllGpsRequest(this.plate, { filter: { start_time: this.startTime, end_time: this.endTime } })
     console.log("開始：", this.startTime, "結束：", this.endTime)
+  }
+
+  plate: any;
+
+  selectCar(event: any) {
+    console.log(event)
+    this.plate = event;
   }
 
   data: any
