@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from "../../../services/auth.service";
@@ -15,11 +15,13 @@ import {TokenStorageService} from "../../../services/token-storage.service";
   providers: [MessageService, ReCaptchaV3Service]
 })
 export class LoginComponent implements OnInit {
-
+  @ViewChild('container')
+  container!: ElementRef;
   login_form: FormGroup;
   siteKey = environment.recaptcha.siteKey
   captchaResponse = '';
   roles!: string;
+  showBack = false;
 
   constructor(
     private fb: FormBuilder,
@@ -75,6 +77,16 @@ export class LoginComponent implements OnInit {
         this.showError();
       }
     });
+  }
+
+  toggleCard() {
+    const card = document.querySelector('.card-container');
+    this.showBack = !this.showBack;
+    if (!this.showBack) {
+      card?.classList.remove('flip-front');
+    } else {
+      card?.classList.add('flip-front');
+    }
   }
 
 

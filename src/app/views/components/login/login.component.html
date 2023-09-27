@@ -1,52 +1,86 @@
-  <div class="flex grid bg-blue-900">
+<div class="flex grid bg-blue-900">
     <div class="col-12 md:col-12 lg:col-7"
          style="background-image: url(https://images.unsplash.com/photo-1517953377824-516f2dca803b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2689&q=80)">
-      <div class="flex items-center h-full p-8">
-        <div>
-          <h2 class="text-4xl font-bold text-white">iCar 車隊管理系統</h2>
-          <p class="max-w-xl mt-3 text-gray-300">
-            長輝資訊科技GPS車隊監控App，可以隨時掌握車輛即時位置與動態資訊，也提供車輛軌跡與各式報表的查詢，是最佳的車隊管理利器。</p>
+        <div class="flex items-center h-full p-8">
+            <div>
+                <h2 class="text-4xl font-bold text-white">iCar 車隊管理系統</h2>
+                <p class="max-w-xl mt-3 text-gray-300">
+                    長輝資訊科技GPS車隊監控App，可以隨時掌握車輛即時位置與動態資訊，也提供車輛軌跡與各式報表的查詢，是最佳的車隊管理利器。</p>
+            </div>
         </div>
-      </div>
     </div>
     <div class="col-12 md:col-12 lg:col-5">
-      <div class="login-container mt-5 mb-5">
-        <div class="login-card">
-          <div class="logo">
-            <i class="pi pi-key text-white"></i>
-            <span class="text-white">天網熊貓</span><br>
-            <span class="text-white mt-2">SkyNet Panda</span>
-          </div>
-          <div class="p-fluid">
-            <form [formGroup]="login_form">
-              <div class="p-field">
-                <label for="fleet_code" class="text-white">車隊ID</label>
-                <input id="fleet_code" formControlName="fleet_code" type="text" pInputText/>
-              </div>
-              <div class="p-field mt-2">
-                <label for="user_name" class="text-white">帳號ID</label>
-                <input id="user_name" formControlName="user_name" type="text" pInputText/>
-              </div>
-              <div class="p-field mt-2">
-                <label for="password" class="text-white">密碼</label>
-                <input id="password" formControlName="password" type="password" pInputText/>
-              </div>
-              <div class="p-field mt-2">
-                <p-checkbox id="rememberMe"  class="text-white" [binary]="true" label="記住密碼"></p-checkbox>
-              </div>
-              <div class="p-field mt-2">
-                <p-checkbox id="autoLogin"  class="text-white" [binary]="true" label="自動登入"></p-checkbox>
-              </div>
+        <div class="login-container mt-5 mb-5">
+            <form [formGroup]="login_form" [ngClass]="{'flip-front': showBack}">
+                <div class="card-container">
+                    <!-- 正面 -->
+                    <p-card class="front" *ngIf="!showBack">
+                        <div class="logo">
+                            <i class="pi pi-key"></i>
+                            <span>天網熊貓</span><br>
+                            <span class="mt-2">SkyNet Panda</span>
+                        </div>
+
+                        <div class="p-field">
+                            <!--                <label for="fleet_code">車隊ID</label>-->
+                            <input id="fleet_code" placeholder="車隊ID" formControlName="fleet_code" type="text" pInputText/>
+                        </div>
+                        <div class="p-field mt-2">
+                            <!--                <label for="user_name">帳號ID</label>-->
+                            <input id="user_name" placeholder="帳號ID" formControlName="user_name" type="text" pInputText/>
+                        </div>
+                        <div class="p-field mt-2">
+                            <!--                <label for="password">密碼</label>-->
+                            <input id="password" placeholder="密碼" formControlName="password" type="password" pInputText/>
+                        </div>
+                        <div class="p-field mt-4 flex justify-content-between">
+                            <p-checkbox id="rememberMe" [binary]="true" label="記住密碼"></p-checkbox>
+                            <p-checkbox id="autoLogin" [binary]="true" label="自動登入"></p-checkbox>
+                        </div>
+                        <div class="p-field">
+                            <p-toast></p-toast>
+                            <p-button (click)="login()" label="登入"
+                                      class="flex justify-content-center align-items-center mt-4"></p-button>
+                        </div>
+                        <div class="col-12 flex justify-content-center mt-4">
+              <span class="text-xs">未註冊帳號?
+                <button class="text-button" (click)="toggleCard()">註冊</button>
+              </span>
+                        </div>
+                    </p-card>
+
+                    <!-- 背面 -->
+                    <p-card class="back" *ngIf="showBack">
+                        <div class="logo">
+                            <i class="pi pi-key"></i>
+                            <span>天網熊貓</span><br>
+                            <span class="mt-2">SkyNet Panda</span>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <input pInputText placeholder="Username">
+                        </div>
+                        <div class="col-12 mt-1">
+                            <input pInputText placeholder="Password">
+                        </div>
+                        <div class="col-12 mt-1">
+                            <input pInputText placeholder="Confirm Password">
+                        </div>
+                        <div class="col-12">
+                            <div class="flex justify-content-center align-items-center mt-1">
+                                <p-button label="註冊"></p-button>
+                            </div>
+                        </div>
+                        <div class="col-12 flex justify-content-center mt-4">
+              <span class="text-xs">擁有帳號?
+                <button class="text-button" (click)="toggleCard()">登入</button>
+              </span>
+                        </div>
+                    </p-card>
+
+                </div>
             </form>
-            <div class="p-field">
-              <p-toast></p-toast>
-              <button type="button" (click)="login()" pButton icon="pi pi-sign-in" label="登入"
-                      class="p-button p-button-success"></button>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 
 
