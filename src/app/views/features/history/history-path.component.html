@@ -15,18 +15,18 @@
             <span>車隊查詢</span>
           </ng-template>
           <div class="grid">
-            <div class="col-6">
+            <div class="col-12 md:col-6 lg:col-6">
               <p-dropdown [options]="carGroups" optionLabel="name" placeholder="選擇車隊"></p-dropdown>
             </div>
-            <div class="col-6">
+            <div class="col-12 md:col-6 lg:col-6">
               <p-dropdown [options]="cars" (click)="getAllVehiclesRequest()" optionLabel="name" placeholder="選擇車牌"></p-dropdown>
             </div>
-            <div class="col-6">
+            <div class="col-12 md:col-6 lg:col-6">
               <p-calendar [showTime]="true" [ngModel]="startDate" (onSelect)="onStartDateChange($event)"
                           [defaultDate]="startDate" [maxDate]="maxDate"
                           placeholder="選擇開始時間"></p-calendar>
             </div>
-            <div class="col-6">
+            <div class="col-12 md:col-6 lg:col-6">
               <p-calendar [showTime]="true" [ngModel]="endDate" (onSelect)="onEndDateChange($event)"
                           [defaultDate]="maxDate" [maxDate]="maxDate"
                           placeholder="選擇結束時間"></p-calendar>
@@ -35,14 +35,13 @@
               <p-button label="查詢" icon="pi pi-search" styleClass="p-button-sm" (click)="searchPath()"></p-button>
             </div>
             <div class="col-12 flex justify-content-between">
-              <div class="col-1 mt-3">
+              <div class="col-12 md:col-1 lg:col-1 mt-3">
                 <p-toggleButton [ngModel]="isPlaying" (onChange)="togglePlay()" onIcon="pi pi-caret-right"
                                 offIcon="pi pi-pause" [disabled]="playable"></p-toggleButton>
               </div>
-              <div class="col-11 ml-2 mt-5">
+              <div class="col-12 md:col-10 lg:col-10 mt-5">
                 <div class="slider-container">
-                  <p-slider (onChange)="onSliderChange($event)" [(ngModel)]="sliderValue" [min]="0"
-                            [max]="totalTime"></p-slider>
+                  <p-slider (onChange)="onSliderChange($event)" [(ngModel)]="sliderValue" [disabled]="playable"></p-slider>
                   <div class="slider-label" [style.left.%]="(sliderValue / totalTime) * 100">
                     {{ formatTime(sliderValue) }}
                   </div>
@@ -143,7 +142,7 @@
   </div>
 </div>
 
-<p-dialog header="地標資料" [(visible)]="markDialog" [modal]="true" [style]="{ width: '20vw' }" [draggable]="false"
+<p-dialog header="地標資料" [(visible)]="markDialog" [modal]="true" [style]="{ width: '30%' }" [draggable]="false"
           [resizable]="false">
   <div class="grid">
     <div class="col-4 flex align-items-center">
