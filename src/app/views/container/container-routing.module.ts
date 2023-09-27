@@ -23,6 +23,7 @@ import { SpeedingComponent } from "../features/odd-list/speeding/speeding.compon
 import { StallComponent } from "../features/odd-list/stall/stall.component";
 import { OddTempComponent } from "../features/odd-list/odd-temp/odd-temp.component";
 import { PolyComponent } from "../features/test/poly/poly.component";
+import { MileComponent } from "../features/statistics/mile/mile.component";
 
 
 const routes: Routes = [
@@ -40,6 +41,7 @@ const routes: Routes = [
       { path: 'cake_report', component: CakeReportComponent, canActivate: [AuthGuard] },
       // statistics
       { path: 'record', component: RecordComponent, canActivate: [AuthGuard] },
+      { path: 'mile', component: MileComponent, canActivate: [AuthGuard] },
       // odd-list
       { path: 'odd_report', component: OddReportComponent, canActivate: [AuthGuard] },
       { path: 'speeding', component: SpeedingComponent, canActivate: [AuthGuard] },

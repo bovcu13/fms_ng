@@ -131,7 +131,14 @@ export class SidebarComponent implements OnInit {
           },
           {
             label: '里程統計',
-            icon: 'pi pi-fw pi-box'
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/mile',
+            command:() =>{
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
+            },
           },
           {
             label: '地標統計',
