@@ -52,7 +52,7 @@
             </div>
             <div class="col-6">
               <p-dropdown [options]="cars"
-                          (click)="getAllVehiclesRequest()"
+                          (onChange)="selectCar($event.value.name)"
                           optionLabel="name"
                           placeholder="選擇車牌"></p-dropdown>
             </div>
