@@ -55,28 +55,28 @@ export class HistoryPathComponent implements OnInit {
                 if (this.sliderValue > this.totalTime) {
                     this.clearIntervalAndPauseCarMovement();
                 }
-            }, 1000);
+            }, this.speed);
             this.animateMarker(this.routeCoordinates, this.car)
         }
         this.isPlaying = !this.isPlaying;
     }
 
     speedRate: number = 1;
+    speed: number = 1000;
 
     changeSpeed() {
         const speedRates = [2, 5, 10, 0.5, 1];
         const currentIndex = speedRates.indexOf(this.speedRate);
         this.speedRate = speedRates[(currentIndex + 1) % speedRates.length];
+        this.speed = 1000 / this.speedRate;
 
         if (!this.isPlaying) {
-            this.clearIntervalAndPauseCarMovement();
-            const newInterval = 1000 / this.speedRate;
             this.intervalId = setInterval(() => {
                 this.sliderValue++;
                 if (this.sliderValue > this.totalTime) {
                     this.clearIntervalAndPauseCarMovement();
                 }
-            }, newInterval);
+            }, this.speed);
             this.animateMarker(this.routeCoordinates, this.car)
         }
     }
@@ -237,9 +237,9 @@ export class HistoryPathComponent implements OnInit {
     markerMoveInter: any
 
     animateMarker(route: any[], marker: any) {
-        const totalFrames = 100;
-        // 根據動畫速度調整 frameDuration
-        const frameDuration = (2000 / this.speedRate) / totalFrames;
+        console.log(this.speedRate)
+        const totalFrames = 50 / this.speedRate;
+        const frameDuration = 1000 / this.speedRate / totalFrames;
         const step = 1 / totalFrames;
 
         const animateMarker = () => {
@@ -265,6 +265,7 @@ export class HistoryPathComponent implements OnInit {
                     clearInterval(this.markerMoveInter);
                 }
             }
+            console.log(this.state.index)
         };
 
         this.markerMoveInter = setInterval(animateMarker, frameDuration);
@@ -428,6 +429,7 @@ export class HistoryPathComponent implements OnInit {
     }
 
     plate: any;
+
     selectCar(event: any) {
         console.log(event)
         this.plate = event;
