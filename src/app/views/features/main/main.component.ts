@@ -538,8 +538,8 @@ circle: any
       // 點擊標記顯示info, 設定中心點
       google.maps.event.addListener(marker, 'click', () => {
         infowindow.open(this.map, marker);
-        this.map.setZoom(17);
-        this.map.setCenter(marker.getPosition() as google.maps.LatLng);
+        this.selectedProduct = location;
+        this.Select();
       });
     }
   }
