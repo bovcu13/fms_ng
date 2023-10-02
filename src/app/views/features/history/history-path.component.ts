@@ -513,12 +513,12 @@ export class HistoryPathComponent implements OnInit {
   apiKey = 'AIzaSyB1hde-5CDelK8n5aMiRecPOcl4i_nx0EE';
   snappedCoordinates : any[] = [];
   runSnapToRoad(path: any[]) {
-    const maxPointsPerRequest = 99;
+    const maxPointsPerRequest = 100;
     const pathValues = path.map(point => `${point.lat},${point.lng}`);
 
     const segments = [];
     for (let i = 0; i < pathValues.length; i += maxPointsPerRequest) {
-      segments.push(pathValues.slice(i, i + maxPointsPerRequest));
+      segments.push(pathValues.slice(i, maxPointsPerRequest));
     }
 
     for (const segment of segments) {
@@ -542,6 +542,8 @@ export class HistoryPathComponent implements OnInit {
           }
 
           this.drawSnappedPolyline(this.snappedCoordinates);
+
+          console.log(this.snappedCoordinates)
         },
         error: error => {
           console.error('Error fetching snap-to-road data:', error);
@@ -553,13 +555,12 @@ export class HistoryPathComponent implements OnInit {
   drawSnappedPolyline(path: any) {
     var snappedPolyline = new google.maps.Polyline({
       path: path,
-      strokeColor: '#48cae4',
+      strokeColor: '#219ebc',
       strokeWeight: 4,
       strokeOpacity: 0.9,
     });
 
     snappedPolyline.setMap(this.map);
-    this.historyPath.push(snappedPolyline);
   }
 
   getUrlByDirection(heading: number) {
