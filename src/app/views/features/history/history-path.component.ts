@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { products } from "../../../shared/data/products";
 import { MenuItem } from 'primeng/api'
 import { CarService } from "../../../services/car.service";
+import { HttpClient } from "@angular/common/http";
 
 declare var google: any;
 
@@ -28,23 +29,6 @@ export class HistoryPathComponent implements OnInit {
 
     playable: boolean = true
 
-    // togglePlay() {
-    //   if (!this.isPlaying) {
-    //     this.clearIntervalAndPauseCarMovement();
-    //   } else {
-    //     const newInterval = 1000 / this.speedRate;
-    //     this.intervalId = setInterval(() => {
-    //       this.sliderValue++;
-    //       if (this.sliderValue > this.totalTime) {
-    //         this.clearIntervalAndPauseCarMovement();
-    //       }
-    //     }, newInterval);
-    //
-    //     this.simulateCarMovement(this.routeCoordinates);
-    //   }
-    //   this.isPlaying = !this.isPlaying;
-    // }
-
     togglePlay() {
         if (!this.isPlaying) {
             this.pauseCarMovement()
@@ -56,7 +40,7 @@ export class HistoryPathComponent implements OnInit {
                     this.clearIntervalAndPauseCarMovement();
                 }
             }, this.speed);
-            this.animateMarker(this.routeCoordinates, this.car)
+            this.animateMarker(this.snappedCoordinates, this.car)
         }
         this.isPlaying = !this.isPlaying;
     }
@@ -253,7 +237,7 @@ export class HistoryPathComponent implements OnInit {
                 this.selectedProduct = this.transformedData[this.state.index]
                 marker.setPosition(newPosition);
                 marker.setIcon({
-                    url: this.transformedData[this.state.index].url,
+                    url: this.snappedAngles[this.state.index].url,
                     scaledSize: new google.maps.Size(50, 50),
                     anchor: new google.maps.Point(25, 25)
                 });
@@ -300,7 +284,7 @@ export class HistoryPathComponent implements OnInit {
         this.markDialog = true;
     }
 
-    constructor(private carServ: CarService) {
+    constructor(private carServ: CarService, private http: HttpClient) {
     }
 
     ngOnInit(): void {
@@ -419,7 +403,7 @@ export class HistoryPathComponent implements OnInit {
 
     // 處理路徑需花費的時間
     calculatePathTime() {
-        this.totalTime = this.routeCoordinates.length
+        this.totalTime = this.snappedCoordinates.length
         console.log('總時間：', this.formatTime(this.totalTime));
     }
 
@@ -474,8 +458,11 @@ export class HistoryPathComponent implements OnInit {
                     lat: item.lat,
                     lng: item.lng
                 }));
+                //test
+                this.runSnapToRoad(this.routeCoordinates)
+
                 // 計算路徑時間
-                this.calculatePathTime()
+                // this.calculatePathTime()
 
                 console.log("轉換後資料:", this.transformedData);
 
@@ -487,29 +474,30 @@ export class HistoryPathComponent implements OnInit {
                     this.historyPath.setMap(null);
                 }
                 // 顯示路徑
-                this.historyPath = new google.maps.Polyline({
-                    path: this.routeCoordinates,
-                    geodesic: true,
-                    strokeColor: "#77428D",
-                    strokeOpacity: 1.0,
-                    strokeWeight: 3,
-                });
-                this.historyPath.setMap(this.map);
+                // this.historyPath = new google.maps.Polyline({
+                //   path: this.routeCoordinates,
+                //   geodesic: true,
+                //   strokeColor: "#77428D",
+                //   strokeOpacity: 1.0,
+                //   strokeWeight: 3,
+                // });
+                // this.historyPath.setMap(this.map);
 
-                // 清除先前的車輛圖示
-                if (this.car !== null) {
-                    this.car.setMap(null);
-                }
-                // 建立車輛圖示
-                this.car = new google.maps.Marker({
-                    position: this.routeCoordinates[0],
-                    map: this.map,
-                    icon: {
-                        url: this.transformedData[0].url,
-                        scaledSize: new google.maps.Size(50, 50),
-                        anchor: new google.maps.Point(25, 25)
-                    },
-                });
+                // // 清除先前的車輛圖示
+                // if (this.car !== null) {
+                //     this.car.setMap(null);
+                // }
+                // // 建立車輛圖示
+                // this.car = new google.maps.Marker({
+                //     position: this.routeCoordinates[0],
+                //     map: this.map,
+                //     icon: {
+                //         url: this.transformedData[0].url,
+                //         scaledSize: new google.maps.Size(50, 50),
+                //         anchor: new google.maps.Point(25, 25)
+                //     },
+                // });
+
                 this.map.setCenter(this.routeCoordinates[0]);
                 this.map.setZoom(20);
                 // 啟動播放鈕
@@ -519,6 +507,136 @@ export class HistoryPathComponent implements OnInit {
                 console.log(err);
             },
         });
+    }
+
+    apiKey = 'AIzaSyB1hde-5CDelK8n5aMiRecPOcl4i_nx0EE';
+    snappedCoordinates: google.maps.LatLngLiteral[] = [];
+
+    runSnapToRoad(path: any[]) {
+        const uniquePath = this.removeDuplicates(path);
+
+        const maxPointsPerRequest = 100;
+        const pathValues = uniquePath.map(point => `${point.lat},${point.lng}`);
+
+        const segments = [];
+        for (let i = 0; i < pathValues.length; i += maxPointsPerRequest) {
+            segments.push(pathValues.slice(i, i + maxPointsPerRequest));
+        }
+
+        for (const segment of segments) {
+            const snapToRoadUrl = 'https://roads.googleapis.com/v1/snapToRoads';
+            const params = {
+                interpolate: 'true',
+                key: this.apiKey,
+                path: segment.join('|')
+            };
+
+            this.http.get(snapToRoadUrl, { params }).subscribe({
+                next: (data: any) => {
+                    const placeIdArray = [];
+                    for (let i = 0; i < data.snappedPoints.length; i++) {
+                        const coordinate = {
+                            lat: data.snappedPoints[i].location.latitude,
+                            lng: data.snappedPoints[i].location.longitude
+                        };
+                        this.snappedCoordinates.push(coordinate);
+                        placeIdArray.push(data.snappedPoints[i].placeId);
+                    }
+
+                    // Calculate path time
+                    this.calculatePathTime();
+
+                    this.drawSnappedPolyline(this.snappedCoordinates);
+
+
+                    this.snappedCoordinates = this.removeDuplicates(this.snappedCoordinates);
+                    this.calculateClockwiseAngles(this.snappedCoordinates);
+                    console.log('snap', this.snappedCoordinates);
+
+                    // Clear previous car icon
+                    if (this.car !== null) {
+                        this.car.setMap(null);
+                    }
+                    // Create car icon
+                    this.car = new google.maps.Marker({
+                        position: this.snappedCoordinates[0],
+                        map: this.map,
+                        icon: {
+                            url: this.snappedAngles[0].url,
+                            scaledSize: new google.maps.Size(50, 50),
+                            anchor: new google.maps.Point(25, 25)
+                        },
+                    });
+
+                },
+                error: error => {
+                    console.error('Error fetching snap-to-road data:', error);
+                }
+            });
+        }
+    }
+
+    removeDuplicates(path: any[]): any[] {
+        console.log('Original path:', path);
+
+        const unique: any[] = [];
+
+        path.forEach(point => {
+            const exists = unique.some(coordinate => {
+                return coordinate.lat === point.lat && coordinate.lng === point.lng;
+            });
+
+            if (!exists) {
+                unique.push(point);
+            }
+        });
+
+        console.log('Filtered path:', unique);
+        return unique;
+    }
+
+
+    snappedAngles: any[] = [];
+
+    calculateClockwiseAngles(coordinates: { lat: number, lng: number }[]) {
+        this.snappedAngles = [];  // Reset the snappedAngles array
+
+        for (let i = 0; i < coordinates.length - 1; i++) {
+            const point1 = coordinates[i];
+            const point2 = coordinates[i + 1];
+
+            // 計算向量
+            const vector1 = { x: point1.lng, y: point1.lat };
+            const vector2 = { x: point2.lng, y: point2.lat };
+
+            // 計算角度，注意要轉換為弧度
+            let angle = Math.atan2(vector2.y - vector1.y, vector2.x - vector1.x);
+
+            // 將弧度轉換為角度，並四捨五入為整數
+            angle = Math.round(angle * (180 / Math.PI));
+
+            // 轉為正值並調整為順時針角度
+            angle = (360 + 90 - angle) % 360;
+
+            // Calculate the URL based on the angle
+            const url = this.getUrlByDirection(angle);
+
+            // Add the angle and URL to snappedAngles
+            this.snappedAngles.push({ heading: angle, url: url });
+        }
+
+        console.log(this.snappedAngles);
+    }
+
+    drawSnappedPolyline(path: any) {
+        var snappedPolyline = new google.maps.Polyline({
+            path: path,
+            strokeColor: '#24DFFF',
+            strokeWeight: 4,
+            strokeOpacity: 0.9,
+        });
+
+        snappedPolyline.setMap(this.map);
     }
 
     getUrlByDirection(heading: number) {

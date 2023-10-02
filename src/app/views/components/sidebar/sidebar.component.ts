@@ -326,6 +326,17 @@ export class SidebarComponent implements OnInit {
         ]
       },
       {
+        label: 'Skynet Premium',
+        icon: 'pi pi-heart-fill',
+        routerLink: '/premium',
+        command:() =>{
+          this.sideVisible = false
+        },
+        style: {
+          background: 'rgba(250,245,200,0.6)',
+        },
+      },
+      {
         label: '更新日誌',
         icon: 'pi pi-book',
         routerLink: '/log',

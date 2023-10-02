@@ -31,44 +31,48 @@ import { OddTempComponent } from "../features/odd-list/odd-temp/odd-temp.compone
 import { PolyComponent } from "../features/test/poly/poly.component";
 import { MileComponent } from "../features/statistics/mile/mile.component";
 import { PremiumComponent } from "../features/premium/premium.component";
+import { SuccessComponent } from "../features/premium/success/success.component";
+import { FailedComponent } from "../features/premium/failed/failed.component";
 
 @NgModule({
-  declarations: [
-    ContainerComponent,
-    RoleComponent,
-    MainComponent,
-    MonitorComponent,
-    SidebarComponent,
-    StreamComponent,
-    LogComponent,
-    MaaaapComponent,
-    MultipleCarsComponent,
-    DrivingStatusComponent,
-    DrawComponent,
-    InfoComponent,
-    HistoryPathComponent,
-    RecordComponent,
-    CakeReportComponent,
-    SignalComponent,
-    BasicDataComponent,
-    OddSetComponent,
-    OddReportComponent,
-    SpeedingComponent,
-    StallComponent,
-    OddTempComponent,
-    PolyComponent,
-    MileComponent,
-    PremiumComponent
-  ],
-  imports: [
-    CommonModule,
-    ContainerRoutingModule,
-    SharedModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    GoogleMapsModule
-  ]
+    declarations: [
+        ContainerComponent,
+        RoleComponent,
+        MainComponent,
+        MonitorComponent,
+        SidebarComponent,
+        StreamComponent,
+        LogComponent,
+        MaaaapComponent,
+        MultipleCarsComponent,
+        DrivingStatusComponent,
+        DrawComponent,
+        InfoComponent,
+        HistoryPathComponent,
+        RecordComponent,
+        CakeReportComponent,
+        SignalComponent,
+        BasicDataComponent,
+        OddSetComponent,
+        OddReportComponent,
+        SpeedingComponent,
+        StallComponent,
+        OddTempComponent,
+        PolyComponent,
+        MileComponent,
+        PremiumComponent,
+        SuccessComponent,
+        FailedComponent
+    ],
+    imports: [
+        CommonModule,
+        ContainerRoutingModule,
+        SharedModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        GoogleMapsModule
+    ]
 })
 export class ContainerModule {
 }
