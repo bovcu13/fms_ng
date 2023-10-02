@@ -544,7 +544,10 @@ export class HistoryPathComponent implements OnInit {
 
           this.drawSnappedPolyline(this.snappedCoordinates);
 
-          console.log(this.snappedCoordinates)
+          console.log('snap',this.snappedCoordinates)
+
+          this.calculateClockwiseAngles(this.snappedCoordinates);
+
         },
         error: error => {
           console.error('Error fetching snap-to-road data:', error);
@@ -552,6 +555,42 @@ export class HistoryPathComponent implements OnInit {
       });
     }
   }
+
+  snappedAngles: any[] = [];
+
+  calculateClockwiseAngles(coordinates: { lat: number, lng: number }[]) {
+    // 儲存角度到 snappedAngles
+    this.snappedAngles.map(item => ({
+      ...item,
+      heading: [],
+    }));
+    for (let i = 0; i < coordinates.length - 1; i++) {
+      const point1 = coordinates[i];
+      const point2 = coordinates[i + 1];
+
+      // 計算向量
+      const vector1 = { x: point1.lng, y: point1.lat };
+      const vector2 = { x: point2.lng, y: point2.lat };
+
+      // 計算向量差
+      const dx = vector2.x - vector1.x;
+      const dy = vector2.y - vector1.y;
+
+      // 計算角度，注意要轉換為弧度
+      let angle = Math.atan2(dy, dx);
+
+      // 將弧度轉換為角度，並四捨五入為整數
+      angle = Math.round(angle * (180 / Math.PI));
+
+      // 轉為正值並調整為順時針角度
+      angle = (360 + 90 - angle) % 360;
+
+      this.snappedAngles.push({heading:angle})
+    }
+    console.log(this.snappedAngles)
+    }
+
+
 
   drawSnappedPolyline(path: any) {
     var snappedPolyline = new google.maps.Polyline({
