@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http'; //http協定
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http'; //http協定
 import {Observable} from 'rxjs';
 import {environment} from "../../environments/environment.development";
 
@@ -10,7 +10,8 @@ const BaseUrl: string = environment.API_URL;
 })
 export class CarService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   //--車隊------------------------------------------------------------------------------------------------
 
@@ -41,7 +42,7 @@ export class CarService {
 
   //--車輛狀態------------------------------------------------------------------------------------------------
 
-  getAllGpsRequest(id:any, body:any): Observable<any> {
+  getAllGpsRequest(id: any, body: any): Observable<any> {
     const url = `${BaseUrl}/web/v1.0/gps/list/${id}`;
     return this.http.post<any>(url, body);
   }
@@ -51,7 +52,7 @@ export class CarService {
     return this.http.get<any>(url);
   }
 
-  getOneGpsRequest(id:any): Observable<any> {
+  getOneGpsRequest(id: any): Observable<any> {
     const url = `${BaseUrl}/web/v1.0/gps/${id}`;
     return this.http.get<any>(url);
   }
@@ -80,7 +81,7 @@ export class CarService {
     return this.http.post<any>(url, body);
   }
 
-  deletePoliciesRequest(body:any): Observable<any> {
+  deletePoliciesRequest(body: any): Observable<any> {
     const url = `${BaseUrl}/web/v1.0/policies`;
     return this.http.delete<any>(body);
   }
@@ -97,7 +98,7 @@ export class CarService {
     return this.http.post<any>(url, body);
   }
 
-  getOneRoleRequest(id:any): Observable<any> {
+  getOneRoleRequest(id: any): Observable<any> {
     const url = `${BaseUrl}/web/v1.0/roles/${id}`;
     return this.http.get<any>(url);
   }
@@ -124,7 +125,7 @@ export class CarService {
     return this.http.post<any>(url, body);
   }
 
-  getOneUserRequest(id:any): Observable<any> {
+  getOneUserRequest(id: any): Observable<any> {
     const url = `${BaseUrl}/web/v1.0/users/${id}`;
     return this.http.get<any>(url);
   }
@@ -151,7 +152,7 @@ export class CarService {
     return this.http.post<any>(url, body);
   }
 
-  getOneVehicleRequest(id:any): Observable<any> {
+  getOneVehicleRequest(id: any): Observable<any> {
     const url = `${BaseUrl}/web/v1.0/vehicles/${id}`;
     return this.http.get<any>(url);
   }
@@ -164,5 +165,27 @@ export class CarService {
   patchVehicleRequest(id: any, body: any): Observable<any> {
     const url = `${BaseUrl}/web/v1.0/vehicles/${id}`;
     return this.http.patch<any>(url, body);
+  }
+
+  //--付款------------------------------------------------------------------------------------------------
+  postPayment(body: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/subscriptions/action-pay`;
+    return this.http.post<any>(url, body);
+  }
+
+  postNewebPay(arr: any): Observable<any> {
+    const body = new HttpParams()
+      .set('MerchantID', arr.MerchantID)
+      .set('TradeInfo', arr.TradeInfo)
+      .set('TradeSha', arr.TradeSha)
+      .set('Version', arr.Version)
+
+    return this.http.post('https://ccore.newebpay.com/MPG/mpg_gateway',
+      body.toString(),
+      {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+      }
+    );
   }
 }
