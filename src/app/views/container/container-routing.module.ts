@@ -24,6 +24,7 @@ import { StallComponent } from "../features/odd-list/stall/stall.component";
 import { OddTempComponent } from "../features/odd-list/odd-temp/odd-temp.component";
 import { PolyComponent } from "../features/test/poly/poly.component";
 import { MileComponent } from "../features/statistics/mile/mile.component";
+import { PremiumComponent } from "../features/premium/premium.component";
 
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
       { path: 'multiCars', component: MultipleCarsComponent, canActivate: [AuthGuard] },
       { path: 'driving_status', component: DrivingStatusComponent, canActivate: [AuthGuard] },
       { path: 'history', component: HistoryPathComponent, canActivate: [AuthGuard] },
+      { path: 'premium', component: PremiumComponent, canActivate: [AuthGuard] },
       // cake
       { path: 'cake_report', component: CakeReportComponent, canActivate: [AuthGuard] },
       // statistics
