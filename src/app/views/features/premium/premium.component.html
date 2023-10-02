@@ -12,8 +12,10 @@
         <label class="inset text-lg">免費試用 1 個月 • 之後是 每月 $199 • 隨時可取消</label>
       </div>
       <div class="flex justify-content-center align-items-center mt-5">
-        <p-button label="免費試用" styleClass="p-button-rounded" [style]="{ width: '10em' }"></p-button>
+        <p-button (click)="pay()" label="免費試用" styleClass="p-button-rounded" [style]="{ width: '10em' }"></p-button>
       </div>
     </div>
   </div>
 </div>
+
+
