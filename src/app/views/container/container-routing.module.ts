@@ -25,49 +25,53 @@ import { OddTempComponent } from "../features/odd-list/odd-temp/odd-temp.compone
 import { PolyComponent } from "../features/test/poly/poly.component";
 import { MileComponent } from "../features/statistics/mile/mile.component";
 import { PremiumComponent } from "../features/premium/premium.component";
-
+import { SuccessComponent } from "../features/premium/success/success.component";
+import { FailedComponent } from "../features/premium/failed/failed.component";
 
 const routes: Routes = [
-  { path: '', redirectTo: '', pathMatch: 'full' },
-  {
-    path: '', component: ContainerComponent,
-    children: [
-      { path: 'main', component: MainComponent, canActivate: [AuthGuard] },
-      { path: 'role', component: RoleComponent, canActivate: [AuthGuard] },
-      { path: 'monitor', component: MonitorComponent, canActivate: [AuthGuard] },
-      { path: 'multiCars', component: MultipleCarsComponent, canActivate: [AuthGuard] },
-      { path: 'driving_status', component: DrivingStatusComponent, canActivate: [AuthGuard] },
-      { path: 'history', component: HistoryPathComponent, canActivate: [AuthGuard] },
-      { path: 'premium', component: PremiumComponent, canActivate: [AuthGuard] },
-      // cake
-      { path: 'cake_report', component: CakeReportComponent, canActivate: [AuthGuard] },
-      // statistics
-      { path: 'record', component: RecordComponent, canActivate: [AuthGuard] },
-      { path: 'mile', component: MileComponent, canActivate: [AuthGuard] },
-      // odd-list
-      { path: 'odd_report', component: OddReportComponent, canActivate: [AuthGuard] },
-      { path: 'speeding', component: SpeedingComponent, canActivate: [AuthGuard] },
-      { path: 'stall', component: StallComponent, canActivate: [AuthGuard] },
-      { path: 'odd_temp', component: OddTempComponent, canActivate: [AuthGuard] },
-      // basic-settings
-      { path: 'basic_data', component: BasicDataComponent, canActivate: [AuthGuard] },
-      { path: 'odd_set', component: OddSetComponent, canActivate: [AuthGuard] },
-      // log
-      { path: 'log', component: LogComponent, canActivate: [AuthGuard] },
-      // test
-      { path: 'stream', component: StreamComponent, canActivate: [AuthGuard] },
-      { path: 'map', component: MaaaapComponent, canActivate: [AuthGuard] },
-      { path: 'draw', component: DrawComponent, canActivate: [AuthGuard] },
-      { path: 'info', component: InfoComponent, canActivate: [AuthGuard] },
-      { path: 'signal', component: SignalComponent, canActivate: [AuthGuard] },
-      { path: 'poly', component: PolyComponent, canActivate: [AuthGuard] },
-    ],
-  },
+    { path: '', redirectTo: '', pathMatch: 'full' },
+    {
+        path: '', component: ContainerComponent,
+        children: [
+            { path: 'main', component: MainComponent, canActivate: [AuthGuard] },
+            { path: 'role', component: RoleComponent, canActivate: [AuthGuard] },
+            { path: 'monitor', component: MonitorComponent, canActivate: [AuthGuard] },
+            { path: 'multiCars', component: MultipleCarsComponent, canActivate: [AuthGuard] },
+            { path: 'driving_status', component: DrivingStatusComponent, canActivate: [AuthGuard] },
+            { path: 'history', component: HistoryPathComponent, canActivate: [AuthGuard] },
+            // premium
+            { path: 'premium', component: PremiumComponent, canActivate: [AuthGuard] },
+            { path: 'pay_success', component: SuccessComponent, canActivate: [AuthGuard] },
+            { path: 'pay_failed', component: FailedComponent, canActivate: [AuthGuard] },
+            // cake
+            { path: 'cake_report', component: CakeReportComponent, canActivate: [AuthGuard] },
+            // statistics
+            { path: 'record', component: RecordComponent, canActivate: [AuthGuard] },
+            { path: 'mile', component: MileComponent, canActivate: [AuthGuard] },
+            // odd-list
+            { path: 'odd_report', component: OddReportComponent, canActivate: [AuthGuard] },
+            { path: 'speeding', component: SpeedingComponent, canActivate: [AuthGuard] },
+            { path: 'stall', component: StallComponent, canActivate: [AuthGuard] },
+            { path: 'odd_temp', component: OddTempComponent, canActivate: [AuthGuard] },
+            // basic-settings
+            { path: 'basic_data', component: BasicDataComponent, canActivate: [AuthGuard] },
+            { path: 'odd_set', component: OddSetComponent, canActivate: [AuthGuard] },
+            // log
+            { path: 'log', component: LogComponent, canActivate: [AuthGuard] },
+            // test
+            { path: 'stream', component: StreamComponent, canActivate: [AuthGuard] },
+            { path: 'map', component: MaaaapComponent, canActivate: [AuthGuard] },
+            { path: 'draw', component: DrawComponent, canActivate: [AuthGuard] },
+            { path: 'info', component: InfoComponent, canActivate: [AuthGuard] },
+            { path: 'signal', component: SignalComponent, canActivate: [AuthGuard] },
+            { path: 'poly', component: PolyComponent, canActivate: [AuthGuard] },
+        ],
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 export class ContainerRoutingModule {
 }
