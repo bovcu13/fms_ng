@@ -4,8 +4,6 @@ import { MenuItem } from 'primeng/api'
 import { CarService } from "../../../services/car.service";
 import { HttpClient } from "@angular/common/http";
 
-import * as $ from 'jquery';
-
 declare var google: any;
 
 @Component({
@@ -42,7 +40,7 @@ export class HistoryPathComponent implements OnInit {
           this.clearIntervalAndPauseCarMovement();
         }
       }, this.speed);
-      this.animateMarker(this.routeCoordinates, this.car)
+      this.animateMarker(this.snappedCoordinates, this.car)
     }
     this.isPlaying = !this.isPlaying;
   }
@@ -405,7 +403,7 @@ export class HistoryPathComponent implements OnInit {
 
   // 處理路徑需花費的時間
   calculatePathTime() {
-    this.totalTime = this.routeCoordinates.length
+    this.totalTime = this.snappedCoordinates.length
     console.log('總時間：', this.formatTime(this.totalTime));
   }
 
@@ -464,7 +462,7 @@ export class HistoryPathComponent implements OnInit {
         this.runSnapToRoad(this.routeCoordinates)
 
         // 計算路徑時間
-        this.calculatePathTime()
+        // this.calculatePathTime()
 
         console.log("轉換後資料:", this.transformedData);
 
@@ -511,7 +509,7 @@ export class HistoryPathComponent implements OnInit {
   }
 
   apiKey = 'AIzaSyB1hde-5CDelK8n5aMiRecPOcl4i_nx0EE';
-  snappedCoordinates : any[] = [];
+  snappedCoordinates : google.maps.LatLngLiteral[] = [];
   runSnapToRoad(path: any[]) {
     const maxPointsPerRequest = 100;
     const pathValues = path.map(point => `${point.lat},${point.lng}`);
@@ -533,13 +531,16 @@ export class HistoryPathComponent implements OnInit {
         next: (data: any) => {
           const placeIdArray = [];
           for (let i = 0; i < data.snappedPoints.length; i++) {
-            const latlng = new google.maps.LatLng(
-                data.snappedPoints[i].location.latitude,
-                data.snappedPoints[i].location.longitude
-            );
-            this.snappedCoordinates.push(latlng);
+            const coordinate = {
+              lat: data.snappedPoints[i].location.latitude,
+              lng: data.snappedPoints[i].location.longitude
+            };
+            this.snappedCoordinates.push(coordinate);
             placeIdArray.push(data.snappedPoints[i].placeId);
           }
+
+          // 計算路徑時間
+          this.calculatePathTime()
 
           this.drawSnappedPolyline(this.snappedCoordinates);
 
