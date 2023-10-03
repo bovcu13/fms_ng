@@ -63,12 +63,11 @@ export class BasicDataComponent implements OnInit {
 
   postVehicleRequest() {
     let body = {
-      fleet_code: this.addVehicle_form.controls['fleet_code'].value,
+      fleet_id: this.addVehicle_form.controls['fleet_id'].value,
       name: this.addVehicle_form.controls['name'].value,
-      phone_number1: this.addVehicle_form.controls['phone_number1']?.value,
-      user_name: this.addVehicle_form.controls['user_name'].value,
-      password: this.addVehicle_form.controls['password'].value,
-      role_id: this.addVehicle_form.controls['role_id'].value
+      driver: this.addVehicle_form.controls['driver'].value,
+      license_plate: this.addVehicle_form.controls['license_plate'].value,
+      sid: this.addVehicle_form.controls['sid'].value
     }
     this.carServ.postVehicleRequest(body).subscribe({
       next: data => {
@@ -79,6 +78,8 @@ export class BasicDataComponent implements OnInit {
         console.log(err);
       },
     });
+
+    this.getAllVehiclesRequest()
   }
 
 }

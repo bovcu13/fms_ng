@@ -46,7 +46,8 @@
               <div class="col-9">
                 <p-card header="車輛資料">
                   <div class="flex justify-content-end mb-3">
-                    <p-button (click)="openAddCarDialog()" label="新增車輛" styleClass="p-button-link p-button-sm"></p-button>
+                    <p-button (click)="openAddCarDialog()" label="新增車輛"
+                              styleClass="p-button-link p-button-sm"></p-button>
                   </div>
                   <p-dataView #dv [value]="vehiclesData">
                     <ng-template let-product pTemplate="listItem">
@@ -100,28 +101,31 @@
   </div>
 </div>
 
-<p-dialog header="新增車輛" [(visible)]="addDialogVisible" [modal]="true" [style]="{ width: '25vw' }" [draggable]="false" [resizable]="false">
-  <div class="col-12">
-    <div class="field">
-      <label class="font-semibold">車輛名稱</label>
-      <input pInputText/>
+<p-dialog header="新增車輛" [(visible)]="addDialogVisible" [modal]="true" [style]="{ width: '25vw' }"
+          [draggable]="false" [resizable]="false">
+  <form [formGroup]="addVehicle_form">
+    <div class="col-12">
+      <div class="field">
+        <label class="font-semibold">車輛名稱</label>
+        <input formControlName="name" pInputText/>
+      </div>
+      <div class="field">
+        <label class="font-semibold">司機名稱</label>
+        <input formControlName="driver" pInputText/>
+      </div>
+      <div class="field">
+        <label class="font-semibold">車牌號碼</label>
+        <input formControlName="license_plate" pInputText/>
+      </div>
+      <div class="field">
+        <label class="font-semibold">車機號碼</label>
+        <input formControlName="sid" pInputText/>
+      </div>
+      <div class="flex justify-content-end">
+        <p-button (click)="postVehicleRequest()" label="新增" styleClass="p-button-primary mr-2"></p-button>
+        <p-button label="取消"
+                  styleClass="p-button-outlined p-button-secondary"></p-button>
+      </div>
     </div>
-    <div class="field">
-      <label class="font-semibold">司機名稱</label>
-      <input pInputText/>
-    </div>
-    <div class="field">
-      <label class="font-semibold">車牌號碼</label>
-      <input pInputText/>
-    </div>
-    <div class="field">
-      <label class="font-semibold">車機號碼</label>
-      <input pInputText/>
-    </div>
-    <div class="flex justify-content-end">
-      <p-button label="新增" styleClass="p-button-primary mr-2"></p-button>
-      <p-button label="取消"
-                styleClass="p-button-outlined p-button-secondary"></p-button>
-    </div>
-  </div>
+  </form>
 </p-dialog>
