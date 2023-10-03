@@ -36,12 +36,9 @@ export class AuthService {
     localStorage.removeItem('currentUser');
   }
 
-  register(username: string, email: string, password: string): Observable<any> {
-    return this.http.post(AUTH_API + '/web/v1.0/users', {
-      username,
-      email,
-      password
-    }, httpOptions);
+  register(body: any): Observable<any> {
+    const url = `${AUTH_API}/web/v1.0/users`;
+    return this.http.post(url, body, httpOptions);
   }
 
   refreshToken(token: string) {
