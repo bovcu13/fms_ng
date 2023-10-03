@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('container')
   container!: ElementRef;
   login_form: FormGroup;
+  register_form: FormGroup;
   siteKey = environment.recaptcha.siteKey
   captchaResponse = '';
   roles!: string;
@@ -38,7 +39,19 @@ export class LoginComponent implements OnInit {
       password: ['12345', [Validators.required]],
       recaptcha: ['', Validators.required]
     });
+    this.register_form = this.fb.group({
+      fleet_code: ['', [Validators.required]],
+      name: ['', [Validators.required]],
+      phone_number1: [''],
+      phone_number2: [''],
+      user_name: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      role_id: ['d56fc184-9441-4396-be6c-d48580650171', [Validators.required]],
+      recaptcha: ['', Validators.required]
+    });
   }
+
+
 
   ngOnInit() {
   }
@@ -75,6 +88,26 @@ export class LoginComponent implements OnInit {
       error: err => {
         // 帳密錯誤
         this.showError();
+      }
+    });
+  }
+
+  register(): void {
+    let body = {
+      fleet_code: this.register_form.controls['fleet_code'].value,
+      name: this.register_form.controls['name'].value,
+      phone_number1: this.register_form.controls['phone_number1']?.value,
+      user_name: this.register_form.controls['user_name'].value,
+      password: this.register_form.controls['password'].value,
+      role_id: this.register_form.controls['role_id'].value
+    }
+    this.authService.register(body).subscribe({
+      next: data => {
+        console.log(data)
+        console.log(body)
+      },
+      error: err => {
+        console.log(err)
       }
     });
   }

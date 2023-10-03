@@ -1,0 +1,17 @@
+<div class="card xl:flex xl:justify-content-center">
+  <p-orderList [value]="vehiclesData" [listStyle]="{ height: '25rem' }">
+    <ng-template let-car pTemplate="item">
+      <div class="flex flex-wrap p-2 align-items-center gap-3">
+        <img src="assets/image/car2.png" [alt]="car.driver" class="w-4rem shadow-2 flex-shrink-0 border-round" />
+        <div class="flex-1 flex flex-column gap-2">
+          <span class="font-bold">{{ car.driver }}</span>
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-tag text-sm"></i>
+            <span>{{ car.fleet_code }}</span>
+          </div>
+        </div>
+        <span class="font-bold text-900"> - </span>
+      </div>
+    </ng-template>
+  </p-orderList>
+</div>
