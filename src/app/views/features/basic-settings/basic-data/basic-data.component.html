@@ -1,69 +1,127 @@
 <div class="overflow-x-hidden flex justify-content-center">
-  <div class="col-8">
-    <div class="grid">
-      <div class="col-3">
-        <div class="col-12 flex justify-content-center">
-          <p-avatar label="我" size="large"
-                    [style]="{ 'background-color': '#2196F3',
+  <div class="col-12">
+    <p-tabView>
+      <p-tabPanel header="概覽">
+        <div class="flex justify-content-center">
+          <div class="col-8">
+            <div class="grid">
+              <div class="col-3">
+                <div class="col-12 flex justify-content-center">
+                  <p-avatar label="我" size="large"
+                            [style]="{ 'background-color': '#2196F3',
                             color: '#ffffff',
                             'width': '10em',
                             'height': '10em'}" shape="circle"></p-avatar>
-        </div>
-        <div class="col-12">
-          <label class="text-xl font-light text-color-secondary">user_name</label>
-        </div>
-        <div *ngIf="!editable" class="col-12 mt-2 flex justify-content-center">
-          <p-button (click)="edit()" label="編輯個人資料" styleClass="p-button-sm p-button-outlined p-button-secondary"
-                    [style]="{'width': '15em'}"></p-button>
-        </div>
-        <div *ngIf="editable" class="mt-2">
-          <div class="col-12">
-            <div class="field">
-              <label class="text-sm font-semibold">姓名</label>
-              <input pInputText/>
-            </div>
-            <div class="field">
-              <label class="text-sm font-semibold">電話號碼</label>
-              <input pInputText/>
-            </div>
-            <div class="field">
-              <label class="text-sm font-semibold">修改密碼</label>
-              <input pInputText/>
-            </div>
-            <div class="flex justify-content-center">
-              <p-button (click)="save()" label="儲存" styleClass="p-button-success p-button-sm mr-2"></p-button>
-              <p-button (click)="cancel()" label="取消" styleClass="p-button-outlined p-button-secondary p-button-sm mr-2"></p-button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-9">
-        <p-card header="車輛資料">
-          <p-dataView #dv [value]="vehiclesData">
-            <ng-template let-product pTemplate="listItem">
-              <div class="col-12">
-                <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
-                  <img class="w-5 sm:w-12rem xl:w-6rem" [src]="'assets/image/car2.png'" />
-                  <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                    <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                      <div class="text-xl font-bold">{{ product.driver }}</div>
-                      <div class="flex align-items-center gap-3">
-                            <span class="flex align-items-center gap-2">
-                                <i class="pi pi-tag"></i>
-                                <span class="font-semibold">{{ product.license_plate }}</span>
-                            </span>
-                      </div>
+                </div>
+                <div class="col-12">
+                  <label class="text-xl font-light text-color-secondary">user_name</label>
+                </div>
+                <div *ngIf="!editable" class="col-12 mt-2 flex justify-content-center">
+                  <p-button (click)="edit()" label="編輯個人資料"
+                            styleClass="p-button-sm p-button-outlined p-button-secondary"
+                            [style]="{'width': '15em'}"></p-button>
+                </div>
+                <div *ngIf="editable" class="mt-2">
+                  <div class="col-12">
+                    <div class="field">
+                      <label class="text-sm font-semibold">姓名</label>
+                      <input pInputText/>
                     </div>
-                    <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
-                      <p-button label="管理" styleClass="p-button-link"></p-button>
+                    <div class="field">
+                      <label class="text-sm font-semibold">電話號碼</label>
+                      <input pInputText/>
+                    </div>
+                    <div class="field">
+                      <label class="text-sm font-semibold">修改密碼</label>
+                      <input pInputText/>
+                    </div>
+                    <div class="flex justify-content-center">
+                      <p-button (click)="save()" label="儲存" styleClass="p-button-success p-button-sm mr-2"></p-button>
+                      <p-button (click)="cancel()" label="取消"
+                                styleClass="p-button-outlined p-button-secondary p-button-sm mr-2"></p-button>
                     </div>
                   </div>
                 </div>
               </div>
-            </ng-template>
-          </p-dataView>
-        </p-card>
-      </div>
-    </div>
+              <div class="col-9">
+                <p-card header="車輛資料">
+                  <div class="flex justify-content-end mb-3">
+                    <p-button (click)="openAddCarDialog()" label="新增車輛" styleClass="p-button-link p-button-sm"></p-button>
+                  </div>
+                  <p-dataView #dv [value]="vehiclesData">
+                    <ng-template let-product pTemplate="listItem">
+                      <div class="col-6">
+                        <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
+                          <img class="w-5 sm:w-12rem xl:w-6rem" [src]="'assets/image/car2.png'"/>
+                          <div
+                            class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                            <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                              <div class="text-xl font-bold">{{ product.driver }}</div>
+                              <div class="flex align-items-center gap-3">
+                            <span class="flex align-items-center gap-2">
+                                <i class="pi pi-tag"></i>
+                                <span class="font-semibold">{{ product.license_plate }}</span>
+                            </span>
+                              </div>
+                            </div>
+                            <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
+                              <p-button label="管理" styleClass="p-button-link"></p-button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </p-dataView>
+                </p-card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Header II">
+        <p>
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+          aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+          Nemo enim
+          ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
+          ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
+        </p>
+      </p-tabPanel>
+      <p-tabPanel header="Header III">
+        <p>
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
+          atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique
+          sunt in culpa
+          qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et
+          expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
+        </p>
+      </p-tabPanel>
+    </p-tabView>
   </div>
 </div>
+
+<p-dialog header="新增車輛" [(visible)]="addDialogVisible" [modal]="true" [style]="{ width: '25vw' }" [draggable]="false" [resizable]="false">
+  <div class="col-12">
+    <div class="field">
+      <label class="font-semibold">車輛名稱</label>
+      <input pInputText/>
+    </div>
+    <div class="field">
+      <label class="font-semibold">司機名稱</label>
+      <input pInputText/>
+    </div>
+    <div class="field">
+      <label class="font-semibold">車牌號碼</label>
+      <input pInputText/>
+    </div>
+    <div class="field">
+      <label class="font-semibold">車機號碼</label>
+      <input pInputText/>
+    </div>
+    <div class="flex justify-content-end">
+      <p-button label="新增" styleClass="p-button-primary mr-2"></p-button>
+      <p-button label="取消"
+                styleClass="p-button-outlined p-button-secondary"></p-button>
+    </div>
+  </div>
+</p-dialog>
