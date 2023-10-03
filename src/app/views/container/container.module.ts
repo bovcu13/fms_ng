@@ -33,46 +33,48 @@ import { MileComponent } from "../features/statistics/mile/mile.component";
 import { PremiumComponent } from "../features/premium/premium.component";
 import { SuccessComponent } from "../features/premium/success/success.component";
 import { FailedComponent } from "../features/premium/failed/failed.component";
+import { TempDashboardComponent } from "../features/temp-control/temp-dashboard/temp-dashboard.component";
 
 @NgModule({
-    declarations: [
-        ContainerComponent,
-        RoleComponent,
-        MainComponent,
-        MonitorComponent,
-        SidebarComponent,
-        StreamComponent,
-        LogComponent,
-        MaaaapComponent,
-        MultipleCarsComponent,
-        DrivingStatusComponent,
-        DrawComponent,
-        InfoComponent,
-        HistoryPathComponent,
-        RecordComponent,
-        CakeReportComponent,
-        SignalComponent,
-        BasicDataComponent,
-        OddSetComponent,
-        OddReportComponent,
-        SpeedingComponent,
-        StallComponent,
-        OddTempComponent,
-        PolyComponent,
-        MileComponent,
-        PremiumComponent,
-        SuccessComponent,
-        FailedComponent
-    ],
-    imports: [
-        CommonModule,
-        ContainerRoutingModule,
-        SharedModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        GoogleMapsModule
-    ]
+  declarations: [
+    ContainerComponent,
+    RoleComponent,
+    MainComponent,
+    MonitorComponent,
+    SidebarComponent,
+    StreamComponent,
+    LogComponent,
+    MaaaapComponent,
+    MultipleCarsComponent,
+    DrivingStatusComponent,
+    DrawComponent,
+    InfoComponent,
+    HistoryPathComponent,
+    RecordComponent,
+    CakeReportComponent,
+    SignalComponent,
+    BasicDataComponent,
+    OddSetComponent,
+    OddReportComponent,
+    SpeedingComponent,
+    StallComponent,
+    OddTempComponent,
+    PolyComponent,
+    MileComponent,
+    PremiumComponent,
+    SuccessComponent,
+    FailedComponent,
+    TempDashboardComponent
+  ],
+  imports: [
+    CommonModule,
+    ContainerRoutingModule,
+    SharedModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    GoogleMapsModule
+  ]
 })
 export class ContainerModule {
 }

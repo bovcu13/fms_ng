@@ -102,10 +102,18 @@ export class SidebarComponent implements OnInit {
       {
         label: '溫控中心',
         icon: 'pi pi-fw pi-box',
+        expanded: true,
         items: [
           {
             label: '溫度儀表板',
-            icon: 'pi pi-fw pi-box'
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/temp_dashboard',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
+            },
           },
           {
             label: '溫度報表',
