@@ -9,11 +9,38 @@ import { sidebarMenu, testMenu } from "../../../shared/data/menu";
 })
 export class SidebarComponent implements OnInit {
 
+  userItems: MenuItem[] | undefined;
   sidebarMenu!: MenuItem[];
   testMenu: MenuItem[] = testMenu;
   sideVisible: boolean = false;
 
   ngOnInit() {
+    // userItems
+    this.userItems = [
+      {
+        label: '帳號'
+      },
+      {
+        label: '<div class="flex justify-content-center"><img style="width: 2rem" src="assets/image/car2.png"/></div><div class="font-bold text-xs text-center">bovcu13</div>',
+        escape: false,
+        items: [
+          {
+            label: '切換帳號',
+            icon: 'pi pi-users',
+          },
+          {
+            separator: true
+          },
+          {
+            label: '登出',
+            icon: 'pi pi-sign-out',
+            routerLink: '/'
+          }
+        ]
+      }
+    ];
+
+    // sidebarMenu
     this.sidebarMenu = [
       {
         label: '監控查詢',

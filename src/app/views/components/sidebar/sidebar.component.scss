@@ -2,7 +2,16 @@
   position: fixed;
   top: 0;
   left: 0;
+  height: 40px;
   width: 100%;
   z-index: 999;
   background: #FFFFFB;
+}
+
+::ng-deep {
+  .p-button:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: none;
+  }
 }
