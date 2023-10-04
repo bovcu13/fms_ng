@@ -83,9 +83,16 @@
         <div class="flex justify-content-center">
           <div class="col-8">
             <h2>語言偏好</h2>
-            <p-divider></p-divider>
             <div class="field grid">
               <label class="col-fixed font-semibold">語言</label>
+              <div class="col-3">
+                <p-dropdown [appendTo]="'body'" [options]="language" optionLabel="name"></p-dropdown>
+              </div>
+            </div>
+            <p-divider></p-divider>
+            <h2>主題偏好</h2>
+            <div class="field grid">
+              <label class="col-fixed font-semibold">主題模式</label>
               <div class="col-3">
                 <p-dropdown [appendTo]="'body'" [options]="language" optionLabel="name"></p-dropdown>
               </div>
