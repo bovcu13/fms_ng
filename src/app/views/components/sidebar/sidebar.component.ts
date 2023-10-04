@@ -335,11 +335,14 @@ export class SidebarComponent implements OnInit {
         expanded: true,
         items: [
           {
-            label: '司機',
+            label: '車隊管理',
             icon: 'pi pi-shield',
-            routerLink: '/role',
+            routerLink: '/fleet_mgmt',
             command:() =>{
               this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
             },
           },
           {
