@@ -48,7 +48,7 @@ export class BasicDataComponent implements OnInit {
 
   // 取得車牌
   getAllVehiclesRequest() {
-    this.carServ.getAllVehiclesRequest().subscribe({
+    this.carServ.getAllVehiclesRequest(1,2).subscribe({
       next: res => {
         this.vehiclesData = res.body.vehicles;
         this.cars = this.vehiclesData.map((item: any) => ({
@@ -71,32 +71,6 @@ export class BasicDataComponent implements OnInit {
   }
   cancel() {
     this.editable = false;
-  }
-
-  addDialogVisible = false;
-  openAddCarDialog() {
-    this.addDialogVisible = true;
-  }
-
-  postVehicleRequest() {
-    let body = {
-      fleet_id: this.addVehicle_form.controls['fleet_id'].value,
-      name: this.addVehicle_form.controls['name'].value,
-      driver: this.addVehicle_form.controls['driver'].value,
-      license_plate: this.addVehicle_form.controls['license_plate'].value,
-      sid: this.addVehicle_form.controls['sid'].value
-    }
-    this.carServ.postVehicleRequest(body).subscribe({
-      next: data => {
-        console.log(data)
-        console.log(body)
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-
-    this.getAllVehiclesRequest()
   }
 
   goToVehicle(id: any) {

@@ -1,0 +1,99 @@
+<div class="overflow-x-hidden flex justify-content-center">
+  <div class="col-8">
+    <p-tabView (onChange)="getTabName($event)">
+      <p-tabPanel header="車隊">
+        <p-card header="{{tab}}">
+
+        </p-card>
+      </p-tabPanel>
+      <p-tabPanel header="車輛">
+        <p-card header="{{tab}}">
+          <p-tabView>
+            <p-tabPanel header="所有車輛">
+              <div class="flex justify-content-end mb-3">
+                <p-button (click)="openAddCarDialog()" label="新增車輛"
+                          styleClass="p-button-link p-button-sm"></p-button>
+              </div>
+              <p-dataView [value]="vehiclesData">
+                <ng-template let-product pTemplate="listItem">
+                  <div pRipple class="col-6 styled-box">
+                    <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
+                      <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/car2.png'"/>
+                      <div
+                        class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                        <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                          <div class="text-lg font-bold">{{ product.name }}</div>
+
+                          <div class="flex align-items-center gap-3">
+                                <span class="flex align-items-center gap-2">
+                                <i class="pi pi-at text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.driver }}</span>
+                                  </span>
+                            <span class="flex align-items-center gap-2">
+                                <i class="pi pi-tag text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.license_plate }}</span>
+                                </span>
+                          </div>
+                        </div>
+                        <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
+                          <p-button (click)="goToVehicle(product.id)" label="管理"
+                                    styleClass="p-button-link"></p-button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dataView>
+            </p-tabPanel>
+            <p-tabPanel header="保養定檢">
+
+            </p-tabPanel>
+            <p-tabPanel header="溫度">
+
+            </p-tabPanel>
+          </p-tabView>
+        </p-card>
+      </p-tabPanel>
+      <p-tabPanel header="司機">
+        <p-card header="{{tab}}">
+
+        </p-card>
+      </p-tabPanel>
+      <p-tabPanel header="車機">
+        <p-card header="{{tab}}">
+
+        </p-card>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>
+
+<!--新增車輛-->
+<p-dialog header="新增車輛" [(visible)]="addDialogVisible" [modal]="true" [style]="{ width: '25vw' }"
+          [draggable]="false" [resizable]="false">
+  <form [formGroup]="addVehicle_form">
+    <div class="col-12">
+      <div class="field">
+        <label class="font-semibold">車輛名稱</label>
+        <input formControlName="name" pInputText/>
+      </div>
+      <div class="field">
+        <label class="font-semibold">司機名稱</label>
+        <input formControlName="driver" pInputText/>
+      </div>
+      <div class="field">
+        <label class="font-semibold">車牌號碼</label>
+        <input formControlName="license_plate" pInputText/>
+      </div>
+      <div class="field">
+        <label class="font-semibold">車機號碼</label>
+        <input formControlName="sid" pInputText/>
+      </div>
+      <div class="flex justify-content-end">
+        <p-button (click)="postVehicleRequest()" label="新增" styleClass="p-button-primary mr-2"></p-button>
+        <p-button label="取消"
+                  styleClass="p-button-outlined p-button-secondary"></p-button>
+      </div>
+    </div>
+  </form>
+</p-dialog>

@@ -35,6 +35,8 @@ import { SuccessComponent } from "../features/premium/success/success.component"
 import { FailedComponent } from "../features/premium/failed/failed.component";
 import { TempDashboardComponent } from "../features/temp-control/temp-dashboard/temp-dashboard.component";
 import { VehicleComponent } from "../features/basic-settings/vehicle/vehicle.component";
+import {FleetMgmtComponent} from "../features/fleet-mgmt/fleet-mgmt/fleet-mgmt.component";
+
 
 @NgModule({
   declarations: [
@@ -66,17 +68,18 @@ import { VehicleComponent } from "../features/basic-settings/vehicle/vehicle.com
     SuccessComponent,
     FailedComponent,
     TempDashboardComponent,
-    VehicleComponent
+    VehicleComponent,
+    FleetMgmtComponent
   ],
-  imports: [
-    CommonModule,
-    ContainerRoutingModule,
-    SharedModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    GoogleMapsModule
-  ]
+    imports: [
+        CommonModule,
+        ContainerRoutingModule,
+        SharedModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        GoogleMapsModule,
+    ]
 })
 export class ContainerModule {
 }

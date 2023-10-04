@@ -142,8 +142,8 @@ export class CarService {
 
   //--車輛------------------------------------------------------------------------------------------------
 
-  getAllVehiclesRequest(): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/vehicles?page=1&limit=20`;
+  getAllVehiclesRequest(page:number=1,limit:number=20): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/vehicles?page=${page}&limit=${limit}`;
     return this.http.get<any>(url);
   }
 

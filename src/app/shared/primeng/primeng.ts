@@ -51,6 +51,7 @@ import { SpeedDialModule } from "primeng/speeddial";
 import { ChartModule } from 'primeng/chart';
 import { DataViewModule } from "primeng/dataview";
 import { OrderListModule } from "primeng/orderlist";
+import { RippleModule } from "primeng/ripple";
 
 
 export const ngModule = [
@@ -106,6 +107,7 @@ export const ngModule = [
   SpeedDialModule,
   ChartModule,
   DataViewModule,
-  OrderListModule
+  OrderListModule,
+  RippleModule
 ]
 
