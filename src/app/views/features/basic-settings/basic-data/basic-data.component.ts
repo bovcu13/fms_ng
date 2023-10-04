@@ -4,6 +4,11 @@ import { CarService } from "../../../../services/car.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
+interface Language {
+  name: string;
+  code: string;
+}
+
 @Component({
   selector: 'app-basic-data',
   templateUrl: './basic-data.component.html',
@@ -25,7 +30,15 @@ export class BasicDataComponent implements OnInit {
     });
   }
 
+  language : Language[] | undefined;
+
   ngOnInit() {
+    this.language = [
+      { name: '繁體中文', code: 'zh-TW' },
+      { name: '簡體中文', code: 'zh-CN' },
+      { name: '日文', code: 'JA' },
+      { name: '英文', code: 'EN' },
+    ];
     this.getAllVehiclesRequest()
   }
 
