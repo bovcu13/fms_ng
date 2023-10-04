@@ -6,3 +6,11 @@
   z-index: 999;
   background: #FFFFFB;
 }
+
+::ng-deep {
+  .p-button:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: none;
+  }
+}
