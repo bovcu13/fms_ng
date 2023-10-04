@@ -34,6 +34,7 @@ import { PremiumComponent } from "../features/premium/premium.component";
 import { SuccessComponent } from "../features/premium/success/success.component";
 import { FailedComponent } from "../features/premium/failed/failed.component";
 import { TempDashboardComponent } from "../features/temp-control/temp-dashboard/temp-dashboard.component";
+import { VehicleComponent } from "../features/basic-settings/vehicle/vehicle.component";
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { TempDashboardComponent } from "../features/temp-control/temp-dashboard/
     PremiumComponent,
     SuccessComponent,
     FailedComponent,
-    TempDashboardComponent
+    TempDashboardComponent,
+    VehicleComponent
   ],
   imports: [
     CommonModule,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { carData } from "../../../../shared/data/products";
 import { CarService } from "../../../../services/car.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-basic-data',
@@ -11,7 +12,10 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 export class BasicDataComponent implements OnInit {
   carData :any[] = carData;
   addVehicle_form: FormGroup;
-  constructor(private carServ: CarService, private fb: FormBuilder) {
+
+  constructor(private carServ: CarService,
+              private fb: FormBuilder,
+              private router: Router) {
     this.addVehicle_form = this.fb.group({
       fleet_id: ['c2d40ef0-341a-4793-b1b3-f4e4f82ba9f2', [Validators.required]],
       name: ['', [Validators.required]],
@@ -80,6 +84,10 @@ export class BasicDataComponent implements OnInit {
     });
 
     this.getAllVehiclesRequest()
+  }
+
+  goToVehicle(id: any) {
+    this.router.navigate(['/vehicle', id])
   }
 
 }

@@ -28,6 +28,7 @@ import { PremiumComponent } from "../features/premium/premium.component";
 import { SuccessComponent } from "../features/premium/success/success.component";
 import { FailedComponent } from "../features/premium/failed/failed.component";
 import { TempDashboardComponent } from "../features/temp-control/temp-dashboard/temp-dashboard.component";
+import { VehicleComponent } from "../features/basic-settings/vehicle/vehicle.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -58,6 +59,7 @@ const routes: Routes = [
       { path: 'odd_temp', component: OddTempComponent, canActivate: [AuthGuard] },
       // basic-settings
       { path: 'basic_data', component: BasicDataComponent, canActivate: [AuthGuard] },
+      { path: 'vehicle/:id', component: VehicleComponent, canActivate: [AuthGuard]},
       { path: 'odd_set', component: OddSetComponent, canActivate: [AuthGuard] },
       // log
       { path: 'log', component: LogComponent, canActivate: [AuthGuard] },
