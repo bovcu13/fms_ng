@@ -49,7 +49,7 @@
                     <p-button (click)="openAddCarDialog()" label="新增車輛"
                               styleClass="p-button-link p-button-sm"></p-button>
                   </div>
-                  <p-dataView #dv [value]="vehiclesData">
+                  <p-dataView [value]="vehiclesData">
                     <ng-template let-product pTemplate="listItem">
                       <div class="col-6">
                         <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
@@ -66,7 +66,7 @@
                               </div>
                             </div>
                             <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
-                              <p-button label="管理" styleClass="p-button-link"></p-button>
+                              <p-button (click)="goToVehicle(product.id)" label="管理" styleClass="p-button-link"></p-button>
                             </div>
                           </div>
                         </div>
