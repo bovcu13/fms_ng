@@ -1,149 +1,131 @@
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-12">
-    <p-card>
-      <p-tabView>
-        <p-tabPanel header="基本資料">
-          <div class="field grid">
-            <label class="col-fixed" style="width:10rem">使用單位名稱</label>
-            <div class="col-3">
-              <input pInputText/>
+    <p-tabView>
+      <p-tabPanel header="概覽">
+        <div class="flex justify-content-center">
+          <div class="col-8">
+            <div class="grid">
+              <div class="col-3">
+                <div class="col-12 flex justify-content-center">
+                  <p-avatar label="我" size="large"
+                            [style]="{ 'background-color': '#2196F3',
+                            color: '#ffffff',
+                            'width': '10em',
+                            'height': '10em'}" shape="circle"></p-avatar>
+                </div>
+                <div class="col-12">
+                  <label class="text-xl font-light text-color-secondary">user_name</label>
+                </div>
+                <div *ngIf="!editable" class="col-12 mt-2 flex justify-content-center">
+                  <p-button (click)="edit()" label="編輯個人資料"
+                            styleClass="p-button-sm p-button-outlined p-button-secondary"
+                            [style]="{'width': '15em'}"></p-button>
+                </div>
+                <div *ngIf="editable" class="mt-2">
+                  <div class="col-12">
+                    <div class="field">
+                      <label class="text-sm font-semibold">姓名</label>
+                      <input pInputText/>
+                    </div>
+                    <div class="field">
+                      <label class="text-sm font-semibold">電話號碼</label>
+                      <input pInputText/>
+                    </div>
+                    <div class="field">
+                      <label class="text-sm font-semibold">修改密碼</label>
+                      <input pInputText/>
+                    </div>
+                    <div class="flex justify-content-center">
+                      <p-button (click)="save()" label="儲存" styleClass="p-button-success p-button-sm mr-2"></p-button>
+                      <p-button (click)="cancel()" label="取消"
+                                styleClass="p-button-outlined p-button-secondary p-button-sm mr-2"></p-button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-9">
+                <p-card header="車輛資料">
+                  <div class="flex justify-content-end mb-3">
+                    <p-button (click)="openAddCarDialog()" label="新增車輛"
+                              styleClass="p-button-link p-button-sm"></p-button>
+                  </div>
+                  <p-dataView #dv [value]="vehiclesData">
+                    <ng-template let-product pTemplate="listItem">
+                      <div class="col-6">
+                        <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
+                          <img class="w-5 sm:w-12rem xl:w-6rem" [src]="'assets/image/car2.png'"/>
+                          <div
+                            class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                            <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                              <div class="text-xl font-bold">{{ product.driver }}</div>
+                              <div class="flex align-items-center gap-3">
+                            <span class="flex align-items-center gap-2">
+                                <i class="pi pi-tag"></i>
+                                <span class="font-semibold">{{ product.license_plate }}</span>
+                            </span>
+                              </div>
+                            </div>
+                            <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
+                              <p-button label="管理" styleClass="p-button-link"></p-button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </p-dataView>
+                </p-card>
+              </div>
             </div>
           </div>
-          <div class="field grid">
-            <label class="col-fixed" style="width:10rem">修改登入密碼</label>
-            <div class="col-3">
-              <input pInputText/>
-            </div>
-          </div>
-          <p-divider></p-divider>
-          <div class="field grid">
-            <label class="col-fixed" style="width:10rem">地圖預設載入位置</label>
-            <div class="col-3">
-              <input pInputText/>
-            </div>
-          </div>
-          <div class="field grid">
-            <label class="col-fixed" style="width:10rem">地圖風格</label>
-            <div class="col-3">
-              <input pInputText/>
-            </div>
-          </div>
-          <div class="field grid">
-            <label class="col-fixed" style="width:10rem">國道每日優惠里程</label>
-            <div class="col-3">
-              <input pInputText/>
-            </div>
-          </div>
-          <div class="flex justify-content-start">
-            <p-checkbox></p-checkbox>
-            <label class="col-fixed">自動登入</label>
-          </div>
-        </p-tabPanel>
-        <p-tabPanel header="車輛資料">
-            <p-table [value]="carData" [tableStyle]="{ 'min-width': '50rem' }">
-              <ng-template pTemplate="header">
-                <tr>
-                  <th>車輛代號</th>
-                  <th>車輛名稱</th>
-                  <th>車牌</th>
-                  <th>姓名</th>
-                  <th>手機號碼1</th>
-                  <th>手機號碼2</th>
-                  <th>油耗量(公里/升)</th>
-                  <th>油品種類</th>
-                  <th>計費車種</th>
-                  <th>車輛樣式</th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-car>
-                <tr>
-                  <td>{{ car.code }}</td>
-                  <td>{{ car.name }}</td>
-                  <td>{{ car.licensePlate }}</td>
-                  <td>{{ car.driver }}</td>
-                  <td>{{ car.phone1 }}</td>
-                  <td>{{ car.phone2 }}</td>
-                  <td>{{ car.fuel }}</td>
-                  <td>{{ car.fuelType }}</td>
-                  <td>{{ car.VehicleType }}</td>
-                  <td>{{ car.vehicleStyle }}</td>
-                </tr>
-              </ng-template>
-            </p-table>
-        </p-tabPanel>
-        <p-tabPanel header="保養定檢">
-          <p-table [value]="carData">
-            <ng-template pTemplate="header">
-              <tr>
-                <th colspan="2">基本資料</th>
-                <th colspan="2">車輛資料</th>
-                <th colspan="6">保養狀況</th>
-                <th colspan="6">里程/時數計算</th>
-                <th colspan="2">驗車</th>
-                <th colspan="4">換照</th>
-                <th colspan="2">傳統/數位大餅</th>
-                <th colspan="2">柴油自主檢驗</th>
-                <th colspan="2">尾門保養</th>
-                <th colspan="2">滅火器保養</th>
-              </tr>
-              <tr>
-                <th>車牌</th>
-                <th>姓名</th>
-                <th>出廠日期</th>
-                <th>保險到期日</th>
-                <th>每幾公里保養</th>
-                <th>每幾小時保養</th>
-                <th>保養日期</th>
-                <th>保養當時里程</th>
-                <th>保養當時時數</th>
-                <th>下次保養日</th>
-                <th>累計公里</th>
-                <th>剩餘公里</th>
-                <th>累計小時</th>
-                <th>剩餘小時</th>
-                <th>剩餘提醒公里</th>
-                <th>剩餘提醒小時</th>
-                <th>最近驗車日</th>
-                <th>下次驗車日</th>
-                <th>駕照換照日</th>
-                <th>行照換照日</th>
-                <th>駕照審驗日</th>
-                <th>訓練證有效日</th>
-                <th>最近檢驗日</th>
-                <th>下次檢驗日</th>
-                <th>最近檢驗日</th>
-                <th>下次檢驗日</th>
-                <th>最近檢驗日</th>
-                <th>下次檢驗日</th>
-                <th>最近檢驗日</th>
-                <th>下次檢驗日</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body">
-              <tr>
-              </tr>
-            </ng-template>
-          </p-table>
-        </p-tabPanel>
-        <p-tabPanel header="溫度">
-          <p-table [tableStyle]="{ 'min-width': '50rem' }">
-            <ng-template pTemplate="header">
-              <tr>
-                <th>車牌</th>
-                <th>蜂鳴器</th>
-                <th>溫度1名稱</th>
-                <th>溫度1標準線</th>
-                <th>溫度1範圍下限</th>
-                <th>溫度1範圍上界</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body">
-              <tr>
-              </tr>
-            </ng-template>
-          </p-table>
-        </p-tabPanel>
-      </p-tabView>
-    </p-card>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Header II">
+        <p>
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+          aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+          Nemo enim
+          ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
+          ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
+        </p>
+      </p-tabPanel>
+      <p-tabPanel header="Header III">
+        <p>
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
+          atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique
+          sunt in culpa
+          qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et
+          expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
+        </p>
+      </p-tabPanel>
+    </p-tabView>
   </div>
 </div>
+
+<p-dialog header="新增車輛" [(visible)]="addDialogVisible" [modal]="true" [style]="{ width: '25vw' }"
+          [draggable]="false" [resizable]="false">
+  <form [formGroup]="addVehicle_form">
+    <div class="col-12">
+      <div class="field">
+        <label class="font-semibold">車輛名稱</label>
+        <input formControlName="name" pInputText/>
+      </div>
+      <div class="field">
+        <label class="font-semibold">司機名稱</label>
+        <input formControlName="driver" pInputText/>
+      </div>
+      <div class="field">
+        <label class="font-semibold">車牌號碼</label>
+        <input formControlName="license_plate" pInputText/>
+      </div>
+      <div class="field">
+        <label class="font-semibold">車機號碼</label>
+        <input formControlName="sid" pInputText/>
+      </div>
+      <div class="flex justify-content-end">
+        <p-button (click)="postVehicleRequest()" label="新增" styleClass="p-button-primary mr-2"></p-button>
+        <p-button label="取消"
+                  styleClass="p-button-outlined p-button-secondary"></p-button>
+      </div>
+    </div>
+  </form>
+</p-dialog>
