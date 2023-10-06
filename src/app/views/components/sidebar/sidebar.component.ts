@@ -349,35 +349,14 @@ export class SidebarComponent implements OnInit {
       {
         label: '車隊管理',
         icon: 'pi pi-shield',
-        items: [
-          {
-            label: '車隊管理',
-            icon: 'pi pi-shield',
-            routerLink: '/fleet_mgmt',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(250,245,200,0.6)'
-            },
-          },
-          {
-            label: '車輛',
-            icon: 'pi pi-shield',
-            routerLink: '/role',
-            command: () => {
-              this.sideVisible = false
-            },
-          },
-          {
-            label: '付費訂閱',
-            icon: 'pi pi-shield',
-            routerLink: '/role',
-            command: () => {
-              this.sideVisible = false
-            },
-          },
-        ]
+        routerLink: '/fleet_mgmt',
+        command: () => {
+          this.sideVisible = false
+        },
+        style: {
+          background: 'rgba(250,245,200,0.6)'
+        },
+
       },
       {
         label: 'Skynet Premium',
