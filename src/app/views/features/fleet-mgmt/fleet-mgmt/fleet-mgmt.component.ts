@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { CarService } from "../../../../services/car.service";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { TabView } from "primeng/tabview";
 
 @Component({
@@ -10,13 +10,17 @@ import { TabView } from "primeng/tabview";
   styleUrls: ['./fleet-mgmt.component.scss']
 })
 export class FleetMgmtComponent {
+
+  activeIndex: number = 0;
+
   @ViewChild(TabView) tabView!: TabView;
 
   addVehicle_form: FormGroup;
 
   constructor(private carServ: CarService,
               private fb: FormBuilder,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute) {
     this.addVehicle_form = this.fb.group({
       fleet_id: ['c2d40ef0-341a-4793-b1b3-f4e4f82ba9f2', [Validators.required]],
       name: ['', [Validators.required]],
@@ -27,6 +31,12 @@ export class FleetMgmtComponent {
   }
 
   ngOnInit() {
+    // 取得路由參數中的 fleetId
+    this.route.params.subscribe(params => {
+      this.activeIndex = params['id'];
+      // 現在你可以在這裡使用 fleetId 了
+    });
+
     this.getAllVehiclesRequest()
   }
 

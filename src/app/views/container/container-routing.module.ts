@@ -64,6 +64,7 @@ const routes: Routes = [
       { path: 'odd_set', component: OddSetComponent, canActivate: [AuthGuard] },
       // fleet-mgmt
       { path: 'fleet_mgmt', component: FleetMgmtComponent, canActivate: [AuthGuard] },
+      { path: 'fleet_mgmt/:id', component: FleetMgmtComponent, canActivate: [AuthGuard] },
       // log
       { path: 'log', component: LogComponent, canActivate: [AuthGuard] },
       // test

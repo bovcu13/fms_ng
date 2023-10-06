@@ -42,7 +42,7 @@
               <div class="col-9">
                 <p-card header="車輛資料">
                   <div class="flex justify-content-end mb-3">
-                    <p-button label="查看更多" routerLink="/fleet_mgmt"
+                    <p-button label="查看更多" [routerLink]="['/fleet_mgmt', activeIndex]"
                               styleClass="p-button-link p-button-sm"></p-button>
                   </div>
                   <p-dataView [value]="vehiclesData">

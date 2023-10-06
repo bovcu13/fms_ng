@@ -1,6 +1,6 @@
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-8">
-    <p-tabView (onChange)="getTabName($event)">
+    <p-tabView (onChange)="getTabName($event)" [(activeIndex)]="activeIndex">
       <p-tabPanel header="車隊">
         <p-card header="{{tab}}">
 
