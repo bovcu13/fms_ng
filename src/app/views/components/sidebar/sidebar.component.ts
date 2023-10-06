@@ -43,6 +43,11 @@ export class SidebarComponent implements OnInit {
     // sidebarMenu
     this.sidebarMenu = [
       {
+        label: '首頁',
+        icon: 'pi pi-home',
+        routerLink: '/main',
+      },
+      {
         label: '監控中心',
         icon: 'pi pi-fw pi-sitemap',
         items: [
@@ -80,7 +85,7 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
-            label: '車溫儀表板',
+            label: '車溫儀表板', //控溫中心
             icon: 'pi pi-fw pi-box',
             routerLink: '/multiCars',
             command: () => {
@@ -294,9 +299,13 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
-            label: '駕駛統計',
+            label: '統計報告',
             icon: 'pi pi-fw pi-box',
             items: [
+              {
+                label: '出勤記錄',
+                icon: 'pi pi-fw pi-box'
+              },
               {
                 label: '檢查表設定',
                 icon: 'pi pi-fw pi-box'

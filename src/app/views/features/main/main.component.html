@@ -50,7 +50,7 @@
                   <th>狀態</th>
                   <th>車輛名稱</th>
                   <th>車牌</th>
-                  <th>姓名</th>
+                  <th>司機</th>
                   <th *ngFor="let col of columns">
                     {{col.header}}
                   </th>
@@ -69,7 +69,7 @@
                   <td>
                     <p-button routerLink="/dispatch"
                               icon="pi pi-eye" styleClass="p-button-info p-button-text"
-                              pTooltip="查看派工單" tooltipPosition="left"></p-button>
+                              pTooltip="查看運輸派工" tooltipPosition="left"></p-button>
                   </td>
                 </tr>
               </ng-template>
@@ -77,7 +77,7 @@
           </p-tabPanel>
           <p-tabPanel>
             <ng-template pTemplate="header">
-              <span>運輸單</span>
+              <span>運輸派工</span>
             </ng-template>
 
           </p-tabPanel>
