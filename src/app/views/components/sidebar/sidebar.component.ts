@@ -58,7 +58,7 @@ export class SidebarComponent implements OnInit {
           //   },
           // },
           {
-            label: '多車監控',
+            label: 'GPS圖台',
             icon: 'pi pi-fw pi-box',
             routerLink: '/multiCars',
             command: () => {
