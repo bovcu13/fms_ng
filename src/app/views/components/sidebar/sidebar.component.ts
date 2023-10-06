@@ -117,7 +117,7 @@ export class SidebarComponent implements OnInit {
       {
         label: '客戶管理',
         icon: 'pi pi-users',
-        routerLink: '/fleet_mgmt',
+        routerLink: '/customer',
         command: () => {
           this.sideVisible = false
         },
