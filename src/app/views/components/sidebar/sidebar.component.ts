@@ -115,18 +115,7 @@ export class SidebarComponent implements OnInit {
         }
       },
       {
-        label: '客戶管理',
-        icon: 'pi pi-users',
-        routerLink: '/customer',
-        command: () => {
-          this.sideVisible = false
-        },
-        style: {
-          background: 'rgba(250,245,200,0.6)',
-        }
-      },
-      {
-        label: '數位大餅',
+        label: '數位軌跡16-1報表',
         icon: 'pi pi-fw pi-chart-pie',
 
         items: [
@@ -287,6 +276,17 @@ export class SidebarComponent implements OnInit {
             },
           }
         ]
+      },
+      {
+        label: '客戶管理',
+        icon: 'pi pi-users',
+        routerLink: '/customer',
+        command: () => {
+          this.sideVisible = false
+        },
+        style: {
+          background: 'rgba(250,245,200,0.6)',
+        }
       },
       {
         label: '基本設定',
