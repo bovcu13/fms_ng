@@ -148,7 +148,7 @@ export class MonitorComponent implements OnInit {
         isLive: true,       // 開啓直播
         hasAudio: false,    // 關閉聲音
         cors: true,         // 開啓跨域訪問
-        url: 'http://127.0.0.1:8080/live?port=1935&app=Mylive&stream=test',   // 指定流鏈接
+        url: 'http://203.70.231.9:12060/live.flv?devid=00710171C6&chl=1&st=1&audio=1',   // 指定流鏈接
       });
 
       // 將flvjs對象和DOM對象綁定
