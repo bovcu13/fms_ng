@@ -148,7 +148,7 @@ export class SidebarComponent implements OnInit {
         ]
       },
       {
-        label: '溫控中心',
+        label: '車盪儀表板',
         icon: 'pi pi-fw pi-box',
         items: [
           {
