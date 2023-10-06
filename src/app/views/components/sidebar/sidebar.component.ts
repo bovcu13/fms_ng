@@ -80,7 +80,7 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
-            label: '行駛狀態表',
+            label: '行駛狀態列表',
             icon: 'pi pi-fw pi-box',
             routerLink: '/driving_status',
             command: () => {
