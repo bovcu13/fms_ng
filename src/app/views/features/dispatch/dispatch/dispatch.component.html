@@ -1,1 +1,51 @@
-<p>dispatch works!</p>
+<div class="overflow-x-hidden flex justify-content-center">
+  <div class="col-8">
+    <p-tabView>
+      <p-tabPanel header="派工單">
+        <div class="flex justify-content-end mb-3">
+          <p-button label="新增派工單" (click)="openNewDispatch()"
+                    styleClass="p-button-link p-button-sm"></p-button>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Header II">
+
+      </p-tabPanel>
+      <p-tabPanel header="Header III">
+
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>
+
+<p-dialog header="新增派工單" [(visible)]="newDispatchVisible" [modal]="true" [style]="{ width: '40vw' }" [draggable]="false" [resizable]="false">
+  <div class="grid">
+    <div class="field col-12 md:col-6 lg:col-6">
+      <label class="font-semibold">託運人</label>
+      <p-dropdown></p-dropdown>
+    </div>
+    <div class="field col-12 md:col-6 lg:col-6">
+      <label class="font-semibold">車牌</label>
+      <input pInputText [disabled]="true" />
+    </div>
+    <div class="field col-12 md:col-6 lg:col-6">
+      <label class="font-semibold">預計出車時間</label>
+      <p-calendar [showTime]="true" [showSeconds]="true"></p-calendar>
+    </div>
+    <div class="field col-12 md:col-6 lg:col-6">
+      <label class="font-semibold">實際出車時間</label>
+      <input pInputText [disabled]="true" />
+    </div>
+    <div class="field col-12 md:col-6 lg:col-6">
+      <label class="font-semibold">預計到達時間</label>
+      <p-calendar [showTime]="true" [showSeconds]="true"></p-calendar>
+    </div>
+    <div class="field col-12 md:col-6 lg:col-6">
+      <label class="font-semibold">實際到達時間</label>
+      <input pInputText [disabled]="true" />
+    </div>
+  </div>
+  <div class="flex justify-content-end">
+    <p-button label="新增" styleClass="p-button-primary mr-2"></p-button>
+    <p-button label="取消" styleClass="p-button-outlined p-button-secondary"></p-button>
+  </div>
+</p-dialog>
