@@ -97,4 +97,8 @@ export class FleetMgmtComponent {
     this.router.navigate(['/vehicle', id])
   }
 
+  goToDriver() {
+    this.router.navigate(['/driver'])
+  }
+
 }

@@ -35,7 +35,8 @@ import { SuccessComponent } from "../features/premium/success/success.component"
 import { FailedComponent } from "../features/premium/failed/failed.component";
 import { TempDashboardComponent } from "../features/temp-control/temp-dashboard/temp-dashboard.component";
 import { VehicleComponent } from "../features/fleet-mgmt/vehicle/vehicle.component";
-import {FleetMgmtComponent} from "../features/fleet-mgmt/fleet-mgmt/fleet-mgmt.component";
+import { FleetMgmtComponent } from "../features/fleet-mgmt/fleet-mgmt/fleet-mgmt.component";
+import { DriverComponent } from "../features/fleet-mgmt/driver/driver.component";
 
 
 @NgModule({
@@ -69,17 +70,18 @@ import {FleetMgmtComponent} from "../features/fleet-mgmt/fleet-mgmt/fleet-mgmt.c
     FailedComponent,
     TempDashboardComponent,
     VehicleComponent,
-    FleetMgmtComponent
+    FleetMgmtComponent,
+    DriverComponent
   ],
-    imports: [
-        CommonModule,
-        ContainerRoutingModule,
-        SharedModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        GoogleMapsModule,
-    ]
+  imports: [
+    CommonModule,
+    ContainerRoutingModule,
+    SharedModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    GoogleMapsModule,
+  ]
 })
 export class ContainerModule {
 }

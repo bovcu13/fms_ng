@@ -30,6 +30,7 @@ import { FailedComponent } from "../features/premium/failed/failed.component";
 import { TempDashboardComponent } from "../features/temp-control/temp-dashboard/temp-dashboard.component";
 import { VehicleComponent } from "../features/fleet-mgmt/vehicle/vehicle.component";
 import {FleetMgmtComponent} from "../features/fleet-mgmt/fleet-mgmt/fleet-mgmt.component";
+import { DriverComponent } from "../features/fleet-mgmt/driver/driver.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -60,11 +61,12 @@ const routes: Routes = [
       { path: 'odd_temp', component: OddTempComponent, canActivate: [AuthGuard] },
       // basic-settings
       { path: 'basic_data', component: BasicDataComponent, canActivate: [AuthGuard] },
-      { path: 'vehicle/:id', component: VehicleComponent, canActivate: [AuthGuard]},
       { path: 'odd_set', component: OddSetComponent, canActivate: [AuthGuard] },
       // fleet-mgmt
       { path: 'fleet_mgmt', component: FleetMgmtComponent, canActivate: [AuthGuard] },
       { path: 'fleet_mgmt/:id', component: FleetMgmtComponent, canActivate: [AuthGuard] },
+      { path: 'vehicle/:id', component: VehicleComponent, canActivate: [AuthGuard]},
+      { path: 'driver', component: DriverComponent, canActivate: [AuthGuard]},
       // log
       { path: 'log', component: LogComponent, canActivate: [AuthGuard] },
       // test
