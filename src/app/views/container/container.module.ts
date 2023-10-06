@@ -34,7 +34,7 @@ import { PremiumComponent } from "../features/premium/premium.component";
 import { SuccessComponent } from "../features/premium/success/success.component";
 import { FailedComponent } from "../features/premium/failed/failed.component";
 import { TempDashboardComponent } from "../features/temp-control/temp-dashboard/temp-dashboard.component";
-import { VehicleComponent } from "../features/basic-settings/vehicle/vehicle.component";
+import { VehicleComponent } from "../features/fleet-mgmt/vehicle/vehicle.component";
 import {FleetMgmtComponent} from "../features/fleet-mgmt/fleet-mgmt/fleet-mgmt.component";
 
 
