@@ -2,10 +2,24 @@
   <div class="col-8">
     <p-tabView>
       <p-tabPanel header="運輸派工">
-        <div class="flex justify-content-end mb-3">
-          <p-button label="新增" (click)="openNewDispatch()"
-                    styleClass="p-button-link p-button-sm"></p-button>
-        </div>
+        <p-card header="運輸派工">
+          <p-tabView>
+            <p-tabPanel header="所有">
+              <div class="flex justify-content-end mb-3">
+                <div class="flex justify-content-end mb-3">
+                  <p-button icon="pi pi-plus" (click)="openNewDispatch()"
+                            styleClass="p-button-info p-button-text"></p-button>
+                </div>
+              </div>
+            </p-tabPanel>
+            <p-tabPanel header="功能 II">
+
+            </p-tabPanel>
+            <p-tabPanel header="功能 III">
+
+            </p-tabPanel>
+          </p-tabView>
+        </p-card>
       </p-tabPanel>
       <p-tabPanel header="Header II">
 
