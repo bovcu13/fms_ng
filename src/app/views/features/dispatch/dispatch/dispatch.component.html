@@ -1,9 +1,9 @@
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-8">
     <p-tabView>
-      <p-tabPanel header="派工單">
+      <p-tabPanel header="運輸派工">
         <div class="flex justify-content-end mb-3">
-          <p-button label="新增派工單" (click)="openNewDispatch()"
+          <p-button label="新增" (click)="openNewDispatch()"
                     styleClass="p-button-link p-button-sm"></p-button>
         </div>
       </p-tabPanel>
@@ -17,10 +17,10 @@
   </div>
 </div>
 
-<p-dialog header="新增派工單" [(visible)]="newDispatchVisible" [modal]="true" [style]="{ width: '40vw' }" [draggable]="false" [resizable]="false">
+<p-dialog header="新增運輸派工" [(visible)]="newDispatchVisible" [modal]="true" [style]="{ width: '40vw' }" [draggable]="false" [resizable]="false">
   <div class="grid">
     <div class="field col-12 md:col-6 lg:col-6">
-      <label class="font-semibold">託運人</label>
+      <label class="font-semibold">姓名</label>
       <p-dropdown></p-dropdown>
     </div>
     <div class="field col-12 md:col-6 lg:col-6">

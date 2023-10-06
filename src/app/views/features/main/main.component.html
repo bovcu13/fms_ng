@@ -63,7 +63,13 @@
           </p-tabPanel>
           <p-tabPanel>
             <ng-template pTemplate="header">
-              <span>異常中心</span>
+              <span>運輸單</span>
+            </ng-template>
+
+          </p-tabPanel>
+          <p-tabPanel>
+            <ng-template pTemplate="header">
+              <span>異常通報</span>
               <p-tag *ngIf="oddTem > 0" severity="danger" value="{{oddTem}}"></p-tag>
             </ng-template>
             <p-accordion [activeIndex]="0">
@@ -99,12 +105,6 @@
                 </div>
               </div>
             </p-accordion>
-          </p-tabPanel>
-          <p-tabPanel>
-            <ng-template pTemplate="header">
-              <span>功能A</span>
-            </ng-template>
-
           </p-tabPanel>
           <p-tabPanel>
             <ng-template pTemplate="header">
