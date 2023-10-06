@@ -43,7 +43,7 @@ export class SidebarComponent implements OnInit {
     // sidebarMenu
     this.sidebarMenu = [
       {
-        label: '監控查詢',
+        label: '監控中心',
         icon: 'pi pi-fw pi-sitemap',
         items: [
           // {
