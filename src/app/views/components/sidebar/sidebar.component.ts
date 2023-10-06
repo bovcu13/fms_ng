@@ -58,7 +58,7 @@ export class SidebarComponent implements OnInit {
           //   },
           // },
           {
-            label: '多車監控',
+            label: 'GPS圖台',
             icon: 'pi pi-fw pi-box',
             routerLink: '/multiCars',
             command: () => {
@@ -69,7 +69,7 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
-            label: '影像監控',
+            label: '車機影像',
             icon: 'pi pi-fw pi-video',
             routerLink: '/monitor',
             command: () => {
@@ -80,7 +80,18 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
-            label: '行駛狀態表',
+            label: '車溫儀表板',
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/multiCars',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
+            },
+          },
+          {
+            label: '行駛狀態列表',
             icon: 'pi pi-fw pi-box',
             routerLink: '/driving_status',
             command: () => {
@@ -104,31 +115,8 @@ export class SidebarComponent implements OnInit {
         ]
       },
       {
-        label: '派工管理',
-        icon: 'pi pi-briefcase',
-        routerLink: '/dispatch',
-        command: () => {
-          this.sideVisible = false
-        },
-        style: {
-          background: 'rgba(250,245,200,0.6)',
-        }
-      },
-      {
-        label: '客戶管理',
-        icon: 'pi pi-users',
-        routerLink: '/customer',
-        command: () => {
-          this.sideVisible = false
-        },
-        style: {
-          background: 'rgba(250,245,200,0.6)',
-        }
-      },
-      {
-        label: '數位大餅',
+        label: '數位軌跡16-1報表',
         icon: 'pi pi-fw pi-chart-pie',
-
         items: [
           {
             label: '大餅報表',
@@ -148,28 +136,33 @@ export class SidebarComponent implements OnInit {
         ]
       },
       {
-        label: '溫控中心',
-        icon: 'pi pi-fw pi-box',
-        items: [
-          {
-            label: '溫度儀表板',
-            icon: 'pi pi-fw pi-box',
-            routerLink: '/temp_dashboard',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(250,245,200,0.6)'
-            },
-          },
-          {
-            label: '溫度報表',
-            icon: 'pi pi-fw pi-chart-bar'
-          },
-        ]
+        label: '運輸派工',
+        icon: 'pi pi-briefcase',
+        routerLink: '/dispatch',
+        command: () => {
+          this.sideVisible = false
+        },
+        style: {
+          background: 'rgba(250,245,200,0.6)',
+        }
       },
       {
-        label: '統計查詢',
+        label: '推播訊息',
+        icon: 'pi pi-briefcase',
+        routerLink: '/dispatch',
+        command: () => {
+          this.sideVisible = false
+        },
+        style: {
+          background: 'rgba(250,245,200,0.6)',
+        }
+      },
+      {
+        label: '行政管理中心',
+        icon: 'pi pi-briefcase',
+      },
+      {
+        label: '統計分析報告',
         icon: 'pi pi-fw pi-box',
         items: [
           {
@@ -218,78 +211,121 @@ export class SidebarComponent implements OnInit {
             label: '均溫報表',
             icon: 'pi pi-fw pi-box'
           },
+          {
+            label: '績效',
+            icon: 'pi pi-fw pi-box'
+          },
+          {
+            label: '異常報表',
+            icon: 'pi pi-fw pi-exclamation-triangle',
+            items: [
+              {
+                label: '異常總表',
+                icon: 'pi pi-fw pi-box',
+                routerLink: '/odd_report',
+                command: () => {
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(250,245,200,0.6)'
+                },
+              },
+              {
+                label: '超速時間',
+                icon: 'pi pi-fw pi-box',
+                routerLink: '/speeding',
+                command: () => {
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(250,245,200,0.6)'
+                },
+              },
+              {
+                label: '停不熄火',
+                icon: 'pi pi-fw pi-box',
+                routerLink: '/stall',
+                command: () => {
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(250,245,200,0.6)'
+                },
+              },
+              {
+                label: '溫度異常',
+                icon: 'pi pi-fw pi-box',
+                routerLink: '/odd_temp',
+                command: () => {
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(250,245,200,0.6)'
+                },
+              }
+            ]
+          },
         ]
       },
       {
-        label: '駕駛統計',
-        icon: 'pi pi-fw pi-box',
+        label: '客戶管理',
+        icon: 'pi pi-users',
+        routerLink: '/customer',
+        command: () => {
+          this.sideVisible = false
+        },
+        style: {
+          background: 'rgba(250,245,200,0.6)',
+        }
+      },
+      {
+        label: '司機管理',
+        icon: 'pi pi-shield',
         items: [
           {
-            label: '檢查表設定',
-            icon: 'pi pi-fw pi-box'
+            label: '司機',
+            icon: 'pi pi-shield',
+            routerLink: '/fleet_mgmt',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)'
+            },
           },
           {
-            label: '自主檢查表',
-            icon: 'pi pi-fw pi-box'
+            label: '駕駛統計',
+            icon: 'pi pi-fw pi-box',
+            items: [
+              {
+                label: '檢查表設定',
+                icon: 'pi pi-fw pi-box'
+              },
+              {
+                label: '自主檢查表',
+                icon: 'pi pi-fw pi-box'
+              },
+              {
+                label: '未做檢查表',
+                icon: 'pi pi-fw pi-box'
+              }
+            ]
           },
-          {
-            label: '未做檢查表',
-            icon: 'pi pi-fw pi-box'
-          }
         ]
       },
       {
-        label: '異常報表',
-        icon: 'pi pi-fw pi-exclamation-triangle',
-        items: [
-          {
-            label: '異常總表',
-            icon: 'pi pi-fw pi-box',
-            routerLink: '/odd_report',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(250,245,200,0.6)'
-            },
-          },
-          {
-            label: '超速時間',
-            icon: 'pi pi-fw pi-box',
-            routerLink: '/speeding',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(250,245,200,0.6)'
-            },
-          },
-          {
-            label: '停不熄火',
-            icon: 'pi pi-fw pi-box',
-            routerLink: '/stall',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(250,245,200,0.6)'
-            },
-          },
-          {
-            label: '溫度異常',
-            icon: 'pi pi-fw pi-box',
-            routerLink: '/odd_temp',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(250,245,200,0.6)'
-            },
-          }
-        ]
+        label: '車輛管理',
+        icon: 'pi pi-shield',
+        routerLink: '/fleet_mgmt',
+        command: () => {
+          this.sideVisible = false
+        },
+        style: {
+          background: 'rgba(250,245,200,0.6)'
+        },
       },
       {
-        label: '基本設定',
+        label: '設定',
         icon: 'pi pi-fw pi-cog',
         items: [
           {
@@ -329,45 +365,40 @@ export class SidebarComponent implements OnInit {
         ]
       },
       {
-        label: '服務專區',
-        icon: 'pi pi-fw pi-box',
+        label: '平台服務專區',
+        icon: 'pi pi-fw pi-cog',
         items: [
+          {
+            label: 'Skynet Premium',
+            icon: 'pi pi-heart-fill',
+            routerLink: '/premium',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)',
+            },
+          },
+          {
+            label: '車機報修',
+            icon: 'pi pi-heart-fill',
+            routerLink: '',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+
+            },
+          },
           {
             label: '聯絡我們',
             icon: 'pi pi-fw pi-box'
           },
           {
-            label: '最新產品',
+            label: '最新消息',
             icon: 'pi pi-fw pi-box'
           },
-          {
-            label: '紅利積點',
-            icon: 'pi pi-fw pi-box'
-          }
         ]
-      },
-      {
-        label: '車隊管理',
-        icon: 'pi pi-shield',
-        routerLink: '/fleet_mgmt',
-        command: () => {
-          this.sideVisible = false
-        },
-        style: {
-          background: 'rgba(250,245,200,0.6)'
-        },
-
-      },
-      {
-        label: 'Skynet Premium',
-        icon: 'pi pi-heart-fill',
-        routerLink: '/premium',
-        command: () => {
-          this.sideVisible = false
-        },
-        style: {
-          background: 'rgba(250,245,200,0.6)',
-        },
       },
       {
         label: '更新日誌',
