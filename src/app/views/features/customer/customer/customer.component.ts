@@ -7,6 +7,12 @@ import { Component } from '@angular/core';
 })
 export class CustomerComponent {
 
+  addCompanyVisible = false;
+
+  openAddCompany() {
+    this.addCompanyVisible = true;
+  }
+
   addCustomerVisible = false;
 
   openAddCustomer() {
