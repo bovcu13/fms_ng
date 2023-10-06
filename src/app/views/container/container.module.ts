@@ -37,6 +37,7 @@ import { TempDashboardComponent } from "../features/temp-control/temp-dashboard/
 import { VehicleComponent } from "../features/fleet-mgmt/vehicle/vehicle.component";
 import { FleetMgmtComponent } from "../features/fleet-mgmt/fleet-mgmt/fleet-mgmt.component";
 import { DriverComponent } from "../features/fleet-mgmt/driver/driver.component";
+import { DispatchComponent } from "../features/dispatch/dispatch/dispatch.component";
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { DriverComponent } from "../features/fleet-mgmt/driver/driver.component"
     TempDashboardComponent,
     VehicleComponent,
     FleetMgmtComponent,
-    DriverComponent
+    DriverComponent,
+    DispatchComponent,
   ],
   imports: [
     CommonModule,

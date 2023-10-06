@@ -106,6 +106,7 @@ export class SidebarComponent implements OnInit {
       {
         label: '派工管理',
         icon: 'pi pi-briefcase',
+        routerLink: '/dispatch',
         command: () => {
           this.sideVisible = false
         },

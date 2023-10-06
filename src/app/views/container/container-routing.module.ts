@@ -31,6 +31,7 @@ import { TempDashboardComponent } from "../features/temp-control/temp-dashboard/
 import { VehicleComponent } from "../features/fleet-mgmt/vehicle/vehicle.component";
 import {FleetMgmtComponent} from "../features/fleet-mgmt/fleet-mgmt/fleet-mgmt.component";
 import { DriverComponent } from "../features/fleet-mgmt/driver/driver.component";
+import { DispatchComponent } from "../features/dispatch/dispatch/dispatch.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -43,6 +44,8 @@ const routes: Routes = [
       { path: 'multiCars', component: MultipleCarsComponent, canActivate: [AuthGuard] },
       { path: 'driving_status', component: DrivingStatusComponent, canActivate: [AuthGuard] },
       { path: 'history', component: HistoryPathComponent, canActivate: [AuthGuard] },
+      // dispatch
+      { path: 'dispatch', component: DispatchComponent, canActivate: [AuthGuard] },
       // premium
       { path: 'premium', component: PremiumComponent, canActivate: [AuthGuard] },
       { path: 'pay_success', component: SuccessComponent, canActivate: [AuthGuard] },
