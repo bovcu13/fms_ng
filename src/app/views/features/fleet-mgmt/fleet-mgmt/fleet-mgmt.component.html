@@ -16,9 +16,9 @@
               </div>
               <p-dataView [value]="vehiclesData">
                 <ng-template let-product pTemplate="listItem">
-                  <div pRipple class="col-6 styled-box">
+                  <div pRipple class="col-6 styled-box" (click)="goToVehicle(product.id)">
                     <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
-                      <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/car2.png'"/>
+                      <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/sport-car.png'"/>
                       <div
                         class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
                         <div class="flex flex-column align-items-center sm:align-items-start gap-3">
@@ -35,10 +35,10 @@
                                 </span>
                           </div>
                         </div>
-                        <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
-                          <p-button (click)="goToVehicle(product.id)" label="管理"
-                                    styleClass="p-button-link"></p-button>
-                        </div>
+                        <!--                        <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">-->
+                        <!--                          <p-button (click)="goToVehicle(product.id)" label="管理"-->
+                        <!--                                    styleClass="p-button-link"></p-button>-->
+                        <!--                        </div>-->
                       </div>
                     </div>
                   </div>
@@ -56,7 +56,40 @@
       </p-tabPanel>
       <p-tabPanel header="司機">
         <p-card header="{{tab}}">
+          <p-tabView>
+            <p-tabPanel header="所有司機">
+              <div class="flex justify-content-end mb-3">
+                <p-button label="新增司機"
+                          styleClass="p-button-link p-button-sm"></p-button>
+              </div>
+              <p-dataView [value]="vehiclesData">
+                <ng-template let-product pTemplate="listItem">
+                  <div pRipple class="col-6 styled-box" (click)="goToVehicle(product.id)">
+                    <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
+                      <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/car2.png'"/>
+                      <div
+                        class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                        <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                          <div class="text-lg font-bold">{{ product.driver }}</div>
 
+                          <div class="flex align-items-center gap-3">
+                                <span class="flex align-items-center gap-2">
+                                <i class="pi pi-at text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.name }}</span>
+                                  </span>
+                            <span class="flex align-items-center gap-2">
+                                <i class="pi pi-tag text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.license_plate }}</span>
+                                </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dataView>
+            </p-tabPanel>
+          </p-tabView>
         </p-card>
       </p-tabPanel>
       <p-tabPanel header="車機">
