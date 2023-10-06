@@ -45,13 +45,12 @@ export class SidebarComponent implements OnInit {
       {
         label: '監控查詢',
         icon: 'pi pi-fw pi-sitemap',
-        expanded: true,
         items: [
           {
             label: '區域監控',
             icon: 'pi pi-fw pi-box',
             routerLink: '/main',
-            command:() =>{
+            command: () => {
               this.sideVisible = false
             },
             style: {
@@ -62,7 +61,7 @@ export class SidebarComponent implements OnInit {
             label: '多車監控',
             icon: 'pi pi-fw pi-box',
             routerLink: '/multiCars',
-            command:() =>{
+            command: () => {
               this.sideVisible = false
             },
             style: {
@@ -73,7 +72,7 @@ export class SidebarComponent implements OnInit {
             label: '影像監控',
             icon: 'pi pi-fw pi-video',
             routerLink: '/monitor',
-            command:() =>{
+            command: () => {
               this.sideVisible = false
             },
             style: {
@@ -84,7 +83,7 @@ export class SidebarComponent implements OnInit {
             label: '行駛狀態表',
             icon: 'pi pi-fw pi-box',
             routerLink: '/driving_status',
-            command:() =>{
+            command: () => {
               this.sideVisible = false
             },
             style: {
@@ -95,7 +94,7 @@ export class SidebarComponent implements OnInit {
             label: '歷史軌跡',
             icon: 'pi pi-fw pi-box',
             routerLink: '/history',
-            command:() =>{
+            command: () => {
               this.sideVisible = false
             },
             style: {
@@ -105,9 +104,30 @@ export class SidebarComponent implements OnInit {
         ]
       },
       {
+        label: '派工管理',
+        icon: 'pi pi-briefcase',
+        command: () => {
+          this.sideVisible = false
+        },
+        style: {
+          background: 'rgba(250,245,200,0.6)',
+        }
+      },
+      {
+        label: '客戶管理',
+        icon: 'pi pi-users',
+        routerLink: '/fleet_mgmt',
+        command: () => {
+          this.sideVisible = false
+        },
+        style: {
+          background: 'rgba(250,245,200,0.6)',
+        }
+      },
+      {
         label: '數位大餅',
         icon: 'pi pi-fw pi-chart-pie',
-        expanded: true,
+
         items: [
           {
             label: '大餅報表',
@@ -129,7 +149,6 @@ export class SidebarComponent implements OnInit {
       {
         label: '溫控中心',
         icon: 'pi pi-fw pi-box',
-        expanded: true,
         items: [
           {
             label: '溫度儀表板',
@@ -150,14 +169,13 @@ export class SidebarComponent implements OnInit {
       },
       {
         label: '統計查詢',
-        expanded: true,
         icon: 'pi pi-fw pi-box',
         items: [
           {
             label: '紀錄列表',
             icon: 'pi pi-fw pi-box',
             routerLink: '/record',
-            command:() =>{
+            command: () => {
               this.sideVisible = false
             },
             style: {
@@ -168,7 +186,7 @@ export class SidebarComponent implements OnInit {
             label: '里程統計',
             icon: 'pi pi-fw pi-box',
             routerLink: '/mile',
-            command:() =>{
+            command: () => {
               this.sideVisible = false
             },
             style: {
@@ -222,7 +240,6 @@ export class SidebarComponent implements OnInit {
       {
         label: '異常報表',
         icon: 'pi pi-fw pi-exclamation-triangle',
-        expanded: true,
         items: [
           {
             label: '異常總表',
@@ -273,7 +290,6 @@ export class SidebarComponent implements OnInit {
       {
         label: '基本設定',
         icon: 'pi pi-fw pi-cog',
-        expanded: true,
         items: [
           {
             label: '基本資料',
@@ -332,13 +348,12 @@ export class SidebarComponent implements OnInit {
       {
         label: '車隊管理',
         icon: 'pi pi-shield',
-        expanded: true,
         items: [
           {
             label: '車隊管理',
             icon: 'pi pi-shield',
             routerLink: '/fleet_mgmt',
-            command:() =>{
+            command: () => {
               this.sideVisible = false
             },
             style: {
@@ -349,7 +364,7 @@ export class SidebarComponent implements OnInit {
             label: '車輛',
             icon: 'pi pi-shield',
             routerLink: '/role',
-            command:() =>{
+            command: () => {
               this.sideVisible = false
             },
           },
@@ -357,7 +372,7 @@ export class SidebarComponent implements OnInit {
             label: '付費訂閱',
             icon: 'pi pi-shield',
             routerLink: '/role',
-            command:() =>{
+            command: () => {
               this.sideVisible = false
             },
           },
@@ -367,7 +382,7 @@ export class SidebarComponent implements OnInit {
         label: 'Skynet Premium',
         icon: 'pi pi-heart-fill',
         routerLink: '/premium',
-        command:() =>{
+        command: () => {
           this.sideVisible = false
         },
         style: {
@@ -378,7 +393,7 @@ export class SidebarComponent implements OnInit {
         label: '更新日誌',
         icon: 'pi pi-book',
         routerLink: '/log',
-        command:() =>{
+        command: () => {
           this.sideVisible = false
         },
         style: {
