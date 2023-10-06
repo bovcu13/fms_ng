@@ -69,7 +69,7 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
-            label: '影像監控',
+            label: '車機影像',
             icon: 'pi pi-fw pi-video',
             routerLink: '/monitor',
             command: () => {
