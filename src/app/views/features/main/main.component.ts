@@ -143,28 +143,28 @@ circle: any
 
   colsInit() {
     this.cols = [
-      { field: 'state', header: '狀態' },
-      { field: 'license_plate', header: '車牌' },
+      // { field: 'state', header: '狀態' },
+      // { field: 'license_plate', header: '車牌' },
       { field: 'speed', header: '時速' },
-      { field: 'sid', header: '車輛名稱' },
-      { field: 'driver', header: '姓名' },
+      // { field: 'vehicle_name', header: '車輛名稱' },
+      // { field: 'driver', header: '姓名' },
       { field: 'addr', header: '地址/地標' },
       { field: 'statusAccumulated', header: '狀態累積' },
       { field: 'departureTime', header: '出車時間' },
       { field: 'drivingTime', header: '開車時間' },
-      { field: 'temperature1', header: '溫度1' },
+      { field: 'temp', header: '溫度' },
       { field: 'direction', header: '方向' },
-      { field: 'returnTime', header: '回傳時間' },
-      { field: 'phoneNumber1', header: '手機號碼1' },
-      { field: 'phoneNumber2', header: '手機號碼2' }
+      { field: 'return', header: '回傳時間' },
+      { field: 'phone', header: '行動電話' },
+      { field: 'progress', header: '裝卸進度' },
     ];
 
     this._selectedColumns = [
-      { field: 'state', header: '狀態' },
-      { field: 'license_plate', header: '車牌' },
-      { field: 'speed', header: '時速' },
-      { field: 'driver', header: '姓名' },
-      { field: 'direction', header: '方向' },
+      // { field: 'state', header: '狀態' },
+      // { field: 'vehicle_name', header: '車輛名稱' },
+      // { field: 'license_plate', header: '車牌' },
+      // { field: 'driver', header: '姓名' },
+      { field: 'progress', header: '裝卸進度' },
     ]
   }
 

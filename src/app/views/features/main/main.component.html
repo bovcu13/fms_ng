@@ -47,15 +47,29 @@
               </ng-template>
               <ng-template pTemplate="header" let-columns>
                 <tr>
+                  <th>狀態</th>
+                  <th>車輛名稱</th>
+                  <th>車牌</th>
+                  <th>姓名</th>
                   <th *ngFor="let col of columns">
                     {{col.header}}
                   </th>
+                  <th></th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-product let-columns="columns">
                 <tr [pSelectableRow]="product">
+                  <td>{{product.state}}</td>
+                  <td>{{product.vehicle_name}}</td>
+                  <td>{{product.license_plate}}</td>
+                  <td>{{product.driver}}</td>
                   <td *ngFor="let col of columns">
                     {{product[col.field]}}
+                  </td>
+                  <td>
+                    <p-button routerLink="/dispatch"
+                              icon="pi pi-eye" styleClass="p-button-info p-button-text"
+                              pTooltip="查看派工單" tooltipPosition="left"></p-button>
                   </td>
                 </tr>
               </ng-template>
