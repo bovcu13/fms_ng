@@ -33,6 +33,7 @@ import {FleetMgmtComponent} from "../features/fleet-mgmt/fleet-mgmt/fleet-mgmt.c
 import { DriverComponent } from "../features/fleet-mgmt/driver/driver.component";
 import { DispatchComponent } from "../features/dispatch/dispatch/dispatch.component";
 import { CustomerComponent} from "../features/customer/customer/customer.component";
+import {CompanyComponent} from "../features/customer/company/company.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -49,6 +50,7 @@ const routes: Routes = [
       { path: 'dispatch', component: DispatchComponent, canActivate: [AuthGuard] },
       // customer
       { path: 'customer', component: CustomerComponent, canActivate: [AuthGuard] },
+      { path: 'company', component: CompanyComponent, canActivate: [AuthGuard] },
       // premium
       { path: 'premium', component: PremiumComponent, canActivate: [AuthGuard] },
       { path: 'pay_success', component: SuccessComponent, canActivate: [AuthGuard] },
