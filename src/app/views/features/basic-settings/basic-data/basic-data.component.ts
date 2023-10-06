@@ -15,6 +15,7 @@ interface Language {
   styleUrls: ['./basic-data.component.scss']
 })
 export class BasicDataComponent implements OnInit {
+  activeIndex = 1;
   carData :any[] = carData;
   addVehicle_form: FormGroup;
 

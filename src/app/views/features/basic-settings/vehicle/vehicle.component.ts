@@ -9,6 +9,9 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ['./vehicle.component.scss']
 })
 export class VehicleComponent implements OnInit {
+
+  activeIndex = 1;
+
   id: any;
 
   editVehicle_form: FormGroup;
@@ -21,8 +24,6 @@ export class VehicleComponent implements OnInit {
       sid: ['', [Validators.required]],
       name: ['', [Validators.required]],
       driver: ['', Validators.required],
-      phone1: ['', Validators.required],
-      phone2: ['', Validators.required],
       fuel: ['', Validators.required],
       fuel_type: ['', Validators.required],
       vehicle_type: ['', Validators.required],
