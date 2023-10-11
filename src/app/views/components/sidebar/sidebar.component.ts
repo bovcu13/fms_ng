@@ -299,13 +299,13 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
+            label: '出勤記錄',
+            icon: 'pi pi-fw pi-box'
+          },
+          {
             label: '統計報告',
             icon: 'pi pi-fw pi-box',
             items: [
-              {
-                label: '出勤記錄',
-                icon: 'pi pi-fw pi-box'
-              },
               {
                 label: '檢查表設定',
                 icon: 'pi pi-fw pi-box'

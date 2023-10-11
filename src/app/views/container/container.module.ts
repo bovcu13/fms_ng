@@ -39,6 +39,7 @@ import { FleetMgmtComponent } from "../features/fleet-mgmt/fleet-mgmt/fleet-mgmt
 import { DriverComponent } from "../features/fleet-mgmt/driver/driver.component";
 import { DispatchComponent } from "../features/dispatch/dispatch/dispatch.component";
 import { CustomerComponent} from "../features/customer/customer/customer.component";
+import {CompanyComponent} from "../features/customer/company/company.component";
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import { CustomerComponent} from "../features/customer/customer/customer.compone
     FleetMgmtComponent,
     DriverComponent,
     DispatchComponent,
-    CustomerComponent
+    CustomerComponent,
+    CompanyComponent,
   ],
   imports: [
     CommonModule,
