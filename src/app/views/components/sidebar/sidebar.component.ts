@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from "primeng/api";
-import { sidebarMenu, testMenu } from "../../../shared/data/menu";
+import { testMenu } from "../../../shared/data/menu";
 
 @Component({
   selector: 'app-sidebar',
@@ -290,7 +290,7 @@ export class SidebarComponent implements OnInit {
           {
             label: '司機',
             icon: 'pi pi-shield',
-            routerLink: '/fleet_mgmt',
+            routerLink: '/driver',
             command: () => {
               this.sideVisible = false
             },

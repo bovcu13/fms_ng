@@ -1,0 +1,84 @@
+<div class="overflow-x-hidden flex justify-content-center">
+  <div class="col-8">
+    <p-card header="司機">
+      <p-tabView>
+        <p-tabPanel header="所有司機">
+          <div class="flex justify-content-end mb-3">
+            <p-button label="新增司機" (click)="addDialogVisible=true"
+                      styleClass="p-button-link p-button-sm"></p-button>
+          </div>
+          <p-dataView [value]="vehiclesData">
+            <ng-template let-product pTemplate="listItem">
+              <div pRipple class="col-6 styled-box" (click)="goToDriver(product.id)">
+                <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
+                  <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/car2.png'"/>
+                  <div
+                    class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                    <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                      <div class="text-lg font-bold">{{ product.driver }}</div>
+
+                      <div class="flex align-items-center gap-3">
+                                <span class="flex align-items-center gap-2">
+                                <i class="pi pi-at text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.name }}</span>
+                                  </span>
+                        <span class="flex align-items-center gap-2">
+                                <i class="pi pi-tag text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.license_plate }}</span>
+                                </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </p-dataView>
+        </p-tabPanel>
+      </p-tabView>
+    </p-card>
+  </div>
+</div>
+<p-dialog header="新增車輛" [(visible)]="addDialogVisible" [modal]="true" [style]="{ width: '25vw' }"
+          [draggable]="false" [resizable]="false">
+  <form [formGroup]="addDriver_form">
+    <div class="grid">
+      <div class="field col-6">
+        <label class="font-semibold">員工編號</label>
+        <input pInputText formControlName="employee_id"/>
+      </div>
+      <div class="field col-6">
+        <label class="font-semibold">司機</label>
+        <input pInputText formControlName="driver"/>
+      </div>
+      <div class="field col-6">
+        <label class="font-semibold">行動電話</label>
+        <input pInputText formControlName="mobile_phone"/>
+      </div>
+      <div class="field col-6">
+        <label class="font-semibold">身份證字號</label>
+        <input pInputText formControlName="id_number"/>
+      </div>
+      <div class="field col-6">
+        <label class="font-semibold">工號</label>
+        <input pInputText formControlName="employee_number"/>
+      </div>
+      <div class="field col-6">
+        <label class="font-semibold">每日成本</label>
+        <input pInputText formControlName="daily_cost"/>
+      </div>
+      <div class="field col-12">
+        <label class="font-semibold">電子郵件</label>
+        <input pInputText formControlName="email"/>
+      </div>
+      <div class="field col-12">
+        <label class="font-semibold">連絡地址</label>
+        <input pInputText formControlName="address"/>
+      </div>
+    </div>
+    <div class="flex justify-content-end">
+      <p-button (click)="addDriverRequest()" label="新增" styleClass="p-button-primary mr-2"></p-button>
+      <p-button label="取消"
+                styleClass="p-button-outlined p-button-secondary"></p-button>
+    </div>
+  </form>
+</p-dialog>

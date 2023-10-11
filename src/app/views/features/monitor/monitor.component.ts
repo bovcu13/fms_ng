@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import { MapInfoWindow, MapMarker } from "@angular/google-maps";
 import { monitorStatus } from "../../../shared/data/monitor";
 import * as flvjs from 'flv.js';
@@ -8,14 +8,8 @@ import * as flvjs from 'flv.js';
   templateUrl: './monitor.component.html',
   styleUrls: ['./monitor.component.scss']
 })
-export class MonitorComponent implements OnInit {
-  videoItems = [
-    {
-      name: 'Video one',
-      src: 'assets/vdo/swimming.mp4',
-      type: 'video/mp4'
-    }
-  ];
+export class MonitorComponent implements AfterViewInit ,OnInit {
+
   monitorStatus: any = monitorStatus;
   sidebarRightOpen = true;
   mapOpen = true;
@@ -29,6 +23,9 @@ export class MonitorComponent implements OnInit {
   selectedCar: any = [];
   scrollHeight: string = '40vh';
   markers: any[] = [];
+  player: any;
+  flvPlayer: any;
+  isPlay: boolean = false;
 
   // 調整視窗顯示排版 & 高度
   paymentOptions: any[] = [
@@ -121,8 +118,36 @@ export class MonitorComponent implements OnInit {
     console.log('layout ' + this.layout)
   }
 
+  ngAfterViewInit(): void {
+    // 獲取DOM對象
+    this.player = document.getElementById('videoElement');
+
+    if (flvjs.default.isSupported()) {
+      // 創建flvjs對象
+      this.flvPlayer = flvjs.default.createPlayer({
+        type: 'flv',        // 指定視頻類型
+        isLive: true,       // 開啓直播
+        hasAudio: false,    // 關閉聲音
+        cors: true,         // 開啓跨域訪問
+        url: 'http://203.70.231.9:12060/live.flv?devid=00710171C6&chl=1&st=1&audio=1',   // 指定流鏈接
+      });
+      // 將flvjs對象和DOM對象綁定
+      this.flvPlayer.attachMediaElement(this.player);
+      // 加載視頻
+      this.flvPlayer.load();
+      // 播放視頻
+      this.flvPlayer.play()
+    }
+    console.log(flvjs.default.getFeatureList());
+  }
+
+
+
+
+
+
+
   ngOnInit(): void {
-    this.vedioInit()
     console.log(this.totalItems)
     this.geocodePositions();
     this.markers = monitorStatus.map((car: { position: any; url: any; label: { text: any; }; }) => ({
@@ -132,10 +157,6 @@ export class MonitorComponent implements OnInit {
       infoWindowContent: car.label.text
     }));
   }
-
-  player: any;
-  flvPlayer: any;
-  isPlay: boolean = false;
 
   vedioInit() {
     // 獲取DOM對象
