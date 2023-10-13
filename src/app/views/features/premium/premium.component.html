@@ -1,3 +1,23 @@
+<!--<div class="overflow-hidden">-->
+<!--  <div class="color d-flex flex-column justify-content-center w-100 h-100">-->
+<!--    <div class="col-12">-->
+<!--      <div class="flex justify-content-center align-items-center mt-8">-->
+<!--        <img class="panda" src="assets/image/panda.png"/>-->
+<!--        <label class="skynet text-5xl font-bold ml-2">Skynet Premium</label>-->
+<!--      </div>-->
+<!--      <div class="flex justify-content-center align-items-center mt-5">-->
+<!--        <label class="inset font-bold text-5xl">提供企業貨主及夥伴車行完整的軟體服務</label>-->
+<!--      </div>-->
+<!--      <div class="flex justify-content-center align-items-center mt-5">-->
+<!--        <label class="inset text-lg">免費試用 1 個月 • 之後是 每月 $199 • 隨時可取消</label>-->
+<!--      </div>-->
+<!--      <div class="flex justify-content-center align-items-center mt-5">-->
+<!--        <p-button (click)="pay()" label="免費試用" styleClass="p-button-rounded" [style]="{ width: '10em' }"></p-button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--primeng input text with formGroup: premiumn_form and have a button to submit-->
 <div class="overflow-hidden">
   <div class="color d-flex flex-column justify-content-center w-100 h-100">
     <div class="col-12">
@@ -6,13 +26,21 @@
         <label class="skynet text-5xl font-bold ml-2">Skynet Premium</label>
       </div>
       <div class="flex justify-content-center align-items-center mt-5">
-        <label class="inset font-bold text-5xl">提供企業貨主及夥伴車行完整的軟體服務</label>
-      </div>
-      <div class="flex justify-content-center align-items-center mt-5">
-        <label class="inset text-lg">免費試用 1 個月 • 之後是 每月 $199 • 隨時可取消</label>
-      </div>
-      <div class="flex justify-content-center align-items-center mt-5">
-        <p-button (click)="pay()" label="免費試用" styleClass="p-button-rounded" [style]="{ width: '10em' }"></p-button>
+        <form [formGroup]="premium_form" (ngSubmit)="pay()">
+          <div class="flex justify-content-center align-items-center mt-5">
+            <label class="inset font-bold text-5xl">提供企業貨主及夥伴車行完整的軟體服務</label>
+          </div>
+          <div class="flex justify-content-center align-items-center mt-5">
+            <label class="inset text-lg">免費試用 1 個月 • 之後是 每月 $199 • 隨時可取消</label>
+          </div>
+          <div class="flex justify-content-center align-items-center mt-5">
+            <input type="text" pInputText formControlName="email" placeholder="請輸入電子郵件"
+                   class="text-center text-lg border-2 border-black rounded-lg w-1/2">
+          </div>
+          <div class="flex justify-content-center align-items-center mt-5">
+            <p-button type="submit" label="免費試用" styleClass="p-button-rounded" [style]="{ width: '10em' }"></p-button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
