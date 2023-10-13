@@ -56,4 +56,15 @@ export class VehicleComponent implements OnInit {
     this.editVehicle_form.patchValue(data)
   }
 
+  updateVehicleRequest(id: string, body: any) {
+    this.carServ.patchVehicleRequest(id, body).subscribe({
+      next: res => {
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
 }

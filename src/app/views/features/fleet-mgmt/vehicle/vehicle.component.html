@@ -49,7 +49,8 @@
                   <input pInputText/>
                 </div>
                 <div class="col-12 flex justify-content-end">
-                  <button pButton pRipple label="儲存" class="p-button-success"></button>
+                  <button pButton pRipple label="儲存" (click)="updateVehicleRequest(id,editVehicle_form.value)"
+                          class="p-button-success"></button>
                 </div>
               </div>
             </div>
