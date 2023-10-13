@@ -1,0 +1,38 @@
+<div class="overflow-x-hidden flex justify-content-center">
+  <div class="col-12">
+    <p-tabView>
+      <p-tabPanel header="車隊資料">
+        <div class="col-12">
+          <p-button icon="pi pi-arrow-left" [routerLink]="['/fleet_mgmt']"
+                    styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
+        </div>
+        <form [formGroup]="editFleet_form">
+          <div class="flex justify-content-center">
+            <div class="col-6">
+              <div class="grid row-gap-2 flex justify-content-center">
+                <div class="col-3 flex align-items-center">
+                  <p-image src="assets/image/car1.png" alt="Image" width="150" [preview]="true"></p-image>
+                </div>
+                <div class="col-9 flex align-items-center justify-content-start">
+                  <label class="text-6xl font-bold">{{editFleet_form.controls['name'].value}}</label>
+                </div>
+                <div class="field col-6">
+                  <label class="font-semibold">車隊代號</label>
+                  <input pInputText formControlName="fleet_code"/>
+                </div>
+                <div class="field col-6">
+                  <label class="font-semibold">負責人</label>
+                  <input pInputText formControlName="name"/>
+                </div>
+                <div class="col-12 flex justify-content-end">
+                  <button pButton pRipple label="儲存" (click)="updateFleetRequest(id,editFleet_form.value)"
+                          class="p-button-success"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>

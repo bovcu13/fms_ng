@@ -5,7 +5,32 @@
         <p-card header="{{tab}}">
           <p-tabView>
             <p-tabPanel header="所有車隊">
+              <div class="flex justify-content-end mb-3">
+                <p-button (click)="addFleetDialogVisible=true" label="新增車隊"
+                          styleClass="p-button-link p-button-sm"></p-button>
+              </div>
+              <p-dataView [value]="fleetsData">
+                <ng-template let-product pTemplate="listItem">
+                  <div pRipple class="col-6 styled-box" (click)="goToFleet(product.id)">
+                    <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
+                      <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/car1.png'"/>
+                      <div
+                        class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                        <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                          <div class="text-lg font-bold">{{ product.fleet_code }}</div>
 
+                          <div class="flex align-items-center gap-3">
+                                <span class="flex align-items-center gap-2">
+                                <i class="pi pi-at text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.name }}</span>
+                                  </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dataView>
             </p-tabPanel>
           </p-tabView>
         </p-card>
@@ -58,44 +83,6 @@
           </p-tabView>
         </p-card>
       </p-tabPanel>
-      <!--      <p-tabPanel header="司機">-->
-      <!--        <p-card header="{{tab}}">-->
-      <!--          <p-tabView>-->
-      <!--            <p-tabPanel header="所有司機">-->
-      <!--              <div class="flex justify-content-end mb-3">-->
-      <!--                <p-button label="新增司機"-->
-      <!--                          styleClass="p-button-link p-button-sm"></p-button>-->
-      <!--              </div>-->
-      <!--              <p-dataView [value]="vehiclesData">-->
-      <!--                <ng-template let-product pTemplate="listItem">-->
-      <!--                  <div pRipple class="col-6 styled-box" (click)="goToDriver()">-->
-      <!--                    <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">-->
-      <!--                      <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/car2.png'"/>-->
-      <!--                      <div-->
-      <!--                        class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">-->
-      <!--                        <div class="flex flex-column align-items-center sm:align-items-start gap-3">-->
-      <!--                          <div class="text-lg font-bold">{{ product.driver }}</div>-->
-
-      <!--                          <div class="flex align-items-center gap-3">-->
-      <!--                                <span class="flex align-items-center gap-2">-->
-      <!--                                <i class="pi pi-at text-xs"></i>-->
-      <!--                                <span class="font-medium text-xs">{{ product.name }}</span>-->
-      <!--                                  </span>-->
-      <!--                            <span class="flex align-items-center gap-2">-->
-      <!--                                <i class="pi pi-tag text-xs"></i>-->
-      <!--                                <span class="font-medium text-xs">{{ product.license_plate }}</span>-->
-      <!--                                </span>-->
-      <!--                          </div>-->
-      <!--                        </div>-->
-      <!--                      </div>-->
-      <!--                    </div>-->
-      <!--                  </div>-->
-      <!--                </ng-template>-->
-      <!--              </p-dataView>-->
-      <!--            </p-tabPanel>-->
-      <!--          </p-tabView>-->
-      <!--        </p-card>-->
-      <!--      </p-tabPanel>-->
       <p-tabPanel header="車機">
         <p-card header="{{tab}}">
           <p-tabView>
@@ -109,8 +96,30 @@
   </div>
 </div>
 
+<!--新增車隊-->
+<p-dialog header="新增車隊" [(visible)]="addFleetDialogVisible" [modal]="true" [style]="{ width: '25vw' }"
+          [draggable]="false" [resizable]="false">
+  <form [formGroup]="addFleet_form">
+    <div class="col-12">
+      <div class="field">
+        <label class="font-semibold">車輛代號</label>
+        <input formControlName="fleet_code" pInputText/>
+      </div>
+      <div class="field">
+        <label class="font-semibold">負責人</label>
+        <input formControlName="name" pInputText/>
+      </div>
+      <div class="flex justify-content-end">
+        <p-button (click)="postFleetRequest()" label="新增" styleClass="p-button-primary mr-2"></p-button>
+        <p-button label="取消" (click)="addFleetDialogVisible=false"
+                  styleClass="p-button-outlined p-button-secondary"></p-button>
+      </div>
+    </div>
+  </form>
+</p-dialog>
+
 <!--新增車輛-->
-<p-dialog header="新增車輛" [(visible)]="addDialogVisible" [modal]="true" [style]="{ width: '25vw' }"
+<p-dialog header="新增車輛" [(visible)]="addCarDialogVisible" [modal]="true" [style]="{ width: '25vw' }"
           [draggable]="false" [resizable]="false">
   <form [formGroup]="addVehicle_form">
     <div class="col-12">
@@ -132,7 +141,7 @@
       </div>
       <div class="flex justify-content-end">
         <p-button (click)="postVehicleRequest()" label="新增" styleClass="p-button-primary mr-2"></p-button>
-        <p-button label="取消"
+        <p-button label="取消" (click)="addCarDialogVisible=false"
                   styleClass="p-button-outlined p-button-secondary"></p-button>
       </div>
     </div>
