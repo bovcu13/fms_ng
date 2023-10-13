@@ -116,118 +116,68 @@ export class SidebarComponent implements OnInit {
             style: {
               background: 'rgba(250,245,200,0.6)'
             },
-          }
-        ]
-      },
-      {
-        label: '數位軌跡16-1報表',
-        icon: 'pi pi-fw pi-chart-pie',
-        items: [
+          },
           {
-            label: '大餅報表',
-            icon: 'pi pi-fw pi-chart-bar',
-            routerLink: '/cake_report',
+            label: '數位軌跡16-1報表',
+            icon: 'pi pi-fw pi-chart-pie',
+            items: [
+              {
+                label: '大餅報表',
+                icon: 'pi pi-fw pi-chart-bar',
+                routerLink: '/cake_report',
+                command: () => {
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(250,245,200,0.6)'
+                },
+              },
+              {
+                label: '大餅軌跡',
+                icon: 'pi pi-fw pi-chart-line'
+              },
+            ]
+          },
+          {
+            label: '運輸派工',
+            icon: 'pi pi-briefcase',
+            routerLink: '/dispatch',
             command: () => {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(250,245,200,0.6)'
-            },
+              background: 'rgba(250,245,200,0.6)',
+            }
           },
           {
-            label: '大餅軌跡',
-            icon: 'pi pi-fw pi-chart-line'
+            label: '推播訊息',
+            icon: 'pi pi-briefcase',
+            routerLink: '/dispatch',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)',
+            }
           },
         ]
-      },
-      {
-        label: '運輸派工',
-        icon: 'pi pi-briefcase',
-        routerLink: '/dispatch',
-        command: () => {
-          this.sideVisible = false
-        },
-        style: {
-          background: 'rgba(250,245,200,0.6)',
-        }
-      },
-      {
-        label: '推播訊息',
-        icon: 'pi pi-briefcase',
-        routerLink: '/dispatch',
-        command: () => {
-          this.sideVisible = false
-        },
-        style: {
-          background: 'rgba(250,245,200,0.6)',
-        }
       },
       {
         label: '行政管理中心',
         icon: 'pi pi-briefcase',
-      },
-      {
-        label: '統計分析報告',
-        icon: 'pi pi-fw pi-box',
         items: [
           {
-            label: '紀錄列表',
+            label: '倉儲',
+            icon: 'pi pi-fw pi-box'
+          },
+          {
+            label: '統計分析報告',
             icon: 'pi pi-fw pi-box',
-            routerLink: '/record',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(250,245,200,0.6)'
-            },
-          },
-          {
-            label: '里程統計',
-            icon: 'pi pi-fw pi-box',
-            routerLink: '/mile',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(250,245,200,0.6)'
-            },
-          },
-          {
-            label: '地標統計',
-            icon: 'pi pi-fw pi-box'
-          },
-          {
-            label: '國道計費',
-            icon: 'pi pi-fw pi-box'
-          },
-          {
-            label: '多工日報',
-            icon: 'pi pi-fw pi-box'
-          },
-          {
-            label: '溫度曲線圖',
-            icon: 'pi pi-fw pi-box'
-          },
-          {
-            label: '多公彙總表',
-            icon: 'pi pi-fw pi-box'
-          },
-          {
-            label: '均溫報表',
-            icon: 'pi pi-fw pi-box'
-          },
-          {
-            label: '績效',
-            icon: 'pi pi-fw pi-box'
-          },
-          {
-            label: '異常報表',
-            icon: 'pi pi-fw pi-exclamation-triangle',
             items: [
               {
-                label: '異常總表',
+                label: '紀錄列表',
                 icon: 'pi pi-fw pi-box',
-                routerLink: '/odd_report',
+                routerLink: '/record',
                 command: () => {
                   this.sideVisible = false
                 },
@@ -236,9 +186,9 @@ export class SidebarComponent implements OnInit {
                 },
               },
               {
-                label: '超速時間',
+                label: '里程統計',
                 icon: 'pi pi-fw pi-box',
-                routerLink: '/speeding',
+                routerLink: '/mile',
                 command: () => {
                   this.sideVisible = false
                 },
@@ -247,50 +197,139 @@ export class SidebarComponent implements OnInit {
                 },
               },
               {
-                label: '停不熄火',
-                icon: 'pi pi-fw pi-box',
-                routerLink: '/stall',
-                command: () => {
-                  this.sideVisible = false
-                },
-                style: {
-                  background: 'rgba(250,245,200,0.6)'
-                },
+                label: '地標統計',
+                icon: 'pi pi-fw pi-box'
               },
               {
-                label: '溫度異常',
-                icon: 'pi pi-fw pi-box',
-                routerLink: '/odd_temp',
-                command: () => {
-                  this.sideVisible = false
-                },
-                style: {
-                  background: 'rgba(250,245,200,0.6)'
-                },
-              }
+                label: '國道計費',
+                icon: 'pi pi-fw pi-box'
+              },
+              {
+                label: '多工日報',
+                icon: 'pi pi-fw pi-box'
+              },
+              {
+                label: '溫度曲線圖',
+                icon: 'pi pi-fw pi-box'
+              },
+              {
+                label: '多公彙總表',
+                icon: 'pi pi-fw pi-box'
+              },
+              {
+                label: '均溫報表',
+                icon: 'pi pi-fw pi-box'
+              },
+              {
+                label: '績效',
+                icon: 'pi pi-fw pi-box'
+              },
+              {
+                label: '異常報表',
+                icon: 'pi pi-fw pi-exclamation-triangle',
+                items: [
+                  {
+                    label: '異常總表',
+                    icon: 'pi pi-fw pi-box',
+                    routerLink: '/odd_report',
+                    command: () => {
+                      this.sideVisible = false
+                    },
+                    style: {
+                      background: 'rgba(250,245,200,0.6)'
+                    },
+                  },
+                  {
+                    label: '超速時間',
+                    icon: 'pi pi-fw pi-box',
+                    routerLink: '/speeding',
+                    command: () => {
+                      this.sideVisible = false
+                    },
+                    style: {
+                      background: 'rgba(250,245,200,0.6)'
+                    },
+                  },
+                  {
+                    label: '停不熄火',
+                    icon: 'pi pi-fw pi-box',
+                    routerLink: '/stall',
+                    command: () => {
+                      this.sideVisible = false
+                    },
+                    style: {
+                      background: 'rgba(250,245,200,0.6)'
+                    },
+                  },
+                  {
+                    label: '溫度異常',
+                    icon: 'pi pi-fw pi-box',
+                    routerLink: '/odd_temp',
+                    command: () => {
+                      this.sideVisible = false
+                    },
+                    style: {
+                      background: 'rgba(250,245,200,0.6)'
+                    },
+                  }
+                ]
+              },
             ]
           },
-        ]
-      },
-      {
-        label: '客戶管理',
-        icon: 'pi pi-users',
-        routerLink: '/customer',
-        command: () => {
-          this.sideVisible = false
-        },
-        style: {
-          background: 'rgba(250,245,200,0.6)',
-        }
-      },
-      {
-        label: '司機管理',
-        icon: 'pi pi-shield',
-        items: [
           {
-            label: '司機',
+            label: '客戶管理',
+            icon: 'pi pi-users',
+            routerLink: '/customer',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(250,245,200,0.6)',
+            }
+          },
+          {
+            label: '司機管理',
             icon: 'pi pi-shield',
-            routerLink: '/driver',
+            items: [
+              {
+                label: '司機',
+                icon: 'pi pi-shield',
+                routerLink: '/driver',
+                command: () => {
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(250,245,200,0.6)'
+                },
+              },
+              {
+                label: '出勤記錄',
+                icon: 'pi pi-fw pi-box'
+              },
+              {
+                label: '統計報告',
+                icon: 'pi pi-fw pi-box',
+                items: [
+                  {
+                    label: '檢查表設定',
+                    icon: 'pi pi-fw pi-box'
+                  },
+                  {
+                    label: '自主檢查表',
+                    icon: 'pi pi-fw pi-box'
+                  },
+                  {
+                    label: '未做檢查表',
+                    icon: 'pi pi-fw pi-box'
+                  }
+                ]
+              },
+            ]
+          },
+          {
+            label: '車輛管理',
+            icon: 'pi pi-shield',
+            routerLink: '/fleet_mgmt',
             command: () => {
               this.sideVisible = false
             },
@@ -299,78 +338,45 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
-            label: '出勤記錄',
-            icon: 'pi pi-fw pi-box'
-          },
-          {
-            label: '統計報告',
-            icon: 'pi pi-fw pi-box',
+            label: '設定',
+            icon: 'pi pi-fw pi-cog',
             items: [
               {
-                label: '檢查表設定',
+                label: '基本資料',
+                icon: 'pi pi-fw pi-box',
+                routerLink: '/basic_data',
+                command: () => {
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(250,245,200,0.6)'
+                },
+              },
+              {
+                label: '異常設定',
+                icon: 'pi pi-fw pi-box',
+                routerLink: '/odd_set',
+                command: () => {
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(250,245,200,0.6)'
+                },
+              },
+              {
+                label: '自建地標',
                 icon: 'pi pi-fw pi-box'
               },
               {
-                label: '自主檢查表',
+                label: '權限分享',
                 icon: 'pi pi-fw pi-box'
               },
               {
-                label: '未做檢查表',
+                label: '駕駛紀錄',
                 icon: 'pi pi-fw pi-box'
               }
             ]
           },
-        ]
-      },
-      {
-        label: '車輛管理',
-        icon: 'pi pi-shield',
-        routerLink: '/fleet_mgmt',
-        command: () => {
-          this.sideVisible = false
-        },
-        style: {
-          background: 'rgba(250,245,200,0.6)'
-        },
-      },
-      {
-        label: '設定',
-        icon: 'pi pi-fw pi-cog',
-        items: [
-          {
-            label: '基本資料',
-            icon: 'pi pi-fw pi-box',
-            routerLink: '/basic_data',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(250,245,200,0.6)'
-            },
-          },
-          {
-            label: '異常設定',
-            icon: 'pi pi-fw pi-box',
-            routerLink: '/odd_set',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(250,245,200,0.6)'
-            },
-          },
-          {
-            label: '自建地標',
-            icon: 'pi pi-fw pi-box'
-          },
-          {
-            label: '權限分享',
-            icon: 'pi pi-fw pi-box'
-          },
-          {
-            label: '駕駛紀錄',
-            icon: 'pi pi-fw pi-box'
-          }
         ]
       },
       {

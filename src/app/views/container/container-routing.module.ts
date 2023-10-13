@@ -36,6 +36,7 @@ import {CustomerComponent} from "../features/customer/customer/customer.componen
 import {CompanyComponent} from "../features/customer/company/company.component";
 import {ViewDriverComponent} from "../features/driver-mgmt/view-driver/view-driver.component";
 import {FleetComponent} from "../features/fleet-mgmt/fleet/fleet.component";
+import {WarehouseComponent} from "../features/customer/warehouse/warehouse.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '', pathMatch: 'full'},
@@ -52,7 +53,8 @@ const routes: Routes = [
       {path: 'dispatch', component: DispatchComponent, canActivate: [AuthGuard]},
       // customer
       {path: 'customer', component: CustomerComponent, canActivate: [AuthGuard]},
-      {path: 'company', component: CompanyComponent, canActivate: [AuthGuard]},
+      {path: 'company/:id', component: CompanyComponent, canActivate: [AuthGuard]},
+      {path: 'warehouse/:id', component: WarehouseComponent, canActivate: [AuthGuard]},
       // premium
       {path: 'premium', component: PremiumComponent, canActivate: [AuthGuard]},
       {path: 'pay_success', component: SuccessComponent, canActivate: [AuthGuard]},
