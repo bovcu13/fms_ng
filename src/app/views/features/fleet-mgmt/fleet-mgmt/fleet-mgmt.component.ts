@@ -1,8 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { CarService } from "../../../../services/car.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { TabView } from "primeng/tabview";
+import {Component, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {CarService} from "../../../../services/car.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {TabView} from "primeng/tabview";
 
 @Component({
   selector: 'app-fleet-mgmt',
@@ -16,17 +16,22 @@ export class FleetMgmtComponent {
   @ViewChild(TabView) tabView!: TabView;
 
   addVehicle_form: FormGroup;
+  addFleet_form: FormGroup;
 
   constructor(private carServ: CarService,
               private fb: FormBuilder,
               private router: Router,
               private route: ActivatedRoute) {
     this.addVehicle_form = this.fb.group({
-      fleet_id: ['c2d40ef0-341a-4793-b1b3-f4e4f82ba9f2', [Validators.required]],
-      name: ['', [Validators.required]],
-      driver: ['', [Validators.required]],
+      fleet_id: ['c2d40ef0-341a-4793-b1b3-f4e4f82ba9f2', Validators.required],
+      name: ['', Validators.required],
+      driver: ['', Validators.required],
       license_plate: ['', Validators.required],
       sid: ['', Validators.required]
+    });
+    this.addFleet_form = this.fb.group({
+      fleet_code: ['', Validators.required],
+      name: ['', Validators.required]
     });
   }
 
@@ -36,24 +41,58 @@ export class FleetMgmtComponent {
       this.activeIndex = params['id'];
       // 現在你可以在這裡使用 fleetId 了
     });
-
+    this.getAllFleetsRequest()
     this.getAllVehiclesRequest()
   }
 
   tab: any
+
   getTabName(event: any) {
     const index = event.index;
     this.tab = this.tabView.tabs[index].header;
     console.log(this.tab);
   }
 
-  cars: any;
+  fleetsData: any;
+  addFleetDialogVisible = false;
 
+  // 取得車隊
+  getAllFleetsRequest() {
+    this.carServ.getAllFleetRequest().subscribe({
+      next: res => {
+        this.fleetsData = res.body.fleets;
+        console.log('fleetsData', res.body.fleets)
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  // 新增車隊
+  postFleetRequest() {
+    let body = {
+      fleet_code: this.addFleet_form.controls['fleet_code'].value,
+      name: this.addFleet_form.controls['name'].value
+    }
+    this.carServ.postFleetRequest(body).subscribe({
+      next: data => {
+        console.log(data)
+        console.log(body)
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+    this.getAllFleetsRequest()
+  }
+
+  cars: any;
   vehiclesData: any;
 
   // 取得車牌
   getAllVehiclesRequest() {
-    this.carServ.getAllVehiclesRequest(1,20).subscribe({
+    this.carServ.getAllVehiclesRequest(1, 20).subscribe({
       next: res => {
         this.vehiclesData = res.body.vehicles;
         this.cars = this.vehiclesData.map((item: any) => ({
@@ -67,9 +106,14 @@ export class FleetMgmtComponent {
     });
   }
 
-  addDialogVisible = false;
+  goToFleet(id: any) {
+    this.router.navigate(['/fleet', id])
+  }
+
+  addCarDialogVisible = false;
+
   openAddCarDialog() {
-    this.addDialogVisible = true;
+    this.addCarDialogVisible = true;
   }
 
   postVehicleRequest() {
@@ -89,7 +133,6 @@ export class FleetMgmtComponent {
         console.log(err);
       },
     });
-
     this.getAllVehiclesRequest()
   }
 
@@ -97,8 +140,5 @@ export class FleetMgmtComponent {
     this.router.navigate(['/vehicle', id])
   }
 
-  goToDriver() {
-    this.router.navigate(['/driver'])
-  }
 
 }
