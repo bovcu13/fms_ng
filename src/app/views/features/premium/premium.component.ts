@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CarService} from "../../../services/car.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {PaymentService} from "../../../services/payment.service";
 
 @Component({
   selector: 'app-premium',
@@ -7,7 +8,17 @@ import {CarService} from "../../../services/car.service";
   styleUrls: ['./premium.component.scss']
 })
 export class PremiumComponent implements OnInit {
-  constructor(private carServ: CarService) {
+
+  premium_form: FormGroup;
+  constructor(
+    private payServ: PaymentService,
+    private fb: FormBuilder,
+  ) {
+    this.premium_form = this.fb.group({
+      amount: [1, Validators.required],
+      description: ['測試', Validators.required],
+      email: ['']
+    })
   }
 
   ngOnInit() {
@@ -23,11 +34,11 @@ export class PremiumComponent implements OnInit {
       amount: amount,
       description: description
     }
-    this.carServ.postPayment(body).subscribe({
+    this.payServ.postPayment(this.premium_form.value).subscribe({
       next: res => {
         console.log(res)
         console.log(body)
-        this.postNewebPay(res.body)
+        this.postRedirect(res.body)
       },
       error: err => {
         console.log(err)
@@ -35,8 +46,8 @@ export class PremiumComponent implements OnInit {
     })
   }
 
-  postNewebPay(arr: any) {
-    this.carServ.postNewebPay(arr).subscribe({
+  postRedirect(arr: any) {
+    this.payServ.postRedirect(arr).subscribe({
       next: res => {
         console.log(res)
       },
