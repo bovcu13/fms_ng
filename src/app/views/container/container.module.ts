@@ -43,6 +43,7 @@ import {CompanyComponent} from "../features/customer/company/company.component";
 import {ViewDriverComponent} from "../features/driver-mgmt/view-driver/view-driver.component";
 import {FleetComponent} from "../features/fleet-mgmt/fleet/fleet.component";
 import {WarehouseComponent} from "../features/customer/warehouse/warehouse.component";
+import {GpsDeviceComponent} from "../features/fleet-mgmt/gps-device/gps-device.component";
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import {WarehouseComponent} from "../features/customer/warehouse/warehouse.compo
     CompanyComponent,
     ViewDriverComponent,
     FleetComponent,
-    WarehouseComponent
+    WarehouseComponent,
+    GpsDeviceComponent
   ],
   imports: [
     CommonModule,
