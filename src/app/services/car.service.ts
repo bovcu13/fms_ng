@@ -40,6 +40,59 @@ export class CarService {
     return this.http.delete<any>(url);
   }
 
+  //--車機------------------------------------------------------------------------------------------------
+
+  getGpsDevicesRequest(page: number = 1, limit: number = 20): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/gps-devices?page=${page}&limit=${limit}`;
+    return this.http.get<any>(url);
+  }
+
+  getGpsDeviceRequest(id: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/gps-devices/${id}`;
+    return this.http.get<any>(url);
+  }
+
+  postGpsDeviceRequest(body: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/gps-devices`;
+    return this.http.post<any>(url, body);
+  }
+
+  patchGpsDeviceRequest(id: any, body: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/gps-devices/${id}`;
+    return this.http.patch<any>(url, body);
+  }
+
+  deleteGpsDeviceRequest(id: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/gps-devices/${id}`;
+    return this.http.delete<any>(url);
+  }
+
+  //--司機---------------------------------------------------------------------------------------------------
+  getAllDriversRequest(page: number = 1, limit: number = 20): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/drivers?page=${page}&limit=${limit}`;
+    return this.http.get<any>(url);
+  }
+
+  getOneDriverRequest(id: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/drivers/${id}`;
+    return this.http.get<any>(url);
+  }
+
+  postDriverRequest(body: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/drivers`;
+    return this.http.post<any>(url, body);
+  }
+
+  patchDriverRequest(id: any, body: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/drivers/${id}`;
+    return this.http.patch<any>(url, body);
+  }
+
+  deleteDriverRequest(id: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/drivers/${id}`;
+    return this.http.delete<any>(url);
+  }
+
   //--車輛狀態------------------------------------------------------------------------------------------------
 
   getAllGpsRequest(id: any, body: any): Observable<any> {
@@ -165,27 +218,5 @@ export class CarService {
   patchVehicleRequest(id: any, body: any): Observable<any> {
     const url = `${BaseUrl}/web/v1.0/vehicles/${id}`;
     return this.http.patch<any>(url, body);
-  }
-
-  //--付款------------------------------------------------------------------------------------------------
-  postPayment(body: any): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/subscriptions/action-pay`;
-    return this.http.post<any>(url, body);
-  }
-
-  postNewebPay(arr: any): Observable<any> {
-    const body = new HttpParams()
-      .set('MerchantID', arr.MerchantID)
-      .set('TradeInfo', arr.TradeInfo)
-      .set('TradeSha', arr.TradeSha)
-      .set('Version', arr.Version)
-
-    return this.http.post('https://ccore.newebpay.com/MPG/mpg_gateway',
-      body.toString(),
-      {
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-      }
-    );
   }
 }
