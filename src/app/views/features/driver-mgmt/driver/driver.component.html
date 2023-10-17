@@ -7,7 +7,7 @@
             <p-button label="新增司機" (click)="addDialogVisible=true"
                       styleClass="p-button-link p-button-sm"></p-button>
           </div>
-          <p-dataView [value]="vehiclesData">
+          <p-dataView [value]="driverData">
             <ng-template let-product pTemplate="listItem">
               <div pRipple class="col-6 styled-box" (click)="goToDriver(product.id)">
                 <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
@@ -15,16 +15,16 @@
                   <div
                     class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
                     <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                      <div class="text-lg font-bold">{{ product.driver }}</div>
+                      <div class="text-lg font-bold">{{ product.name }}</div>
 
                       <div class="flex align-items-center gap-3">
                                 <span class="flex align-items-center gap-2">
                                 <i class="pi pi-at text-xs"></i>
-                                <span class="font-medium text-xs">{{ product.name }}</span>
+                                <span class="font-medium text-xs">{{ product.phone_number }}</span>
                                   </span>
                         <span class="flex align-items-center gap-2">
                                 <i class="pi pi-tag text-xs"></i>
-                                <span class="font-medium text-xs">{{ product.license_plate }}</span>
+                                <span class="font-medium text-xs">{{ product.email }}</span>
                                 </span>
                       </div>
                     </div>
@@ -38,25 +38,28 @@
     </p-card>
   </div>
 </div>
+<p-toast></p-toast>
 <p-dialog header="新增司機" [(visible)]="addDialogVisible" [modal]="true" [style]="{ width: '25vw' }"
           [draggable]="false" [resizable]="false">
-  <form [formGroup]="addDriver_form">
+  <form [formGroup]="addDriver_form" (ngSubmit)="addDriver()">
     <div class="grid">
       <div class="field col-12 md:col-6 lg:col-6">
         <label class="font-semibold">員工編號</label>
         <input pInputText formControlName="employee_id"/>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">司機</label>
-        <input pInputText formControlName="driver"/>
+        <label class="font-semibold"><span class="text-red-600">*</span>司機</label>
+        <input pInputText formControlName="name"
+               [ngClass]="{'ng-dirty':addDriver_form.controls['name'].hasError('required')
+               && addDriver_form.controls['name'].touched}"/>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
         <label class="font-semibold">行動電話</label>
-        <input pInputText formControlName="mobile_phone"/>
+        <input pInputText formControlName="phone_number"/>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
         <label class="font-semibold">身份證字號</label>
-        <input pInputText formControlName="id_number"/>
+        <input pInputText formControlName="id_card_number"/>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
         <label class="font-semibold">工號</label>
@@ -65,6 +68,7 @@
       <div class="field col-12 md:col-6 lg:col-6">
         <label class="font-semibold">每日成本</label>
         <input pInputText formControlName="daily_cost"/>
+        <small *ngIf="addDriver_form.controls['daily_cost'].hasError('pattern')" class="p-error">請輸入整數!</small>
       </div>
       <div class="field col-12">
         <label class="font-semibold">電子郵件</label>
@@ -76,7 +80,7 @@
       </div>
     </div>
     <div class="flex justify-content-end">
-      <p-button (click)="addDriverRequest()" label="新增" styleClass="p-button-primary mr-2"></p-button>
+      <p-button type="submit" label="新增" styleClass="p-button-primary mr-2"></p-button>
       <p-button label="取消"
                 styleClass="p-button-outlined p-button-secondary"></p-button>
     </div>
