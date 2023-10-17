@@ -79,7 +79,7 @@
             <ng-template pTemplate="body" let-product>
               <tr [pSelectableRow]="product">
                 <td>{{ product.date_time | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-                <td>{{ product.state }}</td>
+                <td>{{ product.status }}</td>
                 <td>{{ product.speed }}</td>
                 <td>{{ product.addr }}</td>
                 <td>{{ product.direction }}</td>

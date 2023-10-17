@@ -17,6 +17,7 @@ export class FleetMgmtComponent {
 
   addVehicle_form: FormGroup;
   addFleet_form: FormGroup;
+  addGpsDevice_form: FormGroup;
 
   constructor(private carServ: CarService,
               private fb: FormBuilder,
@@ -33,6 +34,12 @@ export class FleetMgmtComponent {
       fleet_code: ['', Validators.required],
       name: ['', Validators.required]
     });
+    this.addGpsDevice_form = this.fb.group({
+      firm: ['', Validators.required],
+      id: ['', Validators.required],
+      model: ['', Validators.required],
+      sid: ['', Validators.required]
+    });
   }
 
   ngOnInit() {
@@ -43,6 +50,7 @@ export class FleetMgmtComponent {
     });
     this.getAllFleetsRequest()
     this.getAllVehiclesRequest()
+    this.getAllGpsDevicesRequest()
   }
 
   tab: any
@@ -106,16 +114,13 @@ export class FleetMgmtComponent {
     });
   }
 
-  goToFleet(id: any) {
-    this.router.navigate(['/fleet', id])
-  }
-
   addCarDialogVisible = false;
 
   openAddCarDialog() {
     this.addCarDialogVisible = true;
   }
 
+  // 新增車輛
   postVehicleRequest() {
     let body = {
       fleet_id: this.addVehicle_form.controls['fleet_id'].value,
@@ -136,8 +141,31 @@ export class FleetMgmtComponent {
     this.getAllVehiclesRequest()
   }
 
+  gpsDevicesData: any;
+
+  getAllGpsDevicesRequest() {
+    this.carServ.getGpsDevicesRequest().subscribe({
+      next: res => {
+        this.gpsDevicesData = res.body.gps_devices;
+        console.log('gpsDevicesData', res.body.gps_devices)
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  // 跳轉頁面
   goToVehicle(id: any) {
     this.router.navigate(['/vehicle', id])
+  }
+
+  goToFleet(id: any) {
+    this.router.navigate(['/fleet', id])
+  }
+
+  goToGpsDevice(id: any) {
+    this.router.navigate(['/gps_device', id])
   }
 
 

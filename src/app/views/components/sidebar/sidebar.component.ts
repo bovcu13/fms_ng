@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from "primeng/api";
-import { testMenu } from "../../../shared/data/menu";
+import {Component, OnInit} from '@angular/core';
+import {MenuItem} from "primeng/api";
+import {testMenu} from "../../../shared/data/menu";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-sidebar',
@@ -13,6 +14,11 @@ export class SidebarComponent implements OnInit {
   sidebarMenu!: MenuItem[];
   testMenu: MenuItem[] = testMenu;
   sideVisible: boolean = false;
+
+  constructor(
+    private authServ: AuthService
+  ) {
+  }
 
   ngOnInit() {
     // userItems
@@ -34,6 +40,9 @@ export class SidebarComponent implements OnInit {
           {
             label: '登出',
             icon: 'pi pi-sign-out',
+            command: () => {
+              this.authServ.signOut();
+            },
             routerLink: '/'
           }
         ]
@@ -401,9 +410,7 @@ export class SidebarComponent implements OnInit {
             command: () => {
               this.sideVisible = false
             },
-            style: {
-
-            },
+            style: {},
           },
           {
             label: '聯絡我們',
