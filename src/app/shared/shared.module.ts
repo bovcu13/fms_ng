@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ngModule} from './primeng/primeng';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module} from 'ng-recaptcha';
@@ -13,6 +12,7 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import {VgStreamingModule} from "@videogular/ngx-videogular/streaming";
 import {HttpInterceptorService} from "../services/http-interceptor.service";
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {PrimengModule} from "./primeng/primeng";
 
 @NgModule({
   declarations: [],
@@ -20,7 +20,6 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
     CommonModule
   ],
   exports: [
-    ngModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
@@ -30,7 +29,8 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
-    VgStreamingModule
+    VgStreamingModule,
+    PrimengModule
   ],
   providers: [
     {
