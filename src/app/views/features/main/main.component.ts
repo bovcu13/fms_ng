@@ -104,24 +104,18 @@ export class MainComponent implements OnInit {
             // 在這裡執行您想要在資料取得後進行的動作
             this.afterGet()
             this.createMarkers()
-            // 每5秒get
-            // setInterval(() => {
-            //   this.getAll20s();
-            // }, 5000);
-
             return of(null); // 使用 RxJS 的 of 函式返回一個 Observable 包裹的 null
           })
         )
         .subscribe();
 
-    interval(5000)  // 每隔五秒
+    interval(15000)  // 每隔15秒
       .pipe(
         mergeMap(() => this.getAllNewGpsRequest()),  // 取得新資料
         tap(res => {
-          // 在這裡執行您想要在資料取得後進行的動作
+          // 資料取得後進行的動作
           this.afterGet();
-          this.updateMarkers()
-          console.log("來源資料:", res);
+          this.updateMarkers();
         })
       )
       .subscribe();
@@ -421,7 +415,6 @@ export class MainComponent implements OnInit {
 
     this.transformedData.forEach(product => {
       const latlng = new google.maps.LatLng(product.lat, product.lng);
-      console.log("latlng " + latlng);
       geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
         if (status === google.maps.GeocoderStatus.OK) {
           let addressFound = false;
@@ -473,6 +466,9 @@ export class MainComponent implements OnInit {
     console.log("轉換後資料:", this.transformedData)
   }
 
+  // 初始化时在类的构造函数或其他合适的地方初始化infowindow
+  infowindow = new google.maps.InfoWindow();
+
   createMarkers() {
     for (const location of this.transformedData) {
       //標記
@@ -487,24 +483,29 @@ export class MainComponent implements OnInit {
         },
         zIndex: 1
       });
+
       const licensePlate = location.license_plate;
       const driver = location.driver;
       const content = `
-                                        <div class="text-center">
-                                        <label>${licensePlate}</label>
-                                        <br>
-                                        <label>${driver}</label>
-                                        </div>
-                                        `;
-      const infowindow = new google.maps.InfoWindow({
+      <div class="text-center">
+        <label>${licensePlate}</label>
+        <br>
+        <label>${driver}</label>
+      </div>
+    `;
+
+      // 更新infowindow的内容
+      this.infowindow = new google.maps.InfoWindow({
         content: content,
       });
+
       // 一開始就顯示資訊窗口
-      infowindow.open(this.map, marker);
+      this.infowindow.open(this.map, marker);
+
       this.markers.push(marker);
+
       // 點擊標記顯示info, 設定中心點
       google.maps.event.addListener(marker, 'click', () => {
-        infowindow.open(this.map, marker);
         this.selectedProduct = location;
         this.Select();
       });
@@ -512,27 +513,66 @@ export class MainComponent implements OnInit {
   }
 
   updateMarkers() {
-    for (let i = 0; i < this.transformedData.length; i++) {
-      const location = this.transformedData[i];
-      const marker = this.markers[i];
+    this.markers = [];
+    for (const location of this.transformedData) {
+      //標記
+      const marker = new google.maps.Marker({
+        position: new google.maps.LatLng(location.lat, location.lng),
+        map: this.map,
+        title: location.addr,
+        icon: {
+          url: location.url,
+          scaledSize: new google.maps.Size(60, 60),
+          anchor: new google.maps.Point(30, 30)
+        },
+        zIndex: 1
+      });
 
-      // 檢查 marker 是否存在
-      if (!marker) {
-        continue;  // 若 marker 不存在，跳過這次迴圈
-      }
+      const licensePlate = location.license_plate;
+      const driver = location.driver;
+      const content = `
+      <div class="text-center">
+        <label>${licensePlate}</label>
+        <br>
+        <label>${driver}</label>
+      </div>
+    `;
 
-      const currentPosition = marker.getPosition();
+      // 更新infowindow的内容
+      this.infowindow.setContent(content);
 
-      // 檢查 currentPosition 是否存在
-      if (currentPosition) {
-        // 檢查位置是否有變化
-        if (currentPosition.lat() !== location.lat || currentPosition.lng() !== location.lng) {
-          // 更新 marker 位置
-          const newPosition = new google.maps.LatLng(location.lat, location.lng);
-          marker.setPosition(newPosition);
-        }
-      }
+      // 一開始就顯示資訊窗口
+      this.infowindow.open(this.map, marker);
+
+      this.markers.push(marker);
+
+      // 點擊標記顯示info, 設定中心點
+      google.maps.event.addListener(marker, 'click', () => {
+        this.selectedProduct = location;
+        this.Select();
+      });
     }
+    // for (let i = 0; i < this.transformedData.length; i++) {
+    //   const location = this.transformedData[i];
+    //   const marker = this.markers[i];
+    //
+    //   // 檢查 marker 是否存在
+    //   if (!marker) {
+    //     continue;  // 若 marker 不存在，跳過這次迴圈
+    //   }
+    //
+    //   const currentPosition = marker.getPosition();
+    //
+    //   // 檢查 currentPosition 是否存在
+    //   if (currentPosition) {
+    //     // 檢查位置是否有變化
+    //     if (currentPosition.lat() !== location.lat || currentPosition.lng() !== location.lng) {
+    //       // 更新 marker 位置
+    //       const newPosition = new google.maps.LatLng(location.lat, location.lng);
+    //       marker.setPosition(newPosition);
+    //     }
+    //   }
+    // }
   }
 
   getUrlByDirection(heading: number, status: string) {
