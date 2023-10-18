@@ -68,7 +68,7 @@ export class SidebarComponent implements OnInit {
           //     this.sideVisible = false
           //   },
           //   style: {
-          //     background: 'rgba(84, 200, 240, 0.5)'
+          //     background: 'rgba(84, 200, 240, 0.1)'
           //   },
           // },
           {
@@ -79,7 +79,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)'
+              background: 'rgba(84, 200, 240, 0.1)'
             },
           },
           {
@@ -90,7 +90,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)'
+              background: 'rgba(84, 200, 240, 0.1)'
             },
           },
           {
@@ -101,7 +101,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)'
+              background: 'rgba(84, 200, 240, 0.1)'
             },
           },
           {
@@ -112,7 +112,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)'
+              background: 'rgba(84, 200, 240, 0.1)'
             },
           },
           {
@@ -123,7 +123,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)'
+              background: 'rgba(84, 200, 240, 0.1)'
             },
           },
           {
@@ -138,7 +138,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(84, 200, 240, 0.5)'
+                  background: 'rgba(84, 200, 240, 0.1)'
                 },
               },
               {
@@ -165,7 +165,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)',
+              background: 'rgba(84, 200, 240, 0.1)',
             }
           },
           {
@@ -186,7 +186,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)',
+              background: 'rgba(84, 200, 240, 0.1)',
             }
           },
           {
@@ -205,7 +205,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(84, 200, 240, 0.5)'
+                  background: 'rgba(84, 200, 240, 0.1)'
                 },
               },
               {
@@ -216,7 +216,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(84, 200, 240, 0.5)'
+                  background: 'rgba(84, 200, 240, 0.1)'
                 },
               },
               {
@@ -259,7 +259,7 @@ export class SidebarComponent implements OnInit {
                       this.sideVisible = false
                     },
                     style: {
-                      background: 'rgba(84, 200, 240, 0.5)'
+                      background: 'rgba(84, 200, 240, 0.1)'
                     },
                   },
                   {
@@ -270,7 +270,7 @@ export class SidebarComponent implements OnInit {
                       this.sideVisible = false
                     },
                     style: {
-                      background: 'rgba(84, 200, 240, 0.5)'
+                      background: 'rgba(84, 200, 240, 0.1)'
                     },
                   },
                   {
@@ -281,7 +281,7 @@ export class SidebarComponent implements OnInit {
                       this.sideVisible = false
                     },
                     style: {
-                      background: 'rgba(84, 200, 240, 0.5)'
+                      background: 'rgba(84, 200, 240, 0.1)'
                     },
                   },
                   {
@@ -292,7 +292,7 @@ export class SidebarComponent implements OnInit {
                       this.sideVisible = false
                     },
                     style: {
-                      background: 'rgba(84, 200, 240, 0.5)'
+                      background: 'rgba(84, 200, 240, 0.1)'
                     },
                   }
                 ]
@@ -307,7 +307,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)',
+              background: 'rgba(84, 200, 240, 0.1)',
             }
           },
           {
@@ -322,7 +322,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(84, 200, 240, 0.5)'
+                  background: 'rgba(84, 200, 240, 0.1)'
                 },
               },
               {
@@ -357,7 +357,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)'
+              background: 'rgba(84, 200, 240, 0.1)'
             },
           },
           {
@@ -372,7 +372,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(84, 200, 240, 0.5)'
+                  background: 'rgba(84, 200, 240, 0.1)'
                 },
               },
               {
@@ -383,7 +383,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(84, 200, 240, 0.5)'
+                  background: 'rgba(84, 200, 240, 0.1)'
                 },
               },
               {
@@ -418,7 +418,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)',
+              background: 'rgba(84, 200, 240, 0.1)',
             },
           },
           {
