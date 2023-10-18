@@ -68,7 +68,7 @@ export class SidebarComponent implements OnInit {
           //     this.sideVisible = false
           //   },
           //   style: {
-          //     background: 'rgba(84, 200, 240, 0.5)'
+          //     background: 'rgba(84, 200, 240, 0.1)'
           //   },
           // },
           {
@@ -79,7 +79,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)'
+              background: 'rgba(84, 200, 240, 0.1)'
             },
           },
           {
@@ -90,7 +90,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)'
+              background: 'rgba(84, 200, 240, 0.1)'
             },
           },
           {
@@ -101,7 +101,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)'
+              background: 'rgba(84, 200, 240, 0.1)'
             },
           },
           {
@@ -112,7 +112,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)'
+              background: 'rgba(84, 200, 240, 0.1)'
             },
           },
           {
@@ -123,7 +123,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)'
+              background: 'rgba(84, 200, 240, 0.1)'
             },
           },
           {
@@ -138,7 +138,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(84, 200, 240, 0.5)'
+                  background: 'rgba(84, 200, 240, 0.1)'
                 },
               },
               {
@@ -165,7 +165,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)',
+              background: 'rgba(84, 200, 240, 0.1)',
             }
           },
           {
@@ -181,17 +181,74 @@ export class SidebarComponent implements OnInit {
           {
             label: '推播訊息',
             icon: 'pi pi-volume-up',
-            routerLink: '/dispatch',
             command: () => {
               this.sideVisible = false
             },
-            style: {
-              background: 'rgba(84, 200, 240, 0.5)',
-            }
           },
           {
             label: '倉儲',
             icon: 'pi pi-fw pi-box'
+          },
+          {
+            label: '客戶管理',
+            icon: 'pi pi-users',
+            routerLink: '/customer',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(84, 200, 240, 0.1)',
+            }
+          },
+          {
+            label: '車輛管理',
+            icon: 'pi pi-shield',
+            routerLink: '/fleet_mgmt',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(84, 200, 240, 0.1)'
+            },
+          },
+          {
+            label: '司機管理',
+            icon: 'pi pi-shield',
+            items: [
+              {
+                label: '司機',
+                icon: 'pi pi-shield',
+                routerLink: '/driver',
+                command: () => {
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(84, 200, 240, 0.1)'
+                },
+              },
+              {
+                label: '出勤記錄',
+                icon: 'pi pi-fw pi-box'
+              },
+              {
+                label: '統計報告',
+                icon: 'pi pi-fw pi-box',
+                items: [
+                  {
+                    label: '檢查表設定',
+                    icon: 'pi pi-fw pi-box'
+                  },
+                  {
+                    label: '自主檢查表',
+                    icon: 'pi pi-fw pi-box'
+                  },
+                  {
+                    label: '未做檢查表',
+                    icon: 'pi pi-fw pi-box'
+                  }
+                ]
+              },
+            ]
           },
           {
             label: '統計分析報告',
@@ -205,7 +262,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(84, 200, 240, 0.5)'
+                  background: 'rgba(84, 200, 240, 0.1)'
                 },
               },
               {
@@ -216,7 +273,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(84, 200, 240, 0.5)'
+                  background: 'rgba(84, 200, 240, 0.1)'
                 },
               },
               {
@@ -259,7 +316,7 @@ export class SidebarComponent implements OnInit {
                       this.sideVisible = false
                     },
                     style: {
-                      background: 'rgba(84, 200, 240, 0.5)'
+                      background: 'rgba(84, 200, 240, 0.1)'
                     },
                   },
                   {
@@ -270,7 +327,7 @@ export class SidebarComponent implements OnInit {
                       this.sideVisible = false
                     },
                     style: {
-                      background: 'rgba(84, 200, 240, 0.5)'
+                      background: 'rgba(84, 200, 240, 0.1)'
                     },
                   },
                   {
@@ -281,7 +338,7 @@ export class SidebarComponent implements OnInit {
                       this.sideVisible = false
                     },
                     style: {
-                      background: 'rgba(84, 200, 240, 0.5)'
+                      background: 'rgba(84, 200, 240, 0.1)'
                     },
                   },
                   {
@@ -292,73 +349,12 @@ export class SidebarComponent implements OnInit {
                       this.sideVisible = false
                     },
                     style: {
-                      background: 'rgba(84, 200, 240, 0.5)'
+                      background: 'rgba(84, 200, 240, 0.1)'
                     },
                   }
                 ]
               },
             ]
-          },
-          {
-            label: '客戶管理',
-            icon: 'pi pi-users',
-            routerLink: '/customer',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(84, 200, 240, 0.5)',
-            }
-          },
-          {
-            label: '司機管理',
-            icon: 'pi pi-shield',
-            items: [
-              {
-                label: '司機',
-                icon: 'pi pi-shield',
-                routerLink: '/driver',
-                command: () => {
-                  this.sideVisible = false
-                },
-                style: {
-                  background: 'rgba(84, 200, 240, 0.5)'
-                },
-              },
-              {
-                label: '出勤記錄',
-                icon: 'pi pi-fw pi-box'
-              },
-              {
-                label: '統計報告',
-                icon: 'pi pi-fw pi-box',
-                items: [
-                  {
-                    label: '檢查表設定',
-                    icon: 'pi pi-fw pi-box'
-                  },
-                  {
-                    label: '自主檢查表',
-                    icon: 'pi pi-fw pi-box'
-                  },
-                  {
-                    label: '未做檢查表',
-                    icon: 'pi pi-fw pi-box'
-                  }
-                ]
-              },
-            ]
-          },
-          {
-            label: '車輛管理',
-            icon: 'pi pi-shield',
-            routerLink: '/fleet_mgmt',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(84, 200, 240, 0.5)'
-            },
           },
           {
             label: '設定',
@@ -372,7 +368,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(84, 200, 240, 0.5)'
+                  background: 'rgba(84, 200, 240, 0.1)'
                 },
               },
               {
@@ -383,7 +379,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(84, 200, 240, 0.5)'
+                  background: 'rgba(84, 200, 240, 0.1)'
                 },
               },
               {
@@ -418,7 +414,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.5)',
+              background: 'rgba(84, 200, 240, 0.1)',
             },
           },
           {
