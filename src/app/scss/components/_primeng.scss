@@ -15,6 +15,14 @@
     background: none;
   }
 
+  .p-panelmenu .p-menuitem-text {
+    flex-grow: 1;
+  }
+
+  .p-icon-wrapper {
+    order: 1;
+  }
+
   /* sidebar 陰影 */
   .p-sidebar {
     box-shadow: none;
@@ -34,4 +42,6 @@
     width: 100%;
     border-radius: 6px;
   }
+
+
 }
