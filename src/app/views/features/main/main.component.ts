@@ -32,7 +32,8 @@ export class MainComponent implements OnInit {
     { name: '車隊(D)', code: 'D' },
   ]
   cars: any
-circle: any
+  circle: any
+
   Select() {
     if (this.selectedProduct) {
       if (!this.circle) {
@@ -54,7 +55,6 @@ circle: any
       this.map.setZoom(20);
     }
   }
-
 
   // 地圖
   map: any
@@ -270,7 +270,6 @@ circle: any
       }, 0);
     });
 
-
   }
 
 
@@ -373,11 +372,6 @@ circle: any
         color: "#ffffff",
         fontSize: "18px",
       },
-      // icon: svgMarker,
-      // icon: {
-      //   url: 'assets/image/car2.png',
-      //   scaledSize: new google.maps.Size(50, 50)
-      // }
     });
 
     this.markDialog = false;
@@ -453,33 +447,6 @@ circle: any
 
   transformedData: any[] = []; // 存轉換後api資料
 
-  // init - 取得All車輛即時位置
-  // getAllNewGpsRequest() {
-  //   this.carServ.getAllNewGpsRequest().subscribe({
-  //     next: res => {
-  //       this.products = res.body.gps;
-  //       console.log("來源資料:", res);
-  //       this.transformedData = this.products.map(item => ({
-  //         ...item,
-  //         url: this.getUrlByDirection(item.heading),
-  //         addr: "",
-  //         infoWindowContent: item.license_plate + '' + item.driver,
-  //         direction: this.parseHeading(item.heading)
-  //       }));
-  //       this.cars = this.products.map(item => ({
-  //         name: item.license_plate,
-  //         code: item.license_plate
-  //       }));
-  //       // 轉換成中文地址
-  //       this.geocodePositions();
-  //       console.log("轉換後資料:", this.transformedData)
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     },
-  //   });
-  // }
-
   getAllNewGpsRequest() {
     return this.carServ.getAllNewGpsRequest().pipe(
       tap(res => {
@@ -492,7 +459,7 @@ circle: any
   afterGet() {
     this.transformedData = this.products.map(item => ({
       ...item,
-      url: this.getUrlByDirection(item.heading),
+      url: this.getUrlByDirection(item.heading, item.status),
       addr: "",
       infoWindowContent: item.license_plate + '' + item.driver,
       direction: this.parseHeading(item.heading)
@@ -568,175 +535,75 @@ circle: any
     }
   }
 
-
-  // // 20s取得All車輛即時位置
-  // getAll20s() {
-  //   this.carServ.getAllNewGpsRequest().subscribe({
-  //     next: res => {
-  //       this.products = res.body.gps;
-  //       this.transformedData = this.products.map(item => ({
-  //         ...item,
-  //         url: this.getUrlByDirection(item.heading),
-  //         addr: "",
-  //         infoWindowContent: item.license_plate + item.driver,
-  //         direction: this.parseHeading(item.heading)
-  //       }));
-  //       this.cars = this.products.map(item => ({
-  //         name: item.license_plate,
-  //         code: item.license_plate
-  //       }));
-  //       // 轉換成中文地址
-  //       this.geocodePositions();
-  //
-  //       if (this.transformedData.length > 0) {
-  //         if (this.markers !== null) {
-  //           for (const marker of this.markers) {
-  //             marker.setMap(null);
-  //             marker.setPosition(null);
-  //           }
-  //           this.markers = []
-  //         }
-  //         // 預設顯示所有 info window
-  //         for (const location of this.transformedData) {
-  //           //標記
-  //           const marker = new google.maps.Marker({
-  //             position: new google.maps.LatLng(location.lat, location.lng),
-  //             map: this.map,
-  //             title: location.addr,
-  //             icon: { url: location.url, scaledSize: new google.maps.Size(60, 60) },
-  //           });
-  //           const licensePlate = location.license_plate;
-  //           const driver = location.driver;
-  //           const content = `
-  //                                   <div class="text-center">
-  //                                   <label>${licensePlate}</label>
-  //                                   <br>
-  //                                   <label>${driver}</label>
-  //                                   </div>
-  //                                   `;
-  //           const infowindow = new google.maps.InfoWindow({
-  //             content: content,
-  //           });
-  //           // 一開始就顯示資訊窗口
-  //           infowindow.open(this.map, marker);
-  //           this.markers.push(marker);
-  //           // 點擊標記顯示info, 設定中心點
-  //           google.maps.event.addListener(marker, 'click', () => {
-  //             infowindow.open(this.map, marker);
-  //             this.map.setZoom(17);
-  //             this.map.setCenter(marker.getPosition() as google.maps.LatLng);
-  //           });
-  //         }
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     },
-  //   });
-  // }
-
-  // test(event: any) {
-  //   console.log(event)
-  //   this.getOneGpsRequest(event)
-  // }
-  //
-  // getOneGpsRequest(id: any) {
-  //   this.carServ.getOneGpsRequest(id).subscribe({
-  //     next: res => {
-  //       this.products = res.body;
-  //       console.log(this.products)
-  //       this.transformedData = this.products.map(item => ({
-  //         ...item,
-  //         url: this.getUrlByDirection(item.heading),
-  //         addr: "",
-  //         infoWindowContent: item.license_plate + item.driver,
-  //         direction: this.parseHeading(item.heading)
-  //       }));
-  //       // 轉換成中文地址
-  //       this.geocodePositions();
-  //
-  //       if (this.transformedData.length > 0) {
-  //         if (this.markers !== null) {
-  //           for (const marker of this.markers) {
-  //             marker.setMap(null);
-  //             marker.setPosition(null);
-  //           }
-  //           this.markers = []
-  //         }
-  //         // 預設顯示所有 info window
-  //         for (const location of this.transformedData) {
-  //           //標記
-  //           const marker = new google.maps.Marker({
-  //             position: new google.maps.LatLng(location.lat, location.lng),
-  //             map: this.map,
-  //             title: location.addr,
-  //             icon: { url: location.url, scaledSize: new google.maps.Size(60, 60) },
-  //           });
-  //           const licensePlate = location.license_plate;
-  //           const driver = location.driver;
-  //           const content = `
-  //                                   <div class="text-center">
-  //                                   <label>${licensePlate}</label>
-  //                                   <br>
-  //                                   <label>${driver}</label>
-  //                                   </div>
-  //                                   `;
-  //           const infowindow = new google.maps.InfoWindow({
-  //             content: content,
-  //           });
-  //           // info open
-  //           infowindow.open(this.map, marker);
-  //           this.markers.push(marker);
-  //           // 點擊事件
-  //           google.maps.event.addListener(marker, 'click', () => {
-  //             infowindow.open(this.map, marker);
-  //             this.map.setZoom(17);
-  //             this.map.setCenter(marker.getPosition() as google.maps.LatLng);
-  //           });
-  //         }
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     },
-  //   });
-  // }
-
-  getUrlByDirection(heading: number) {
-    let directionUrlMap: { [key: string]: string } = {
-      '北': 'assets/car/normal_n.png',
-      '東北': 'assets/car/normal_ne.png',
-      '東': 'assets/car/normal_e.png',
-      '東南': 'assets/car/normal_se.png',
-      '南': 'assets/car/normal_s.png',
-      '西南': 'assets/car/normal_sw.png',
-      '西': 'assets/car/normal_w.png',
-      '西北': 'assets/car/normal_nw.png'
-    };
+  getUrlByDirection(heading: number, status: string) {
     let direction = this.parseHeading(heading);
-    return directionUrlMap[direction] || 'assets/image/warehouse.png';
+
+    let directionUrlMap: { [key: string]: { [status: string]: string } } = {
+      '北': {
+        '熄火': 'assets/car/off_n.png',
+        '失聯': 'assets/car/missing_n.png',
+        '行駛': 'assets/car/normal_n.png',
+        '怠停': 'assets/car/stall_n.png',
+        '久停': 'assets/car/stop_n.png'
+      },
+      '東北': {
+        '熄火': 'assets/car/off_ne.png',
+        '失聯': 'assets/car/missing_ne.png',
+        '行駛': 'assets/car/normal_ne.png',
+        '怠停': 'assets/car/stall_ne.png',
+        '久停': 'assets/car/stop_ne.png'
+      },
+      '東': {
+        '熄火': 'assets/car/off_e.png',
+        '失聯': 'assets/car/missing_e.png',
+        '行駛': 'assets/car/normal_e.png',
+        '怠停': 'assets/car/stall_e.png',
+        '久停': 'assets/car/stop_e.png'
+      },
+      '東南': {
+        '熄火': 'assets/car/off_se.png',
+        '失聯': 'assets/car/missing_se.png',
+        '行駛': 'assets/car/normal_se.png',
+        '怠停': 'assets/car/stall_se.png',
+        '久停': 'assets/car/stop_se.png'
+      },
+      '南': {
+        '熄火': 'assets/car/off_s.png',
+        '失聯': 'assets/car/missing_s.png',
+        '行駛': 'assets/car/normal_s.png',
+        '怠停': 'assets/car/stall_s.png',
+        '久停': 'assets/car/stop_s.png'
+      },
+      '西南': {
+        '熄火': 'assets/car/off_sw.png',
+        '失聯': 'assets/car/missing_sw.png',
+        '行駛': 'assets/car/normal_sw.png',
+        '怠停': 'assets/car/stall_sw.png',
+        '久停': 'assets/car/stop_sw.png'
+      },
+      '西': {
+        '熄火': 'assets/car/off_w.png',
+        '失聯': 'assets/car/missing_w.png',
+        '行駛': 'assets/car/normal_w.png',
+        '怠停': 'assets/car/stall_w.png',
+        '久停': 'assets/car/stop_w.png'
+      },
+      '西北': {
+        '熄火': 'assets/car/off_nw.png',
+        '失聯': 'assets/car/missing_nw.png',
+        '行駛': 'assets/car/normal_nw.png',
+        '怠停': 'assets/car/stall_nw.png',
+        '久停': 'assets/car/stop_nw.png'
+      }
+    };
+
+    return directionUrlMap[direction] && directionUrlMap[direction][status] || 'assets/image/warehouse.png';
   }
 
   parseHeading(heading: number) {
-    if ((heading >= 0 && heading < 22.5) || (heading >= 337.5 && heading <= 360)) {
-      return '北';
-    } else if (heading >= 22.5 && heading < 67.5) {
-      return '東北';
-    } else if (heading >= 67.5 && heading < 112.5) {
-      return '東';
-    } else if (heading >= 112.5 && heading < 157.5) {
-      return '東南';
-    } else if (heading >= 157.5 && heading < 202.5) {
-      return '南';
-    } else if (heading >= 202.5 && heading < 247.5) {
-      return '西南';
-    } else if (heading >= 247.5 && heading < 292.5) {
-      return '西';
-    } else if (heading >= 292.5 && heading < 337.5) {
-      return '西北';
-    } else {
-      return '未知方位';
-    }
+    const directions = ['北', '東北', '東', '東南', '南', '西南', '西', '西北'];
+    const index = Math.floor(((heading + 22.5) % 360) / 45);
+    return directions[index] || '未知方位';
   }
 
 }
