@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {MenuItem} from "primeng/api";
-import {testMenu} from "../../../shared/data/menu";
-import {AuthService} from "../../../services/auth.service";
+import { Component, OnInit } from '@angular/core';
+import { MenuItem } from "primeng/api";
+import { testMenu } from "../../../shared/data/menu";
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
   selector: 'app-sidebar',
@@ -57,7 +57,7 @@ export class SidebarComponent implements OnInit {
         routerLink: '/main',
       },
       {
-        label: '監控中心',
+        label: '車隊監控管理(FMS)',
         icon: 'pi pi-fw pi-sitemap',
         items: [
           // {
@@ -147,8 +147,18 @@ export class SidebarComponent implements OnInit {
               },
             ]
           },
+        ]
+      },
+      {
+        label: '運輸調度管理(TMS)',
+        icon: 'pi pi-truck',
+        items: [
           {
-            label: '運輸派工',
+            label: '派工單',
+            icon: 'pi pi-briefcase',
+          },
+          {
+            label: '派車與調度',
             icon: 'pi pi-briefcase',
             routerLink: '/dispatch',
             command: () => {
@@ -158,6 +168,16 @@ export class SidebarComponent implements OnInit {
               background: 'rgba(250,245,200,0.6)',
             }
           },
+          {
+            label: '貨態追蹤',
+            icon: 'pi pi-briefcase',
+          },
+        ]
+      },
+      {
+        label: '行政管理中心',
+        icon: 'pi pi-briefcase',
+        items: [
           {
             label: '推播訊息',
             icon: 'pi pi-briefcase',
@@ -169,12 +189,6 @@ export class SidebarComponent implements OnInit {
               background: 'rgba(250,245,200,0.6)',
             }
           },
-        ]
-      },
-      {
-        label: '行政管理中心',
-        icon: 'pi pi-briefcase',
-        items: [
           {
             label: '倉儲',
             icon: 'pi pi-fw pi-box'
@@ -387,6 +401,10 @@ export class SidebarComponent implements OnInit {
             ]
           },
         ]
+      },
+      {
+        label: '永續與低碳運輸計畫',
+        icon: 'pi pi-globe',
       },
       {
         label: '平台服務專區',
