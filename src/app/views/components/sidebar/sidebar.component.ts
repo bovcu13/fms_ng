@@ -68,18 +68,18 @@ export class SidebarComponent implements OnInit {
           //     this.sideVisible = false
           //   },
           //   style: {
-          //     background: 'rgba(250,245,200,0.6)'
+          //     background: 'rgba(84, 200, 240, 0.5)'
           //   },
           // },
           {
             label: 'GPS圖台',
-            icon: 'pi pi-fw pi-box',
+            icon: 'pi pi-map-marker',
             routerLink: '/multiCars',
             command: () => {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(250,245,200,0.6)'
+              background: 'rgba(84, 200, 240, 0.5)'
             },
           },
           {
@@ -90,18 +90,18 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(250,245,200,0.6)'
+              background: 'rgba(84, 200, 240, 0.5)'
             },
           },
           {
             label: '車溫儀表板', //控溫中心
-            icon: 'pi pi-fw pi-box',
+            icon: 'pi pi-chart-bar',
             routerLink: '/multiCars',
             command: () => {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(250,245,200,0.6)'
+              background: 'rgba(84, 200, 240, 0.5)'
             },
           },
           {
@@ -112,18 +112,18 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(250,245,200,0.6)'
+              background: 'rgba(84, 200, 240, 0.5)'
             },
           },
           {
             label: '歷史軌跡',
-            icon: 'pi pi-fw pi-box',
+            icon: 'pi pi-directions-alt',
             routerLink: '/history',
             command: () => {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(250,245,200,0.6)'
+              background: 'rgba(84, 200, 240, 0.5)'
             },
           },
           {
@@ -138,7 +138,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(250,245,200,0.6)'
+                  background: 'rgba(84, 200, 240, 0.5)'
                 },
               },
               {
@@ -155,22 +155,22 @@ export class SidebarComponent implements OnInit {
         items: [
           {
             label: '派工單',
-            icon: 'pi pi-briefcase',
+            icon: 'pi pi-box',
           },
           {
             label: '派車與調度',
-            icon: 'pi pi-briefcase',
+            icon: 'pi pi-box',
             routerLink: '/dispatch',
             command: () => {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(250,245,200,0.6)',
+              background: 'rgba(84, 200, 240, 0.5)',
             }
           },
           {
             label: '貨態追蹤',
-            icon: 'pi pi-briefcase',
+            icon: 'pi pi-box',
           },
         ]
       },
@@ -180,13 +180,13 @@ export class SidebarComponent implements OnInit {
         items: [
           {
             label: '推播訊息',
-            icon: 'pi pi-briefcase',
+            icon: 'pi pi-volume-up',
             routerLink: '/dispatch',
             command: () => {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(250,245,200,0.6)',
+              background: 'rgba(84, 200, 240, 0.5)',
             }
           },
           {
@@ -195,7 +195,7 @@ export class SidebarComponent implements OnInit {
           },
           {
             label: '統計分析報告',
-            icon: 'pi pi-fw pi-box',
+            icon: 'pi pi-fw pi-chart-line',
             items: [
               {
                 label: '紀錄列表',
@@ -205,7 +205,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(250,245,200,0.6)'
+                  background: 'rgba(84, 200, 240, 0.5)'
                 },
               },
               {
@@ -216,7 +216,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(250,245,200,0.6)'
+                  background: 'rgba(84, 200, 240, 0.5)'
                 },
               },
               {
@@ -259,7 +259,7 @@ export class SidebarComponent implements OnInit {
                       this.sideVisible = false
                     },
                     style: {
-                      background: 'rgba(250,245,200,0.6)'
+                      background: 'rgba(84, 200, 240, 0.5)'
                     },
                   },
                   {
@@ -270,7 +270,7 @@ export class SidebarComponent implements OnInit {
                       this.sideVisible = false
                     },
                     style: {
-                      background: 'rgba(250,245,200,0.6)'
+                      background: 'rgba(84, 200, 240, 0.5)'
                     },
                   },
                   {
@@ -281,7 +281,7 @@ export class SidebarComponent implements OnInit {
                       this.sideVisible = false
                     },
                     style: {
-                      background: 'rgba(250,245,200,0.6)'
+                      background: 'rgba(84, 200, 240, 0.5)'
                     },
                   },
                   {
@@ -292,7 +292,7 @@ export class SidebarComponent implements OnInit {
                       this.sideVisible = false
                     },
                     style: {
-                      background: 'rgba(250,245,200,0.6)'
+                      background: 'rgba(84, 200, 240, 0.5)'
                     },
                   }
                 ]
@@ -307,7 +307,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(250,245,200,0.6)',
+              background: 'rgba(84, 200, 240, 0.5)',
             }
           },
           {
@@ -322,7 +322,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(250,245,200,0.6)'
+                  background: 'rgba(84, 200, 240, 0.5)'
                 },
               },
               {
@@ -357,7 +357,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(250,245,200,0.6)'
+              background: 'rgba(84, 200, 240, 0.5)'
             },
           },
           {
@@ -372,7 +372,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(250,245,200,0.6)'
+                  background: 'rgba(84, 200, 240, 0.5)'
                 },
               },
               {
@@ -383,7 +383,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(250,245,200,0.6)'
+                  background: 'rgba(84, 200, 240, 0.5)'
                 },
               },
               {
@@ -418,7 +418,7 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(250,245,200,0.6)',
+              background: 'rgba(84, 200, 240, 0.5)',
             },
           },
           {
