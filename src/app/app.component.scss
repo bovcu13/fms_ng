@@ -1,1 +1,13 @@
-
+::ng-deep {
+  .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    background: #ffffff;
+    border-color: #BA9132;
+    color: #BA9132;
+  }
+  // 側邊欄hover
+  .p-panelmenu .p-panelmenu-header:not(.p-highlight):not(.p-disabled):hover .p-panelmenu-header-content {
+    background: #DCB879;
+    border-color: #dee2e6;
+    color: #495057;
+  }
+}
