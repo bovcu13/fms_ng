@@ -156,6 +156,13 @@ export class SidebarComponent implements OnInit {
           {
             label: '派工單',
             icon: 'pi pi-box',
+            routerLink: '/dispatch_list',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(84, 200, 240, 0.1)',
+            }
           },
           {
             label: '派車與調度',
