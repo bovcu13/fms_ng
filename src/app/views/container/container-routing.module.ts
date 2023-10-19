@@ -38,6 +38,7 @@ import {ViewDriverComponent} from "../features/driver-mgmt/view-driver/view-driv
 import {FleetComponent} from "../features/fleet-mgmt/fleet/fleet.component";
 import {WarehouseComponent} from "../features/customer/warehouse/warehouse.component";
 import {GpsDeviceComponent} from "../features/fleet-mgmt/gps-device/gps-device.component";
+import {DispatchFormComponent} from "../features/dispatch/dispatch-form/dispatch-form.component";
 
 
 const routes: Routes = [
@@ -53,6 +54,7 @@ const routes: Routes = [
       {path: 'history', component: HistoryPathComponent, canActivate: [AuthGuard]},
       // dispatch
       {path: 'dispatch', component: DispatchComponent, canActivate: [AuthGuard]},
+      {path: 'dispatch_form', component: DispatchFormComponent, canActivate: [AuthGuard]},
       // customer
       {path: 'customer', component: CustomerComponent, canActivate: [AuthGuard]},
       {path: 'company/:id', component: CompanyComponent, canActivate: [AuthGuard]},
