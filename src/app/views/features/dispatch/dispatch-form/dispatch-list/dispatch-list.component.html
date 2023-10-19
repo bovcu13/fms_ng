@@ -10,6 +10,32 @@
                   <p-button routerLink="/dispatch_form" icon="pi pi-plus" styleClass="p-button-info p-button-text"></p-button>
                 </div>
               </div>
+              <p-dataView [value]="list">
+                <ng-template let-list pTemplate="listItem">
+                  <div pRipple class="col-6 styled-box" routerLink="/dispatch_form">
+                    <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
+                      <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/car2.png'"/>
+                      <div
+                        class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                        <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                          <div class="text-lg font-bold">{{ list.name }}</div>
+
+                          <div class="flex align-items-center gap-3">
+                                <span class="flex align-items-center gap-2">
+                                <i class="pi pi-at text-xs"></i>
+                                <span class="font-medium text-xs">{{ list.order_date }}</span>
+                                  </span>
+                            <span class="flex align-items-center gap-2">
+                                <i class="pi pi-tag text-xs"></i>
+                                <span class="font-medium text-xs">{{ list.order_number }}</span>
+                                </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dataView>
             </p-tabPanel>
           </p-tabView>
         </p-card>

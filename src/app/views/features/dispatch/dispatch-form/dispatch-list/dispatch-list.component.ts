@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { list } from "../../../../../shared/data/dispatch";
 
 @Component({
   selector: 'app-dispatch-list',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./dispatch-list.component.scss']
 })
 export class DispatchListComponent {
-
+  list: any = list;
 }
