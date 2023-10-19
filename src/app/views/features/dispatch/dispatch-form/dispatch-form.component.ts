@@ -7,5 +7,5 @@ import { list } from "../../../../shared/data/dispatch";
   styleUrls: ['./dispatch-form.component.scss']
 })
 export class DispatchFormComponent {
-list: any = list;
+list: any = list[0].trips;
 }
