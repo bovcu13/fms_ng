@@ -60,37 +60,44 @@
             </div>
           </div>
           <div class="col-12">
-            <div class="flex justify-content-end">
-              <p-button label="加入" styleClass="p-button-outlined p-button-info"></p-button>
+            <div class="field">
+              <div class="flex justify-content-end">
+                <p-button label="加入到明細" styleClass="p-button-outlined p-button-info"></p-button>
+              </div>
+              <p-divider></p-divider>
+              <h3>派工明細</h3>
+              <p-table [value]="list">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>託運人</th>
+                    <th>板台號碼</th>
+                    <th>品名</th>
+                    <th>單價</th>
+                    <th>件數</th>
+                    <th>噸位</th>
+                    <th>起運點</th>
+                    <th>卸貨點</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-list>
+                  <tr>
+                    <td>{{ list.shipper }}</td>
+                    <td>{{ list.pallet }}</td>
+                    <td>{{ list.product_name }}</td>
+                    <td>{{ list.unit_price }}</td>
+                    <td>{{ list.quantity }}</td>
+                    <td>{{ list.tonnage }}</td>
+                    <td>{{ list.origin }}</td>
+                    <td>{{ list.destination }}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
             </div>
-            <p-divider></p-divider>
-            <h3>派工明細</h3>
-            <p-table [value]="list" [tableStyle]="{ 'min-width': '50rem' }">
-              <ng-template pTemplate="header">
-                <tr>
-                  <th>託運人</th>
-                  <th>板台號碼</th>
-                  <th>品名</th>
-                  <th>單價</th>
-                  <th>件數</th>
-                  <th>噸位</th>
-                  <th>起運點</th>
-                  <th>卸貨點</th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-list>
-                <tr>
-                  <td>{{ list.shipper }}</td>
-                  <td>{{ list.pallet }}</td>
-                  <td>{{ list.product_name }}</td>
-                  <td>{{ list.unit_price }}</td>
-                  <td>{{ list.quantity }}</td>
-                  <td>{{ list.tonnage }}</td>
-                  <td>{{ list.origin }}</td>
-                  <td>{{ list.destination }}</td>
-                </tr>
-              </ng-template>
-            </p-table>
+          </div>
+          <div class="col-12">
+            <div class="flex justify-content-end">
+              <p-button label="儲存派工單" styleClass="p-button-outlined p-button-info"></p-button>
+            </div>
           </div>
         </div>
       </p-card>
