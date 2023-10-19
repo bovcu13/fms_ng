@@ -45,6 +45,7 @@ import {FleetComponent} from "../features/fleet-mgmt/fleet/fleet.component";
 import {WarehouseComponent} from "../features/customer/warehouse/warehouse.component";
 import {GpsDeviceComponent} from "../features/fleet-mgmt/gps-device/gps-device.component";
 import {DispatchFormComponent} from "../features/dispatch/dispatch-form/dispatch-form.component";
+import {DispatchListComponent} from "../features/dispatch/dispatch-form/dispatch-list/dispatch-list.component";
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import {DispatchFormComponent} from "../features/dispatch/dispatch-form/dispatch
     WarehouseComponent,
     GpsDeviceComponent,
     DispatchFormComponent,
+    DispatchListComponent,
   ],
   imports: [
     CommonModule,
