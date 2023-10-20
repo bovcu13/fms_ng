@@ -1,13 +1,14 @@
 <div class="mt-2">
   <div class="flex justify-content-center">
     <div class="col-8">
+      <form [formGroup]="dispatch_form">
       <p-card>
         <h1 class="text-center">新增派工單</h1>
         <div class="grid">
           <div class="col-12">
             <div class="flex justify-content-between">
-              <div class="font-medium text-sm">填單日: 20231019</div>
-              <div class="font-medium text-sm">單號: 236-M3</div>
+              <div class="font-medium text-sm">{{dispatch_form.controls['created_at'].value}}</div>
+              <div class="font-medium text-sm">{{dispatch_form.controls['id'].value}}</div>
             </div>
             <p-divider></p-divider>
           </div>
@@ -19,14 +20,14 @@
           </div>
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
-              <label class="font-semibold"><span class="text-red-600">*</span>承運日期</label>
-              <input pInputText/>
+              <label class="font-semibold">承運日期</label>
+              <p-calendar formControlName="date" dateFormat="yy-mm-dd"></p-calendar>
             </div>
           </div>
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
               <label class="font-semibold"><span class="text-red-600">*</span>託運人</label>
-              <input pInputText/>
+              <p-dropdown formControlName="shipper"></p-dropdown>
             </div>
           </div>
           <div class="col-12 md:col-6 lg:col-6">
@@ -44,19 +45,19 @@
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
               <label class="font-semibold">單價</label>
-              <input pInputText/>
+              <p-inputNumber class="w-full" formControlName="unit_price" mode="currency" inputId="currency-taiwan" currency="TWD" locale="zh-TW"></p-inputNumber>
             </div>
           </div>
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
               <label class="font-semibold">件數</label>
-              <input pInputText/>
+              <p-inputNumber class="w-full" formControlName="quantity" [min]="0"></p-inputNumber>
             </div>
           </div>
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
               <label class="font-semibold">噸位</label>
-              <input pInputText/>
+              <p-inputNumber class="w-full" formControlName="tonnage" [min]="0"></p-inputNumber>
             </div>
           </div>
           <div class="col-12 md:col-6 lg:col-6">
@@ -74,7 +75,7 @@
           <div class="col-12">
             <div class="field">
               <div class="flex justify-content-end">
-                <p-button label="加入到明細" styleClass="p-button-outlined p-button-info"></p-button>
+                <p-button (click)="add()" label="加入到明細" styleClass="p-button-outlined p-button-info"></p-button>
               </div>
               <p-divider></p-divider>
               <h3>派工明細</h3>
@@ -113,6 +114,7 @@
           </div>
         </div>
       </p-card>
+      </form>
     </div>
   </div>
 </div>
