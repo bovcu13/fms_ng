@@ -208,7 +208,7 @@ export class SidebarComponent implements OnInit {
             }
           },
           {
-            label: '車輛管理',
+            label: '車隊管理',
             icon: 'pi pi-shield',
             routerLink: '/fleet_mgmt',
             command: () => {
