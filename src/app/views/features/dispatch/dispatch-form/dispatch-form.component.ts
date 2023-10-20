@@ -1,17 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { list } from "../../../../shared/data/dispatch";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'app-dispatch-form',
   templateUrl: './dispatch-form.component.html',
   styleUrls: ['./dispatch-form.component.scss']
 })
-export class DispatchFormComponent {
-  list: any = list[0].trips;
+export class DispatchFormComponent implements OnInit {
+  id: any = 0;
+  list: any = list[this.id].trips;
   dispatch_form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute) {
+    this.id = this.route.snapshot.paramMap.get('id');
     this.dispatch_form = this.fb.group({
       created_at: ['2023-10-18', Validators.required], //填單日
       id: ['236-M3', Validators.required], //單號
@@ -26,9 +29,11 @@ export class DispatchFormComponent {
       origin:  ['', Validators.required], //起運
       destination: ['', Validators.required], //卸貨
     });
+    this.dispatch_form.patchValue(list[this.id]);
   }
 
   data: any
+
   add() {
     //Check whether the required fields in the form are filled out
     if (this.dispatch_form.valid) {
@@ -40,6 +45,19 @@ export class DispatchFormComponent {
     } else {
       alert("請填寫必填欄位");
     }
+  }
+
+  title: any;
+  formName() {
+    if (this.dispatch_form.controls['name'].value) {
+     this.title = this.dispatch_form.controls['name'].value;
+    } else {
+      this.title = "新增派工單";
+    }
+  }
+
+  ngOnInit(): void {
+    this.formName();
   }
 
 }

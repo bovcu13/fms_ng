@@ -1,12 +1,12 @@
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-8">
-<!--    <p-tabView>-->
-<!--      <p-tabPanel header="派工單">-->
-        <p-card header="運輸訂單">
+    <p-tabView>
+      <p-tabPanel header="貨態追蹤">
+        <p-card header="貨態追蹤">
           <p-tabView>
             <p-tabPanel header="所有訂單">
               <div class="flex justify-content-end mb-3">
-                  <p-button routerLink="/dispatch_form" icon="pi pi-plus" styleClass="p-button-info p-button-text"></p-button>
+                  <p-button icon="pi pi-search" styleClass="p-button-info p-button-text"></p-button>
               </div>
               <p-dataView [value]="list">
                 <ng-template let-list pTemplate="listItem">
@@ -36,7 +36,8 @@
             </p-tabPanel>
           </p-tabView>
         </p-card>
-<!--      </p-tabPanel>-->
-<!--    </p-tabView>-->
+      </p-tabPanel>
+    </p-tabView>
   </div>
 </div>
+

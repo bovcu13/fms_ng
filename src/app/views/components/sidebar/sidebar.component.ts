@@ -143,7 +143,11 @@ export class SidebarComponent implements OnInit {
               },
               {
                 label: '大餅軌跡',
-                icon: 'pi pi-fw pi-chart-line'
+                icon: 'pi pi-fw pi-chart-line',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
               },
             ]
           },
@@ -178,6 +182,13 @@ export class SidebarComponent implements OnInit {
           {
             label: '貨態追蹤',
             icon: 'pi pi-box',
+            routerLink: '/e_tracking',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(84, 200, 240, 0.1)',
+            }
           },
         ]
       },
@@ -189,7 +200,7 @@ export class SidebarComponent implements OnInit {
             label: '推播訊息',
             icon: 'pi pi-volume-up',
             command: () => {
-              this.sideVisible = false
+              alert("功能未開放");
             },
           },
           {
@@ -235,7 +246,11 @@ export class SidebarComponent implements OnInit {
               },
               {
                 label: '出勤記錄',
-                icon: 'pi pi-fw pi-box'
+                icon: 'pi pi-fw pi-box',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
               },
               {
                 label: '統計報告',
@@ -243,15 +258,27 @@ export class SidebarComponent implements OnInit {
                 items: [
                   {
                     label: '檢查表設定',
-                    icon: 'pi pi-fw pi-box'
+                    icon: 'pi pi-fw pi-box',
+                    command: () => {
+                      alert("功能未開放");
+                      this.sideVisible = false
+                    },
                   },
                   {
                     label: '自主檢查表',
-                    icon: 'pi pi-fw pi-box'
+                    icon: 'pi pi-fw pi-box',
+                    command: () => {
+                      alert("功能未開放");
+                      this.sideVisible = false
+                    },
                   },
                   {
                     label: '未做檢查表',
-                    icon: 'pi pi-fw pi-box'
+                    icon: 'pi pi-fw pi-box',
+                    command: () => {
+                      alert("功能未開放");
+                      this.sideVisible = false
+                    },
                   }
                 ]
               },
@@ -285,31 +312,59 @@ export class SidebarComponent implements OnInit {
               },
               {
                 label: '地標統計',
-                icon: 'pi pi-fw pi-box'
+                icon: 'pi pi-fw pi-box',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
               },
               {
                 label: '國道計費',
-                icon: 'pi pi-fw pi-box'
+                icon: 'pi pi-fw pi-box',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
               },
               {
                 label: '多工日報',
-                icon: 'pi pi-fw pi-box'
+                icon: 'pi pi-fw pi-box',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
               },
               {
                 label: '溫度曲線圖',
-                icon: 'pi pi-fw pi-box'
+                icon: 'pi pi-fw pi-box',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
               },
               {
                 label: '多公彙總表',
-                icon: 'pi pi-fw pi-box'
+                icon: 'pi pi-fw pi-box',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
               },
               {
                 label: '均溫報表',
-                icon: 'pi pi-fw pi-box'
+                icon: 'pi pi-fw pi-box',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
               },
               {
                 label: '績效',
-                icon: 'pi pi-fw pi-box'
+                icon: 'pi pi-fw pi-box',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
               },
               {
                 label: '異常報表',
@@ -381,8 +436,9 @@ export class SidebarComponent implements OnInit {
               {
                 label: '異常設定',
                 icon: 'pi pi-fw pi-box',
-                routerLink: '/odd_set',
+                // routerLink: '/odd_set',
                 command: () => {
+                  alert("功能未開放");
                   this.sideVisible = false
                 },
                 style: {
@@ -391,15 +447,27 @@ export class SidebarComponent implements OnInit {
               },
               {
                 label: '自建地標',
-                icon: 'pi pi-fw pi-box'
+                icon: 'pi pi-fw pi-box',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
               },
               {
                 label: '權限分享',
-                icon: 'pi pi-fw pi-box'
+                icon: 'pi pi-fw pi-box',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
               },
               {
                 label: '駕駛紀錄',
-                icon: 'pi pi-fw pi-box'
+                icon: 'pi pi-fw pi-box',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
               }
             ]
           },
@@ -408,6 +476,10 @@ export class SidebarComponent implements OnInit {
       {
         label: '永續與低碳運輸計畫',
         icon: 'pi pi-globe',
+        command: () => {
+          alert("功能未開放");
+          this.sideVisible = false
+        },
       },
       {
         label: '平台服務專區',
@@ -429,17 +501,26 @@ export class SidebarComponent implements OnInit {
             icon: 'pi pi-heart-fill',
             routerLink: '',
             command: () => {
+              alert("功能未開放");
               this.sideVisible = false
             },
             style: {},
           },
           {
             label: '聯絡我們',
-            icon: 'pi pi-fw pi-box'
+            icon: 'pi pi-fw pi-box',
+            command: () => {
+              alert("功能未開放");
+              this.sideVisible = false
+            },
           },
           {
             label: '最新消息',
-            icon: 'pi pi-fw pi-box'
+            icon: 'pi pi-fw pi-box',
+            command: () => {
+              alert("功能未開放");
+              this.sideVisible = false
+            },
           },
         ]
       },

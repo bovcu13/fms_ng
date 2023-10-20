@@ -40,6 +40,7 @@ import {WarehouseComponent} from "../features/customer/warehouse/warehouse.compo
 import {GpsDeviceComponent} from "../features/fleet-mgmt/gps-device/gps-device.component";
 import {DispatchFormComponent} from "../features/dispatch/dispatch-form/dispatch-form.component";
 import {DispatchListComponent} from "../features/dispatch/dispatch-form/dispatch-list/dispatch-list.component";
+import {ETrackingComponent} from "../features/dispatch/e-tracking/e-tracking.component";
 
 
 const routes: Routes = [
@@ -56,7 +57,9 @@ const routes: Routes = [
       // dispatch
       {path: 'dispatch', component: DispatchComponent, canActivate: [AuthGuard]},
       {path: 'dispatch_list', component: DispatchListComponent, canActivate: [AuthGuard]},
+      {path: 'dispatch_list/:id', component: DispatchFormComponent, canActivate: [AuthGuard]},
       {path: 'dispatch_form', component: DispatchFormComponent, canActivate: [AuthGuard]},
+      {path: 'e_tracking', component: ETrackingComponent, canActivate: [AuthGuard]},
       // customer
       {path: 'customer', component: CustomerComponent, canActivate: [AuthGuard]},
       {path: 'company/:id', component: CompanyComponent, canActivate: [AuthGuard]},
