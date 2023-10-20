@@ -1,10 +1,11 @@
 export const list = [
   {
-    name: "派工單名稱",
-    order_date: "2023-10-19",
-    order_number: "236-M3",
+    name: "運輸訂單01",
+    created_at: "2023-10-19",
+    id: "236-M3",
     trips: [
       {
+        date: "2023-10-19",
         "shipper": "台南欣城",
         "pallet": "376(93-XM)",
         "product_name": "軸線",
@@ -15,6 +16,7 @@ export const list = [
         "destination": "堅富"
       },
       {
+        date: "2023-10-19",
         "shipper": "台南欣城",
         "pallet": "376(93-XM)",
         "product_name": "軸線",
@@ -25,6 +27,7 @@ export const list = [
         "destination": "朧賢"
       },
       {
+        date: "2023-10-19",
         "shipper": "台南欣城",
         "pallet": "376(93-XM)",
         "product_name": "漆包線",
@@ -35,6 +38,7 @@ export const list = [
         "destination": "三美"
       },
       {
+        date: "2023-10-19",
         "shipper": "三美",
         "pallet": "376(93-XM)",
         "product_name": "塑軸",
@@ -45,6 +49,7 @@ export const list = [
         "destination": "大亞"
       },
       {
+        date: "2023-10-19",
         "shipper": "台南欣城",
         "pallet": "376(93-XM)",
         "product_name": "軸線",

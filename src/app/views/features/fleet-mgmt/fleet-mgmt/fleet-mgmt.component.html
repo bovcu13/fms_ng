@@ -1,8 +1,8 @@
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-8">
-    <p-tabView (onChange)="getTabName($event)" [(activeIndex)]="activeIndex">
+    <p-tabView [(activeIndex)]="activeIndex">
       <p-tabPanel header="車隊">
-        <p-card header="{{tab}}">
+        <p-card header="車隊">
           <p-tabView>
             <p-tabPanel header="所有車隊">
               <div class="flex justify-content-end mb-3">
@@ -36,7 +36,7 @@
         </p-card>
       </p-tabPanel>
       <p-tabPanel header="車輛">
-        <p-card header="{{tab}}">
+        <p-card header="車輛">
           <p-tabView>
             <p-tabPanel header="所有車輛">
               <div class="flex justify-content-end mb-3">
@@ -84,7 +84,7 @@
         </p-card>
       </p-tabPanel>
       <p-tabPanel header="車機">
-        <p-card header="{{tab}}">
+        <p-card header="車機">
           <p-tabView>
             <p-tabPanel header="所有車機">
               <p-dataView [value]="gpsDevicesData">

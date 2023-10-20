@@ -154,7 +154,7 @@ export class SidebarComponent implements OnInit {
         icon: 'pi pi-truck',
         items: [
           {
-            label: '派工單',
+            label: '運輸訂單',
             icon: 'pi pi-box',
             routerLink: '/dispatch_list',
             command: () => {
@@ -165,7 +165,7 @@ export class SidebarComponent implements OnInit {
             }
           },
           {
-            label: '派車與調度',
+            label: '派工與調度',
             icon: 'pi pi-box',
             routerLink: '/dispatch',
             command: () => {
@@ -208,7 +208,7 @@ export class SidebarComponent implements OnInit {
             }
           },
           {
-            label: '車輛管理',
+            label: '車隊管理',
             icon: 'pi pi-shield',
             routerLink: '/fleet_mgmt',
             command: () => {
