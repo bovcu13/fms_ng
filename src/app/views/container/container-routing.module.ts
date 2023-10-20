@@ -43,6 +43,7 @@ import {DispatchListComponent} from "../features/dispatch/dispatch-form/dispatch
 import {ETrackingComponent} from "../features/dispatch/e-tracking/e-tracking.component";
 import {WarehouseListComponent} from "../features/my-warehouse/warehouse-list/warehouse-list.component";
 import {WarehouseViewComponent} from "../features/my-warehouse/warehouse-view/warehouse-view.component";
+import {ETrackingViewComponent} from "../features/dispatch/e-tracking/e-tracking-view/e-tracking-view.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '', pathMatch: 'full'},
@@ -61,6 +62,7 @@ const routes: Routes = [
       {path: 'dispatch_list/:id', component: DispatchFormComponent, canActivate: [AuthGuard]},
       {path: 'dispatch_form', component: DispatchFormComponent, canActivate: [AuthGuard]},
       {path: 'e_tracking', component: ETrackingComponent, canActivate: [AuthGuard]},
+      {path: 'e_tracking_view', component: ETrackingViewComponent, canActivate: [AuthGuard]},
       // my-warehouse
       {path: 'warehouse_list', component: WarehouseListComponent, canActivate: [AuthGuard]},
       {path: 'warehouse_list/:id', component: WarehouseViewComponent, canActivate: [AuthGuard]},
