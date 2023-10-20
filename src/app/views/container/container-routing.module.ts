@@ -57,6 +57,7 @@ const routes: Routes = [
       // dispatch
       {path: 'dispatch', component: DispatchComponent, canActivate: [AuthGuard]},
       {path: 'dispatch_list', component: DispatchListComponent, canActivate: [AuthGuard]},
+      {path: 'dispatch_list/:id', component: DispatchFormComponent, canActivate: [AuthGuard]},
       {path: 'dispatch_form', component: DispatchFormComponent, canActivate: [AuthGuard]},
       {path: 'e_tracking', component: ETrackingComponent, canActivate: [AuthGuard]},
       // customer

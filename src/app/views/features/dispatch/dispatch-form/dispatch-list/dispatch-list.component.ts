@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { list } from "../../../../../shared/data/dispatch";
+import { CarService } from "../../../../../services/car.service";
+import { FormBuilder } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-dispatch-list',
@@ -8,4 +11,15 @@ import { list } from "../../../../../shared/data/dispatch";
 })
 export class DispatchListComponent {
   list: any = list;
+
+  constructor(
+    private carServ: CarService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {
+  }
+
+  goToForm(id: any) {
+    this.router.navigate(['/dispatch_list', id])
+  }
 }
