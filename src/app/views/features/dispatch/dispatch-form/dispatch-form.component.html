@@ -3,7 +3,7 @@
     <div class="col-8">
       <form [formGroup]="dispatch_form">
       <p-card>
-        <h1 class="text-center">新增派工單</h1>
+        <h1 class="text-center">新增運輸訂單</h1>
         <div class="grid">
           <div class="col-12">
             <div class="flex justify-content-between">
@@ -15,13 +15,13 @@
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
               <label class="font-semibold"><span class="text-red-600">*</span>派工名稱</label>
-              <input pInputText/>
+              <input formControlName="name" pInputText/>
             </div>
           </div>
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
               <label class="font-semibold">承運日期</label>
-              <p-calendar formControlName="date" dateFormat="yy-mm-dd"></p-calendar>
+              <p-calendar formControlName="date" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
             </div>
           </div>
           <div class="col-12 md:col-6 lg:col-6">
@@ -33,13 +33,13 @@
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
               <label class="font-semibold">板台號碼</label>
-              <input pInputText/>
+              <p-dropdown formControlName="pallet"></p-dropdown>
             </div>
           </div>
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
               <label class="font-semibold"><span class="text-red-600">*</span>品名</label>
-              <input pInputText/>
+              <input formControlName="product_name" pInputText/>
             </div>
           </div>
           <div class="col-12 md:col-6 lg:col-6">
@@ -63,13 +63,13 @@
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
               <label class="font-semibold"><span class="text-red-600">*</span>起運點</label>
-              <input pInputText/>
+              <input formControlName="origin" pInputText/>
             </div>
           </div>
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
               <label class="font-semibold"><span class="text-red-600">*</span>卸貨點</label>
-              <input pInputText/>
+              <input formControlName="destination" pInputText/>
             </div>
           </div>
           <div class="col-12">

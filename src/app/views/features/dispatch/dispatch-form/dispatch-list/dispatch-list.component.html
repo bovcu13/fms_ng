@@ -2,13 +2,11 @@
   <div class="col-8">
 <!--    <p-tabView>-->
 <!--      <p-tabPanel header="派工單">-->
-        <p-card header="派工單">
+        <p-card header="運輸訂單">
           <p-tabView>
-            <p-tabPanel header="所有派工單">
+            <p-tabPanel header="所有訂單">
               <div class="flex justify-content-end mb-3">
-                <div class="flex justify-content-end mb-3">
                   <p-button routerLink="/dispatch_form" icon="pi pi-plus" styleClass="p-button-info p-button-text"></p-button>
-                </div>
               </div>
               <p-dataView [value]="list">
                 <ng-template let-list pTemplate="listItem">
@@ -21,12 +19,12 @@
 
                           <div class="flex align-items-center gap-3">
                                 <span class="flex align-items-center gap-2">
-                                <i class="pi pi-at text-xs"></i>
-                                <span class="font-medium text-xs">{{ list.order_date }}</span>
+                                <i class="pi pi-calendar text-xs"></i>
+                                <span class="font-medium text-xs">{{ list.created_at }}</span>
                                   </span>
                             <span class="flex align-items-center gap-2">
                                 <i class="pi pi-tag text-xs"></i>
-                                <span class="font-medium text-xs">{{ list.order_number }}</span>
+                                <span class="font-medium text-xs">{{ list.id }}</span>
                                 </span>
                           </div>
                         </div>
