@@ -204,8 +204,15 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
-            label: '倉儲',
-            icon: 'pi pi-fw pi-box'
+            label: '倉儲管理',
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/warehouse_list',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(84, 200, 240, 0.1)',
+            }
           },
           {
             label: '客戶管理',
