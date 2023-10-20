@@ -6,27 +6,38 @@
           <p-tabView>
             <p-tabPanel header="所有訂單">
               <div class="flex justify-content-end mb-3">
-                  <p-button icon="pi pi-search" styleClass="p-button-info p-button-text"></p-button>
+                <p-button icon="pi pi-search" styleClass="p-button-info p-button-text"></p-button>
               </div>
               <p-dataView [value]="list">
                 <ng-template let-list pTemplate="listItem">
                   <div pRipple class="col-6 styled-box" (click)="goToForm(list.id)">
                     <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
-                      <div
-                        class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                      <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
                         <div class="flex flex-column align-items-center sm:align-items-start gap-3">
                           <div class="text-lg font-bold">{{ list.name }}</div>
-
                           <div class="flex align-items-center gap-3">
-                                <span class="flex align-items-center gap-2">
-                                <i class="pi pi-calendar text-xs"></i>
-                                <span class="font-medium text-xs">{{ list.created_at }}</span>
-                                  </span>
                             <span class="flex align-items-center gap-2">
-                                <i class="pi pi-tag text-xs"></i>
-                                <span class="font-medium text-xs">{{ list.id }}</span>
-                                </span>
+                              <i class="pi pi-tag text-xs"></i>
+                              <span class="font-medium text-xs">{{ list.id }}</span>
+                            </span>
                           </div>
+                          <div class="flex align-items-center gap-3">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-info-circle text-xs"></i>
+                              <span class="font-medium text-xs">{{ list.trips ? list.trips[list.now-1].origin : null }}</span>
+                              <i class="pi pi-arrow-right text-xs"></i>
+                              <span class="font-medium text-xs">{{ list.trips ? list.trips[list.now-1].destination : null }}</span>
+                            </span>
+                          </div>
+                          <div class="flex align-items-center gap-3">
+                          <span class="flex align-items-center gap-2">
+                              <i class="pi pi-map-marker text-xs"></i>
+                              <span class="font-medium text-xs">{{ list.addr }}</span>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
+                          <p-tag [severity]="list.status === '運送中' ? 'warning' : 'info'">{{ list.status }}</p-tag>
                         </div>
                       </div>
                     </div>

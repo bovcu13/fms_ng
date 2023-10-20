@@ -3,6 +3,9 @@ export const list = [
     name: "運輸訂單01",
     created_at: "2023-10-19",
     id: "0",
+    addr: "台北市大安區復興南路一段123號",
+    status: "運送中",
+    now: 3,
     trips: [
       {
         date: "2023-10-19",
@@ -65,6 +68,9 @@ export const list = [
     name: "運輸訂單02",
     created_at: "2023-10-20",
     id: "1",
+    addr: "新北市板橋區文化路二段456號",
+    status: "待攬收",
+    now: 1,
     trips: [
       {
         date: "2023-10-19",
