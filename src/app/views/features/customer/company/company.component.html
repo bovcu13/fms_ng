@@ -1,69 +1,75 @@
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-12">
-    <p-tabView>
-      <p-tabPanel header="客戶資料">
         <div class="col-12">
           <p-button icon="pi pi-arrow-left" [routerLink]="['/customer']"
                     styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
         </div>
         <form [formGroup]="editCompany_form">
           <div class="flex justify-content-center">
-            <div class="col-6">
+            <div class="col-8">
               <div class="grid row-gap-2 flex justify-content-center">
                 <div class="col-3 flex align-items-center">
-                  <p-image src="assets/image/car3.jpg" alt="Image" width="150" [preview]="true"></p-image>
+                  <p-image src="assets/image/car3.jpg" alt="Image" width="100" [preview]="true"></p-image>
                 </div>
                 <div class="col-9 flex align-items-center justify-content-start">
                   <label class="text-6xl font-bold">{{editCompany_form.controls['name'].value}}</label>
                 </div>
-                <div class="field col-6">
-                  <label class="font-semibold">客戶</label>
-                  <input pInputText formControlName="name"/>
-                </div>
-                <div class="field col-6">
-                  <label class="font-semibold">地址</label>
-                  <input pInputText formControlName="address"/>
-                </div>
-                <div class="col-12 flex justify-content-end">
-                  <button pButton pRipple label="儲存" class="p-button-success"></button>
+                <div class="col-12">
+                <p-tabView>
+                  <p-tabPanel header="基本資料">
+                    <div class="grid">
+                    <div class="field col-6">
+                      <label class="font-semibold">客戶</label>
+                      <input pInputText formControlName="name"/>
+                    </div>
+                    <div class="field col-6">
+                      <label class="font-semibold">地址</label>
+                      <input pInputText formControlName="address"/>
+                    </div>
+                    <div class="col-12 flex justify-content-end">
+                      <button pButton pRipple label="儲存" class="p-button-success"></button>
+                    </div>
+                    </div>
+                  </p-tabPanel>
+                  <p-tabPanel header="倉儲">
+                    <div class="col-12">
+                      <p-button icon="pi pi-arrow-left" [routerLink]="['/customer']"
+                                styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
+                    </div>
+                    <p-dataView [value]="warehousesData">
+                      <ng-template let-product pTemplate="listItem">
+                        <div pRipple class="col-6 styled-box" (click)="goToWarehouse(product.id)">
+                          <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
+                            <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/warehouse.png'"/>
+                            <div
+                              class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                              <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                                <div class="text-lg font-bold">{{ product.manager }}</div>
+
+                                <div class="flex align-items-center gap-3">
+                                <span class="flex align-items-center gap-2">
+                                <i class="pi pi-at text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.name }}</span>
+                                  </span>
+                                  <span class="flex align-items-center gap-2">
+                                <i class="pi pi-tag text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.address }}</span>
+                                </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-dataView>
+                  </p-tabPanel>
+                  <p-tabPanel header="貨物品項">
+                  </p-tabPanel>
+                </p-tabView>
                 </div>
               </div>
             </div>
           </div>
         </form>
-      </p-tabPanel>
-      <p-tabPanel header="倉儲">
-        <div class="col-12">
-          <p-button icon="pi pi-arrow-left" [routerLink]="['/customer']"
-                    styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
-        </div>
-        <p-dataView [value]="warehousesData">
-          <ng-template let-product pTemplate="listItem">
-            <div pRipple class="col-6 styled-box" (click)="goToWarehouse(product.id)">
-              <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
-                <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/warehouse.png'"/>
-                <div
-                  class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                  <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                    <div class="text-lg font-bold">{{ product.manager }}</div>
-
-                    <div class="flex align-items-center gap-3">
-                                <span class="flex align-items-center gap-2">
-                                <i class="pi pi-at text-xs"></i>
-                                <span class="font-medium text-xs">{{ product.name }}</span>
-                                  </span>
-                      <span class="flex align-items-center gap-2">
-                                <i class="pi pi-tag text-xs"></i>
-                                <span class="font-medium text-xs">{{ product.address }}</span>
-                                </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </p-dataView>
-      </p-tabPanel>
-    </p-tabView>
   </div>
 </div>

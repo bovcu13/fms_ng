@@ -41,6 +41,7 @@ import {GpsDeviceComponent} from "../features/fleet-mgmt/gps-device/gps-device.c
 import {DispatchFormComponent} from "../features/dispatch/dispatch-form/dispatch-form.component";
 import {DispatchListComponent} from "../features/dispatch/dispatch-form/dispatch-list/dispatch-list.component";
 import {ETrackingComponent} from "../features/dispatch/e-tracking/e-tracking.component";
+import {WarehouseListComponent} from "../features/my-warehouse/warehouse-list/warehouse-list.component";
 
 
 const routes: Routes = [
@@ -60,6 +61,8 @@ const routes: Routes = [
       {path: 'dispatch_list/:id', component: DispatchFormComponent, canActivate: [AuthGuard]},
       {path: 'dispatch_form', component: DispatchFormComponent, canActivate: [AuthGuard]},
       {path: 'e_tracking', component: ETrackingComponent, canActivate: [AuthGuard]},
+      // my-warehouse
+      {path: 'warehouse_list', component: WarehouseListComponent, canActivate: [AuthGuard]},
       // customer
       {path: 'customer', component: CustomerComponent, canActivate: [AuthGuard]},
       {path: 'company/:id', component: CompanyComponent, canActivate: [AuthGuard]},
