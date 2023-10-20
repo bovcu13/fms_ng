@@ -53,14 +53,6 @@ export class FleetMgmtComponent {
     this.getAllGpsDevicesRequest()
   }
 
-  tab: any
-
-  getTabName(event: any) {
-    const index = event.index;
-    this.tab = this.tabView.tabs[index].header;
-    console.log(this.tab);
-  }
-
   fleetsData: any;
   addFleetDialogVisible = false;
 
