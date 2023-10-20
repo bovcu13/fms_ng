@@ -48,6 +48,7 @@ import {DispatchFormComponent} from "../features/dispatch/dispatch-form/dispatch
 import {DispatchListComponent} from "../features/dispatch/dispatch-form/dispatch-list/dispatch-list.component";
 import {ETrackingComponent} from "../features/dispatch/e-tracking/e-tracking.component";
 import {WarehouseListComponent} from "../features/my-warehouse/warehouse-list/warehouse-list.component";
+import {WarehouseViewComponent} from "../features/my-warehouse/warehouse-view/warehouse-view.component";
 
 
 @NgModule({
@@ -94,6 +95,7 @@ import {WarehouseListComponent} from "../features/my-warehouse/warehouse-list/wa
     DispatchListComponent,
     ETrackingComponent,
     WarehouseListComponent,
+    WarehouseViewComponent
   ],
   imports: [
     CommonModule,

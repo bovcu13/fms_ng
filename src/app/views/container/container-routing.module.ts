@@ -42,7 +42,7 @@ import {DispatchFormComponent} from "../features/dispatch/dispatch-form/dispatch
 import {DispatchListComponent} from "../features/dispatch/dispatch-form/dispatch-list/dispatch-list.component";
 import {ETrackingComponent} from "../features/dispatch/e-tracking/e-tracking.component";
 import {WarehouseListComponent} from "../features/my-warehouse/warehouse-list/warehouse-list.component";
-
+import {WarehouseViewComponent} from "../features/my-warehouse/warehouse-view/warehouse-view.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '', pathMatch: 'full'},
@@ -63,6 +63,7 @@ const routes: Routes = [
       {path: 'e_tracking', component: ETrackingComponent, canActivate: [AuthGuard]},
       // my-warehouse
       {path: 'warehouse_list', component: WarehouseListComponent, canActivate: [AuthGuard]},
+      {path: 'warehouse_list/:id', component: WarehouseViewComponent, canActivate: [AuthGuard]},
       // customer
       {path: 'customer', component: CustomerComponent, canActivate: [AuthGuard]},
       {path: 'company/:id', component: CompanyComponent, canActivate: [AuthGuard]},
