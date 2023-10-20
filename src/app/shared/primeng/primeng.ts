@@ -55,6 +55,7 @@ import {DataViewModule} from "primeng/dataview";
 import {OrderListModule} from "primeng/orderlist";
 import {RippleModule} from "primeng/ripple";
 import {MessageService} from 'primeng/api';
+import {StepsModule} from "primeng/steps";
 
 @NgModule({
   declarations: [],
@@ -116,7 +117,8 @@ import {MessageService} from 'primeng/api';
     DataViewModule,
     OrderListModule,
     RippleModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    StepsModule
   ],
   providers: [MessageService]
 })
