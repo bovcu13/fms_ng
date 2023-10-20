@@ -32,9 +32,8 @@
                     </div>
                   </p-tabPanel>
                   <p-tabPanel header="倉儲">
-                    <div class="col-12">
-                      <p-button icon="pi pi-arrow-left" [routerLink]="['/customer']"
-                                styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
+                    <div class="flex justify-content-end mb-3">
+                      <p-button icon="pi pi-plus" styleClass="p-button-info p-button-text"></p-button>
                     </div>
                     <p-dataView [value]="warehousesData">
                       <ng-template let-product pTemplate="listItem">

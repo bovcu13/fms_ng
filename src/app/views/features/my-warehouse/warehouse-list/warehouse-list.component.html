@@ -1,1 +1,40 @@
-<p>my-warehouse works!</p>
+<div class="overflow-x-hidden flex justify-content-center">
+  <div class="col-8">
+    <p-tabView>
+      <p-tabPanel header="倉儲">
+        <p-card header="倉儲">
+          <p-tabView>
+            <p-tabPanel header="所有倉儲">
+              <div class="flex justify-content-end mb-3">
+                <p-button icon="pi pi-plus" styleClass="p-button-info p-button-text"></p-button>
+              </div>
+              <p-dataView [value]="warehousesData">
+                <ng-template let-product pTemplate="listItem">
+                  <div pRipple class="col-6 styled-box" (click)="goToWarehouse(product.id)">
+                    <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
+                      <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                        <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                          <div class="text-lg font-bold">{{ product.name }}</div>
+                          <div class="flex align-items-center gap-3">
+                                <span class="flex align-items-center gap-2">
+                                <i class="pi pi-at text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.manager }}</span>
+                                  </span>
+                            <span class="flex align-items-center gap-2">
+                                <i class="pi pi-tag text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.address }}</span>
+                                </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dataView>
+            </p-tabPanel>
+          </p-tabView>
+        </p-card>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>
