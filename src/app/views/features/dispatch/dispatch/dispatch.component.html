@@ -1,16 +1,40 @@
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-8">
     <p-tabView>
-      <p-tabPanel header="派車與調度">
-        <p-card header="派車與調度">
+      <p-tabPanel header="派工與調度">
+        <p-card header="派工與調度">
           <p-tabView>
             <p-tabPanel header="所有工作">
-              <div class="flex justify-content-end mb-3">
                 <div class="flex justify-content-end mb-3">
                   <p-button icon="pi pi-plus" (click)="openNewDispatch()"
                             styleClass="p-button-info p-button-text"></p-button>
                 </div>
-              </div>
+                <p-dataView [value]="workData">
+                  <ng-template let-product pTemplate="listItem">
+                    <div pRipple class="col-6 styled-box">
+                      <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
+                        <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/warehouse.png'"/>
+                        <div
+                          class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                          <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                            <div class="text-lg font-bold">{{ product.name }}</div>
+
+                            <div class="flex align-items-center gap-3">
+                                <span class="flex align-items-center gap-2">
+                                <i class="pi pi-at text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.driver }}</span>
+                                  </span>
+                              <span class="flex align-items-center gap-2">
+                                <i class="pi pi-tag text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.form }}</span>
+                                </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-dataView>
             </p-tabPanel>
           </p-tabView>
         </p-card>
@@ -19,11 +43,19 @@
   </div>
 </div>
 
-<p-dialog header="新增運輸派工" [(visible)]="newDispatchVisible" [modal]="true" [style]="{ width: '40vw' }" [draggable]="false" [resizable]="false">
+<p-dialog header="新增工作" [(visible)]="newDispatchVisible" [modal]="true" [style]="{ width: '40vw' }" [draggable]="false" [resizable]="false">
   <div class="grid">
     <div class="field col-12 md:col-6 lg:col-6">
-      <label class="font-semibold">姓名</label>
-      <p-dropdown></p-dropdown>
+      <label class="font-semibold">日期</label>
+      <p-calendar [appendTo]="'body'"></p-calendar>
+    </div>
+    <div class="field col-12 md:col-6 lg:col-6">
+      <label class="font-semibold">運輸訂單</label>
+      <p-dropdown placeholder="選擇訂單" [options]="formList"></p-dropdown>
+    </div>
+    <div class="field col-12 md:col-6 lg:col-6">
+      <label class="font-semibold">司機</label>
+      <p-dropdown placeholder="選擇司機" [options]="driverData" optionLabel="name"></p-dropdown>
     </div>
     <div class="field col-12 md:col-6 lg:col-6">
       <label class="font-semibold">車牌</label>
@@ -31,7 +63,7 @@
     </div>
     <div class="field col-12 md:col-6 lg:col-6">
       <label class="font-semibold">預計出車時間</label>
-      <p-calendar [showTime]="true" [showSeconds]="true"></p-calendar>
+      <p-calendar [showTime]="true" [showSeconds]="true" [appendTo]="'body'"></p-calendar>
     </div>
     <div class="field col-12 md:col-6 lg:col-6">
       <label class="font-semibold">實際出車時間</label>
@@ -39,7 +71,7 @@
     </div>
     <div class="field col-12 md:col-6 lg:col-6">
       <label class="font-semibold">預計到達時間</label>
-      <p-calendar [showTime]="true" [showSeconds]="true"></p-calendar>
+      <p-calendar [showTime]="true" [showSeconds]="true" [appendTo]="'body'"></p-calendar>
     </div>
     <div class="field col-12 md:col-6 lg:col-6">
       <label class="font-semibold">實際到達時間</label>
