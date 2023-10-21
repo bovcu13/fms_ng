@@ -26,7 +26,7 @@
         <label class="skynet text-5xl font-bold ml-2">Skynet Premium</label>
       </div>
       <div class="flex justify-content-center align-items-center mt-5">
-        <form [formGroup]="premium_form" (ngSubmit)="pay()">
+        <form ngNoForm action={{payurl}} method="POST">
           <div class="flex justify-content-center align-items-center mt-5">
             <label class="inset font-bold text-5xl">提供企業貨主及夥伴車行完整的軟體服務</label>
           </div>
@@ -34,9 +34,18 @@
             <label class="inset text-lg">免費試用 1 個月 • 之後是 每月 $199 • 隨時可取消</label>
           </div>
           <div class="flex justify-content-center align-items-center mt-5">
-            <input type="text" pInputText formControlName="email" placeholder="請輸入電子郵件"
+            <input type="text" name="email" placeholder="請輸入電子郵件"
                    class="text-center text-lg border-2 border-black rounded-lg w-1/2">
           </div>
+          <input type="text" name="MerchantID" value={{MerchantID}}
+                   class="text-center text-lg border-2 border-black rounded-lg w-1/2" style="display: none">
+                   <input type="text" name="TradeInfo" value={{TradeInfo}}
+                   class="text-center text-lg border-2 border-black rounded-lg w-1/2" style="display: none">
+                   <input type="text" name="TradeSha" value={{TradeSha}}
+                   class="text-center text-lg border-2 border-black rounded-lg w-1/2" style="display: none">
+                   <input type="text" name="Version" value={{Version}}
+                   class="text-center text-lg border-2 border-black rounded-lg w-1/2" style="display: none">
+
           <div class="flex justify-content-center align-items-center mt-5">
             <p-button type="submit" label="免費試用" styleClass="p-button-rounded" [style]="{ width: '10em' }"></p-button>
           </div>
