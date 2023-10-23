@@ -11,3 +11,15 @@
     color: #495057;
   }
 }
+
+// 路線內的格式
+.custom-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  color: #FFFFFF;
+  vertical-align: middle;
+}
