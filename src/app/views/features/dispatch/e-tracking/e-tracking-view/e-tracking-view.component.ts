@@ -62,10 +62,10 @@ export class ETrackingViewComponent implements OnInit {
 
   constructor() {
     this.events = [
-      { status: '仁武', date: '抵達：2023-10-23 09:00', icon: 'pi pi-check', color: '#87B0C4' },
+      { status: '仁武', date: '抵達：2023-10-23 09:00', icon: 'pi pi-check-circle', color: '#B6C5CC' },
       { status: '堅富', date: '預計抵達時間：2023-10-23 10:30', icon: 'pi pi-truck', color: '#FF9800' },
-      { status: '仁武', date: '預計抵達時間：2023-10-23 16:15', icon: 'pi pi-hourglass', color: '#87B0C4' },
-      { status: '朧賢', date: '預計抵達時間：2023-10-23 17:00', icon: 'pi pi-hourglass', color: '#87B0C4' }
+      { status: '仁武', date: '預計抵達時間：2023-10-23 16:15', icon: 'pi pi-circle', color: '#B6C5CC' },
+      { status: '朧賢', date: '預計抵達時間：2023-10-23 17:00', icon: 'pi pi-circle', color: '#B6C5CC' }
     ];
   }
 
