@@ -3,11 +3,19 @@
     <p-tabView>
       <p-tabPanel header="貨態追蹤">
         <p-card header="貨態追蹤">
+          <div class="col-12 flex justify-content-between mb-3">
+            <div class="w-full">
+                <span class="w-full p-input-icon-left">
+                <i class="pi pi-search text-yellow-600"></i>
+                <input type="text" pInputText />
+                </span>
+            </div>
+            <div class="ml-2">
+              <p-button icon="pi pi-sliders-h" severity="secondary"></p-button>
+            </div>
+          </div>
           <p-tabView>
             <p-tabPanel header="所有訂單">
-              <div class="flex justify-content-end mb-3">
-                <p-button icon="pi pi-search" styleClass="p-button-info p-button-text"></p-button>
-              </div>
               <p-dataView [value]="list">
                 <ng-template let-list pTemplate="listItem">
                   <div pRipple class="col-6 styled-box" (click)="goToForm(list.id)">
