@@ -43,5 +43,32 @@
     border-radius: 6px;
   }
 
+  .p-panel .p-panel-header {
+    border: 1px solid #DBCBA4;
+    padding: 1rem;
+    background: rgba(255, 205, 89);
+    color: #495057;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+  }
+
+  .p-panel .p-panel-content {
+    padding: 1rem;
+    border: 1px solid #DBCBA4;
+    background: #fffffb;
+    color: #495057;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top: 0 none;
+  }
+
+  .p-timeline-event-opposite {
+    display: none; /* 隱藏opposite */
+  }
+
+  .p-timeline .p-timeline-right {
+    float: none; /* 取消右侧内容的浮动 */
+    width: auto; /* 自动宽度以填充整个容器 */
+  }
 
 }

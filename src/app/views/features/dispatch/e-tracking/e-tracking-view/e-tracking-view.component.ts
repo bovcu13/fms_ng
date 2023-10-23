@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from "primeng/api";
+import { list } from "../../../../../shared/data/dispatch";
 
 declare var google: any;
+
+interface EventItem {
+  status?: string;
+  date?: string;
+  icon?: string;
+  color?: string;
+  image?: string;
+}
 
 @Component({
   selector: 'app-e-tracking-view',
@@ -9,7 +18,56 @@ declare var google: any;
   styleUrls: ['./e-tracking-view.component.scss']
 })
 export class ETrackingViewComponent implements OnInit {
+  events: EventItem[];
   items: MenuItem[] | undefined;
+
+  goodsData = [
+    {
+      id: 1,
+      name: '筆記本電腦',
+      spec: '15吋, Intel Core i7, 512GB SSD',
+      quantity: 2,
+      unit: '台',
+      price: 999.99,
+      total: 1999.98,
+    },
+    {
+      id: 2,
+      name: '4K LED 電視',
+      spec: '55吋, Smart TV',
+      quantity: 1,
+      unit: '台',
+      price: 699.99,
+      total: 699.99,
+    },
+    {
+      id: 3,
+      name: '耳機',
+      spec: '無線藍牙, 降噪功能',
+      quantity: 5,
+      unit: '對',
+      price: 149.99,
+      total: 749.95,
+    },
+    {
+      id: 4,
+      name: '咖啡機',
+      spec: '單杯咖啡機, 咖啡膠囊',
+      quantity: 3,
+      unit: '台',
+      price: 79.99,
+      total: 239.97,
+    }
+  ]
+
+  constructor() {
+    this.events = [
+      { status: '仁武', date: '抵達：2023-10-23 09:00', icon: 'pi pi-check', color: '#87B0C4' },
+      { status: '堅富', date: '預計抵達時間：2023-10-23 10:30', icon: 'pi pi-truck', color: '#FF9800' },
+      { status: '仁武', date: '預計抵達時間：2023-10-23 16:15', icon: 'pi pi-hourglass', color: '#87B0C4' },
+      { status: '朧賢', date: '預計抵達時間：2023-10-23 17:00', icon: 'pi pi-hourglass', color: '#87B0C4' }
+    ];
+  }
 
   ngOnInit() {
     this.initMap();
@@ -174,4 +232,5 @@ export class ETrackingViewComponent implements OnInit {
 
   }
 
+  protected readonly list = list;
 }
