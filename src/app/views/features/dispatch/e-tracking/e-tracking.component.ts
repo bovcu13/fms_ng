@@ -25,6 +25,6 @@ export class ETrackingComponent {
   }
 
   goToForm(id: any) {
-    this.router.navigate(['/dispatch_list', id])
+    this.router.navigate(['/e_tracking_view'])
   }
 }

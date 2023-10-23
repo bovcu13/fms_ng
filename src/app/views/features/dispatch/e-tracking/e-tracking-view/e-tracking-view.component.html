@@ -5,16 +5,271 @@
                 styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
     </div>
     <div class="flex justify-content-center">
-      <div class="col-8">
-        <p-card>
-        <p-steps [model]="items" [readonly]="true"></p-steps>
-        </p-card>
-        <div class="grid flex align-items-center justify-content-start mt-3">
-          <div class="col-12 text-3xl font-bold">運輸訂單01</div>
-          <div class="col-12 text-base">A12345</div>
+      <div class="col-8 flex flex-wrap row-gap-2">
+        <div class="col-12 flex align-items-center justify-content-start gap-2">
+          <div class="text-3xl font-bold">運輸訂單01：</div>
+          <div class="text-3xl">A12345</div>
+          <p-tag severity="warning" value="運送中"></p-tag>
+        </div>
+        <p-divider class="w-full"></p-divider>
+        <div class="col-12 driver-content">
+          <div class="flex xl:flex-row xl:align-items-start p-2 gap-4">
+            <img class="w-3 sm:w-10rem xl:w-4rem block xl:block mx-auto border-round" [src]="'assets/image/car2.png'"/>
+            <div
+              class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-center flex-1 gap-4">
+              <div class="flex flex-column align-items-center sm:align-items-start gap-2">
+                <div class="text-base text-700">司機</div>
+                <div class="text-xl font-bold text-900">李宜蓁</div>
+              </div>
+              <div class="flex gap-2">
+                <p-button label="撥打電話" icon="pi pi-phone"
+                          styleClass="p-button-sm p-button-warning p-button-outlined"></p-button>
+                <p-button label="傳送訊息" icon="pi pi-comments" styleClass="p-button-sm p-button-warning"></p-button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 driver-content">
+          <div class="p-2">
+            <div class="text-xl font-medium text-900 mt-2 mb-4">運輸現況</div>
+            <div id="map" style="height: 50vh; width: 100%;"></div>
+          </div>
+        </div>
+        <div class="col-12 driver-content">
+          <div class="p-2">
+            <div class="text-xl font-medium text-900 mt-2 mb-4">運輸計畫</div>
+            <p-tabView>
+              <p-tabPanel header="詳細資訊">
+                <div class="grid">
+                  <div class="col-7">
+                    <p-panel header="路線">
+                      <p-timeline [value]="events">
+                        <ng-template pTemplate="marker" let-event>
+                          <span class="custom-marker shadow-2" [style.backgroundColor]="event.color">
+                            <i [ngClass]="event.icon"></i>
+                          </span>
+                        </ng-template>
+                        <ng-template pTemplate="content" let-event>
+                          <p-card class="p-4" [header]="event.status" [subheader]="event.date">
+                            <div class="flex justify-content-between">
+                              <p-button label="抵達"
+                                        styleClass="p-button-sm p-button-rounded p-button-warning"></p-button>
+                              <p-button label="提貨"
+                                        styleClass="p-button-sm p-button-rounded p-button-warning"></p-button>
+                              <p-button label="卸貨"
+                                        styleClass="p-button-sm p-button-rounded p-button-warning"></p-button>
+                              <p-button label="完成"
+                                        styleClass="p-button-sm p-button-rounded p-button-success"></p-button>
+                              <p-button label="異常"
+                                        styleClass="p-button-sm p-button-rounded p-button-danger"></p-button>
+                            </div>
+                          </p-card>
+                        </ng-template>
+                      </p-timeline>
+                    </p-panel>
+                  </div>
+                  <div class="col-5">
+                    <p-panel header="行駛狀態">
+                      <div class="track-content">
+                        <div class="flex flex-column align-items-center sm:align-items-start p-2 gap-2">
+                          <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-map-marker text-xs text-600"></i>
+                              <span class="font-medium text-xs text-600">目前位置</span>
+                            </span>
+                          </div>
+                          <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-map-marker text-xs text-0"></i>
+                              <span class="font-medium text-sm text-900">814高雄市仁武區水管路100號</span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="track-content mt-3">
+                        <div class="flex flex-column align-items-center sm:align-items-start p-2 gap-2">
+                          <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-map text-xs text-600"></i>
+                              <span class="font-medium text-xs text-600">行駛距離</span>
+                            </span>
+                          </div>
+                          <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-map-marker text-xs text-0"></i>
+                              <span class="font-medium text-sm text-900">11456km</span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="track-content mt-3">
+                        <div class="flex flex-column align-items-center sm:align-items-start p-2 gap-2">
+                          <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-bolt text-xs text-600"></i>
+                              <span class="font-medium text-xs text-600">時速</span>
+                            </span>
+                          </div>
+                          <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-map-marker text-xs text-0"></i>
+                              <span class="font-medium text-sm text-900">100km/h</span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </p-panel>
+                    <div class="mt-3">
+                      <p-panel header="行程資料">
+                        <div class="track-content mt-3">
+                          <div class="flex flex-column align-items-center sm:align-items-start p-2 gap-2">
+                            <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-sign-out text-xs text-600"></i>
+                              <span class="font-medium text-xs text-600">出發地</span>
+                            </span>
+                            </div>
+                            <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-map-marker text-xs text-0"></i>
+                              <span class="font-medium text-sm text-900">804高雄市鼓山區大順一路111號</span>
+                            </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="track-content mt-3">
+                          <div class="flex flex-column align-items-center sm:align-items-start p-2 gap-2">
+                            <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-flag text-xs text-600"></i>
+                              <span class="font-medium text-xs text-600">目的地</span>
+                            </span>
+                            </div>
+                            <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-map-marker text-xs text-0"></i>
+                              <span class="font-medium text-sm text-900">806高雄市前鎮區二聖一路290號</span>
+                            </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="track-content mt-3">
+                          <div class="flex flex-column align-items-center sm:align-items-start p-2 gap-2">
+                            <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-clock text-xs text-600"></i>
+                              <span class="font-medium text-xs text-600">預計到達時間</span>
+                            </span>
+                            </div>
+                            <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-map-marker text-xs text-0"></i>
+                              <span class="font-medium text-sm text-900">2023-10-23 10:30</span>
+                            </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="track-content mt-3">
+                          <div class="flex flex-column align-items-center sm:align-items-start p-2 gap-2">
+                            <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-check text-xs text-600"></i>
+                              <span class="font-medium text-xs text-600">實際到達時間</span>
+                            </span>
+                            </div>
+                            <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-map-marker text-xs text-0"></i>
+                              <span class="font-medium text-sm text-900">尚未抵達</span>
+                            </span>
+                            </div>
+                          </div>
+                        </div>
+                      </p-panel>
+                    </div>
+                  </div>
+                </div>
+              </p-tabPanel>
+              <p-tabPanel header="車輛資訊">
+                <div class="flex justify-content-center">
+                  <div class="grid">
+                  <div class="col-4 flex align-items-center">
+                      <p-image src="assets/image/sport-car.png" alt="Image" width="90%" [preview]="true"></p-image>
+                  </div>
+                  <div class="col-8">
+                    <div class="grid">
+                      <div class="col-12">
+                        <div class="flex justify-content-center align-items-center">
+                      <span class="flex align-items-center gap-6">
+                        <i class="pi pi-truck text-2xl text-600"></i>
+                        <span class="font-medium text-2xl text-900">季河27號</span>
+                      </span>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <p-divider></p-divider>
+                      </div>
+                      <div class="col-6">
+                        <div class="flex flex-column gap-2">
+                          <div class="flex align-items-center text-sm font-medium text-600">車型</div>
+                          <div class="flex align-items-center font-medium text-900">Cargo Track HD320</div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="flex flex-column gap-2">
+                          <div class="flex align-items-center text-sm font-medium text-600">空間</div>
+                          <div class="flex align-items-center font-medium text-900">71% / 100%</div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="flex flex-column gap-2">
+                          <div class="flex align-items-center text-sm font-medium text-600">重量</div>
+                          <div class="flex align-items-center font-medium text-900">7.2 噸</div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="flex flex-column gap-2">
+                          <div class="flex align-items-center text-sm font-medium text-600">裝載量</div>
+                          <div class="flex align-items-center font-medium text-900">37245 in3</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </p-tabPanel>
+              <p-tabPanel header="貨品資訊">
+                <p-dataView [value]="goodsData">
+                  <ng-template let-product pTemplate="listItem">
+                    <div pRipple class="col-6 styled-box"  >
+                      <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
+                        <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/warehouse.png'"/>
+                        <div
+                          class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                          <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                            <div class="text-lg font-bold">{{ product.name }}</div>
+
+                            <div class="flex align-items-center gap-3">
+                                <span class="flex align-items-center gap-2">
+                                <i class="pi pi-inbox text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.quantity }} {{ product.unit }}</span>
+                                  </span>
+                              <span class="flex align-items-center gap-2">
+                                <i class="pi pi-tag text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.spec }}</span>
+                                </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-dataView>
+              </p-tabPanel>
+            </p-tabView>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
