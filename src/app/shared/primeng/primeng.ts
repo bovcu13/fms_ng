@@ -56,6 +56,7 @@ import {OrderListModule} from "primeng/orderlist";
 import {RippleModule} from "primeng/ripple";
 import {MessageService} from 'primeng/api';
 import {StepsModule} from "primeng/steps";
+import {GalleriaModule} from "primeng/galleria";
 
 @NgModule({
   declarations: [],
@@ -118,7 +119,8 @@ import {StepsModule} from "primeng/steps";
     OrderListModule,
     RippleModule,
     ConfirmDialogModule,
-    StepsModule
+    StepsModule,
+    GalleriaModule
   ],
   providers: [MessageService]
 })

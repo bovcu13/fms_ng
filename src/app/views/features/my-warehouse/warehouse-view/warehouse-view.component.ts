@@ -9,14 +9,6 @@ import { ActivatedRoute, Router } from "@angular/router";
   styleUrls: ['./warehouse-view.component.scss']
 })
 export class WarehouseViewComponent implements OnInit {
-  editCompany_form: FormGroup;
-  companiesData = [
-    {
-      id: 1,
-      name: 'A倉庫',
-      address: '台北市中山區'
-    }
-  ]
   warehousesData = [
     {
       id: 1,
@@ -25,6 +17,7 @@ export class WarehouseViewComponent implements OnInit {
       address: '台北市中山區'
     }
   ]
+
   goodsData = [
     {
       id: 1,
@@ -64,13 +57,33 @@ export class WarehouseViewComponent implements OnInit {
     }
   ]
 
+  showDetailPage = false;
+  selectedProductId: any; // 變數來保存所選的商品 ID
+
+  showGoodsView(id: any) {
+    this.selectedProductId = id; // 保存所選的商品 ID
+    this.showDetailPage = true; // 顯示商品詳細頁面
+  }
+
+  backWarehouse() {
+    this.showDetailPage = false;
+  }
+
+  addGoodsVisible = false;
+  openAddGoods() {
+    this.addGoodsVisible = true;
+  }
+
+  editWarehouse_form: FormGroup;
+  addGoods_form: FormGroup;
+
   constructor(
     private carServ: CarService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.editCompany_form = this.fb.group({
+    this.editWarehouse_form = this.fb.group({
       id: ['', Validators.required],
       name: ['', Validators.required],
       manager: ['', Validators.required],
@@ -80,9 +93,23 @@ export class WarehouseViewComponent implements OnInit {
       updated_at: [''],
       updated_by: [''],
     });
+
+    this.addGoods_form = this.fb.group({
+      id: ['', Validators.required],
+      name: ['', Validators.required],
+      spec: [''],
+      quantity: ['', Validators.required],
+      unit: ['', Validators.required],
+      price: ['', Validators.required],
+      total: ['', Validators.required],
+      created_at: [''],
+      created_by: [''],
+      updated_at: [''],
+      updated_by: [''],
+    });
   }
 
   ngOnInit(): void {
-    this.editCompany_form.patchValue(this.companiesData[0])
+    this.editWarehouse_form.patchValue(this.warehousesData[0])
   }
 }
