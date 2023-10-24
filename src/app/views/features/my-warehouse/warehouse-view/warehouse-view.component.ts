@@ -9,14 +9,6 @@ import { ActivatedRoute, Router } from "@angular/router";
   styleUrls: ['./warehouse-view.component.scss']
 })
 export class WarehouseViewComponent implements OnInit {
-  editCompany_form: FormGroup;
-  companiesData = [
-    {
-      id: 1,
-      name: 'A倉庫',
-      address: '台北市中山區'
-    }
-  ]
   warehousesData = [
     {
       id: 1,
@@ -25,6 +17,7 @@ export class WarehouseViewComponent implements OnInit {
       address: '台北市中山區'
     }
   ]
+
   goodsData = [
     {
       id: 1,
@@ -64,6 +57,20 @@ export class WarehouseViewComponent implements OnInit {
     }
   ]
 
+  showDetailPage = false;
+  selectedProductId: any; // 變數來保存所選的商品 ID
+
+  showGoodsView(id: any) {
+    this.selectedProductId = id; // 保存所選的商品 ID
+    this.showDetailPage = true; // 顯示商品詳細頁面
+  }
+
+  backWarehouse() {
+    this.showDetailPage = false;
+  }
+
+  editCompany_form: FormGroup;
+
   constructor(
     private carServ: CarService,
     private fb: FormBuilder,
@@ -83,6 +90,6 @@ export class WarehouseViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.editCompany_form.patchValue(this.companiesData[0])
+    this.editCompany_form.patchValue(this.warehousesData[0])
   }
 }
