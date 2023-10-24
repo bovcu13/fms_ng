@@ -4,16 +4,16 @@
       <p-button icon="pi pi-arrow-left" [routerLink]="['/warehouse_list']"
                 styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
     </div>
-    <form [formGroup]="editCompany_form">
       <div class="flex justify-content-center">
         <div class="col-8">
           <div class="grid row-gap-2 flex justify-content-center">
             <div class="col-12 flex align-items-center justify-content-start">
-              <label class="text-6xl font-bold">{{editCompany_form.controls['name'].value}}</label>
+              <label class="text-6xl font-bold">{{editWarehouse_form.controls['name'].value}}</label>
             </div>
             <div class="col-12">
               <p-tabView>
                 <p-tabPanel header="基本資料">
+                  <form [formGroup]="editWarehouse_form">
                   <div class="grid">
                     <div class="field col-6">
                       <label class="font-semibold">名稱</label>
@@ -24,13 +24,14 @@
                       <input pInputText formControlName="address"/>
                     </div>
                     <div class="col-12 flex justify-content-end">
-                      <button pButton pRipple label="儲存" class="p-button-success"></button>
+                      <button pButton pRipple label="儲存" class="p-button-warning"></button>
                     </div>
                   </div>
+                  </form>
                 </p-tabPanel>
                 <p-tabPanel header="倉管">
                   <div class="flex justify-content-end mb-3">
-                    <p-button icon="pi pi-plus" styleClass="p-button-info p-button-text"></p-button>
+                    <p-button icon="pi pi-plus" styleClass="p-button-warning p-button-text"></p-button>
                   </div>
                   <p-dataView [value]="warehousesData">
                     <ng-template let-product pTemplate="listItem">
@@ -62,7 +63,7 @@
                 <p-tabPanel header="貨物品項">
                   <div *ngIf="!showDetailPage">
                   <div class="flex justify-content-end mb-3">
-                    <p-button icon="pi pi-plus" styleClass="p-button-info p-button-text"></p-button>
+                    <p-button (click)="openAddGoods()" icon="pi pi-plus" styleClass="p-button-warning p-button-text"></p-button>
                   </div>
                   <p-dataView [value]="goodsData">
                     <ng-template let-product pTemplate="listItem">
@@ -102,7 +103,54 @@
           </div>
         </div>
       </div>
-    </form>
   </div>
 </div>
 
+
+<p-dialog header="新增貨物品項" [(visible)]="addGoodsVisible" [modal]="true" [style]="{ width: '50vw' }"
+          [draggable]="false" [resizable]="false">
+  <form [formGroup]="addGoods_form">
+  <div class="grid">
+    <div class="col-12 md:col-6 lg:col-6">
+      <div class="field">
+        <label class="font-semibold">名稱</label>
+        <input formControlName="name" pInputText/>
+      </div>
+    </div>
+    <div class="col-12 md:col-6 lg:col-6">
+      <div class="field">
+        <label class="font-semibold">規格</label>
+        <input formControlName="spec" pInputText/>
+      </div>
+    </div>
+    <div class="col-12 md:col-6 lg:col-6">
+      <div class="field">
+        <label class="font-semibold">數量</label>
+        <p-inputNumber class="w-full" formControlName="quantity" [min]="0"></p-inputNumber>
+      </div>
+    </div>
+    <div class="col-12 md:col-6 lg:col-6">
+      <div class="field">
+        <label class="font-semibold">單位</label>
+        <input formControlName="unit" pInputText/>
+      </div>
+    </div>
+    <div class="col-12 md:col-6 lg:col-6">
+      <div class="field">
+        <label class="font-semibold">單價</label>
+        <p-inputNumber class="w-full" formControlName="price" mode="currency" inputId="currency-taiwan" currency="TWD" locale="zh-TW" [min]="0"></p-inputNumber>
+      </div>
+    </div>
+    <div class="col-12 md:col-6 lg:col-6">
+      <div class="field">
+        <label class="font-semibold">總額</label>
+        <p-inputNumber class="w-full" formControlName="total" mode="currency" inputId="currency-taiwan" currency="TWD" locale="zh-TW" [min]="0"></p-inputNumber>
+      </div>
+    </div>
+    <div class="col-12 flex justify-content-end">
+      <p-button label="取消" styleClass="mr-2 p-button-outlined p-button-secondary"></p-button>
+      <p-button label="新增" styleClass="p-button-warning"></p-button>
+    </div>
+  </div>
+  </form>
+</p-dialog>
