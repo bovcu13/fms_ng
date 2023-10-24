@@ -7,7 +7,7 @@
             <p-tabPanel header="所有公司">
               <div class="flex justify-content-end mb-3">
                 <p-button icon="pi pi-plus" (click)="openAddCompany()"
-                          styleClass="p-button-info p-button-text"></p-button>
+                          styleClass="p-button-warning p-button-text"></p-button>
               </div>
               <p-dataView [value]="companiesData">
                 <ng-template let-product pTemplate="listItem">
