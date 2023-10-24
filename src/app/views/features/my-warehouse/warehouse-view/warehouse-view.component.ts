@@ -69,7 +69,13 @@ export class WarehouseViewComponent implements OnInit {
     this.showDetailPage = false;
   }
 
-  editCompany_form: FormGroup;
+  addGoodsVisible = false;
+  openAddGoods() {
+    this.addGoodsVisible = true;
+  }
+
+  editWarehouse_form: FormGroup;
+  addGoods_form: FormGroup;
 
   constructor(
     private carServ: CarService,
@@ -77,7 +83,7 @@ export class WarehouseViewComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.editCompany_form = this.fb.group({
+    this.editWarehouse_form = this.fb.group({
       id: ['', Validators.required],
       name: ['', Validators.required],
       manager: ['', Validators.required],
@@ -87,9 +93,23 @@ export class WarehouseViewComponent implements OnInit {
       updated_at: [''],
       updated_by: [''],
     });
+
+    this.addGoods_form = this.fb.group({
+      id: ['', Validators.required],
+      name: ['', Validators.required],
+      spec: [''],
+      quantity: ['', Validators.required],
+      unit: ['', Validators.required],
+      price: ['', Validators.required],
+      total: ['', Validators.required],
+      created_at: [''],
+      created_by: [''],
+      updated_at: [''],
+      updated_by: [''],
+    });
   }
 
   ngOnInit(): void {
-    this.editCompany_form.patchValue(this.warehousesData[0])
+    this.editWarehouse_form.patchValue(this.warehousesData[0])
   }
 }
