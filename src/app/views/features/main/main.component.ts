@@ -70,6 +70,13 @@ export class MainComponent implements OnInit {
     lng: 120.9876
   };
 
+  TAIWAN_BOUNDS = {
+    north: 25.36,
+    south: 21.86,
+    west: 118.18,
+    east: 123.78,
+  };
+
 
   // 功能列
   items!: MenuItem[];
@@ -95,9 +102,10 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.mapInit();
     this.colsInit();
     this.itemInit();
-    this.mapInit();
+
     this.getAllNewGpsRequest()
         .pipe(
           switchMap(() => {
@@ -194,6 +202,10 @@ export class MainComponent implements OnInit {
     this.mapOptions = {
       zoom: 8,
       center: this.center,
+      restriction: {
+        latLngBounds: this.TAIWAN_BOUNDS,
+        strictBounds: false,
+      },
     };
 
     // 創建地圖實例
