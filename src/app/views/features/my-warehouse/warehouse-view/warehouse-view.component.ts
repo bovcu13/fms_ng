@@ -59,12 +59,10 @@ export class WarehouseViewComponent implements OnInit {
 
   showDetailPage = false;
   selectedProductId: any; // 變數來保存所選的商品 ID
-
   showGoodsView(id: any) {
     this.selectedProductId = id; // 保存所選的商品 ID
     this.showDetailPage = true; // 顯示商品詳細頁面
   }
-
   backWarehouse() {
     this.showDetailPage = false;
   }
