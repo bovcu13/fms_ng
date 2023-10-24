@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-warehouse',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./warehouse.component.scss']
 })
 export class WarehouseComponent {
-
+  @Input() warehouseId: any; // 定義 productId 作為輸入屬性
 }

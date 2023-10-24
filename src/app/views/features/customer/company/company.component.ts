@@ -65,14 +65,21 @@ export class CompanyComponent implements OnInit {
     }
   ];
 
-  showDetailPage = false;
+  showGoodsDetailPage = false;
   selectedProductId: any; // 變數來保存所選的商品 ID
   showGoodsView(id: any) {
     this.selectedProductId = id; // 保存所選的商品 ID
-    this.showDetailPage = true; // 顯示商品詳細頁面
+    this.showGoodsDetailPage = true; // 顯示商品詳細頁面
   }
-  backWarehouse() {
-    this.showDetailPage = false;
+  showWarehouseDetailPage = false;
+  selectedWarehouseId: any;
+  showWarehouseView(id: any) {
+    this.selectedWarehouseId = id;
+    this.showWarehouseDetailPage = true;
+  }
+  backCompany() {
+    this.showGoodsDetailPage = false;
+    this.showWarehouseDetailPage = false;
   }
 
   addGoodsVisible = false;
