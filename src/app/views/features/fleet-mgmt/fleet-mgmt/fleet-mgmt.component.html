@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-8">
     <p-tabView [(activeIndex)]="activeIndex">
@@ -6,7 +7,7 @@
           <p-tabView>
             <p-tabPanel header="所有車隊">
               <div class="flex justify-content-end mb-3">
-                <p-button (click)="addFleetDialogVisible=true"
+                <p-button (click)="addFleetDialogVisible = true"
                           icon="pi pi-plus" styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
               </div>
               <p-dataView [value]="fleetsData">
@@ -17,12 +18,12 @@
                       <div
                         class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
                         <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                          <div class="text-lg font-bold">{{ product.fleet_code }}</div>
+                          <div class="text-lg font-bold">{{ product.name }}</div>
 
                           <div class="flex align-items-center gap-3">
                                 <span class="flex align-items-center gap-2">
                                 <i class="pi pi-at text-xs"></i>
-                                <span class="font-medium text-xs">{{ product.name }}</span>
+                                <span class="font-medium text-xs">{{ product.fleet_code }}</span>
                                   </span>
                           </div>
                         </div>
@@ -116,7 +117,7 @@
 </div>
 
 <!--新增車隊-->
-<p-dialog header="新增車隊" [(visible)]="addFleetDialogVisible" [modal]="true" [style]="{ width: '25vw' }"
+<p-dialog header="新增車隊" [(visible)]="addFleetDialogVisible" [modal]="true" [style]="{ width: '40vw' }"
           [draggable]="false" [resizable]="false">
   <form [formGroup]="addFleet_form">
     <div class="col-12">
@@ -129,8 +130,8 @@
         <input formControlName="name" pInputText/>
       </div>
       <div class="flex justify-content-end">
-        <p-button (click)="postFleetRequest()" label="新增" styleClass="p-button-primary mr-2"></p-button>
-        <p-button label="取消" (click)="addFleetDialogVisible=false"
+        <p-button (click)="postFleetRequest()" label="新增" styleClass="p-button-warning mr-2"></p-button>
+        <p-button label="取消" (click)="closeAddFleetDialog()"
                   styleClass="p-button-outlined p-button-secondary"></p-button>
       </div>
     </div>
@@ -138,7 +139,7 @@
 </p-dialog>
 
 <!--新增車輛-->
-<p-dialog header="新增車輛" [(visible)]="addCarDialogVisible" [modal]="true" [style]="{ width: '30vw' }"
+<p-dialog header="新增車輛" [(visible)]="addCarDialogVisible" [modal]="true" [style]="{ width: '40vw' }"
           [draggable]="false" [resizable]="false">
   <form [formGroup]="addVehicle_form">
     <div class="col-12">
