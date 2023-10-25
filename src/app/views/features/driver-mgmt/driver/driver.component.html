@@ -4,8 +4,7 @@
       <p-tabView>
         <p-tabPanel header="所有司機">
           <div class="flex justify-content-end mb-3">
-            <p-button label="新增司機" (click)="addDialogVisible=true"
-                      styleClass="p-button-link p-button-sm"></p-button>
+            <p-button (click)="addDialogVisible=true" icon="pi pi-plus" styleClass="p-button-warning p-button-text"></p-button>
           </div>
           <p-dataView [value]="driverData">
             <ng-template let-product pTemplate="listItem">
