@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-8">
     <p-tabView [(activeIndex)]="activeIndex">
@@ -6,8 +7,8 @@
           <p-tabView>
             <p-tabPanel header="所有車隊">
               <div class="flex justify-content-end mb-3">
-                <p-button (click)="addFleetDialogVisible=true" label="新增車隊"
-                          styleClass="p-button-link p-button-sm"></p-button>
+                <p-button (click)="addFleetDialogVisible = true"
+                          icon="pi pi-plus" styleClass="p-button-warning p-button-text"></p-button>
               </div>
               <p-dataView [value]="fleetsData">
                 <ng-template let-product pTemplate="listItem">
@@ -17,12 +18,12 @@
                       <div
                         class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
                         <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                          <div class="text-lg font-bold">{{ product.fleet_code }}</div>
+                          <div class="text-lg font-bold">{{ product.name }}</div>
 
                           <div class="flex align-items-center gap-3">
                                 <span class="flex align-items-center gap-2">
                                 <i class="pi pi-at text-xs"></i>
-                                <span class="font-medium text-xs">{{ product.name }}</span>
+                                <span class="font-medium text-xs">{{ product.fleet_code }}</span>
                                   </span>
                           </div>
                         </div>
@@ -40,8 +41,8 @@
           <p-tabView>
             <p-tabPanel header="所有車輛">
               <div class="flex justify-content-end mb-3">
-                <p-button (click)="openAddCarDialog()" label="新增車輛"
-                          styleClass="p-button-link p-button-sm"></p-button>
+                <p-button (click)="openAddCarDialog()"
+                          icon="pi pi-plus" styleClass="p-button-warning p-button-text"></p-button>
               </div>
               <p-dataView [value]="vehiclesData">
                 <ng-template let-product pTemplate="listItem">
@@ -64,21 +65,11 @@
                                 </span>
                           </div>
                         </div>
-                        <!--                        <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">-->
-                        <!--                          <p-button (click)="goToVehicle(product.id)" label="管理"-->
-                        <!--                                    styleClass="p-button-link"></p-button>-->
-                        <!--                        </div>-->
                       </div>
                     </div>
                   </div>
                 </ng-template>
               </p-dataView>
-            </p-tabPanel>
-            <p-tabPanel header="保養定檢">
-
-            </p-tabPanel>
-            <p-tabPanel header="溫度">
-
             </p-tabPanel>
           </p-tabView>
         </p-card>
@@ -126,7 +117,7 @@
 </div>
 
 <!--新增車隊-->
-<p-dialog header="新增車隊" [(visible)]="addFleetDialogVisible" [modal]="true" [style]="{ width: '25vw' }"
+<p-dialog header="新增車隊" [(visible)]="addFleetDialogVisible" [modal]="true" [style]="{ width: '40vw' }"
           [draggable]="false" [resizable]="false">
   <form [formGroup]="addFleet_form">
     <div class="col-12">
@@ -139,16 +130,16 @@
         <input formControlName="name" pInputText/>
       </div>
       <div class="flex justify-content-end">
-        <p-button (click)="postFleetRequest()" label="新增" styleClass="p-button-primary mr-2"></p-button>
-        <p-button label="取消" (click)="addFleetDialogVisible=false"
-                  styleClass="p-button-outlined p-button-secondary"></p-button>
+        <p-button label="取消" (click)="closeAddFleetDialog()"
+                  styleClass="p-button-outlined p-button-secondary mr-2"></p-button>
+        <p-button (click)="postFleetRequest()" label="新增" styleClass="p-button-warning"></p-button>
       </div>
     </div>
   </form>
 </p-dialog>
 
 <!--新增車輛-->
-<p-dialog header="新增車輛" [(visible)]="addCarDialogVisible" [modal]="true" [style]="{ width: '25vw' }"
+<p-dialog header="新增車輛" [(visible)]="addCarDialogVisible" [modal]="true" [style]="{ width: '40vw' }"
           [draggable]="false" [resizable]="false">
   <form [formGroup]="addVehicle_form">
     <div class="col-12">
@@ -166,12 +157,12 @@
       </div>
       <div class="field">
         <label class="font-semibold">車機號碼</label>
-        <input formControlName="sid" pInputText/>
+        <p-dropdown formControlName="sid" [options]="gpsDevicesData" optionLabel="sid" placeholder="選擇車機" appendTo="body"></p-dropdown>
       </div>
       <div class="flex justify-content-end">
-        <p-button (click)="postVehicleRequest()" label="新增" styleClass="p-button-primary mr-2"></p-button>
-        <p-button label="取消" (click)="addCarDialogVisible=false"
-                  styleClass="p-button-outlined p-button-secondary"></p-button>
+        <p-button label="取消" (click)="closeAddCarDialog()"
+                  styleClass="p-button-outlined p-button-secondary mr-2"></p-button>
+        <p-button (click)="postVehicleRequest()" label="新增" styleClass="p-button-warning"></p-button>
       </div>
     </div>
   </form>

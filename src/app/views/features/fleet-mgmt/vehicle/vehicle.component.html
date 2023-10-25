@@ -1,80 +1,85 @@
+<p-toast></p-toast>
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-12">
-    <p-tabView>
-      <p-tabPanel header="車輛資料">
-        <div class="col-12">
-          <p-button icon="pi pi-arrow-left" [routerLink]="['/fleet_mgmt', activeIndex]"
-                    styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
-        </div>
-        <form [formGroup]="editVehicle_form">
-          <div class="flex justify-content-center">
-            <div class="col-6">
-              <div class="grid row-gap-2 flex justify-content-center">
-                <div class="col-3 flex align-items-center">
-                  <p-image src="assets/image/sport-car.png" alt="Image" width="100%" [preview]="true"></p-image>
-                </div>
-                <div class="col-9 flex align-items-center justify-content-start">
-                  <label class="text-6xl font-bold">{{editVehicle_form.controls['name'].value}}</label>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">車牌號碼</label>
-                  <input pInputText formControlName="license_plate"/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">車機號碼</label>
-                  <input pInputText formControlName="sid"/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">車輛名稱</label>
-                  <input pInputText formControlName="name"/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">司機名稱</label>
-                  <input pInputText formControlName="driver"/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">油耗量(公里/公升)</label>
-                  <input pInputText/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">油品種類</label>
-                  <input pInputText/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">計費車種</label>
-                  <input pInputText/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">車輛樣式</label>
-                  <input pInputText/>
-                </div>
-                <div class="col-12 flex justify-content-end">
-                  <button pButton pRipple label="儲存" (click)="updateVehicleRequest(id,editVehicle_form.value)"
-                          class="p-button-success"></button>
-                </div>
-              </div>
+    <div class="col-12">
+      <p-button icon="pi pi-arrow-left" [routerLink]="['/fleet_mgmt', activeIndex]"
+                styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
+    </div>
+    <form [formGroup]="editVehicle_form">
+      <div class="flex justify-content-center">
+        <div class="col-8">
+          <div class="grid">
+            <div class="col-3 flex align-items-center">
+              <p-image src="assets/image/sport-car.png" alt="Image" width="100" [preview]="true"></p-image>
+            </div>
+            <div class="col-8 flex align-items-center justify-content-start">
+              <label class="text-6xl font-bold">{{editVehicle_form.controls['name'].value}}</label>
+            </div>
+            <div class="ml-auto col-1 flex align-items-center">
+              <p-confirmDialog #cd [style]="{ width: '40vw' }">
+                <ng-template pTemplate="footer">
+                  <p-button (click)="cd.reject()" label="取消" icon="pi pi-times"
+                            styleClass="p-button-secondary"></p-button>
+                  <p-button (click)="cd.accept()" label="確定" icon="pi pi-check"
+                            styleClass="p-button-warning"></p-button>
+                </ng-template>
+              </p-confirmDialog>
+              <p-button (click)="deleteVehicleRequest()" icon="pi pi-trash"
+                        styleClass="p-button-lg p-button-rounded p-button-danger p-button-text"></p-button>
+            </div>
+            <div class="col-12">
+              <p-tabView>
+                <p-tabPanel header="基本資料">
+                  <div class="grid row-gap-2 flex justify-content-center">
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">車牌號碼</label>
+                      <input pInputText formControlName="license_plate"/>
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">車機號碼</label>
+                      <input pInputText formControlName="sid"/>
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">車輛名稱</label>
+                      <input pInputText formControlName="name"/>
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">司機名稱</label>
+                      <input pInputText formControlName="driver"/>
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">油耗量(公里/公升)</label>
+                      <input pInputText/>
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">油品種類</label>
+                      <input pInputText/>
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">計費車種</label>
+                      <input pInputText/>
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">車輛樣式</label>
+                      <input pInputText/>
+                    </div>
+                    <div class="col-12 flex justify-content-end">
+                      <button pButton pRipple label="儲存" (click)="updateVehicleRequest(id,editVehicle_form.value)"
+                              class="p-button-warning"></button>
+                    </div>
+                  </div>
+                </p-tabPanel>
+                <p-tabPanel header="保養定檢">
+                  No results found ...
+                </p-tabPanel>
+                <p-tabPanel header="溫度">
+                  No results found ...
+                </p-tabPanel>
+              </p-tabView>
             </div>
           </div>
-        </form>
-      </p-tabPanel>
-      <p-tabPanel header="保養定檢I">
-        <p>
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-          aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-          Nemo enim
-          ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
-          ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-        </p>
-      </p-tabPanel>
-      <p-tabPanel header="溫度">
-        <p>
-          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
-          atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique
-          sunt in culpa
-          qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et
-          expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-        </p>
-      </p-tabPanel>
-    </p-tabView>
+        </div>
+      </div>
+    </form>
   </div>
 </div>

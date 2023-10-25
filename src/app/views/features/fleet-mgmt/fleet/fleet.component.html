@@ -1,38 +1,53 @@
+<p-toast></p-toast>
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-12">
-    <p-tabView>
-      <p-tabPanel header="車隊資料">
-        <div class="col-12">
-          <p-button icon="pi pi-arrow-left" [routerLink]="['/fleet_mgmt']"
-                    styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
-        </div>
-        <form [formGroup]="editFleet_form">
-          <div class="flex justify-content-center">
-            <div class="col-6">
-              <div class="grid row-gap-2 flex justify-content-center">
-                <div class="col-3 flex align-items-center">
-                  <p-image src="assets/image/car1.png" alt="Image" width="100%" [preview]="true"></p-image>
-                </div>
-                <div class="col-9 flex align-items-center justify-content-start">
-                  <label class="text-6xl font-bold">{{editFleet_form.controls['name'].value}}</label>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">車隊代號</label>
-                  <input pInputText formControlName="fleet_code"/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">車隊名稱</label>
-                  <input pInputText formControlName="name"/>
-                </div>
-                <div class="col-12 flex justify-content-end">
-                  <button pButton pRipple label="儲存" (click)="updateFleetRequest(id,editFleet_form.value)"
-                          class="p-button-success"></button>
-                </div>
-              </div>
+    <div class="col-12">
+      <p-button icon="pi pi-arrow-left" [routerLink]="['/fleet_mgmt']"
+                styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
+    </div>
+    <form [formGroup]="editFleet_form">
+      <div class="flex justify-content-center">
+        <div class="col-6">
+          <div class="grid">
+            <div class="col-3 flex align-items-center">
+              <p-image src="assets/image/car1.png" alt="Image" width="100" [preview]="true"></p-image>
             </div>
+            <div class="col-8 flex align-items-center justify-content-start">
+              <label class="text-6xl font-bold">{{editFleet_form.controls['name'].value}}</label>
+            </div>
+            <div class="ml-auto col-1 flex align-items-center">
+              <p-confirmDialog #cd [style]="{ width: '40vw' }">
+                <ng-template pTemplate="footer">
+                  <p-button (click)="cd.reject()" label="取消" icon="pi pi-times"
+                            styleClass="p-button-secondary"></p-button>
+                  <p-button (click)="cd.accept()" label="確定" icon="pi pi-check"
+                            styleClass="p-button-warning"></p-button>
+                </ng-template>
+              </p-confirmDialog>
+              <p-button (click)="deleteFleetRequest()" icon="pi pi-trash"
+                        styleClass="p-button-lg p-button-rounded p-button-danger p-button-text"></p-button>
+            </div>
+            <p-tabView>
+              <p-tabPanel header="車隊資料">
+                <div class="grid">
+                  <div class="field col-12 md:col-6 lg:col-6">
+                    <label class="font-semibold">車隊代號</label>
+                    <input pInputText formControlName="fleet_code"/>
+                  </div>
+                  <div class="field col-12 md:col-6 lg:col-6">
+                    <label class="font-semibold">車隊名稱</label>
+                    <input pInputText formControlName="name"/>
+                  </div>
+                  <div class="col-12 flex justify-content-end">
+                    <button pButton pRipple label="儲存" (click)="updateFleetRequest(id,editFleet_form.value)"
+                            class="p-button-warning"></button>
+                  </div>
+                </div>
+              </p-tabPanel>
+            </p-tabView>
           </div>
-        </form>
-      </p-tabPanel>
-    </p-tabView>
+        </div>
+      </div>
+    </form>
   </div>
 </div>

@@ -1,16 +1,17 @@
-import {Component, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CarService} from "../../../../services/car.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {TabView} from "primeng/tabview";
+import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { CarService } from "../../../../services/car.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { TabView } from "primeng/tabview";
+import { ConfirmationService, MessageService } from "primeng/api";
 
 @Component({
   selector: 'app-fleet-mgmt',
   templateUrl: './fleet-mgmt.component.html',
-  styleUrls: ['./fleet-mgmt.component.scss']
+  styleUrls: ['./fleet-mgmt.component.scss'],
+  providers: [ConfirmationService, MessageService]
 })
 export class FleetMgmtComponent {
-
   activeIndex: number = 0;
 
   @ViewChild(TabView) tabView!: TabView;
@@ -19,10 +20,14 @@ export class FleetMgmtComponent {
   addFleet_form: FormGroup;
   addGpsDevice_form: FormGroup;
 
-  constructor(private carServ: CarService,
-              private fb: FormBuilder,
-              private router: Router,
-              private route: ActivatedRoute) {
+  constructor(
+    private carServ: CarService,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
+  ) {
     this.addVehicle_form = this.fb.group({
       fleet_id: ['c2d40ef0-341a-4793-b1b3-f4e4f82ba9f2', Validators.required],
       name: ['', Validators.required],
@@ -30,10 +35,12 @@ export class FleetMgmtComponent {
       license_plate: ['', Validators.required],
       sid: ['', Validators.required]
     });
+
     this.addFleet_form = this.fb.group({
       fleet_code: ['', Validators.required],
       name: ['', Validators.required]
     });
+
     this.addGpsDevice_form = this.fb.group({
       firm: ['', Validators.required],
       id: ['', Validators.required],
@@ -56,6 +63,12 @@ export class FleetMgmtComponent {
   fleetsData: any;
   addFleetDialogVisible = false;
 
+  closeAddFleetDialog() {
+    this.addFleetDialogVisible = false;
+    this.showCancel('新增');
+    this.addFleet_form.reset();
+  }
+
   // 取得車隊
   getAllFleetsRequest() {
     this.carServ.getAllFleetRequest().subscribe({
@@ -77,8 +90,12 @@ export class FleetMgmtComponent {
     }
     this.carServ.postFleetRequest(body).subscribe({
       next: data => {
-        console.log(data)
-        console.log(body)
+        this.showSussess('新增');
+        this.addFleetDialogVisible = false;
+        this.addFleet_form.reset();
+        this.getAllFleetsRequest();
+        console.log(data);
+        console.log(body);
       },
       error: (err) => {
         console.log(err);
@@ -112,6 +129,12 @@ export class FleetMgmtComponent {
     this.addCarDialogVisible = true;
   }
 
+  closeAddCarDialog() {
+    this.addCarDialogVisible = false;
+    this.showCancel('新增');
+    this.addVehicle_form.reset();
+  }
+
   // 新增車輛
   postVehicleRequest() {
     let body = {
@@ -119,18 +142,22 @@ export class FleetMgmtComponent {
       name: this.addVehicle_form.controls['name'].value,
       driver: this.addVehicle_form.controls['driver'].value,
       license_plate: this.addVehicle_form.controls['license_plate'].value,
-      sid: this.addVehicle_form.controls['sid'].value
+      sid: this.addVehicle_form.controls['sid'].value.sid
     }
     this.carServ.postVehicleRequest(body).subscribe({
       next: data => {
-        console.log(data)
-        console.log(body)
+        this.showSussess('新增');
+        this.addCarDialogVisible = false;
+        this.addVehicle_form.reset();
+        console.log(data);
+        console.log(body);
+        this.getAllVehiclesRequest();
       },
       error: (err) => {
         console.log(err);
+        console.log(body);
       },
     });
-    this.getAllVehiclesRequest()
   }
 
   gpsDevicesData: any;
@@ -160,5 +187,17 @@ export class FleetMgmtComponent {
     this.router.navigate(['/gps_device', id])
   }
 
+  // 操作結果提示
+  showSussess(info = '修改') {
+    this.messageService.add({ severity: 'success', summary: '完成', detail: `${info}成功！` });
+  }
+
+  showError(info = '修改') {
+    this.messageService.add({ severity: 'error', summary: '錯誤', detail: `${info}失敗！` });
+  }
+
+  showCancel(info: string = '修改') {
+    this.messageService.add({ severity: 'warn', summary: '取消', detail: `取消${info}！` });
+  }
 
 }

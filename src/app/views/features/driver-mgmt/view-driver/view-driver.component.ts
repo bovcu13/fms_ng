@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CarService} from "../../../../services/car.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ConfirmationService, MessageService} from "primeng/api";
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-view-driver',
@@ -71,8 +71,8 @@ export class ViewDriverComponent implements OnInit {
   deleteDriver() {
     console.log('open')
     this.confirmationService.confirm({
-      message: `確定刪除${this.editDriver_form.controls['name'].value}?`,
-      header: '確定刪除?',
+      message: `確定刪除${this.editDriver_form.controls['name'].value}？`,
+      header: '確定刪除？',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.carServ.deleteDriverRequest(this.id).subscribe({

@@ -1,70 +1,82 @@
+<p-toast></p-toast>
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-12">
-    <p-tabView>
-      <p-tabPanel header="司機資料">
-        <div class="col-12">
-          <p-button icon="pi pi-arrow-left" [routerLink]="['/driver']"
-                    styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
-        </div>
-        <p-toast></p-toast>
-        <form [formGroup]="editDriver_form">
-          <div class="flex justify-content-center">
-            <div class="col-6">
-              <div class="grid row-gap-2 flex justify-content-center">
-                <div class="col-3 flex align-items-center">
-                  <p-image src="assets/image/car2.png" alt="Image" width="100%" [preview]="true"></p-image>
-                </div>
-                <div class="ml-auto col-8 flex align-items-center">
-                  <label class="text-6xl font-bold">{{editDriver_form.controls['name'].value}}</label>
-                </div>
-                <div class="ml-auto col-1 flex align-items-center">
-                  <p-confirmDialog acceptButtonStyleClass="bg-red-600 border-transparent" acceptLabel="確定"
-                  rejectButtonStyleClass="surface-600 border-transparent" rejectLabel="取消"></p-confirmDialog>
-                  <p-button (click)="deleteDriver()" icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-text"></p-button>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">員工編號</label>
-                  <input pInputText formControlName="employee_id"/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold"><span class="text-red-600">*</span>司機</label>
-                  <input pInputText formControlName="name"
-                         [ngClass]="{'ng-dirty':editDriver_form.controls['name'].hasError('required')
+    <div class="col-12">
+      <p-button icon="pi pi-arrow-left" [routerLink]="['/driver']"
+                styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
+    </div>
+    <form [formGroup]="editDriver_form">
+      <div class="flex justify-content-center">
+        <div class="col-6">
+          <div class="grid row-gap-2 flex justify-content-center">
+            <div class="col-3 flex align-items-center">
+              <p-image src="assets/image/car2.png" alt="Image" width="100" [preview]="true"></p-image>
+            </div>
+            <div class="ml-auto col-8 flex align-items-center">
+              <label class="text-6xl font-bold">{{editDriver_form.controls['name'].value}}</label>
+            </div>
+            <div class="ml-auto col-1 flex align-items-center">
+              <p-confirmDialog #cd [style]="{ width: '40vw' }">
+                <ng-template pTemplate="footer">
+                  <p-button (click)="cd.reject()" label="取消" icon="pi pi-times"
+                            styleClass="p-button-secondary"></p-button>
+                  <p-button (click)="cd.accept()" label="確定" icon="pi pi-check"
+                            styleClass="p-button-warning"></p-button>
+                </ng-template>
+              </p-confirmDialog>
+              <p-button (click)="deleteDriver()" icon="pi pi-trash"
+                        styleClass="p-button-lg p-button-rounded p-button-danger p-button-text"></p-button>
+            </div>
+            <div class="col-12">
+              <p-tabView>
+                <p-tabPanel header="司機資料">
+                  <div class="grid row-gap-2 flex justify-content-center">
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">員工編號</label>
+                      <input pInputText formControlName="employee_id"/>
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold"><span class="text-red-600">*</span>司機</label>
+                      <input pInputText formControlName="name"
+                             [ngClass]="{'ng-dirty':editDriver_form.controls['name'].hasError('required')
                          && editDriver_form.controls['name'].touched}"/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">行動電話</label>
-                  <input pInputText formControlName="phone_number"/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">身份證字號</label>
-                  <input pInputText formControlName="id_card_number"/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">工號</label>
-                  <input pInputText formControlName="employee_number"/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">電子郵件</label>
-                  <input pInputText formControlName="email"/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">連絡地址</label>
-                  <input pInputText formControlName="address"/>
-                </div>
-                <div class="field col-12 md:col-6 lg:col-6">
-                  <label class="font-semibold">每日成本</label>
-                  <input pInputText formControlName="daily_cost"/>
-                  <small *ngIf="editDriver_form.controls['daily_cost'].hasError('pattern')" class="p-error">請輸入整數!</small>
-                </div>
-                <div class="col-12 flex justify-content-end">
-                  <button (click)="editDriver()" pButton pRipple label="儲存" class="p-button-success"></button>
-                </div>
-              </div>
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">行動電話</label>
+                      <input pInputText formControlName="phone_number"/>
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">身份證字號</label>
+                      <input pInputText formControlName="id_card_number"/>
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">工號</label>
+                      <input pInputText formControlName="employee_number"/>
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">電子郵件</label>
+                      <input pInputText formControlName="email"/>
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">連絡地址</label>
+                      <input pInputText formControlName="address"/>
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-6">
+                      <label class="font-semibold">每日成本</label>
+                      <input pInputText formControlName="daily_cost"/>
+                      <small *ngIf="editDriver_form.controls['daily_cost'].hasError('pattern')"
+                             class="p-error">請輸入整數!</small>
+                    </div>
+                    <div class="col-12 flex justify-content-end">
+                      <button (click)="editDriver()" pButton pRipple label="儲存" class="p-button-warning"></button>
+                    </div>
+                  </div>
+                </p-tabPanel>
+              </p-tabView>
             </div>
           </div>
-        </form>
-      </p-tabPanel>
-    </p-tabView>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
