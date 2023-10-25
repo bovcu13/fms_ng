@@ -57,6 +57,17 @@ export class WarehouseViewComponent implements OnInit {
     }
   ]
 
+  warehouses = [ 'A 倉庫','B 倉庫','C 倉庫','D 倉庫','E 倉庫' ];
+
+  managerData = [
+    {
+      id: 1,
+      name: 'A 管理員',
+      phone: '0912345678',
+      warehouse: ['A 倉庫']
+    }
+  ]
+
   showDetailPage = false;
   selectedProductId: any; // 變數來保存所選的商品 ID
   showGoodsView(id: any) {
@@ -72,8 +83,20 @@ export class WarehouseViewComponent implements OnInit {
     this.addGoodsVisible = true;
   }
 
+  editManagerVisable = false;
+  editable = false;
+
+  showEditManager(editable: boolean) {
+    this.editable = editable;
+    if (!editable) {
+      this.editManager_form.reset();
+    }
+    this.editManagerVisable = true;
+  }
+
   editWarehouse_form: FormGroup;
   addGoods_form: FormGroup;
+  editManager_form: FormGroup;
 
   constructor(
     private carServ: CarService,
@@ -105,9 +128,17 @@ export class WarehouseViewComponent implements OnInit {
       updated_at: [''],
       updated_by: [''],
     });
+
+    this.editManager_form = this.fb.group({
+      id: ['', Validators.required],
+      name: ['', Validators.required],
+      phone: ['', Validators.required],
+      warehouse: ['', Validators.required],
+    });
   }
 
   ngOnInit(): void {
     this.editWarehouse_form.patchValue(this.warehousesData[0])
+    this.editManager_form.patchValue(this.managerData[0])
   }
 }
