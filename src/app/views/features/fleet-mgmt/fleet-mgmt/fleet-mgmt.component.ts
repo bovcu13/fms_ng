@@ -1,8 +1,8 @@
-import {Component, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CarService} from "../../../../services/car.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {TabView} from "primeng/tabview";
+import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { CarService } from "../../../../services/car.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { TabView } from "primeng/tabview";
 
 @Component({
   selector: 'app-fleet-mgmt',
@@ -10,7 +10,6 @@ import {TabView} from "primeng/tabview";
   styleUrls: ['./fleet-mgmt.component.scss']
 })
 export class FleetMgmtComponent {
-
   activeIndex: number = 0;
 
   @ViewChild(TabView) tabView!: TabView;
@@ -30,10 +29,12 @@ export class FleetMgmtComponent {
       license_plate: ['', Validators.required],
       sid: ['', Validators.required]
     });
+
     this.addFleet_form = this.fb.group({
       fleet_code: ['', Validators.required],
       name: ['', Validators.required]
     });
+
     this.addGpsDevice_form = this.fb.group({
       firm: ['', Validators.required],
       id: ['', Validators.required],
