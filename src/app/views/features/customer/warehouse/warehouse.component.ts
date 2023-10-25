@@ -8,6 +8,14 @@ import { Component, Input } from '@angular/core';
 export class WarehouseComponent {
   @Input() warehouseId: any; // 定義 productId 作為輸入屬性
 
+  warehouses = [
+    {name: 'New York', code: 'NY'},
+    {name: 'Rome', code: 'RM'},
+    {name: 'London', code: 'LDN'},
+    {name: 'Istanbul', code: 'IST'},
+    {name: 'Paris', code: 'PRS'}
+  ];
+
   warehousesData = [
     {
       id: 1,
@@ -55,4 +63,9 @@ export class WarehouseComponent {
       total: 239.97,
     }
   ]
+
+  editManagerVisable = false;
+  showEditManager() {
+    this.editManagerVisable = true;
+  }
 }
