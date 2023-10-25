@@ -1,71 +1,77 @@
 import { Component, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { CarService } from "../../../../services/car.service";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
-  selector: 'app-warehouse',
-  templateUrl: './warehouse.component.html',
-  styleUrls: ['./warehouse.component.scss']
+    selector: 'app-warehouse',
+    templateUrl: './warehouse.component.html',
+    styleUrls: ['./warehouse.component.scss']
 })
 export class WarehouseComponent {
-  @Input() warehouseId: any; // 定義 productId 作為輸入屬性
+    @Input() warehouseId: any; // 定義 productId 作為輸入屬性
 
-  warehouses = [
-    {name: 'New York', code: 'NY'},
-    {name: 'Rome', code: 'RM'},
-    {name: 'London', code: 'LDN'},
-    {name: 'Istanbul', code: 'IST'},
-    {name: 'Paris', code: 'PRS'}
-  ];
+    warehouses = [ 'A 倉庫','B 倉庫','C 倉庫','D 倉庫','E 倉庫' ];
 
-  warehousesData = [
-    {
-      id: 1,
-      name: 'A 倉庫',
-      manager: 'A 管理員',
-      address: '台北市中山區'
+    warehousesData = [
+        {
+            id: 1,
+            name: 'A 倉庫',
+            manager: 'A 管理員',
+            address: '台北市中山區'
+        }
+    ]
+
+    managerData = [
+        {
+            id: 1,
+            name: 'A 管理員',
+            phone: '0912345678',
+            warehouse: ['A 倉庫']
+        }
+    ]
+
+    editManagerVisable = false;
+    editable = false;
+
+    showEditManager(editable: boolean) {
+        this.editable = editable;
+        if (!editable) {
+            this.editManager_form.reset();
+        }
+        this.editManagerVisable = true;
     }
-  ]
 
-  goodsData = [
-    {
-      id: 1,
-      name: '筆記本電腦',
-      spec: '15吋, Intel Core i7, 512GB SSD',
-      quantity: 2,
-      unit: '台',
-      price: 999.99,
-      total: 1999.98,
-    },
-    {
-      id: 2,
-      name: '4K LED 電視',
-      spec: '55吋, Smart TV',
-      quantity: 1,
-      unit: '台',
-      price: 699.99,
-      total: 699.99,
-    },
-    {
-      id: 3,
-      name: '耳機',
-      spec: '無線藍牙, 降噪功能',
-      quantity: 5,
-      unit: '對',
-      price: 149.99,
-      total: 749.95,
-    },
-    {
-      id: 4,
-      name: '咖啡機',
-      spec: '單杯咖啡機, 咖啡膠囊',
-      quantity: 3,
-      unit: '台',
-      price: 79.99,
-      total: 239.97,
+    editWarehouse_form: FormGroup;
+    editManager_form: FormGroup;
+
+    constructor(
+        private carServ: CarService,
+        private fb: FormBuilder,
+        private route: ActivatedRoute,
+        private router: Router
+    ) {
+        this.editWarehouse_form = this.fb.group({
+            id: ['', Validators.required],
+            name: ['', Validators.required],
+            manager: ['', Validators.required],
+            address: [''],
+            created_at: [''],
+            created_by: [''],
+            updated_at: [''],
+            updated_by: [''],
+        });
+
+        this.editManager_form = this.fb.group({
+            id: ['', Validators.required],
+            name: ['', Validators.required],
+            phone: ['', Validators.required],
+            warehouse: ['', Validators.required],
+        });
     }
-  ]
 
-  editManagerVisable = false;
-  showEditManager() {
-    this.editManagerVisable = true;
-  }
+    ngOnInit(): void {
+        this.editWarehouse_form.patchValue(this.warehousesData[0])
+        this.editManager_form.patchValue(this.managerData[0])
+    }
 }
