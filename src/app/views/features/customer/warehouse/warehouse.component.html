@@ -1,1 +1,47 @@
-<p>warehouse works!</p>
+<div class="grid">
+    <div class="col-7">
+        <p-card header="A 倉庫">
+            <div class="grid">
+                <div class="col-12">
+                    <label class="font-bold">基本資料</label>
+                </div>
+                <div class="col-12">
+                    <div class="field col-12">
+                        <label class="font-medium">名稱</label>
+                        <input pInputText/>
+                    </div>
+                    <div class="field col-12">
+                        <label class="font-medium">地址</label>
+                        <input pInputText/>
+                    </div>
+                    <div class="col-12 flex justify-content-end">
+                        <p-button label="儲存" styleClass="p-button-warning"></p-button>
+                    </div>
+                </div>
+            </div>
+        </p-card>
+    </div>
+    <div class="col-5">
+        <div class="grid">
+            <div class="col-12">
+                <p-panel header="倉管" [toggleable]="true">
+                    <div class="flex justify-content-end mb-3">
+                        <p-button icon="pi pi-plus" styleClass="p-button-warning p-button-text"></p-button>
+                    </div>
+                    <p-dataView [value]="warehousesData">
+                        <ng-template let-product pTemplate="listItem">
+                            <div pRipple class="col-12 styled-box">
+                                <div class="flex flex-column md:flex-row xl:flex-row align-items-center p-3 gap-4">
+                                    <img class="w-3rem" [src]="'assets/image/warehouse.png'"/>
+                                    <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                                        <div class="text-lg font-bold">{{ product.manager }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dataView>
+                </p-panel>
+            </div>
+        </div>
+    </div>
+</div>
