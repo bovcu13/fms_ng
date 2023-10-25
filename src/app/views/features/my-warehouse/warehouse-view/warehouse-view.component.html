@@ -4,16 +4,16 @@
       <p-button icon="pi pi-arrow-left" [routerLink]="['/warehouse_list']"
                 styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
     </div>
-      <div class="flex justify-content-center">
-        <div class="col-8">
-          <div class="grid row-gap-2 flex justify-content-center">
-            <div class="col-12 flex align-items-center justify-content-start">
-              <label class="text-6xl font-bold">{{editWarehouse_form.controls['name'].value}}</label>
-            </div>
-            <div class="col-12">
-              <p-tabView>
-                <p-tabPanel header="基本資料">
-                  <form [formGroup]="editWarehouse_form">
+    <div class="flex justify-content-center">
+      <div class="col-8">
+        <div class="grid row-gap-2 flex justify-content-center">
+          <div class="col-12 flex align-items-center justify-content-start">
+            <label class="text-6xl font-bold">{{editWarehouse_form.controls['name'].value}}</label>
+          </div>
+          <div class="col-12">
+            <p-tabView>
+              <p-tabPanel header="基本資料">
+                <form [formGroup]="editWarehouse_form">
                   <div class="grid">
                     <div class="field col-6">
                       <label class="font-semibold">名稱</label>
@@ -27,42 +27,43 @@
                       <button pButton pRipple label="儲存" class="p-button-warning"></button>
                     </div>
                   </div>
-                  </form>
-                </p-tabPanel>
-                <p-tabPanel header="倉管">
-                  <div class="flex justify-content-end mb-3">
-                    <p-button icon="pi pi-plus" styleClass="p-button-warning p-button-text"></p-button>
-                  </div>
-                  <p-dataView [value]="warehousesData">
-                    <ng-template let-product pTemplate="listItem">
-                      <div pRipple class="col-6 styled-box"  >
-                        <div class="flex flex-column xl:flex-row align-items-start p-3 gap-4">
-                          <img class="w-3rem" [src]="'assets/image/warehouse.png'"/>
-                          <div
-                            class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                            <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                              <div class="text-lg font-bold">{{ product.manager }}</div>
-                              <div class="flex align-items-center gap-3">
+                </form>
+              </p-tabPanel>
+              <p-tabPanel header="倉管">
+                <div class="flex justify-content-end mb-3">
+                  <p-button (click)="showEditManager(false)" icon="pi pi-plus" styleClass="p-button-warning p-button-text"></p-button>
+                </div>
+                <p-dataView [value]="warehousesData">
+                  <ng-template let-product pTemplate="listItem">
+                    <div pRipple class="col-6 styled-box" (click)="showEditManager(true)">
+                      <div class="flex flex-column xl:flex-row align-items-start p-3 gap-4">
+                        <img class="w-3rem" [src]="'assets/image/warehouse.png'"/>
+                        <div
+                          class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                          <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                            <div class="text-lg font-bold">{{ product.manager }}</div>
+                            <div class="flex align-items-center gap-3">
                                 <span class="flex align-items-center gap-2">
                                 <i class="pi pi-at text-xs"></i>
                                 <span class="font-medium text-xs">{{ product.name }}</span>
                                   </span>
-                                <span class="flex align-items-center gap-2">
+                              <span class="flex align-items-center gap-2">
                                 <i class="pi pi-tag text-xs"></i>
                                 <span class="font-medium text-xs">{{ product.address }}</span>
                                 </span>
-                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </ng-template>
-                  </p-dataView>
-                </p-tabPanel>
-                <p-tabPanel header="貨物品項">
-                  <div *ngIf="!showDetailPage">
+                    </div>
+                  </ng-template>
+                </p-dataView>
+              </p-tabPanel>
+              <p-tabPanel header="貨物品項">
+                <div *ngIf="!showDetailPage">
                   <div class="flex justify-content-end mb-3">
-                    <p-button (click)="openAddGoods()" icon="pi pi-plus" styleClass="p-button-warning p-button-text"></p-button>
+                    <p-button (click)="openAddGoods()" icon="pi pi-plus"
+                              styleClass="p-button-warning p-button-text"></p-button>
                   </div>
                   <p-dataView [value]="goodsData">
                     <ng-template let-product pTemplate="listItem">
@@ -90,18 +91,18 @@
                       </div>
                     </ng-template>
                   </p-dataView>
-                  </div>
-                  <div *ngIf="showDetailPage">
-                    <p-button icon="pi pi-arrow-left" (click)="backWarehouse()"
-                              styleClass="mb-2 p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
-                    <app-goods-view [productId]="selectedProductId"></app-goods-view>
-                  </div>
-                </p-tabPanel>
-              </p-tabView>
-            </div>
+                </div>
+                <div *ngIf="showDetailPage">
+                  <p-button icon="pi pi-arrow-left" (click)="backWarehouse()"
+                            styleClass="mb-2 p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
+                  <app-goods-view [productId]="selectedProductId"></app-goods-view>
+                </div>
+              </p-tabPanel>
+            </p-tabView>
           </div>
         </div>
       </div>
+    </div>
   </div>
 </div>
 
@@ -109,47 +110,90 @@
 <p-dialog header="新增貨物品項" [(visible)]="addGoodsVisible" [modal]="true" [style]="{ width: '50vw' }"
           [draggable]="false" [resizable]="false">
   <form [formGroup]="addGoods_form">
-  <div class="grid">
-    <div class="col-12 md:col-6 lg:col-6">
-      <div class="field">
-        <label class="font-semibold">名稱</label>
-        <input formControlName="name" pInputText/>
+    <div class="grid">
+      <div class="col-12 md:col-6 lg:col-6">
+        <div class="field">
+          <label class="font-semibold">名稱</label>
+          <input formControlName="name" pInputText/>
+        </div>
+      </div>
+      <div class="col-12 md:col-6 lg:col-6">
+        <div class="field">
+          <label class="font-semibold">規格</label>
+          <input formControlName="spec" pInputText/>
+        </div>
+      </div>
+      <div class="col-12 md:col-6 lg:col-6">
+        <div class="field">
+          <label class="font-semibold">數量</label>
+          <p-inputNumber class="w-full" formControlName="quantity" [min]="0"></p-inputNumber>
+        </div>
+      </div>
+      <div class="col-12 md:col-6 lg:col-6">
+        <div class="field">
+          <label class="font-semibold">單位</label>
+          <input formControlName="unit" pInputText/>
+        </div>
+      </div>
+      <div class="col-12 md:col-6 lg:col-6">
+        <div class="field">
+          <label class="font-semibold">單價</label>
+          <p-inputNumber class="w-full" formControlName="price" mode="currency" inputId="currency-taiwan" currency="TWD"
+                         locale="zh-TW" [min]="0"></p-inputNumber>
+        </div>
+      </div>
+      <div class="col-12 md:col-6 lg:col-6">
+        <div class="field">
+          <label class="font-semibold">總額</label>
+          <p-inputNumber class="w-full" formControlName="total" mode="currency" inputId="currency-taiwan" currency="TWD"
+                         locale="zh-TW" [min]="0"></p-inputNumber>
+        </div>
+      </div>
+      <div class="col-12 flex justify-content-end">
+        <p-button label="取消" styleClass="mr-2 p-button-outlined p-button-secondary"></p-button>
+        <p-button label="新增" styleClass="p-button-warning"></p-button>
       </div>
     </div>
-    <div class="col-12 md:col-6 lg:col-6">
-      <div class="field">
-        <label class="font-semibold">規格</label>
-        <input formControlName="spec" pInputText/>
+  </form>
+</p-dialog>
+
+<p-dialog [header]="editable ? '編輯倉管' : '新增倉管'" [(visible)]="editManagerVisable" [modal]="true"
+          [style]="{ width: '40vw' }" [draggable]="false" [resizable]="false">
+  <form [formGroup]="editManager_form">
+    <div *ngIf="editable"
+         class="flex flex-column justify-content-center md:flex-row xl:flex-row align-items-center p-3 gap-4">
+      <img class="w-3rem" [src]="'assets/image/warehouse.png'"/>
+      <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+        <div class="text-lg font-bold">A 管理員</div>
       </div>
     </div>
-    <div class="col-12 md:col-6 lg:col-6">
-      <div class="field">
-        <label class="font-semibold">數量</label>
-        <p-inputNumber class="w-full" formControlName="quantity" [min]="0"></p-inputNumber>
+    <div class="grid">
+      <div *ngIf="editable" class="col-12">
+        <p-divider></p-divider>
+      </div>
+      <div class="col-12 md:col-6 lg:col-6">
+        <div class="field">
+          <label class="font-semibold">姓名</label>
+          <input pInputText formControlName="name"/>
+        </div>
+      </div>
+      <div class="col-12 md:col-6 lg:col-6">
+        <div class="field">
+          <label class="font-semibold">電話</label>
+          <input pInputText formControlName="phone"/>
+        </div>
+      </div>
+      <div class="col-12 md:col-12 lg:col-12">
+        <div class="field">
+          <label class="font-semibold">管理倉庫</label>
+          <p-multiSelect [options]="warehouses" formControlName="warehouse" display="chip"
+                         [appendTo]="'body'"></p-multiSelect>
+        </div>
+      </div>
+      <div class="col-12 flex justify-content-end">
+        <p-button label="取消" styleClass="mr-2 p-button-outlined p-button-secondary"></p-button>
+        <p-button label="儲存" styleClass="p-button-warning"></p-button>
       </div>
     </div>
-    <div class="col-12 md:col-6 lg:col-6">
-      <div class="field">
-        <label class="font-semibold">單位</label>
-        <input formControlName="unit" pInputText/>
-      </div>
-    </div>
-    <div class="col-12 md:col-6 lg:col-6">
-      <div class="field">
-        <label class="font-semibold">單價</label>
-        <p-inputNumber class="w-full" formControlName="price" mode="currency" inputId="currency-taiwan" currency="TWD" locale="zh-TW" [min]="0"></p-inputNumber>
-      </div>
-    </div>
-    <div class="col-12 md:col-6 lg:col-6">
-      <div class="field">
-        <label class="font-semibold">總額</label>
-        <p-inputNumber class="w-full" formControlName="total" mode="currency" inputId="currency-taiwan" currency="TWD" locale="zh-TW" [min]="0"></p-inputNumber>
-      </div>
-    </div>
-    <div class="col-12 flex justify-content-end">
-      <p-button label="取消" styleClass="mr-2 p-button-outlined p-button-secondary"></p-button>
-      <p-button label="新增" styleClass="p-button-warning"></p-button>
-    </div>
-  </div>
   </form>
 </p-dialog>
