@@ -8,7 +8,7 @@
             <p-tabPanel header="所有車隊">
               <div class="flex justify-content-end mb-3">
                 <p-button (click)="addFleetDialogVisible = true"
-                          icon="pi pi-plus" styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
+                          icon="pi pi-plus" styleClass="p-button-warning p-button-text"></p-button>
               </div>
               <p-dataView [value]="fleetsData">
                 <ng-template let-product pTemplate="listItem">
@@ -42,7 +42,7 @@
             <p-tabPanel header="所有車輛">
               <div class="flex justify-content-end mb-3">
                 <p-button (click)="openAddCarDialog()"
-                          icon="pi pi-plus" styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
+                          icon="pi pi-plus" styleClass="p-button-warning p-button-text"></p-button>
               </div>
               <p-dataView [value]="vehiclesData">
                 <ng-template let-product pTemplate="listItem">
@@ -130,9 +130,9 @@
         <input formControlName="name" pInputText/>
       </div>
       <div class="flex justify-content-end">
-        <p-button (click)="postFleetRequest()" label="新增" styleClass="p-button-warning mr-2"></p-button>
         <p-button label="取消" (click)="closeAddFleetDialog()"
-                  styleClass="p-button-outlined p-button-secondary"></p-button>
+                  styleClass="p-button-outlined p-button-secondary mr-2"></p-button>
+        <p-button (click)="postFleetRequest()" label="新增" styleClass="p-button-warning"></p-button>
       </div>
     </div>
   </form>
@@ -160,9 +160,9 @@
         <p-dropdown formControlName="sid" [options]="gpsDevicesData" optionLabel="sid" placeholder="選擇車機" appendTo="body"></p-dropdown>
       </div>
       <div class="flex justify-content-end">
-        <p-button (click)="postVehicleRequest()" label="新增" styleClass="p-button-warning mr-2"></p-button>
-        <p-button label="取消" (click)="addCarDialogVisible=false"
-                  styleClass="p-button-outlined p-button-secondary"></p-button>
+        <p-button label="取消" (click)="closeAddCarDialog()"
+                  styleClass="p-button-outlined p-button-secondary mr-2"></p-button>
+        <p-button (click)="postVehicleRequest()" label="新增" styleClass="p-button-warning"></p-button>
       </div>
     </div>
   </form>

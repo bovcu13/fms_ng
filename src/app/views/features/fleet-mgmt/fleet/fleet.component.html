@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-12">
     <div class="col-12">
@@ -11,7 +12,7 @@
             <div class="col-3 flex align-items-center">
               <p-image src="assets/image/car1.png" alt="Image" width="100" [preview]="true"></p-image>
             </div>
-            <div class="ol-8 flex align-items-center justify-content-start">
+            <div class="col-8 flex align-items-center justify-content-start">
               <label class="text-6xl font-bold">{{editFleet_form.controls['name'].value}}</label>
             </div>
             <div class="ml-auto col-1 flex align-items-center">
@@ -39,7 +40,7 @@
                   </div>
                   <div class="col-12 flex justify-content-end">
                     <button pButton pRipple label="儲存" (click)="updateFleetRequest(id,editFleet_form.value)"
-                            class="p-button-success"></button>
+                            class="p-button-warning"></button>
                   </div>
                 </div>
               </p-tabPanel>
