@@ -47,20 +47,32 @@ export class FleetComponent implements OnInit {
   }
 
   updateFleetRequest(id: string, body: any) {
-    this.carServ.patchFleetRequest(id, body).subscribe({
-      next: res => {
-        console.log(res);
+    this.confirmationService.confirm({
+      message: `確定要儲存 ${this.editFleet_form.controls['fleet_code'].value} 的修改？`,
+      header: '確定修改？',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.carServ.patchFleetRequest(id, body).subscribe({
+          next: res => {
+            console.log(res);
+            this.showSussess('修改');
+          },
+          error: (err) => {
+            console.log(err);
+            this.showError('修改');
+          },
+        });
       },
-      error: (err) => {
-        console.log(err);
-      },
+      reject: () => {
+        this.showCancel('修改');
+      }
     });
   }
 
   deleteFleetRequest() {
     console.log('open')
     this.confirmationService.confirm({
-      message: `確定刪除${this.editFleet_form.controls['name'].value}？`,
+      message: `確定要刪除 ${this.editFleet_form.controls['name'].value} 嗎？`,
       header: '確定刪除？',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

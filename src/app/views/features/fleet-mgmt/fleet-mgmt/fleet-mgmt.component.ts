@@ -66,6 +66,7 @@ export class FleetMgmtComponent {
   closeAddFleetDialog() {
     this.addFleetDialogVisible = false;
     this.showCancel('新增');
+    this.addFleet_form.reset();
   }
 
   // 取得車隊
@@ -91,6 +92,7 @@ export class FleetMgmtComponent {
       next: data => {
         this.showSussess('新增');
         this.addFleetDialogVisible = false;
+        this.addFleet_form.reset();
         this.getAllFleetsRequest();
         console.log(data);
         console.log(body);
@@ -127,6 +129,12 @@ export class FleetMgmtComponent {
     this.addCarDialogVisible = true;
   }
 
+  closeAddCarDialog() {
+    this.addCarDialogVisible = false;
+    this.showCancel('新增');
+    this.addVehicle_form.reset();
+  }
+
   // 新增車輛
   postVehicleRequest() {
     let body = {
@@ -134,18 +142,22 @@ export class FleetMgmtComponent {
       name: this.addVehicle_form.controls['name'].value,
       driver: this.addVehicle_form.controls['driver'].value,
       license_plate: this.addVehicle_form.controls['license_plate'].value,
-      sid: this.addVehicle_form.controls['sid'].value
+      sid: this.addVehicle_form.controls['sid'].value.sid
     }
     this.carServ.postVehicleRequest(body).subscribe({
       next: data => {
-        console.log(data)
-        console.log(body)
+        this.showSussess('新增');
+        this.addCarDialogVisible = false;
+        this.addVehicle_form.reset();
+        console.log(data);
+        console.log(body);
+        this.getAllVehiclesRequest();
       },
       error: (err) => {
         console.log(err);
+        console.log(body);
       },
     });
-    this.getAllVehiclesRequest()
   }
 
   gpsDevicesData: any;

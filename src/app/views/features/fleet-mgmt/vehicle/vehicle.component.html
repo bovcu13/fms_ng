@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-12">
     <div class="col-12">
@@ -7,12 +8,24 @@
     <form [formGroup]="editVehicle_form">
       <div class="flex justify-content-center">
         <div class="col-8">
-          <div class="grid row-gap-2 flex justify-content-center">
+          <div class="grid">
             <div class="col-3 flex align-items-center">
               <p-image src="assets/image/sport-car.png" alt="Image" width="100" [preview]="true"></p-image>
             </div>
-            <div class="col-9 flex align-items-center justify-content-start">
+            <div class="col-8 flex align-items-center justify-content-start">
               <label class="text-6xl font-bold">{{editVehicle_form.controls['name'].value}}</label>
+            </div>
+            <div class="ml-auto col-1 flex align-items-center">
+              <p-confirmDialog #cd [style]="{ width: '40vw' }">
+                <ng-template pTemplate="footer">
+                  <p-button (click)="cd.reject()" label="取消" icon="pi pi-times"
+                            styleClass="p-button-secondary"></p-button>
+                  <p-button (click)="cd.accept()" label="確定" icon="pi pi-check"
+                            styleClass="p-button-warning"></p-button>
+                </ng-template>
+              </p-confirmDialog>
+              <p-button (click)="deleteVehicleRequest()" icon="pi pi-trash"
+                        styleClass="p-button-lg p-button-rounded p-button-danger p-button-text"></p-button>
             </div>
             <div class="col-12">
               <p-tabView>
