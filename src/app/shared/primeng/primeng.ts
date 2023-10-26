@@ -57,6 +57,7 @@ import {RippleModule} from "primeng/ripple";
 import {MessageService} from 'primeng/api';
 import {StepsModule} from "primeng/steps";
 import {GalleriaModule} from "primeng/galleria";
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
   declarations: [],
@@ -120,7 +121,8 @@ import {GalleriaModule} from "primeng/galleria";
     RippleModule,
     ConfirmDialogModule,
     StepsModule,
-    GalleriaModule
+    GalleriaModule,
+    InputMaskModule
   ],
   providers: [MessageService]
 })
