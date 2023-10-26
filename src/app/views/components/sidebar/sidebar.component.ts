@@ -96,12 +96,8 @@ export class SidebarComponent implements OnInit {
           {
             label: '車溫儀表板', //控溫中心
             icon: 'pi pi-chart-bar',
-            routerLink: '/multiCars',
             command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(84, 200, 240, 0.1)'
+              alert("功能未開放");
             },
           },
           {

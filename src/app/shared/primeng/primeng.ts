@@ -58,6 +58,7 @@ import {MessageService} from 'primeng/api';
 import {StepsModule} from "primeng/steps";
 import {GalleriaModule} from "primeng/galleria";
 import { InputMaskModule } from 'primeng/inputmask';
+import {FullCalendarModule} from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [],
@@ -122,7 +123,8 @@ import { InputMaskModule } from 'primeng/inputmask';
     ConfirmDialogModule,
     StepsModule,
     GalleriaModule,
-    InputMaskModule
+    InputMaskModule,
+    FullCalendarModule
   ],
   providers: [MessageService]
 })
