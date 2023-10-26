@@ -1,7 +1,7 @@
 <div class="overflow-y-hidden overflow-x-hidden">
   <div class="grid">
     <div class="col-12 md:col-12 lg:col-8">
-      <div id="map" style="height: 100%; width: 100%;position: relative"></div>
+      <div id="map" style="height: 100vh; width: 100%;position: relative"></div>
       <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button"
                 styleClass="p-button-sm bg-white p-button-raised p-button-text p-button-info"></p-button>
       <div class="func">
@@ -18,7 +18,7 @@
       <div *ngIf="selectedProduct" class="addr">{{selectedProduct.addr}}</div>
     </div>
     <div class="col-12 md:col-12 lg:col-4">
-      <p-card>
+      <p-card styleClass="h-screen">
         <p-tabView>
           <p-tabPanel>
             <ng-template pTemplate="header">
@@ -34,11 +34,11 @@
             </div>
             <p-table [columns]="selectedColumns"
                      [value]="transformedData"
-                     [rows]="5"
                      selectionMode="single"
                      [(selection)]="selectedProduct"
                      [scrollable]="true"
-                     (onRowSelect)="Select()">
+                     (onRowSelect)="Select()"
+                     styleClass="p-datatable-sm p-datatable-striped">
               <ng-template pTemplate="caption">
                 <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns"
                                (onClear)="clearMultiSelect()" [showClear]="true" [maxSelectedLabels]="4"
@@ -75,11 +75,10 @@
               </ng-template>
             </p-table>
           </p-tabPanel>
-          <p-tabPanel>
+          <p-tabPanel [disabled]="true">
             <ng-template pTemplate="header">
               <span>運輸派工</span>
             </ng-template>
-
           </p-tabPanel>
           <p-tabPanel>
             <ng-template pTemplate="header">
@@ -119,11 +118,6 @@
                 </div>
               </div>
             </p-accordion>
-          </p-tabPanel>
-          <p-tabPanel>
-            <ng-template pTemplate="header">
-              <span>功能B</span>
-            </ng-template>
           </p-tabPanel>
         </p-tabView>
       </p-card>
