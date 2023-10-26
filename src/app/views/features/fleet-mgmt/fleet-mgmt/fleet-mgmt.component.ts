@@ -58,6 +58,7 @@ export class FleetMgmtComponent {
     this.getAllFleetsRequest()
     this.getAllVehiclesRequest()
     this.getAllGpsDevicesRequest()
+    this.getAllDriversRequest()
   }
 
   fleetsData: any;
@@ -162,11 +163,27 @@ export class FleetMgmtComponent {
 
   gpsDevicesData: any;
 
+  // 車機
   getAllGpsDevicesRequest() {
     this.carServ.getGpsDevicesRequest().subscribe({
       next: res => {
         this.gpsDevicesData = res.body.gps_devices;
         console.log('gpsDevicesData', res.body.gps_devices)
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  driverData: any;
+
+  // 司機
+  getAllDriversRequest() {
+    this.carServ.getAllDriversRequest().subscribe({
+      next: res => {
+        this.driverData = res.body.drivers;
+        console.log('driverData',this.driverData);
       },
       error: (err) => {
         console.log(err);
