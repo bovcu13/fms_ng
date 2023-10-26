@@ -39,7 +39,8 @@ export class VehicleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getOneVehicleRequest()
+    this.getOneVehicleRequest();
+    this.getAllGpsDevicesRequest();
   }
 
   vehiclesData: any;
@@ -111,6 +112,20 @@ export class VehicleComponent implements OnInit {
     });
   }
 
+  gpsDevicesData: any;
+
+  getAllGpsDevicesRequest() {
+    this.carServ.getGpsDevicesRequest().subscribe({
+      next: res => {
+        this.gpsDevicesData = res.body.gps_devices;
+        console.log('gpsDevicesData', res.body.gps_devices)
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
   showSussess(info = '修改') {
     this.messageService.add({ severity: 'success', summary: '完成', detail: `${info}成功！` });
   }
@@ -123,4 +138,5 @@ export class VehicleComponent implements OnInit {
     this.messageService.add({ severity: 'warn', summary: '取消', detail: `取消${info}！` });
   }
 
+  protected readonly console = console;
 }

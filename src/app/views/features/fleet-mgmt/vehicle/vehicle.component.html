@@ -37,7 +37,7 @@
                     </div>
                     <div class="field col-12 md:col-6 lg:col-6">
                       <label class="font-semibold">車機號碼</label>
-                      <input pInputText formControlName="sid"/>
+                      <p-dropdown formControlName="sid" [options]="gpsDevicesData" optionLabel="sid" placeholder="選擇車機" appendTo="body"></p-dropdown>
                     </div>
                     <div class="field col-12 md:col-6 lg:col-6">
                       <label class="font-semibold">車輛名稱</label>
