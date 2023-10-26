@@ -148,12 +148,12 @@
         <input formControlName="name" pInputText/>
       </div>
       <div class="field">
-        <label class="font-semibold">司機名稱</label>
-        <input formControlName="driver" pInputText/>
-      </div>
-      <div class="field">
         <label class="font-semibold">車牌號碼</label>
         <input formControlName="license_plate" pInputText/>
+      </div>
+      <div class="field">
+        <label class="font-semibold">司機名稱</label>
+        <p-dropdown formControlName="driver" [options]="driverData" optionLabel="name" placeholder="選擇司機" appendTo="body"></p-dropdown>
       </div>
       <div class="field">
         <label class="font-semibold">車機號碼</label>
