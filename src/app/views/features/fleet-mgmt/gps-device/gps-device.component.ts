@@ -9,7 +9,6 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./gps-device.component.scss']
 })
 export class GpsDeviceComponent implements OnInit {
-
   activeIndex = 2;
   editGpsDevice_form: FormGroup;
   id: any;
