@@ -31,16 +31,13 @@ export class VehicleComponent implements OnInit {
       sid: ['', [Validators.required]],
       name: ['', [Validators.required]],
       driver: ['', Validators.required],
-      fuel: ['', Validators.required],
-      fuel_type: ['', Validators.required],
-      vehicle_type: ['', Validators.required],
-      vehicle_style: ['', Validators.required],
     });
   }
 
   ngOnInit() {
     this.getOneVehicleRequest();
     this.getAllGpsDevicesRequest();
+    this.getAllDriversRequest();
   }
 
   vehiclesData: any;
@@ -112,13 +109,29 @@ export class VehicleComponent implements OnInit {
     });
   }
 
-  gpsDevicesData: any;
+  // 車機
+  gpsDevicesData: any[] =[]
 
   getAllGpsDevicesRequest() {
     this.carServ.getGpsDevicesRequest().subscribe({
       next: res => {
         this.gpsDevicesData = res.body.gps_devices;
         console.log('gpsDevicesData', res.body.gps_devices)
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  // 司機
+  driverData: any;
+
+  getAllDriversRequest() {
+    this.carServ.getAllDriversRequest().subscribe({
+      next: res => {
+        this.driverData = res.body.drivers;
+        console.log('driverData',this.driverData);
       },
       error: (err) => {
         console.log(err);
