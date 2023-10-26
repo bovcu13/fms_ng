@@ -51,6 +51,7 @@ import {WarehouseListComponent} from "../features/my-warehouse/warehouse-list/wa
 import {WarehouseViewComponent} from "../features/my-warehouse/warehouse-view/warehouse-view.component";
 import {ETrackingViewComponent} from "../features/dispatch/e-tracking/e-tracking-view/e-tracking-view.component";
 import {GoodsViewComponent} from "../features/my-warehouse/goods-view/goods-view.component";
+import {EventComponent} from "../features/dispatch/event/event.component";
 
 
 @NgModule({
@@ -99,7 +100,8 @@ import {GoodsViewComponent} from "../features/my-warehouse/goods-view/goods-view
     WarehouseListComponent,
     WarehouseViewComponent,
     ETrackingViewComponent,
-    GoodsViewComponent
+    GoodsViewComponent,
+    EventComponent,
   ],
   imports: [
     CommonModule,

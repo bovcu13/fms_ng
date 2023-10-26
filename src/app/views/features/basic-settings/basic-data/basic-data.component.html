@@ -2,82 +2,78 @@
   <div class="col-8">
     <p-tabView>
       <p-tabPanel header="概覽">
-        <div class="flex justify-content-center">
-          <div class="col-12">
-            <div class="grid">
-              <div class="col-3">
-                <div class="col-12 flex justify-content-center">
-                  <p-image src="assets/image/car1.png" alt="Image" width="200" [preview]="true"></p-image>
+        <div class="flex justify-content-between">
+          <div class="col-3">
+            <div class="col-12 flex justify-content-center">
+              <p-image src="assets/image/car1.png" alt="Image" width="150" [preview]="true"></p-image>
+            </div>
+            <div class="col-12 flex justify-content-center">
+              <label class="text-xl font-light text-yellow-900">user_name</label>
+            </div>
+            <div *ngIf="!editable" class="col-12 mt-2 flex justify-content-center">
+              <p-button (click)="edit()" label="編輯個人資料"
+                        styleClass="p-button-sm p-button-outlined p-button-warning"
+                        [style]="{'width': '13em'}"></p-button>
+            </div>
+            <div *ngIf="editable" class="mt-2">
+              <div class="col-12">
+                <div class="field">
+                  <label class="text-sm font-semibold">姓名</label>
+                  <input pInputText/>
                 </div>
-                <div class="col-12">
-                  <label class="text-xl font-light text-color-secondary">user_name</label>
+                <div class="field">
+                  <label class="text-sm font-semibold">電話號碼</label>
+                  <input pInputText/>
                 </div>
-                <div *ngIf="!editable" class="col-12 mt-2 flex justify-content-center">
-                  <p-button (click)="edit()" label="編輯個人資料"
-                            styleClass="p-button-sm p-button-outlined p-button-secondary"
-                            [style]="{'width': '15em'}"></p-button>
+                <div class="field">
+                  <label class="text-sm font-semibold">修改密碼</label>
+                  <input pInputText/>
                 </div>
-                <div *ngIf="editable" class="mt-2">
-                  <div class="col-12">
-                    <div class="field">
-                      <label class="text-sm font-semibold">姓名</label>
-                      <input pInputText/>
-                    </div>
-                    <div class="field">
-                      <label class="text-sm font-semibold">電話號碼</label>
-                      <input pInputText/>
-                    </div>
-                    <div class="field">
-                      <label class="text-sm font-semibold">修改密碼</label>
-                      <input pInputText/>
-                    </div>
-                    <div class="flex justify-content-center">
-                      <p-button (click)="save()" label="儲存" styleClass="p-button-success p-button-sm mr-2"></p-button>
-                      <p-button (click)="cancel()" label="取消"
-                                styleClass="p-button-outlined p-button-secondary p-button-sm mr-2"></p-button>
-                    </div>
-                  </div>
+                <div class="flex justify-content-center">
+                  <p-button (click)="cancel()" label="取消"
+                            styleClass="p-button-outlined p-button-secondary p-button-sm mr-2"></p-button>
+                  <p-button (click)="save()" label="儲存" styleClass="p-button-warning p-button-sm mr-2"></p-button>
                 </div>
               </div>
-              <div class="col-9">
-                <p-card header="車輛資料">
-                  <div class="flex justify-content-end mb-3">
-                    <p-button label="查看更多" [routerLink]="['/fleet_mgmt', activeIndex]"
-                              styleClass="p-button-link p-button-sm"></p-button>
-                  </div>
-                  <p-dataView [value]="vehiclesData">
-                    <ng-template let-product pTemplate="listItem">
-                      <div pRipple class="col-6 styled-box" (click)="goToVehicle(product.id)">
-                        <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
-                          <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/car2.png'"/>
-                          <div
-                            class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                            <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                              <div class="text-lg font-bold">{{ product.name }}</div>
+            </div>
+          </div>
+          <div class="col-8">
+            <p-card header="車輛資料">
+              <div class="flex justify-content-end mb-3">
+                <p-button label="查看更多" [routerLink]="['/fleet_mgmt', activeIndex]"
+                          styleClass="p-button-link p-button-sm"></p-button>
+              </div>
+              <p-dataView [value]="vehiclesData">
+                <ng-template let-product pTemplate="listItem">
+                  <div pRipple class="col-6 styled-box" (click)="goToVehicle(product.id)">
+                    <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
+                      <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/car2.png'"/>
+                      <div
+                        class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                        <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                          <div class="text-lg font-bold">{{ product.name }}</div>
 
-                              <div class="flex align-items-center gap-3">
+                          <div class="flex align-items-center gap-3">
                                 <span class="flex align-items-center gap-2">
                                 <i class="pi pi-at text-xs"></i>
                                 <span class="font-medium text-xs">{{ product.driver }}</span>
                                   </span>
-                                <span class="flex align-items-center gap-2">
+                            <span class="flex align-items-center gap-2">
                                 <i class="pi pi-tag text-xs"></i>
                                 <span class="font-medium text-xs">{{ product.license_plate }}</span>
                                 </span>
-                              </div>
-                            </div>
-                            <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
-<!--                              <p-button (click)="goToVehicle(product.id)" label="管理"-->
-<!--                                        styleClass="p-button-link"></p-button>-->
-                            </div>
                           </div>
                         </div>
+                        <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
+                          <!--                              <p-button (click)="goToVehicle(product.id)" label="管理"-->
+                          <!--                                        styleClass="p-button-link"></p-button>-->
+                        </div>
                       </div>
-                    </ng-template>
-                  </p-dataView>
-                </p-card>
-              </div>
-            </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dataView>
+            </p-card>
           </div>
         </div>
       </p-tabPanel>
