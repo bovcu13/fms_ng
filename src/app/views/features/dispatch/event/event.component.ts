@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
-import { events } from "../../../../shared/data/event";
+import { workData } from "../../../../shared/data/event";
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
   styleUrls: ['./event.component.scss'],
 })
 export class EventComponent implements OnInit {
-  dispatchEvents: any[] = events;
+  dispatchEvents: any[] = workData;
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [
