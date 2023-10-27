@@ -48,8 +48,8 @@ export class VehicleComponent implements OnInit {
     this.carServ.getOneVehicleRequest(this.id).subscribe({
       next: res => {
         this.vehiclesData = res.body;
+        console.log('vehiclesData',this.vehiclesData);
         this.putVehicleData(this.vehiclesData)
-        console.log(this.vehiclesData);
       },
       error: (err) => {
         console.log(err);
@@ -58,7 +58,13 @@ export class VehicleComponent implements OnInit {
   }
 
   putVehicleData(data: any) {
-    this.editVehicle_form.patchValue(data)
+    this.editVehicle_form.patchValue(data);
+    this.editVehicle_form.patchValue(
+      {
+        driver: this.driverData.find((item: any) => item.name === data.driver).name,
+        sid: this.gpsDevicesData.find((item: any) => item.sid === data.sid).sid
+      }
+    )
   }
 
   updateVehicleRequest(id: string, body: any) {

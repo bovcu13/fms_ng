@@ -37,7 +37,7 @@
                     </div>
                     <div class="field col-12 md:col-6 lg:col-6">
                       <label class="font-semibold">車機號碼</label>
-                      <p-dropdown (onChange)="console.log($event.value)" formControlName="sid" [options]="gpsDevicesData" optionLabel="sid" placeholder="選擇車機" appendTo="body"></p-dropdown>
+                      <p-dropdown (onChange)="console.log($event.value)" formControlName="sid" [options]="gpsDevicesData" optionLabel="sid" optionValue="sid" placeholder="選擇車機" appendTo="body"></p-dropdown>
                     </div>
                     <div class="field col-12 md:col-6 lg:col-6">
                       <label class="font-semibold">車輛名稱</label>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="field col-12 md:col-6 lg:col-6">
                       <label class="font-semibold">司機名稱</label>
-                      <p-dropdown formControlName="driver" [options]="driverData" optionLabel="name" placeholder="選擇司機" appendTo="body"></p-dropdown>
+                      <p-dropdown formControlName="driver" [options]="driverData" optionLabel="name" optionValue="name" placeholder="選擇司機" appendTo="body"></p-dropdown>
                     </div>
                     <div class="field col-12 md:col-6 lg:col-6">
                       <label class="font-semibold">油耗量(公里/公升)</label>
