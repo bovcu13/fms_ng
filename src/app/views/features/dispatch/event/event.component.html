@@ -1,8 +1,30 @@
 <div class="flex justify-content-center">
   <div class="col-10">
-    <p-card>
-      <full-calendar [options]="calendarOptions"></full-calendar>
-    </p-card>
+      <full-calendar
+        [options]="calendarOptions"
+      ></full-calendar>
   </div>
 </div>
 
+<form [formGroup]="event_form">
+<p-dialog header={{dialogHeader}} [(visible)]="addEventVisible" [modal]="true" [style]="{ width: '40vw' }" [draggable]="false" [resizable]="false">
+  <div class="col-12">
+    <div class="field">
+      <label class="font-semibold">名稱</label>
+      <input formControlName="name" pInputText/>
+    </div>
+    <div class="field">
+      <label class="font-semibold">開始日期</label>
+      <p-calendar formControlName="start_date"></p-calendar>
+    </div>
+    <div class="field">
+      <label class="font-semibold">結束日期</label>
+      <p-calendar formControlName="end_date"></p-calendar>
+    </div>
+    <div class="flex justify-content-end">
+      <p-button label="取消" styleClass="p-button-outlined p-button-secondary mr-2"></p-button>
+      <p-button label="新增" styleClass="p-button-warning"></p-button>
+    </div>
+  </div>
+</p-dialog>
+</form>
