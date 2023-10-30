@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, signal } from '@angular/core';
-import { products } from "../../../shared/data/products";
 import { MenuItem } from 'primeng/api'
 import { CarService } from "../../../services/car.service";
 import { mergeMap, switchMap, tap } from "rxjs/operators";
@@ -18,85 +17,15 @@ interface Column {
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-
-  products: any[] = products;
-  selectedProduct: any;
-
-  cols!: Column[];
-  _selectedColumns!: Column[];
-
+  // 車隊
   carGroups: any = [
     { name: '車隊(A)', code: 'A' },
     { name: '車隊(B)', code: 'B' },
     { name: '車隊(C)', code: 'C' },
     { name: '車隊(D)', code: 'D' },
   ]
-  cars: any
-  circle: any
-
-  Select() {
-    if (this.selectedProduct) {
-      if (!this.circle) {
-        this.circle = new google.maps.Marker({
-          position: new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng),
-          map: this.map,
-          icon: {
-            url: 'assets/image/circle.png',
-            scaledSize: new google.maps.Size(60, 60),
-            anchor: new google.maps.Point(30, 30)
-          },
-          optimized: false,
-          zIndex: 0
-        });
-      } else {
-        this.circle.setPosition(new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng));
-      }
-      this.map.setCenter(new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng));
-      this.map.setZoom(20);
-    }
-  }
-
-  // 地圖
-  map: any
-  mapOptions: any
-  // 標記
-  markers: google.maps.Marker[] = [];
-  // 線條
-  poly = google.maps.Polyline;
-
-  //初始地圖地點
-  center: google.maps.LatLngLiteral = {
-    lat: 23.83876,
-    lng: 120.9876
-  };
-
-  TAIWAN_BOUNDS = {
-    north: 25.36,
-    south: 21.86,
-    west: 118.18,
-    east: 123.78,
-  };
-
-
-  // 功能列
-  items!: MenuItem[];
-
-  // 按下右鍵的地標按鈕顯示
-  landmarkButt = false;
-  markDialog: boolean = false;
-
-  showMarkDialog() {
-    this.markDialog = true;
-  }
-
   // 溫度異常台數
   oddTem: number = 1;
-
-  markType: any[] = [
-    { name: 'Home', icon: 'pi pi-home', code: 'Home' },
-    { name: 'Star', icon: 'pi pi-star-fill', code: 'Star' },
-    { name: 'Company', icon: 'pi pi-building', code: 'Company' },
-  ];
 
   constructor(private carServ: CarService) {
   }
@@ -109,7 +38,7 @@ export class MainComponent implements OnInit {
     this.getAllNewGpsRequest()
         .pipe(
           switchMap(() => {
-            // 在這裡執行您想要在資料取得後進行的動作
+            // 資料取得後進行
             this.afterGet()
             this.createMarkers()
             return of(null); // 使用 RxJS 的 of 函式返回一個 Observable 包裹的 null
@@ -129,20 +58,20 @@ export class MainComponent implements OnInit {
       .subscribe();
   }
 
+  // 顯示欄位
+  cols!: Column[];
+  _selectedColumns!: Column[];
   @Input() get selectedColumns(): any[] {
     return this._selectedColumns;
   }
-
   set selectedColumns(val: any[]) {
     //restore original order
     this._selectedColumns = this.cols.filter((col) => val.includes(col));
   }
-
   clearMultiSelect() {
     // onClear事件
     this._selectedColumns = [];
   }
-
   colsInit() {
     this.cols = [
       // { field: 'state', header: '狀態' },
@@ -170,6 +99,8 @@ export class MainComponent implements OnInit {
     ]
   }
 
+  // 功能列
+  items!: MenuItem[];
   itemInit() {
     this.items = [
       {
@@ -196,6 +127,40 @@ export class MainComponent implements OnInit {
       }
     ];
   }
+
+  // 地圖
+  map: any
+  mapOptions: any
+  // 標記
+  markers: google.maps.Marker[] = [];
+  // 線條
+  poly = google.maps.Polyline;
+  // 初始地圖地點
+  center: google.maps.LatLngLiteral = {
+    lat: 23.83876,
+    lng: 120.9876
+  };
+  // 地圖邊界
+  TAIWAN_BOUNDS = {
+    north: 25.36,
+    south: 21.86,
+    west: 118.18,
+    east: 123.78,
+  };
+
+  // 按下右鍵的地標按鈕顯示
+  landmarkButt = false;
+  markDialog: boolean = false;
+
+  showMarkDialog() {
+    this.markDialog = true;
+  }
+
+  markType: any[] = [
+    { name: 'Home', icon: 'pi pi-home', code: 'Home' },
+    { name: 'Star', icon: 'pi pi-star-fill', code: 'Star' },
+    { name: 'Company', icon: 'pi pi-building', code: 'Company' },
+  ];
 
   mapInit() {
     // 定義地圖相關設定
@@ -275,7 +240,32 @@ export class MainComponent implements OnInit {
         }
       }, 0);
     });
+  }
 
+  // 選取車輛
+  products: any[] = [];
+  selectedProduct: any;
+  circle: any
+  Select() {
+    if (this.selectedProduct) {
+      if (!this.circle) {
+        this.circle = new google.maps.Marker({
+          position: new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng),
+          map: this.map,
+          icon: {
+            url: 'assets/image/circle.png',
+            scaledSize: new google.maps.Size(60, 60),
+            anchor: new google.maps.Point(30, 30)
+          },
+          optimized: false,
+          zIndex: 0
+        });
+      } else {
+        this.circle.setPosition(new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng));
+      }
+      this.map.setCenter(new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng));
+      this.map.setZoom(20);
+    }
   }
 
 
@@ -461,6 +451,8 @@ export class MainComponent implements OnInit {
     );
   }
 
+  infowindow = new google.maps.InfoWindow();
+  cars: any;
   afterGet() {
     this.transformedData = this.products.map(item => ({
       ...item,
@@ -477,9 +469,6 @@ export class MainComponent implements OnInit {
     this.geocodePositions();
     console.log("轉換後資料:", this.transformedData)
   }
-
-  // 初始化时在类的构造函数或其他合适的地方初始化infowindow
-  infowindow = new google.maps.InfoWindow();
 
   createMarkers() {
     for (const location of this.transformedData) {
@@ -583,6 +572,16 @@ export class MainComponent implements OnInit {
           const newPosition = new google.maps.LatLng(location.lat, location.lng);
           marker.setPosition(newPosition);
         }
+      }
+
+      // 檢查URL變化
+      if (marker.getIcon() !== location.url) {
+        // 更新URL
+        marker.setIcon({
+          url: location.url,
+          scaledSize: new google.maps.Size(60, 60),
+          anchor: new google.maps.Point(30, 30)
+        });
       }
     }
   }
