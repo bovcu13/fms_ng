@@ -26,7 +26,7 @@
         <label class="skynet text-5xl font-bold ml-2">Skynet Premium</label>
       </div>
       <div class="flex justify-content-center align-items-center mt-5">
-        <form ngNoForm action={{payurl}} method="POST">
+        <form ngNoForm action={{payurl}} method="POST" #myForm>
           <div class="flex justify-content-center align-items-center mt-5">
             <label class="inset font-bold text-5xl">提供企業貨主及夥伴車行完整的軟體服務</label>
           </div>
@@ -35,7 +35,7 @@
           </div>
           <div class="flex justify-content-center align-items-center mt-5">
             <input type="text" name="email" pInputText placeholder="請輸入電子郵件"
-                   class="mail rounded-lg">
+                   class="mail rounded-lg" [(ngModel)]="email">
           </div>
           <input type="text" name="MerchantID" value={{MerchantID}}
                    class="text-center text-lg border-2 border-black rounded-lg w-1/2" style="display: none">
@@ -47,7 +47,8 @@
                    class="text-center text-lg border-2 border-black rounded-lg w-1/2" style="display: none">
 
           <div class="flex justify-content-center align-items-center mt-5">
-            <p-button type="submit" label="免費試用" [rounded]="true" [style]="{ width: '10em' }"></p-button>
+            <p-button (click)="postPayment(email,1, '測試')" label="免費試用" [rounded]="true" [style]="{ width: '10em' }"></p-button>
+            <button id="button2" type="submit" style="display: none"></button>
           </div>
         </form>
       </div>

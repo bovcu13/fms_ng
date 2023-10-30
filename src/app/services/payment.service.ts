@@ -19,9 +19,9 @@ export class PaymentService {
     return this.http.post<any>(url, body);
   }
 
-  postRedirect(body: any): Observable<any> {
+  postRedirect(): Observable<any> {
     const url = `${BaseUrl}/web/v1.0/subscriptions/action-pay/redirect`;
-    return this.http.post<any>(url, body);
+    return this.http.post<any>(url, {});
   }
 
   postNewebPay(arr: any): Observable<any> {
