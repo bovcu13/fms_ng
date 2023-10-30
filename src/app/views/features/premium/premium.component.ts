@@ -40,6 +40,7 @@ export class PremiumComponent implements OnInit {
   triggerButton2(button2: HTMLButtonElement) {
     button2.click();
   }
+  visible: boolean = false;
 
   postPayment(email: string, amount: number, description: string) {
     let body = {
@@ -58,6 +59,7 @@ export class PremiumComponent implements OnInit {
 //        console.log(res)
 //        console.log(body)
 //        this.postRedirect(res.body)
+        this.visible = true;
         setTimeout(() => {
           this.triggerButton2(document.getElementById('button2') as HTMLButtonElement);
         }, 500);
