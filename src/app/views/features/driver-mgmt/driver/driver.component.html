@@ -4,27 +4,27 @@
       <p-tabView>
         <p-tabPanel header="所有司機">
           <div class="flex justify-content-end mb-3">
-            <p-button (click)="addDialogVisible=true" icon="pi pi-plus" styleClass="p-button-warning p-button-text"></p-button>
+            <p-button (click)="addDialogVisible=true" icon="pi pi-plus"
+                      styleClass="p-button-warning p-button-text"></p-button>
           </div>
           <p-dataView [value]="driverData">
             <ng-template let-product pTemplate="listItem">
               <div pRipple class="col-6 styled-box" (click)="goToDriver(product.id)">
-                <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
-                  <img class="w-2 sm:w-9rem xl:w-3rem" [src]="'assets/image/car2.png'"/>
+                <div class="flex flex-column align-items-center xl:flex-row xl:align-items-start p-3 gap-4">
+                  <img class="w-8 sm:w-5rem xl:w-3rem" [src]="'assets/image/car2.png'"/>
                   <div
-                    class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                    <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                      <div class="text-lg font-bold">{{ product.name }}</div>
-
+                    class="flex sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                    <div class="flex flex-column align-items-center xl:align-items-start gap-3">
+                      <div class="font-bold xl:text-lg font-bold">{{ product.name }}</div>
                       <div class="flex align-items-center gap-3">
-                                <span class="flex align-items-center gap-2">
-                                <i class="pi pi-at text-xs"></i>
-                                <span class="font-medium text-xs">{{ product.phone_number }}</span>
-                                  </span>
                         <span class="flex align-items-center gap-2">
-                                <i class="pi pi-tag text-xs"></i>
-                                <span class="font-medium text-xs">{{ product.email }}</span>
-                                </span>
+                          <i class="pi pi-at text-xs"></i>
+                          <span class="font-medium text-xs">{{ product.phone_number }}</span>
+                        </span>
+                        <span class="flex align-items-center gap-2">
+                          <i class="pi pi-tag text-xs"></i>
+                          <span class="font-medium text-xs">{{ product.email }}</span>
+                        </span>
                       </div>
                     </div>
                   </div>
