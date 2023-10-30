@@ -3,8 +3,8 @@
     <p-tabView>
       <p-tabPanel header="車機資料">
         <div class="col-12">
-          <p-button icon="pi pi-arrow-left" [routerLink]="['/fleet_mgmt', activeIndex]"
-                    styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
+          <p-button icon="pi pi-arrow-left" [routerLink]="['/fleet_mgmt', activeIndex]" size="large"
+                    [rounded]="true" severity="secondary" [text]="true"></p-button>
         </div>
         <form [formGroup]="editGpsDevice_form">
           <div class="flex justify-content-center">

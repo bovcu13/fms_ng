@@ -16,7 +16,7 @@
                         <input pInputText formControlName="address"/>
                     </div>
                     <div class="col-12 flex justify-content-end">
-                        <p-button label="儲存" styleClass="p-button-warning"></p-button>
+                        <p-button label="儲存" severity="warning"></p-button>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,8 @@
             <div class="col-12">
                 <p-panel header="倉管" [toggleable]="true">
                     <div class="flex justify-content-end mb-3">
-                        <p-button (click)="showEditManager(false)" icon="pi pi-plus" styleClass="p-button-warning p-button-text"></p-button>
+                        <p-button (click)="showEditManager(false)" icon="pi pi-plus"
+                                  severity="warning" [text]="true"></p-button>
                     </div>
                     <p-dataView [value]="warehousesData">
                         <ng-template let-product pTemplate="listItem">
@@ -79,8 +80,8 @@
             </div>
         </div>
         <div class="col-12 flex justify-content-end">
-            <p-button label="取消" styleClass="mr-2 p-button-outlined p-button-secondary"></p-button>
-            <p-button label="儲存" styleClass="p-button-warning"></p-button>
+            <p-button label="取消" (click)="editManagerVisable=false" [outlined]="true" severity="secondary" styleClass="mr-2"></p-button>
+            <p-button label="儲存" severity="warning"></p-button>
         </div>
     </div>
 </p-dialog>

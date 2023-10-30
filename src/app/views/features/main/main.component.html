@@ -2,8 +2,8 @@
   <div class="grid">
     <div class="col-12 md:col-12 lg:col-8">
       <div id="map" style="height: 100vh; width: 100%;position: relative"></div>
-      <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button"
-                styleClass="p-button-sm bg-white p-button-raised p-button-text p-button-info"></p-button>
+      <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button" size="small" severity="info"
+                [raised]="true" [text]="true" styleClass="bg-white"></p-button>
       <div class="func">
         <p-speedDial showIcon="pi pi-map" buttonClassName="p-button-secondary"
                      direction="right" [model]="items">
@@ -67,8 +67,7 @@
                     {{product[col.field]}}
                   </td>
                   <td>
-                    <p-button routerLink="/dispatch"
-                              icon="pi pi-eye" styleClass="p-button-info p-button-text"
+                    <p-button routerLink="/dispatch" severity="info" [text]="true" icon="pi pi-eye"
                               pTooltip="查看運輸派工" tooltipPosition="left"></p-button>
                   </td>
                 </tr>
@@ -181,7 +180,7 @@
       <p-inputSwitch></p-inputSwitch>
     </div>
     <div class="col-12 flex justify-content-end">
-      <p-button label="取消" styleClass="p-button-outlined p-button-secondary mr-2"></p-button>
+      <p-button label="取消" severity="secondary" [outlined]="true" styleClass="mr-2"></p-button>
       <p-button label="新增" (click)="addLandMark()"></p-button>
     </div>
   </div>

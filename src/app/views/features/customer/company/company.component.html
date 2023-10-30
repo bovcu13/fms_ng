@@ -1,8 +1,7 @@
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-12">
     <div class="col-12">
-      <p-button icon="pi pi-arrow-left" [routerLink]="['/customer']"
-                styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
+      <p-button icon="pi pi-arrow-left" [routerLink]="['/customer']" severity="secondary" [text]="true"></p-button>
     </div>
     <form [formGroup]="editCompany_form">
       <div class="flex justify-content-center">
@@ -27,14 +26,14 @@
                       <input pInputText formControlName="address"/>
                     </div>
                     <div class="col-12 flex justify-content-end">
-                      <p-button label="儲存" styleClass="p-button-warning"></p-button>
+                      <p-button label="儲存" severity="warning"></p-button>
                     </div>
                   </div>
                 </p-tabPanel>
                 <p-tabPanel header="倉儲">
                   <div *ngIf="!showWarehouseDetailPage">
                     <div class="flex justify-content-end mb-3">
-                      <p-button icon="pi pi-plus" styleClass="p-button-warning p-button-text"></p-button>
+                      <p-button icon="pi pi-plus" severity="warning" [text]="true"></p-button>
                     </div>
                     <p-dataView [value]="warehousesData">
                       <ng-template let-product pTemplate="listItem">
@@ -59,16 +58,15 @@
                     </p-dataView>
                   </div>
                   <div *ngIf="showWarehouseDetailPage">
-                    <p-button icon="pi pi-arrow-left" (click)="backCompany()"
-                              styleClass="mb-2 p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
+                    <p-button icon="pi pi-arrow-left" (click)="backCompany()" size="large"
+                              [rounded]="true" [text]="true" severity="secondary" styleClass="mb-2"></p-button>
                     <app-warehouse [warehouseId]="selectedProductId"></app-warehouse>
                   </div>
                 </p-tabPanel>
                 <p-tabPanel header="貨物品項">
                   <div *ngIf="!showGoodsDetailPage">
                     <div class="flex justify-content-end mb-3">
-                      <p-button (click)="openAddGoods()" icon="pi pi-plus"
-                                styleClass="p-button-warning p-button-text"></p-button>
+                      <p-button (click)="openAddGoods()" icon="pi pi-plus" severity="warning" [text]="true"></p-button>
                     </div>
                     <p-dataView [value]="goodsData">
                       <ng-template let-product pTemplate="listItem">
@@ -97,8 +95,8 @@
                     </p-dataView>
                   </div>
                   <div *ngIf="showGoodsDetailPage">
-                    <p-button icon="pi pi-arrow-left" (click)="backCompany()"
-                              styleClass="mb-2 p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
+                    <p-button icon="pi pi-arrow-left" (click)="backCompany()" size="large"
+                              [rounded]="true" severity="secondary" [text]="true" styleClass="mb-2"></p-button>
                     <app-goods-view [productId]="selectedProductId"></app-goods-view>
                   </div>
                 </p-tabPanel>
@@ -155,8 +153,8 @@
         </div>
       </div>
       <div class="col-12 flex justify-content-end">
-        <p-button label="取消" styleClass="mr-2 p-button-outlined p-button-secondary"></p-button>
-        <p-button label="新增" styleClass="p-button-warning"></p-button>
+        <p-button label="取消" (click)="addGoodsVisible=false" [outlined]="true" severity="secondary" styleClass="mr-2"></p-button>
+        <p-button label="新增" severity="warning"></p-button>
       </div>
     </div>
   </form>

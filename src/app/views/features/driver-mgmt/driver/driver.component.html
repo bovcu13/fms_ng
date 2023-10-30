@@ -4,8 +4,7 @@
       <p-tabView>
         <p-tabPanel header="所有司機">
           <div class="flex justify-content-end mb-3">
-            <p-button (click)="addDialogVisible=true" icon="pi pi-plus"
-                      styleClass="p-button-warning p-button-text"></p-button>
+            <p-button (click)="addDialogVisible=true" icon="pi pi-plus" severity="warning" [text]="true"></p-button>
           </div>
           <p-dataView [value]="driverData">
             <ng-template let-product pTemplate="listItem">
@@ -79,9 +78,8 @@
       </div>
     </div>
     <div class="flex justify-content-end">
-      <p-button type="submit" label="新增" styleClass="p-button-primary mr-2"></p-button>
-      <p-button label="取消"
-                styleClass="p-button-outlined p-button-secondary"></p-button>
+      <p-button label="取消" (click)="addDialogVisible=false" severity="secondary" styleClass="mr-2" [outlined]="true"></p-button>
+      <p-button type="submit" severity="warning" label="新增"></p-button>
     </div>
   </form>
 </p-dialog>

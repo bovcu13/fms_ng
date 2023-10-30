@@ -6,8 +6,7 @@
           <p-tabView>
             <p-tabPanel header="所有公司">
               <div class="flex justify-content-end mb-3">
-                <p-button icon="pi pi-plus" (click)="openAddCompany()"
-                          styleClass="p-button-warning p-button-text"></p-button>
+                <p-button icon="pi pi-plus" (click)="openAddCompany()" severity="warning" [text]="true"></p-button>
               </div>
               <p-dataView [value]="companiesData">
                 <ng-template let-product pTemplate="listItem">
@@ -43,8 +42,7 @@
           <p-tabView>
             <p-tabPanel header="所有聯絡人">
               <div class="flex justify-content-end mb-3">
-                <p-button icon="pi pi-plus" (click)="openAddCustomer()"
-                          styleClass="p-button-warning p-button-text"></p-button>
+                <p-button icon="pi pi-plus" (click)="openAddCustomer()" severity="warning" [text]="true"></p-button>
               </div>
               No results found ...
             </p-tabPanel>
@@ -76,8 +74,8 @@
     </div>
   </div>
   <div class="flex justify-content-end">
-    <p-button label="新增" styleClass="p-button-primary mr-2"></p-button>
-    <p-button label="取消" styleClass="p-button-outlined p-button-secondary"></p-button>
+    <p-button label="新增" severity="warning" styleClass="mr-2"></p-button>
+    <p-button label="取消" (click)="addCustomerVisible=false" severity="secondary" [outlined]="true"></p-button>
   </div>
 </p-dialog>
 
@@ -110,8 +108,8 @@
     </div>
   </div>
   <div class="flex justify-content-end">
-    <p-button label="新增" styleClass="p-button-primary mr-2"></p-button>
-    <p-button label="取消" styleClass="p-button-outlined p-button-secondary"></p-button>
+    <p-button label="新增" severity="warning" styleClass="mr-2"></p-button>
+    <p-button label="取消" severity="secondary" [outlined]="true" (click)="addCompanyVisible=false"></p-button>
   </div>
 </p-dialog>
 

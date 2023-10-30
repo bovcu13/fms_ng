@@ -1,8 +1,7 @@
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-12">
     <div class="col-12">
-      <p-button icon="pi pi-arrow-left" [routerLink]="['/e_tracking']"
-                styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
+      <p-button icon="pi pi-arrow-left" [routerLink]="['/e_tracking']" size="large" [rounded]="true" severity="secondary" [text]="true"></p-button>
     </div>
     <div class="flex justify-content-center">
       <div class="col-8 flex flex-wrap row-gap-2">
@@ -22,9 +21,8 @@
                 <div class="text-xl font-bold text-900">李宜蓁</div>
               </div>
               <div class="flex gap-2">
-                <p-button label="撥打電話" icon="pi pi-phone"
-                          styleClass="p-button-sm p-button-warning p-button-outlined"></p-button>
-                <p-button label="傳送訊息" icon="pi pi-comments" styleClass="p-button-sm p-button-warning"></p-button>
+                <p-button label="撥打電話" icon="pi pi-phone" size="small" severity="warning" [outlined]="true"></p-button>
+                <p-button label="傳送訊息" icon="pi pi-comments" size="small" severity="warning"></p-button>
               </div>
             </div>
           </div>
@@ -52,16 +50,11 @@
                         <ng-template pTemplate="content" let-event>
                           <p-card class="p-4" [header]="event.status" [subheader]="event.date">
                             <div class="flex justify-content-between">
-                              <p-button label="抵達"
-                                        styleClass="p-button-sm p-button-rounded p-button-warning"></p-button>
-                              <p-button label="提貨"
-                                        styleClass="p-button-sm p-button-rounded p-button-warning"></p-button>
-                              <p-button label="卸貨"
-                                        styleClass="p-button-sm p-button-rounded p-button-warning"></p-button>
-                              <p-button label="完成"
-                                        styleClass="p-button-sm p-button-rounded p-button-success"></p-button>
-                              <p-button label="異常"
-                                        styleClass="p-button-sm p-button-rounded p-button-danger"></p-button>
+                              <p-button label="抵達" size="small" severity="warning" [rounded]="true"></p-button>
+                              <p-button label="提貨" size="small" severity="warning" [rounded]="true"></p-button>
+                              <p-button label="卸貨" size="small" severity="warning" [rounded]="true"></p-button>
+                              <p-button label="完成" size="small" severity="success" [rounded]="true"></p-button>
+                              <p-button label="異常" size="small" severity="danger" [rounded]="true"></p-button>
                             </div>
                           </p-card>
                         </ng-template>

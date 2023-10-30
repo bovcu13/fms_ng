@@ -1,4 +1,7 @@
 <div class="mt-2">
+  <div class="col-12">
+    <p-button icon="pi pi-arrow-left" [routerLink]="['/dispatch_list']" severity="secondary" [text]="true"></p-button>
+  </div>
   <div class="flex justify-content-center">
     <div class="col-8 h-full">
       <form [formGroup]="dispatch_form">
@@ -75,7 +78,7 @@
           <div class="col-12">
             <div class="field">
               <div class="flex justify-content-end">
-                <p-button (click)="add()" label="加入到明細" styleClass="p-button-outlined p-button-info"></p-button>
+                <p-button (click)="add()" label="加入到明細" [outlined]="true" severity="info"></p-button>
               </div>
               <p-divider></p-divider>
               <h3>派工明細</h3>
@@ -109,7 +112,7 @@
           </div>
           <div class="col-12">
             <div class="flex justify-content-end">
-              <p-button label="儲存派工單" styleClass="p-button-outlined p-button-info"></p-button>
+              <p-button label="儲存派工單" [outlined]="true" severity="info"></p-button>
             </div>
           </div>
         </div>

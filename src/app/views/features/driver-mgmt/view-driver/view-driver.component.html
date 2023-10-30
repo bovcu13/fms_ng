@@ -2,8 +2,7 @@
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-12">
     <div class="col-12">
-      <p-button icon="pi pi-arrow-left" [routerLink]="['/driver']"
-                styleClass="p-button-lg p-button-rounded p-button-secondary p-button-text"></p-button>
+      <p-button icon="pi pi-arrow-left" [routerLink]="['/driver']" size="large" [rounded]="true" severity="secondary" [text]="true"></p-button>
     </div>
     <form [formGroup]="editDriver_form">
       <div class="flex justify-content-center">
@@ -18,14 +17,11 @@
             <div class="ml-auto col-1 flex align-items-center">
               <p-confirmDialog #cd [style]="{ width: '40vw' }">
                 <ng-template pTemplate="footer">
-                  <p-button (click)="cd.reject()" label="取消" icon="pi pi-times"
-                            styleClass="p-button-secondary"></p-button>
-                  <p-button (click)="cd.accept()" label="確定" icon="pi pi-check"
-                            styleClass="p-button-warning"></p-button>
+                  <p-button (click)="cd.reject()" label="取消" icon="pi pi-times" severity="secondary"></p-button>
+                  <p-button (click)="cd.accept()" label="確定" icon="pi pi-check" severity="warning"></p-button>
                 </ng-template>
               </p-confirmDialog>
-              <p-button (click)="deleteDriver()" icon="pi pi-trash"
-                        styleClass="p-button-lg p-button-rounded p-button-danger p-button-text"></p-button>
+              <p-button (click)="deleteDriver()" icon="pi pi-trash" size="large" [rounded]="true" severity="danger" [text]="true"></p-button>
             </div>
             <div class="col-12">
               <p-tabView>
