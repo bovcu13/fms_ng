@@ -1,62 +1,61 @@
 <div class="overflow-x-hidden flex justify-content-center">
-  <div class="col-12">
-    <p-card>
-      <p-tabView>
-        <p-tabPanel header="異常設定">
-          <div class=" flex justify-content-center">
-            <div class="col-5">
-              <p-dataView [value]="odd">
-                <ng-template let-product pTemplate="listItem" let-expanded="expanded">
-                  <div class="col-12">
-                    <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
-                      <div class="relative">
-                        <p-button class="toggle-button" styleClass="p-button-text"
-                                  (click)="toggleAdditionalContent(product)">
-                          <i *ngIf="!product.showAdditionalContent"
-                             class="pi pi-chevron-right"></i>
-                          <i *ngIf="product.showAdditionalContent"
-                             class="pi pi-chevron-down"></i>
-                        </p-button>
-                        <img class="w-4 sm:w-8em xl:w-6rem shadow-2 block xl:block mx-auto border-round"
-                             [src]="product.image" [alt]="product.type"/>
-                      </div>
-                      <div
-                        class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                        <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                          <div class="text-2xl font-bold text-900">{{ product.type }}</div>
-                          <div class="grid field ml-1">
-                            <p-inputNumber class="w-5"></p-inputNumber>
-                            <label class="col-fixed">分鐘</label>
-                          </div>
+    <div class="col-12">
+        <p-card>
+            <p-tabView>
+                <p-tabPanel header="異常設定">
+                    <div class=" flex justify-content-center">
+                        <div class="col-5">
+                            <p-dataView [value]="odd">
+                                <ng-template let-product pTemplate="listItem" let-expanded="expanded">
+                                    <div class="col-12">
+                                        <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+                                            <div class="relative">
+                                                <p-button class="toggle-button" [text]="true"
+                                                          (click)="toggleAdditionalContent(product)">
+                                                    <i *ngIf="!product.showAdditionalContent"
+                                                       class="pi pi-chevron-right"></i>
+                                                    <i *ngIf="product.showAdditionalContent"
+                                                       class="pi pi-chevron-down"></i>
+                                                </p-button>
+                                                <img class="w-4 sm:w-8em xl:w-6rem shadow-2 block xl:block mx-auto border-round"
+                                                     [src]="product.image" [alt]="product.type"/>
+                                            </div>
+                                          <div
+                                            class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                                                <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                                                    <div class="text-2xl font-bold text-900">{{ product.type }}</div>
+                                                    <div class="grid field ml-1">
+                                                        <p-inputNumber class="w-5"></p-inputNumber>
+                                                        <label class="col-fixed">分鐘</label>
+                                                    </div>
+                                                </div>
+                                                <p-toggleButton onIcon="pi pi-check" offIcon="pi pi-times"
+                                                                class="mt-6"></p-toggleButton>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-column xl:flex-row xl:align-items-center justify-content-end p-3 gap-3">
+                                                <div class="additional-content"
+                                                     *ngIf="product.showAdditionalContent">
+                                                    <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                                                        <p-toggleButton onLabel="視窗" offLabel="視窗"
+                                                                        onIcon="pi pi-check" offIcon="pi pi-times"
+                                                                        [style]="{ width: '7em' }"></p-toggleButton>
+                                                        <p-toggleButton onLabel="鈴聲" offLabel="鈴聲"
+                                                                        onIcon="pi pi-check" offIcon="pi pi-times"
+                                                                        [style]="{ width: '7em' }"
+                                                                        class="mr-2 ml-2"></p-toggleButton>
+                                                        <p-button label="試聽" [style]="{ width: '7em' }"></p-button>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </p-dataView>
                         </div>
-                        <p-toggleButton onIcon="pi pi-check" offIcon="pi pi-times"
-                                        class="mt-6"></p-toggleButton>
-                      </div>
                     </div>
-                    <div class="flex flex-column xl:flex-row xl:align-items-center justify-content-end p-3 gap-3">
-                      <div class="additional-content"
-                           *ngIf="product.showAdditionalContent">
-                        <div
-                          class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                          <p-toggleButton onLabel="視窗" offLabel="視窗"
-                                          onIcon="pi pi-check" offIcon="pi pi-times"
-                                          [style]="{ width: '7em' }"></p-toggleButton>
-                          <p-toggleButton onLabel="鈴聲" offLabel="鈴聲"
-                                          onIcon="pi pi-check" offIcon="pi pi-times"
-                                          [style]="{ width: '7em' }"
-                                          class="mr-2 ml-2"></p-toggleButton>
-                          <p-button label="試聽" [style]="{ width: '7em' }"></p-button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-              </p-dataView>
-            </div>
-          </div>
-        </p-tabPanel>
+                </p-tabPanel>
 
-        <p-tabPanel header="速限設定">
+                <p-tabPanel header="速限設定">
 
         </p-tabPanel>
       </p-tabView>

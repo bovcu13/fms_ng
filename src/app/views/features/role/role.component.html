@@ -6,7 +6,7 @@
         <ng-template pTemplate="caption">
           <div class="flex justify-content-between flex-wrap">
             <div class="flex align-items-center justify-content-center">
-              <button pButton label="新增" class="p-button-outlined" icon="pi pi-plus" (click)="showDialog()"></button>
+              <p-button label="新增" [outlined]="true" icon="pi pi-plus" (click)="showDialog()"></p-button>
             </div>
             <div class="flex align-items-center justify-content-center">
             <span class="p-input-icon-left table-search">
@@ -38,8 +38,8 @@
             <td>{{ role.name }}</td>
             <td>{{ role.created_at }}</td>
             <td>
-              <p-button icon="pi pi-trash" pTooltip="刪除"
-                        tooltipPosition="top" styleClass="p-button-rounded p-button-secondary p-button-text"></p-button>
+              <p-button icon="pi pi-trash" pTooltip="刪除" tooltipPosition="top"
+                        [rounded]="true" severity="secondary" [text]="true"></p-button>
             </td>
           </tr>
         </ng-template>
@@ -185,8 +185,8 @@
       </div>
     </div>
     <div class="flex justify-content-end mt-3">
-      <p-button label="取消" styleClass="p-button-secondary mr-2" (click)="add = false"></p-button>
-      <p-button label="新增" styleClass="p-button-info" (click)="add = false"></p-button>
+      <p-button label="取消" severity="secondary" styleClass="mr-2" (click)="add = false"></p-button>
+      <p-button label="新增" severity="info" (click)="add = false"></p-button>
     </div>
   </p-dialog>
 </form>

@@ -6,7 +6,7 @@
           <p-tabView>
             <p-tabPanel header="所有訂單">
               <div class="flex justify-content-end mb-3">
-                  <p-button routerLink="/dispatch_form" icon="pi pi-plus" styleClass="p-button-info p-button-text"></p-button>
+                  <p-button routerLink="/dispatch_form" icon="pi pi-plus" severity="info" [text]="true"></p-button>
               </div>
               <p-dataView [value]="list">
                 <ng-template let-list pTemplate="listItem">
