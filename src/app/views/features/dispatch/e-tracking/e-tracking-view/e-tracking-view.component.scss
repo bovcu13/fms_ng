@@ -21,5 +21,18 @@
   z-index: 100;
 }
 
+.sub-content {
+  padding: 10px;
+  background: #ffffff;
+  color: #495057;
+  //border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.sub-content3 {
+  padding: 10px;
+  background: #ffffff;
+  color: #495057;
+}
+
 ::ng-deep {
 }
