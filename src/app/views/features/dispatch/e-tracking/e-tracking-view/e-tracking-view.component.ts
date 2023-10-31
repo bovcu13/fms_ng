@@ -18,9 +18,6 @@ interface EventItem {
   styleUrls: ['./e-tracking-view.component.scss']
 })
 export class ETrackingViewComponent implements OnInit {
-  events: EventItem[];
-  items: MenuItem[] | undefined;
-
   goodsData = [
     {
       id: 1,
@@ -60,6 +57,15 @@ export class ETrackingViewComponent implements OnInit {
     }
   ]
 
+  tourStops: [google.maps.LatLngLiteral, string][] = [
+    [{ lat: 22.61295, lng: 120.3196 }, "NOW"],
+    [{ lat: 22.63217293878507, lng: 120.32530129011322 }, "環球影城"],
+    [{ lat: 22.65317138696395, lng: 120.31894684150537 }, "鼎山家樂福"],
+    [{ lat: 22.66610475944051, lng: 120.29979369507383 }, "瑞豐夜市"],
+    [{ lat: 22.752722291935832, lng: 120.32990834147498 }, "高第一女宿"],
+  ];
+
+  events: EventItem[];
   constructor() {
     this.events = [
       { status: '仁武', date: '抵達：2023-10-23 09:00', icon: 'pi pi-check-circle', color: '#B6C5CC' },
@@ -71,6 +77,11 @@ export class ETrackingViewComponent implements OnInit {
 
   ngOnInit() {
     this.initMap();
+    this.initItems();
+  }
+
+  items: MenuItem[] | undefined;
+  initItems() {
     this.items = [
       {
         label: 'Personal',
@@ -92,13 +103,20 @@ export class ETrackingViewComponent implements OnInit {
   }
 
   map: any;
-  mapOptions: any;
   center: google.maps.LatLngLiteral = {
     lat: 22.61295,
     lng: 120.3196
   };
+  // 地圖邊界
+  TAIWAN_BOUNDS = {
+    north: 25.36,
+    south: 21.86,
+    west: 118.18,
+    east: 123.78,
+  };
 
   initMap() {
+    // 地圖風格
     const styledMapType = new google.maps.StyledMapType(
       [
         { elementType: "geometry", stylers: [{ color: "#ebe3cd" }] },
@@ -213,24 +231,92 @@ export class ETrackingViewComponent implements OnInit {
       { name: "Styled Map" }
     );
 
-    // Create a map object, and include the MapTypeId to add
-    // to the map type control.
+    // mapOptions
     const map = new google.maps.Map(
       document.getElementById("map") as HTMLElement,
       {
         center: this.center,
         zoom: 16,
-        mapTypeControlOptions: {
-          mapTypeIds: ["roadmap", "satellite", "hybrid", "terrain", "styled_map"],
+        restriction: {
+          latLngBounds: this.TAIWAN_BOUNDS,
+          strictBounds: false,
         },
       }
     );
+
+    // DirectionsAPI
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer(
+      {
+        suppressMarkers: true
+      });
+    directionsRenderer.setMap(map);
+
+    const waypoints: google.maps.DirectionsWaypoint[] = [];
+    const infoWindow = new google.maps.InfoWindow();
+
+    this.tourStops.forEach(([position, title], i) => {
+      // Marker
+      const marker = new google.maps.Marker({
+        position,
+        map,
+        title: `${title}`,
+        label: {
+          text: `${i + 1}`,
+          color: "#ffffff",
+          fontSize: "18px",
+        },
+        optimized: false,
+      });
+      // Click listener
+      marker.addListener("click", () => {
+        infoWindow.close();
+        infoWindow.setContent(marker.getTitle());
+        infoWindow.open(marker.getMap(), marker);
+
+        map.setCenter(marker.getPosition());
+        map.setZoom(16);
+      });
+      // Waypoint
+      waypoints.push({
+        location: position,
+        stopover: true,
+      });
+    });
+
+    const request = {
+      origin: waypoints[0].location,
+      destination: waypoints[waypoints.length - 1].location,
+      waypoints: waypoints.slice(1, waypoints.length - 1), // Exclude the first and last waypoints
+      travelMode: google.maps.TravelMode.DRIVING, // You can change this to your preferred travel mode
+    };
+
+    directionsService.route(request, (response: any, status: any) => {
+      if (status === google.maps.DirectionsStatus.OK) {
+        directionsRenderer.setDirections(response);
+        const route = response.routes[0];
+        if (route) {
+          for (let i = 0; i < route.legs.length; i++) {
+            const leg = route.legs[i];
+            const waypointDistance = leg.distance.value;
+
+            console.log(`Waypoint ${i + 1} 之间的距离: ${waypointDistance} 米`);
+          }
+        }
+      } else {
+        console.error("Directions request failed:", status);
+      }
+    });
+
+
 
     //Associate the styled map with the MapTypeId and set it to display.
     map.mapTypes.set("styled_map", styledMapType);
     map.setMapTypeId("styled_map");
 
   }
+
+
 
   protected readonly list = list;
 }
