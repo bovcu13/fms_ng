@@ -10,7 +10,7 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class DispatchFormComponent implements OnInit {
   id: any = 0;
-  list: any = list[this.id].trips;
+  list: any = list[this.id].shipping_list;
   dispatch_form: FormGroup;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute) {
@@ -18,16 +18,16 @@ export class DispatchFormComponent implements OnInit {
     this.dispatch_form = this.fb.group({
       created_at: ['2023-10-18', Validators.required], //填單日
       id: ['236-M3', Validators.required], //單號
-      name: ['', Validators.required], //派工名稱
-      date: [''], //承運日期
+      name: ['', Validators.required], //名稱
+      // date: [''], //承運日期
       shipper: ['', Validators.required], //託運人
-      pallet: [''], //板台號碼
-      product_name: ['', Validators.required], //品名
-      unit_price: [''], //單價
-      quantity: [''], //件數
-      tonnage:  [''], //噸數
+      // trailer: [''], //板台號碼
       origin:  ['', Validators.required], //起運
       destination: ['', Validators.required], //卸貨
+      product_name: ['', Validators.required], //品名
+      unit_price: [''], //單價
+      qty: ['', Validators.required], //件數
+      tonnage:  ['', Validators.required], //噸數
     });
     this.dispatch_form.patchValue(list[this.id]);
   }
@@ -52,7 +52,7 @@ export class DispatchFormComponent implements OnInit {
     if (this.dispatch_form.controls['name'].value) {
      this.title = this.dispatch_form.controls['name'].value;
     } else {
-      this.title = "新增派工單";
+      this.title = "新增託運訂單";
     }
   }
 
