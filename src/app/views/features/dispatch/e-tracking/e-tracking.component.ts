@@ -12,16 +12,13 @@ import { list } from "../../../../shared/data/dispatch";
 export class ETrackingComponent {
   list: any = list;
 
-  events: string[];
 
   constructor(
     private carServ: CarService,
     private fb: FormBuilder,
     private router: Router
   ) {
-    this.events = [
-      "2020", "2021"
-    ];
+
   }
 
   goToForm(id: any) {
