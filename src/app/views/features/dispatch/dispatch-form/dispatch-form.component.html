@@ -21,46 +21,16 @@
               <input formControlName="name" pInputText/>
             </div>
           </div>
-          <div class="col-12 md:col-6 lg:col-6">
-            <div class="field">
-              <label class="font-semibold">承運日期</label>
-              <p-calendar formControlName="date" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
-            </div>
-          </div>
+<!--          <div class="col-12 md:col-6 lg:col-6">-->
+<!--            <div class="field">-->
+<!--              <label class="font-semibold">承運日期</label>-->
+<!--              <p-calendar formControlName="date" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>-->
+<!--            </div>-->
+<!--          </div>-->
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
               <label class="font-semibold"><span class="text-red-600">*</span>託運人</label>
               <p-dropdown formControlName="shipper"></p-dropdown>
-            </div>
-          </div>
-          <div class="col-12 md:col-6 lg:col-6">
-            <div class="field">
-              <label class="font-semibold">板台號碼</label>
-              <p-dropdown formControlName="pallet"></p-dropdown>
-            </div>
-          </div>
-          <div class="col-12 md:col-6 lg:col-6">
-            <div class="field">
-              <label class="font-semibold"><span class="text-red-600">*</span>品名</label>
-              <input formControlName="product_name" pInputText/>
-            </div>
-          </div>
-          <div class="col-12 md:col-6 lg:col-6">
-            <div class="field">
-              <label class="font-semibold">單價</label>
-              <p-inputNumber class="w-full" formControlName="unit_price" mode="currency" inputId="currency-taiwan" currency="TWD" locale="zh-TW"></p-inputNumber>
-            </div>
-          </div>
-          <div class="col-12 md:col-6 lg:col-6">
-            <div class="field">
-              <label class="font-semibold">件數</label>
-              <p-inputNumber class="w-full" formControlName="quantity" [min]="0"></p-inputNumber>
-            </div>
-          </div>
-          <div class="col-12 md:col-6 lg:col-6">
-            <div class="field">
-              <label class="font-semibold">噸位</label>
-              <p-inputNumber class="w-full" formControlName="tonnage" [min]="0"></p-inputNumber>
             </div>
           </div>
           <div class="col-12 md:col-6 lg:col-6">
@@ -76,35 +46,69 @@
             </div>
           </div>
           <div class="col-12">
+            <p-divider></p-divider>
+          </div>
+<!--          <div class="col-12 md:col-6 lg:col-6">-->
+<!--            <div class="field">-->
+<!--              <label class="font-semibold"><span class="text-red-600">*</span>板台號碼</label>-->
+<!--              <p-dropdown formControlName="pallet"></p-dropdown>-->
+<!--            </div>-->
+<!--          </div>-->
+          <div class="col-12 md:col-6 lg:col-6">
+            <div class="field">
+              <label class="font-semibold"><span class="text-red-600">*</span>品名</label>
+              <input formControlName="product_name" pInputText/>
+            </div>
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <div class="field">
+              <label class="font-semibold">單價</label>
+              <p-inputNumber class="w-full" formControlName="unit_price" mode="currency" inputId="currency-taiwan" currency="TWD" locale="zh-TW"></p-inputNumber>
+            </div>
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <div class="field">
+              <label class="font-semibold"><span class="text-red-600">*</span>件數</label>
+              <p-inputNumber class="w-full" formControlName="qty" [min]="0"></p-inputNumber>
+            </div>
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <div class="field">
+              <label class="font-semibold"><span class="text-red-600">*</span>噸位</label>
+              <p-inputNumber class="w-full" formControlName="tonnage" [min]="0"></p-inputNumber>
+            </div>
+          </div>
+
+          <div class="col-12">
             <div class="field">
               <div class="flex justify-content-end">
-                <p-button (click)="add()" label="加入" [outlined]="true" severity="info"></p-button>
+                <p-button (click)="add()" label="加入託運清單" [outlined]="true" severity="info"></p-button>
               </div>
               <p-divider></p-divider>
-              <h3>派工明細</h3>
+              <h3>託運清單</h3>
               <p-table [value]="list">
                 <ng-template pTemplate="header">
                   <tr>
-                    <th>託運人</th>
-                    <th>板台號碼</th>
+<!--                    <th>託運人</th>-->
+<!--                    <th>板台號碼</th>-->
                     <th>品名</th>
                     <th>單價</th>
                     <th>件數</th>
                     <th>噸位</th>
-                    <th>起運點</th>
-                    <th>卸貨點</th>
+<!--                    <th>起運點</th>-->
+<!--                    <th>卸貨點</th>-->
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-list>
                   <tr>
-                    <td>{{ list.shipper }}</td>
-                    <td>{{ list.pallet }}</td>
+<!--                    <td>{{ list.shipper }}</td>-->
+<!--                    <td>{{ list.pallet }}</td>-->
                     <td>{{ list.product_name }}</td>
                     <td>{{ list.unit_price }}</td>
-                    <td>{{ list.quantity }}</td>
+                    <td>{{ list.qty }}</td>
                     <td>{{ list.tonnage }}</td>
-                    <td>{{ list.origin }}</td>
-                    <td>{{ list.destination }}</td>
+<!--                    <td>{{ list.origin }}</td>-->
+<!--                    <td>{{ list.destination }}</td>-->
                   </tr>
                 </ng-template>
               </p-table>
