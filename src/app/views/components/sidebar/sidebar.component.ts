@@ -154,7 +154,7 @@ export class SidebarComponent implements OnInit {
         icon: 'pi pi-truck',
         items: [
           {
-            label: '運輸訂單',
+            label: '託運訂單',
             icon: 'pi pi-box',
             routerLink: '/dispatch_list',
             command: () => {
