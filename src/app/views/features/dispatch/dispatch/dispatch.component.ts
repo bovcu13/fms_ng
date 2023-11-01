@@ -84,7 +84,7 @@ export class DispatchComponent implements OnInit {
   showEdit = true;//判斷是否dialog為新增與編輯
   e_id: any;
   showAddEventDialog(type: string, event ?: any) {
-    this.dialogHeader = type === 'editList' || 'editCalendar' ? '編輯任務' : '新增任務';
+    this.dialogHeader = type === 'editList' || type === 'editCalendar' ? '編輯任務' : '新增任務';
     this.addEventVisible = true;
 
     if (event) {
@@ -155,7 +155,6 @@ export class DispatchComponent implements OnInit {
   }
 
   driverData: any
-  // 取得車牌
   getAllDriversRequest() {
     this.carServ.getAllDriversRequest().subscribe({
       next: res => {

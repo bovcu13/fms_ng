@@ -2,7 +2,7 @@
   <div class="col-8">
     <p-tabView>
       <p-tabPanel header="派工與調度">
-        <p-card header="派工與調度">
+        <p-card header="派工與調度（貨物運輸訂單）">
           <p-tabView>
             <p-tabPanel header="所有工作">
               <div class="flex justify-content-end mb-3">
@@ -61,7 +61,7 @@
 </div>
 
 <form [formGroup]="event_form">
-  <p-dialog header="{{dialogHeader}}" [(visible)]="addEventVisible" [modal]="true" [style]="{ width: '40vw' }"
+  <p-dialog header="{{dialogHeader}}" [(visible)]="addEventVisible" [modal]="true" [style]="{ width: '50vw' }"
             [draggable]="false" [resizable]="false">
     <div class="grid">
       <div class="field col-12 md:col-6 lg:col-6">
@@ -70,19 +70,8 @@
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
         <label class="font-semibold">運輸訂單</label>
-        <p-dropdown placeholder="選擇訂單" [options]="formList"></p-dropdown>
-      </div>
-      <div class="field col-12 md:col-12 lg:col-12">
-        <label class="font-semibold">開始日期</label>
-        <p-calendar formControlName="start_date" [appendTo]="'body'"></p-calendar>
-      </div>
-      <div class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">預計結束日期</label>
-        <p-calendar formControlName="end_date" [appendTo]="'body'"></p-calendar>
-      </div>
-      <div *ngIf="dialogHeader == '編輯任務'" class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">實際結束日期</label>
-        <p-calendar [appendTo]="'body'"></p-calendar>
+        <p-multiSelect placeholder="選擇訂單" [options]="formList"
+                       display="chip" [showClear]="true"></p-multiSelect>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
         <label class="font-semibold">司機</label>
@@ -93,20 +82,28 @@
         <input pInputText [disabled]="true"/>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">預計出車時間</label>
-        <p-calendar [showTime]="true" [showSeconds]="true" [appendTo]="'body'"></p-calendar>
-      </div>
-      <div *ngIf="dialogHeader == '編輯任務'" class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">實際出車時間</label>
-        <input pInputText />
+        <label class="font-semibold">板台號</label>
+        <p-dropdown placeholder="選擇板台"></p-dropdown>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">預計到達時間</label>
-        <p-calendar [showTime]="true" [showSeconds]="true" [appendTo]="'body'"></p-calendar>
+      </div>
+      <div class="field col-12 md:col-12 lg:col-6">
+        <label class="font-semibold">開始時間</label>
+        <p-calendar formControlName="start_date"
+                    [appendTo]="'body'" [showTime]="true"></p-calendar>
+      </div>
+      <div class="field col-12 md:col-6 lg:col-6">
+        <label class="font-semibold">結束時間</label>
+        <p-calendar formControlName="end_date"
+                    [appendTo]="'body'" [showTime]="true"></p-calendar>
       </div>
       <div *ngIf="dialogHeader == '編輯任務'" class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">實際到達時間</label>
-        <p-calendar [showTime]="true" [showSeconds]="true" [appendTo]="'body'"></p-calendar>
+        <label class="font-semibold">實際開始時間</label>
+        <p-calendar [appendTo]="'body'" [showTime]="true"></p-calendar>
+      </div>
+      <div *ngIf="dialogHeader == '編輯任務'" class="field col-12 md:col-6 lg:col-6">
+        <label class="font-semibold">實際結束時間</label>
+        <p-calendar [appendTo]="'body'" [showTime]="true"></p-calendar>
       </div>
     </div>
     <div class="flex justify-content-end">

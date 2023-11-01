@@ -1,6 +1,6 @@
 export const list = [
   {
-    name: "春之風",
+    name: "產品配送計劃",
     created_at: "2023-10-19",
     id: "0",
     origin: "季河",
@@ -27,7 +27,7 @@ export const list = [
     ],
   },
   {
-    name: "夜市探索",
+    name: "國際運送安排",
     created_at: "2023-10-19",
     id: "1",
     origin: "鼎山家樂福",
@@ -54,7 +54,7 @@ export const list = [
     ],
   },
   {
-    name: "文化之旅",
+    name: "訂單運輸安排",
     created_at: "2023-10-19",
     id: "2",
     origin: "高第一女宿",
@@ -81,7 +81,7 @@ export const list = [
     ],
   },
   {
-    name: "商學之路",
+    name: "商品分發管理",
     created_at: "2023-10-19",
     id: "3",
     origin: "季河",
@@ -108,7 +108,7 @@ export const list = [
     ],
   },
   {
-    name: "歡樂之旅",
+    name: "物流處理訂單",
     created_at: "2023-10-19",
     id: "4",
     origin: "中央公園",
