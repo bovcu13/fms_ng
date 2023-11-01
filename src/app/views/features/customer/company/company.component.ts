@@ -126,7 +126,4 @@ export class CompanyComponent implements OnInit {
     this.editCompany_form.patchValue(this.companiesData[0])
   }
 
-  goToWarehouse(id: any) {
-    this.router.navigate(['/warehouse', id])
-  }
 }
