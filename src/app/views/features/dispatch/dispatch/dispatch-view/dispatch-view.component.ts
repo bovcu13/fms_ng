@@ -13,7 +13,8 @@ import { list } from "../../../../../shared/data/dispatch";
 export class DispatchViewComponent implements OnInit {
   id: any = 0;
   list: any = list;
-  workData = workData
+  workData: any;
+  taskList: any;
 
   event_form: FormGroup;
 
@@ -24,6 +25,9 @@ export class DispatchViewComponent implements OnInit {
     private router: Router
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
+
+    this.workData = workData[this.id - 1];
+    this.taskList = this.workData.form;
 
     this.event_form = this.fb.group({
       id: ['', Validators.required],
@@ -43,20 +47,18 @@ export class DispatchViewComponent implements OnInit {
     });
 
     const driver = {
-      name: workData[this.id - 1].driver
+      name: this.workData.driver
     }
-    const form = workData[this.id - 1].form.map((item: any) => ({ name: item.name }));
+    const form = this.workData.form.map((item: any) => ({ name: item.name }));
     console.log('form:', form)
-    this.event_form.patchValue(workData[this.id - 1]);
+    this.event_form.patchValue(this.workData);
     this.event_form.patchValue({
-      start_date: new Date((workData[this.id - 1].start)),
-      end_date: new Date((workData[this.id - 1].end)),
+      start_date: new Date((this.workData.start)),
+      end_date: new Date((this.workData.end)),
       driver: driver,
       form: form
     });
   }
-
-  taskList = workData[this.id].form
 
   ngOnInit(): void {
     this.getFormListName();
@@ -86,5 +88,13 @@ export class DispatchViewComponent implements OnInit {
         console.log(err);
       },
     });
+  }
+
+  onClickTask(event: any) {
+    console.log('event:', event);
+  }
+
+  onReorderTask(event: any) {
+    console.log('event:', event);
   }
 }

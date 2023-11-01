@@ -27,7 +27,8 @@
                       </div>
                       <div class="field col-12 md:col-6 lg:col-6">
                         <label class="font-semibold">司機</label>
-                        <p-dropdown placeholder="選擇司機" formControlName="driver" [options]="driverData" optionLabel="name"></p-dropdown>
+                        <p-dropdown placeholder="選擇司機" formControlName="driver" [options]="driverData"
+                                    optionLabel="name"></p-dropdown>
                       </div>
                       <div class="field col-12 md:col-6 lg:col-6">
                         <label class="font-semibold">車牌</label>
@@ -72,23 +73,28 @@
             </div>
             <div class="col-5">
               <p-card>
-                <div class="card xl:flex xl:justify-content-center">
-                  <p-orderList [value]="taskList" [listStyle]="{ 'max-height': '30rem' }" [dragdrop]="true">
-                    <ng-template let-product pTemplate="item">
-                      <div class="flex flex-wrap p-2 align-items-center gap-3">
-                        <div class="flex-1 flex flex-column gap-2">
-                          <span class="font-bold">{{ product.name }}</span>
-                          <div class="flex align-items-center gap-2">
-                            <i class="pi pi-info-circle text-sm"></i>
-                            <span>{{ product.origin }}</span>
-                            <i class="pi pi-arrow-right text-sm"></i>
-                            <span>{{ product.destination }}</span>
+                <p-tabView>
+                  <p-tabPanel header="運輸順序">
+                    <div class="card xl:flex xl:justify-content-center">
+                      <p-orderList [value]="taskList" (onSelectionChange)="onClickTask($event)" (onReorder)="onReorderTask($event)"
+                                   [responsive]="true" [dragdrop]="true">
+                        <ng-template let-product pTemplate="item">
+                          <div class="flex flex-wrap p-2 align-items-center gap-3">
+                            <div class="flex-1 flex flex-column gap-2">
+                              <span class="font-bold">{{ product.name }}</span>
+                              <div class="flex align-items-center gap-2">
+                                <i class="pi pi-info-circle text-sm"></i>
+                                <span>{{ product.origin }}</span>
+                                <i class="pi pi-arrow-right text-sm"></i>
+                                <span>{{ product.destination }}</span>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </ng-template>
-                  </p-orderList>
-                </div>
+                        </ng-template>
+                      </p-orderList>
+                    </div>
+                  </p-tabPanel>
+                </p-tabView>
               </p-card>
             </div>
           </div>
