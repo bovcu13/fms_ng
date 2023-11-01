@@ -50,8 +50,9 @@ export class DispatchComponent implements OnInit {
       listPlugin,
     ],
     headerToolbar: {
-      left: 'title',
-      right: 'today prev,next',
+      start: 'dayGridMonth timeGridWeek timeGridDay',
+      center: 'title',
+      end: 'prevYear prev next nextYear'
     },
     editable: false,// 是否可以進行拖拽、修改
     selectMirror: true,
@@ -88,10 +89,14 @@ export class DispatchComponent implements OnInit {
     this.addEventVisible = true;
 
     if (event) {
+      const driver={
+        name: this.dispatchEvents[Number(event._def.publicId) - 1].driver
+      }
       this.event_form.patchValue({
-        name: event.title,
+        title: event.title,
         start_date: new Date((event.start)),
         end_date: type === 'editList' ? new Date((event.end)) : new Date(this.dispatchEvents[Number(event._def.publicId) - 1].end),
+        driver: driver
       });
       this.showEdit = true;
     } else {
@@ -103,7 +108,6 @@ export class DispatchComponent implements OnInit {
   minDate: Date; // 最早時間，午夜12時
   maxDate: any; // 最晚時間，晚間11點59分
 
-  addDispatchWork_form: FormGroup;
   event_form: FormGroup;
 
   constructor(
@@ -112,21 +116,9 @@ export class DispatchComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.addDispatchWork_form = this.fb.group({
-      id: ['', Validators.required],
-      name: ['', Validators.required],
-      date: ['', Validators.required],
-      form: [''],
-      driver: [''],
-      created_at: [''],
-      created_by: [''],
-      updated_at: [''],
-      updated_by: [''],
-    });
-
     this.event_form = this.fb.group({
       id: ['', Validators.required],
-      name: ['', [Validators.required]],
+      title: ['', [Validators.required]],
       start_date: ['', [Validators.required]],
       end_date: ['', [Validators.required]],
       type: ['', [Validators.required]],
@@ -159,7 +151,7 @@ export class DispatchComponent implements OnInit {
     this.carServ.getAllDriversRequest().subscribe({
       next: res => {
         this.driverData = res.body.drivers.map((item:any) => ({
-          name: item.name
+          name: item.name,
         }));
         console.log(this.driverData);
       },
@@ -167,6 +159,10 @@ export class DispatchComponent implements OnInit {
         console.log(err);
       },
     });
+  }
+
+  goToDispatchView(id: any) {
+    this.router.navigate(['/dispatch_view', id])
   }
 
 }

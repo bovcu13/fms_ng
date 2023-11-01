@@ -1,32 +1,16 @@
 ::ng-deep {
-  .fc-h-event .fc-event-title-container {
-    flex-grow: 1;
-    flex-shrink: 1;
-    min-width: 0px;
-    background: rgba(255, 205, 89);
-    font-family: 'Noto Sans TC', sans-serif;
-    font-weight: 400;
-    border: none;
-    color: #000;
-  }
-
-  .fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-block-event {
-    color: #ffffff;
-    background: rgba(255, 205, 89);
-    border-color: rgba(255, 205, 89);
-  }
 
   .fc.fc-theme-standard .fc-toolbar .fc-button:disabled {
     opacity: 0.6;
-    color: #000;
+    color: #03071e;
     background: rgba(255, 205, 89);
-    border: 1px solid rgba(255, 205, 89);
+    border: 2px solid rgba(34, 34, 59, 0.3);
   }
 
   .fc.fc-theme-standard .fc-toolbar .fc-button {
-    color: #000;
+    color: #03071e;
     background: rgba(255, 205, 89);
-    border: 1px solid rgba(255, 205, 89);
+    border: 2px solid rgba(34, 34, 59, 0.3);
     font-size: 1rem;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
     border-radius: 3px;
