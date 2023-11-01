@@ -52,7 +52,7 @@ import {WarehouseViewComponent} from "../features/my-warehouse/warehouse-view/wa
 import {ETrackingViewComponent} from "../features/dispatch/e-tracking/e-tracking-view/e-tracking-view.component";
 import {GoodsViewComponent} from "../features/my-warehouse/goods-view/goods-view.component";
 import {EventComponent} from "../features/dispatch/event/event.component";
-
+import {DispatchViewComponent} from "../features/dispatch/dispatch/dispatch-view/dispatch-view.component";
 
 @NgModule({
   declarations: [
@@ -102,6 +102,7 @@ import {EventComponent} from "../features/dispatch/event/event.component";
     ETrackingViewComponent,
     GoodsViewComponent,
     EventComponent,
+    DispatchViewComponent,
   ],
   imports: [
     CommonModule,
