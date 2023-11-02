@@ -50,7 +50,6 @@ export class DispatchViewComponent implements OnInit {
       name: this.workData.driver
     }
     const form = this.workData.form.map((item: any) => ({ name: item.name }));
-    console.log('form:', form)
     this.event_form.patchValue(this.workData);
     this.event_form.patchValue({
       start_date: new Date((this.workData.start)),
@@ -90,11 +89,22 @@ export class DispatchViewComponent implements OnInit {
     });
   }
 
+  goodsData: any
+  shippingList: any
   onClickTask(event: any) {
-    console.log('event:', event);
+    console.log('CLickEvent:', event);
+    this.goodsData = event.value;
+    console.log('goodsData:', this.goodsData);
+
+    if (this.goodsData && this.goodsData.length > 0) {
+      this.shippingList = this.goodsData[0].shipping_list;
+      console.log('shipping_list:', this.shippingList);
+    } else {
+      console.log('goodsData is empty or invalid');
+    }
   }
 
   onReorderTask(event: any) {
-    console.log('event:', event);
+    console.log('ReorderEvent:', event);
   }
 }
