@@ -106,9 +106,9 @@
       </div>
     </div>
     <div class="flex justify-content-end">
-      <p-button *ngIf="dialogHeader == '編輯任務'" label="儲存" styleClass="mr-2"></p-button>
-      <p-button *ngIf="dialogHeader != '編輯任務'" label="新增" styleClass="mr-2"></p-button>
-      <p-button label="取消" severity="secondary" [outlined]="true"></p-button>
+      <p-button label="取消" severity="secondary" styleClass="mr-2" [outlined]="true"></p-button>
+      <p-button *ngIf="dialogHeader == '編輯任務'" label="儲存" severity="warning"></p-button>
+      <p-button *ngIf="dialogHeader != '編輯任務'" label="新增" severity="warning"></p-button>
     </div>
   </p-dialog>
 </form>
