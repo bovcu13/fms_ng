@@ -1,88 +1,92 @@
 <div class="grid">
-    <div class="col-7">
-        <p-card header="A 倉庫">
-            <form [formGroup]="editWarehouse_form">
-            <div class="grid">
-                <div class="col-12">
-                    <label class="font-bold">基本資料</label>
-                </div>
-                <div class="col-12">
-                    <div class="field col-12">
-                        <label class="font-medium">名稱</label>
-                        <input pInputText formControlName="name"/>
-                    </div>
-                    <div class="field col-12">
-                        <label class="font-medium">地址</label>
-                        <input pInputText formControlName="address"/>
-                    </div>
-                    <div class="col-12 flex justify-content-end">
-                        <p-button label="儲存" severity="warning"></p-button>
-                    </div>
-                </div>
-            </div>
-            </form>
-        </p-card>
-    </div>
-    <div class="col-5">
+  <div class="col-7">
+    <p-card header="A 倉庫">
+      <form [formGroup]="editWarehouse_form">
         <div class="grid">
-            <div class="col-12">
-                <p-panel header="倉管" [toggleable]="true">
-                    <div class="flex justify-content-end mb-3">
-                        <p-button (click)="showEditManager(false)" icon="pi pi-plus"
-                                  severity="warning" [text]="true"></p-button>
-                    </div>
-                    <p-dataView [value]="warehousesData">
-                        <ng-template let-product pTemplate="listItem">
-                            <div pRipple class="col-12 styled-box" (click)="showEditManager(true)">
-                                <div class="flex flex-column md:flex-row xl:flex-row align-items-center p-3 gap-4">
-                                    <img class="w-3rem" [src]="'assets/image/warehouse.png'"/>
-                                    <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                                        <div class="text-lg font-bold">{{ product.manager }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-template>
-                    </p-dataView>
-                </p-panel>
+          <div class="col-12">
+            <label class="font-bold">基本資料</label>
+          </div>
+          <div class="col-12">
+            <div class="field col-12">
+              <label class="font-medium">名稱</label>
+              <input pInputText formControlName="name"/>
             </div>
+            <div class="field col-12">
+              <label class="font-medium">地址</label>
+              <input pInputText formControlName="address"/>
+            </div>
+            <div class="col-12 flex justify-content-end">
+              <p-button label="儲存" severity="warning"></p-button>
+            </div>
+          </div>
         </div>
+      </form>
+    </p-card>
+  </div>
+  <div class="col-5">
+    <div class="grid">
+      <div class="col-12">
+        <p-panel header="倉管" [toggleable]="true">
+          <div class="flex justify-content-end mb-3">
+            <p-button (click)="showEditManager(false)" icon="pi pi-plus"
+                      severity="warning" [text]="true"></p-button>
+          </div>
+          <p-dataView [value]="warehousesData">
+            <ng-template let-product pTemplate="listItem">
+              <div pRipple class="col-12 styled-box" (click)="showEditManager(true)">
+                <div class="flex flex-column md:flex-row xl:flex-row align-items-center p-3 gap-4">
+                  <img class="w-3rem" [src]="'assets/image/warehouse.png'"/>
+                  <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                    <div class="text-lg font-bold">{{ product.manager }}</div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </p-dataView>
+        </p-panel>
+      </div>
     </div>
+  </div>
 </div>
 
 <form [formGroup]="editManager_form">
-<p-dialog [header]="editable ? '編輯倉管' : '新增倉管'" [(visible)]="editManagerVisable" [modal]="true" [style]="{ width: '40vw' }" [draggable]="false" [resizable]="false">
-    <div *ngIf="editable" class="flex flex-column justify-content-center md:flex-row xl:flex-row align-items-center p-3 gap-4">
-        <img class="w-3rem" [src]="'assets/image/warehouse.png'"/>
-        <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-            <div class="text-lg font-bold">A 管理員</div>
-        </div>
+  <p-dialog [header]="editable ? '編輯倉管' : '新增倉管'" [(visible)]="editManagerVisable" [modal]="true"
+            [style]="{ width: '40vw' }" [draggable]="false" [resizable]="false">
+    <div *ngIf="editable"
+         class="flex flex-column justify-content-center md:flex-row xl:flex-row align-items-center p-3 gap-4">
+      <img class="w-3rem" [src]="'assets/image/warehouse.png'"/>
+      <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+        <div class="text-lg font-bold">A 管理員</div>
+      </div>
     </div>
     <div class="grid">
-        <div *ngIf="editable" class="col-12">
-            <p-divider></p-divider>
+      <div *ngIf="editable" class="col-12">
+        <p-divider></p-divider>
+      </div>
+      <div class="col-12 md:col-6 lg:col-6">
+        <div class="field">
+          <label class="font-semibold">姓名</label>
+          <input pInputText formControlName="name"/>
         </div>
-        <div class="col-12 md:col-6 lg:col-6">
-            <div class="field">
-                <label class="font-semibold">姓名</label>
-                <input pInputText formControlName="name" />
-            </div>
+      </div>
+      <div class="col-12 md:col-6 lg:col-6">
+        <div class="field">
+          <label class="font-semibold">電話</label>
+          <input pInputText formControlName="phone"/>
         </div>
-        <div class="col-12 md:col-6 lg:col-6">
-            <div class="field">
-                <label class="font-semibold">電話</label>
-                <input pInputText formControlName="phone" />
-            </div>
+      </div>
+      <div class="col-12 md:col-12 lg:col-12">
+        <div class="field">
+          <label class="font-semibold">管理倉庫</label>
+          <p-multiSelect [options]="warehouses" formControlName="warehouse" display="chip"
+                         [appendTo]="'body'"></p-multiSelect>
         </div>
-        <div class="col-12 md:col-12 lg:col-12">
-            <div class="field">
-                <label class="font-semibold">管理倉庫</label>
-                <p-multiSelect [options]="warehouses" formControlName="warehouse" display="chip" [appendTo]="'body'"></p-multiSelect>
-            </div>
-        </div>
-        <div class="col-12 flex justify-content-end">
-            <p-button label="取消" (click)="editManagerVisable=false" [outlined]="true" severity="secondary" styleClass="mr-2"></p-button>
-            <p-button label="儲存" severity="warning"></p-button>
-        </div>
+      </div>
+      <div class="col-12 flex justify-content-end">
+        <p-button label="取消" (click)="editManagerVisable=false" [outlined]="true" severity="secondary"
+                  styleClass="mr-2"></p-button>
+        <p-button label="儲存" severity="warning"></p-button>
+      </div>
     </div>
-</p-dialog>
+  </p-dialog>
 </form>
