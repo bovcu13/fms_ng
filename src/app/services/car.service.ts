@@ -219,4 +219,31 @@ export class CarService {
     const url = `${BaseUrl}/web/v1.0/vehicles/${id}`;
     return this.http.patch<any>(url, body);
   }
+
+  //--板車------------------------------------------------------------------------------------------------
+
+  getAllTrailersRequest(page: number = 1, limit: number = 20): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/trailers?page=${page}&limit=${limit}`;
+    return this.http.get<any>(url);
+  }
+
+  postTrailersRequest(body: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/trailers`;
+    return this.http.post<any>(url, body);
+  }
+
+  getOneTrailersRequest(id: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/trailers/${id}`;
+    return this.http.get<any>(url);
+  }
+
+  deleteTrailersRequest(id: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/trailers/${id}`;
+    return this.http.delete<any>(url);
+  }
+
+  patchTrailersRequest(id: any, body: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/trailers/${id}`;
+    return this.http.patch<any>(url, body);
+  }
 }
