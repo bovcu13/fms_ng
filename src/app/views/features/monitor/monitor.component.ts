@@ -129,7 +129,7 @@ export class MonitorComponent implements AfterViewInit ,OnInit {
         isLive: true,       // 開啓直播
         hasAudio: false,    // 關閉聲音
         cors: true,         // 開啓跨域訪問
-        url: 'http://203.70.231.9:12060/live.flv?devid=00710171C6&chl=1&st=1&audio=1',   // 指定流鏈接
+        url: 'http://34.212.71.99:12060/live.flv?devid=00710171C6&chl=1&st=1&audio=1',   // 指定流鏈接
       });
       // 將flvjs對象和DOM對象綁定
       this.flvPlayer.attachMediaElement(this.player);
@@ -169,7 +169,7 @@ export class MonitorComponent implements AfterViewInit ,OnInit {
         isLive: true,       // 開啓直播
         hasAudio: false,    // 關閉聲音
         cors: true,         // 開啓跨域訪問
-        url: 'http://203.70.231.9:12060/live.flv?devid=00710171C6&chl=1&st=1&audio=1',   // 指定流鏈接
+        url: 'http://34.212.71.99:12060/live.flv?devid=00710171C6&chl=1&st=1&audio=1',   // 指定流鏈接
       });
 
       // 將flvjs對象和DOM對象綁定
