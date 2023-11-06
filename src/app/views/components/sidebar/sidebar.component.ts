@@ -414,7 +414,7 @@ export class SidebarComponent implements OnInit {
                 },
               },
               {
-                label: '權限分享',
+                label: '權限',
                 icon: 'pi pi-fw pi-box',
                 command: () => {
                   alert("功能未開放");
