@@ -228,57 +228,21 @@ export class SidebarComponent implements OnInit {
           {
             label: '司機管理',
             icon: 'pi pi-shield',
-            items: [
-              {
-                label: '司機',
-                icon: 'pi pi-shield',
-                routerLink: '/driver',
-                command: () => {
-                  this.sideVisible = false
-                },
-                style: {
-                  background: 'rgba(255, 192, 203, 0.4)'
-                },
-              },
-              {
-                label: '出勤記錄',
-                icon: 'pi pi-fw pi-box',
-                command: () => {
-                  alert("功能未開放");
-                  this.sideVisible = false
-                },
-              },
-              {
-                label: '統計報告',
-                icon: 'pi pi-fw pi-box',
-                items: [
-                  {
-                    label: '檢查表設定',
-                    icon: 'pi pi-fw pi-box',
-                    command: () => {
-                      alert("功能未開放");
-                      this.sideVisible = false
-                    },
-                  },
-                  {
-                    label: '自主檢查表',
-                    icon: 'pi pi-fw pi-box',
-                    command: () => {
-                      alert("功能未開放");
-                      this.sideVisible = false
-                    },
-                  },
-                  {
-                    label: '未做檢查表',
-                    icon: 'pi pi-fw pi-box',
-                    command: () => {
-                      alert("功能未開放");
-                      this.sideVisible = false
-                    },
-                  }
-                ]
-              },
-            ]
+            routerLink: '/driver',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(255, 192, 203, 0.4)'
+            },
+          },
+          {
+            label: '行車安全檢查',
+            icon: 'pi pi-fw pi-box',
+            command: () => {
+              alert("功能未開放");
+              this.sideVisible = false
+            },
           },
           {
             label: '統計分析報告',
