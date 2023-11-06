@@ -487,14 +487,14 @@ export class SidebarComponent implements OnInit {
           background: 'rgba(220,250,220,0.6)',
         },
       },
-      {
-        label: 'FMP-功能清單',
-        icon: 'pi pi-google',
-        style: {
-          background: 'rgba(220,250,220,0.6)',
-        },
-        url: 'https://docs.google.com/spreadsheets/d/1E3c_g36atRFDkZRQkvwTOzWWXnATkNnwX0bcMW5atL0/edit#gid=0'
-      },
+      // {
+      //   label: 'FMP-功能清單',
+      //   icon: 'pi pi-google',
+      //   style: {
+      //     background: 'rgba(220,250,220,0.6)',
+      //   },
+      //   url: 'https://docs.google.com/spreadsheets/d/1E3c_g36atRFDkZRQkvwTOzWWXnATkNnwX0bcMW5atL0/edit#gid=0'
+      // },
       // {
       //   label: 'rtsp測試',
       //   icon: 'pi pi-code',
