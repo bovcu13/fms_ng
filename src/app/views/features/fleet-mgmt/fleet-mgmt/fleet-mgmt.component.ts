@@ -20,6 +20,7 @@ export class FleetMgmtComponent {
   addVehicle_form: FormGroup;
   addFleet_form: FormGroup;
   addGpsDevice_form: FormGroup;
+  addTrailers_form: FormGroup;
 
   constructor(
     private carServ: CarService,
@@ -48,6 +49,11 @@ export class FleetMgmtComponent {
       model: ['', Validators.required],
       sid: ['', Validators.required]
     });
+
+    this.addTrailers_form = this.fb.group({
+      id: ['', Validators.required],
+      code: ['', Validators.required]
+    });
   }
 
   ngOnInit() {
@@ -60,7 +66,7 @@ export class FleetMgmtComponent {
     this.getAllVehiclesRequest();
     this.getAllGpsDevicesRequest();
     this.getAllDriversRequest();
-    // this.getAllTrailersRequest();
+    this.getAllTrailersRequest();
   }
 
   // 取得車隊
@@ -190,13 +196,13 @@ export class FleetMgmtComponent {
     });
   }
 
-  trailersData = trailers;
+  trailersData : any;
 
   // 取得板車
   getAllTrailersRequest() {
     this.carServ.getAllTrailersRequest().subscribe({
       next: res => {
-        this.trailersData = res.body.drivers;
+        this.trailersData = res.body.trailers;
         console.log('trailersData',this.trailersData);
       },
       error: (err) => {
@@ -205,17 +211,49 @@ export class FleetMgmtComponent {
     });
   }
 
+  addTrailersDialogVisible = false;
+  openAddTrailersDialog() {
+    this.addTrailersDialogVisible = true;
+  }
+  closeAddTrailersDialog() {
+    this.addTrailersDialogVisible = false;
+    this.showCancel('新增');
+    this.addTrailers_form.reset();
+  }
+
+  // 新增板車
+  postTrailersRequest() {
+    let body = {
+      code: this.addTrailers_form.controls['code'].value
+    }
+    this.carServ.postTrailersRequest(body).subscribe({
+      next: data => {
+        this.showSussess('新增');
+        this.addTrailersDialogVisible = false;
+        this.addTrailers_form.reset();
+        console.log(data);
+        console.log(body);
+        this.getAllTrailersRequest();
+      },
+      error: (err) => {
+        console.log(err);
+        console.log(body);
+      },
+    });
+  }
+
   // 跳轉頁面
   goToVehicle(id: any) {
     this.router.navigate(['/vehicle', id])
   }
-
   goToFleet(id: any) {
     this.router.navigate(['/fleet', id])
   }
-
   goToGpsDevice(id: any) {
     this.router.navigate(['/gps_device', id])
+  }
+  goToTrailers(id: any) {
+    this.router.navigate(['/trailers', id])
   }
 
   // 操作結果提示

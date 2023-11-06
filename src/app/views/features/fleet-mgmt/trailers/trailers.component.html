@@ -1,1 +1,57 @@
-<p>trailers works!</p>
+<p-toast></p-toast>
+<div class="overflow-x-hidden flex justify-content-center">
+  <div class="col-12">
+    <div class="col-12">
+      <p-button icon="pi pi-arrow-left" [routerLink]="['/fleet_mgmt', activeIndex]"
+                [rounded]="true" severity="secondary" [text]="true"></p-button>
+    </div>
+    <form [formGroup]="editTrailers_form">
+      <div class="flex justify-content-center">
+        <div class="col-8">
+          <div class="grid">
+            <div class="col-3 flex align-items-center">
+              <p-image src="assets/image/sport-car.png" alt="Image" width="100" [preview]="true"></p-image>
+            </div>
+            <div class="col-8 flex align-items-center justify-content-start">
+              <label class="text-6xl font-bold">{{editTrailers_form.controls['code'].value}}</label>
+            </div>
+            <div class="ml-auto col-1 flex align-items-center">
+              <p-confirmDialog #cd [style]="{ width: '40vw' }">
+                <ng-template pTemplate="footer">
+                  <p-button (click)="cd.reject()" label="取消" icon="pi pi-times" severity="secondary"></p-button>
+                  <p-button (click)="cd.accept()" label="確定" icon="pi pi-check" severity="warning"></p-button>
+                </ng-template>
+              </p-confirmDialog>
+              <p-button (click)="deleteTrailersRequest()" icon="pi pi-trash" size="large" [rounded]="true" severity="danger" [text]="true"></p-button>
+            </div>
+            <div class="col-12">
+              <p-divider></p-divider>
+              <p-card>
+                <p-tabView>
+                  <p-tabPanel header="基本資料">
+                    <div class="grid row-gap-2">
+                      <div class="field col-12 md:col-6 lg:col-6">
+                        <label class="font-semibold">板車號碼</label>
+                        <input pInputText formControlName="code"/>
+                      </div>
+                      <div class="col-12 flex justify-content-end">
+                        <button pButton pRipple label="儲存" (click)="updateTrailersRequest(id,editTrailers_form.value)"
+                                class="p-button-warning"></button>
+                      </div>
+                    </div>
+                  </p-tabPanel>
+                  <p-tabPanel header="保養定檢">
+                    No results found ...
+                  </p-tabPanel>
+                  <p-tabPanel header="輪胎">
+                    No results found ...
+                  </p-tabPanel>
+                </p-tabView>
+              </p-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
