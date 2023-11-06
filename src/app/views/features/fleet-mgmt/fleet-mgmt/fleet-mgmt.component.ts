@@ -4,6 +4,7 @@ import { CarService } from "../../../../services/car.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TabView } from "primeng/tabview";
 import { ConfirmationService, MessageService } from "primeng/api";
+import { trailers } from "../../../../shared/data/trailers";
 
 @Component({
   selector: 'app-fleet-mgmt',
@@ -55,22 +56,15 @@ export class FleetMgmtComponent {
       this.activeIndex = params['id'];
       // 現在你可以在這裡使用 fleetId 了
     });
-    this.getAllFleetsRequest()
-    this.getAllVehiclesRequest()
-    this.getAllGpsDevicesRequest()
-    this.getAllDriversRequest()
-  }
-
-  fleetsData: any;
-  addFleetDialogVisible = false;
-
-  closeAddFleetDialog() {
-    this.addFleetDialogVisible = false;
-    this.showCancel('新增');
-    this.addFleet_form.reset();
+    this.getAllFleetsRequest();
+    this.getAllVehiclesRequest();
+    this.getAllGpsDevicesRequest();
+    this.getAllDriversRequest();
+    // this.getAllTrailersRequest();
   }
 
   // 取得車隊
+  fleetsData: any;
   getAllFleetsRequest() {
     this.carServ.getAllFleetRequest().subscribe({
       next: res => {
@@ -81,6 +75,13 @@ export class FleetMgmtComponent {
         console.log(err);
       },
     });
+  }
+
+  addFleetDialogVisible = false;
+  closeAddFleetDialog() {
+    this.addFleetDialogVisible = false;
+    this.showCancel('新增');
+    this.addFleet_form.reset();
   }
 
   // 新增車隊
@@ -108,7 +109,7 @@ export class FleetMgmtComponent {
   cars: any;
   vehiclesData: any;
 
-  // 取得車牌
+  // 取得車輛
   getAllVehiclesRequest() {
     this.carServ.getAllVehiclesRequest(1, 20).subscribe({
       next: res => {
@@ -125,11 +126,9 @@ export class FleetMgmtComponent {
   }
 
   addCarDialogVisible = false;
-
   openAddCarDialog() {
     this.addCarDialogVisible = true;
   }
-
   closeAddCarDialog() {
     this.addCarDialogVisible = false;
     this.showCancel('新增');
@@ -163,7 +162,7 @@ export class FleetMgmtComponent {
 
   gpsDevicesData: any;
 
-  // 車機
+  // 取得車機
   getAllGpsDevicesRequest() {
     this.carServ.getGpsDevicesRequest().subscribe({
       next: res => {
@@ -178,12 +177,27 @@ export class FleetMgmtComponent {
 
   driverData: any;
 
-  // 司機
+  // 取得司機
   getAllDriversRequest() {
     this.carServ.getAllDriversRequest().subscribe({
       next: res => {
         this.driverData = res.body.drivers;
         console.log('driverData',this.driverData);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  trailersData = trailers;
+
+  // 取得板車
+  getAllTrailersRequest() {
+    this.carServ.getAllTrailersRequest().subscribe({
+      next: res => {
+        this.trailersData = res.body.drivers;
+        console.log('trailersData',this.trailersData);
       },
       error: (err) => {
         console.log(err);
