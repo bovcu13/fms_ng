@@ -226,6 +226,17 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
+            label: '板車管理',
+            icon: 'pi pi-shield',
+            routerLink: '/trailers',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(255, 192, 203, 0.4)'
+            },
+          },
+          {
             label: '司機管理',
             icon: 'pi pi-shield',
             routerLink: '/driver',
