@@ -421,20 +421,12 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
               },
-              {
-                label: '駕駛紀錄',
-                icon: 'pi pi-fw pi-box',
-                command: () => {
-                  alert("功能未開放");
-                  this.sideVisible = false
-                },
-              }
             ]
           },
         ]
       },
       {
-        label: '永續與低碳運輸計畫',
+        label: 'ESG永續與低碳運輸計畫',
         icon: 'pi pi-globe',
         command: () => {
           alert("功能未開放");
