@@ -94,14 +94,7 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
-            label: '車溫儀表板', //控溫中心
-            icon: 'pi pi-chart-bar',
-            command: () => {
-              alert("功能未開放");
-            },
-          },
-          {
-            label: '行駛狀態列表',
+            label: '車輛行駛日誌',
             icon: 'pi pi-fw pi-box',
             routerLink: '/driving_status',
             command: () => {
@@ -235,57 +228,21 @@ export class SidebarComponent implements OnInit {
           {
             label: '司機管理',
             icon: 'pi pi-shield',
-            items: [
-              {
-                label: '司機',
-                icon: 'pi pi-shield',
-                routerLink: '/driver',
-                command: () => {
-                  this.sideVisible = false
-                },
-                style: {
-                  background: 'rgba(255, 192, 203, 0.4)'
-                },
-              },
-              {
-                label: '出勤記錄',
-                icon: 'pi pi-fw pi-box',
-                command: () => {
-                  alert("功能未開放");
-                  this.sideVisible = false
-                },
-              },
-              {
-                label: '統計報告',
-                icon: 'pi pi-fw pi-box',
-                items: [
-                  {
-                    label: '檢查表設定',
-                    icon: 'pi pi-fw pi-box',
-                    command: () => {
-                      alert("功能未開放");
-                      this.sideVisible = false
-                    },
-                  },
-                  {
-                    label: '自主檢查表',
-                    icon: 'pi pi-fw pi-box',
-                    command: () => {
-                      alert("功能未開放");
-                      this.sideVisible = false
-                    },
-                  },
-                  {
-                    label: '未做檢查表',
-                    icon: 'pi pi-fw pi-box',
-                    command: () => {
-                      alert("功能未開放");
-                      this.sideVisible = false
-                    },
-                  }
-                ]
-              },
-            ]
+            routerLink: '/driver',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(255, 192, 203, 0.4)'
+            },
+          },
+          {
+            label: '行車安全檢查',
+            icon: 'pi pi-fw pi-box',
+            command: () => {
+              alert("功能未開放");
+              this.sideVisible = false
+            },
           },
           {
             label: '統計分析報告',
@@ -457,27 +414,19 @@ export class SidebarComponent implements OnInit {
                 },
               },
               {
-                label: '權限分享',
+                label: '權限',
                 icon: 'pi pi-fw pi-box',
                 command: () => {
                   alert("功能未開放");
                   this.sideVisible = false
                 },
               },
-              {
-                label: '駕駛紀錄',
-                icon: 'pi pi-fw pi-box',
-                command: () => {
-                  alert("功能未開放");
-                  this.sideVisible = false
-                },
-              }
             ]
           },
         ]
       },
       {
-        label: '永續與低碳運輸計畫',
+        label: 'ESG永續與低碳運輸計畫',
         icon: 'pi pi-globe',
         command: () => {
           alert("功能未開放");
@@ -538,14 +487,14 @@ export class SidebarComponent implements OnInit {
           background: 'rgba(220,250,220,0.6)',
         },
       },
-      {
-        label: 'FMP-功能清單',
-        icon: 'pi pi-google',
-        style: {
-          background: 'rgba(220,250,220,0.6)',
-        },
-        url: 'https://docs.google.com/spreadsheets/d/1E3c_g36atRFDkZRQkvwTOzWWXnATkNnwX0bcMW5atL0/edit#gid=0'
-      },
+      // {
+      //   label: 'FMP-功能清單',
+      //   icon: 'pi pi-google',
+      //   style: {
+      //     background: 'rgba(220,250,220,0.6)',
+      //   },
+      //   url: 'https://docs.google.com/spreadsheets/d/1E3c_g36atRFDkZRQkvwTOzWWXnATkNnwX0bcMW5atL0/edit#gid=0'
+      // },
       // {
       //   label: 'rtsp測試',
       //   icon: 'pi pi-code',
