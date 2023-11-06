@@ -53,7 +53,8 @@ import { ETrackingViewComponent } from "../features/dispatch/e-tracking/e-tracki
 import { GoodsViewComponent } from "../features/my-warehouse/goods-view/goods-view.component";
 import { EventComponent } from "../features/dispatch/event/event.component";
 import { DispatchViewComponent } from "../features/dispatch/dispatch/dispatch-view/dispatch-view.component";
-import { TrailersComponent } from "../features/fleet-mgmt/trailers/trailers.component";
+import { TrailersComponent } from "../features/trailers-mgmt/trailers/trailers.component";
+import { TrailersMgmtComponent } from "../features/trailers-mgmt/trailers-mgmt.component";
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import { TrailersComponent } from "../features/fleet-mgmt/trailers/trailers.comp
     GoodsViewComponent,
     EventComponent,
     DispatchViewComponent,
-    TrailersComponent
+    TrailersComponent,
+    TrailersMgmtComponent
   ],
   imports: [
     CommonModule,

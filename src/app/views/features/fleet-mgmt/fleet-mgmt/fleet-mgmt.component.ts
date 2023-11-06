@@ -20,7 +20,7 @@ export class FleetMgmtComponent {
   addVehicle_form: FormGroup;
   addFleet_form: FormGroup;
   addGpsDevice_form: FormGroup;
-  addTrailers_form: FormGroup;
+  // addTrailers_form: FormGroup;
 
   constructor(
     private carServ: CarService,
@@ -50,10 +50,10 @@ export class FleetMgmtComponent {
       sid: ['', Validators.required]
     });
 
-    this.addTrailers_form = this.fb.group({
-      id: ['', Validators.required],
-      code: ['', Validators.required]
-    });
+    // this.addTrailers_form = this.fb.group({
+    //   id: ['', Validators.required],
+    //   code: ['', Validators.required]
+    // });
   }
 
   ngOnInit() {
@@ -66,7 +66,7 @@ export class FleetMgmtComponent {
     this.getAllVehiclesRequest();
     this.getAllGpsDevicesRequest();
     this.getAllDriversRequest();
-    this.getAllTrailersRequest();
+    // this.getAllTrailersRequest();
   }
 
   // 取得車隊
@@ -106,6 +106,7 @@ export class FleetMgmtComponent {
         console.log(body);
       },
       error: (err) => {
+        this.showError('新增');
         console.log(err);
       },
     });
@@ -160,6 +161,7 @@ export class FleetMgmtComponent {
         this.getAllVehiclesRequest();
       },
       error: (err) => {
+        this.showError('新增');
         console.log(err);
         console.log(body);
       },
@@ -196,51 +198,51 @@ export class FleetMgmtComponent {
     });
   }
 
-  trailersData : any;
+  // trailersData : any;
+  //
+  // // 取得板車
+  // getAllTrailersRequest() {
+  //   this.carServ.getAllTrailersRequest().subscribe({
+  //     next: res => {
+  //       this.trailersData = res.body.trailers;
+  //       console.log('trailersData',this.trailersData);
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     },
+  //   });
+  // }
 
-  // 取得板車
-  getAllTrailersRequest() {
-    this.carServ.getAllTrailersRequest().subscribe({
-      next: res => {
-        this.trailersData = res.body.trailers;
-        console.log('trailersData',this.trailersData);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
+  // addTrailersDialogVisible = false;
+  // openAddTrailersDialog() {
+  //   this.addTrailersDialogVisible = true;
+  // }
+  // closeAddTrailersDialog() {
+  //   this.addTrailersDialogVisible = false;
+  //   this.showCancel('新增');
+  //   this.addTrailers_form.reset();
+  // }
 
-  addTrailersDialogVisible = false;
-  openAddTrailersDialog() {
-    this.addTrailersDialogVisible = true;
-  }
-  closeAddTrailersDialog() {
-    this.addTrailersDialogVisible = false;
-    this.showCancel('新增');
-    this.addTrailers_form.reset();
-  }
-
-  // 新增板車
-  postTrailersRequest() {
-    let body = {
-      code: this.addTrailers_form.controls['code'].value
-    }
-    this.carServ.postTrailersRequest(body).subscribe({
-      next: data => {
-        this.showSussess('新增');
-        this.addTrailersDialogVisible = false;
-        this.addTrailers_form.reset();
-        console.log(data);
-        console.log(body);
-        this.getAllTrailersRequest();
-      },
-      error: (err) => {
-        console.log(err);
-        console.log(body);
-      },
-    });
-  }
+  // // 新增板車
+  // postTrailersRequest() {
+  //   let body = {
+  //     code: this.addTrailers_form.controls['code'].value
+  //   }
+  //   this.carServ.postTrailersRequest(body).subscribe({
+  //     next: data => {
+  //       this.showSussess('新增');
+  //       this.addTrailersDialogVisible = false;
+  //       this.addTrailers_form.reset();
+  //       console.log(data);
+  //       console.log(body);
+  //       this.getAllTrailersRequest();
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //       console.log(body);
+  //     },
+  //   });
+  // }
 
   // 跳轉頁面
   goToVehicle(id: any) {
@@ -252,9 +254,9 @@ export class FleetMgmtComponent {
   goToGpsDevice(id: any) {
     this.router.navigate(['/gps_device', id])
   }
-  goToTrailers(id: any) {
-    this.router.navigate(['/trailers', id])
-  }
+  // goToTrailers(id: any) {
+  //   this.router.navigate(['/trailers', id])
+  // }
 
   // 操作結果提示
   showSussess(info = '修改') {
