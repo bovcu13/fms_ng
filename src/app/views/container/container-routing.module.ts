@@ -47,6 +47,7 @@ import {ETrackingViewComponent} from "../features/dispatch/e-tracking/e-tracking
 import {GoodsViewComponent} from "../features/my-warehouse/goods-view/goods-view.component";
 import {EventComponent} from "../features/dispatch/event/event.component";
 import {DispatchViewComponent} from "../features/dispatch/dispatch/dispatch-view/dispatch-view.component";
+import { TrailersComponent } from "../features/fleet-mgmt/trailers/trailers.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '', pathMatch: 'full'},
@@ -97,10 +98,11 @@ const routes: Routes = [
       {path: 'odd_set', component: OddSetComponent, canActivate: [AuthGuard]},
       // fleet-mgmt
       {path: 'fleet_mgmt', component: FleetMgmtComponent, canActivate: [AuthGuard]},
-      {path: 'fleet_mgmt/:id', component: FleetMgmtComponent, canActivate: [AuthGuard]},
+      {path: 'fleet_mgmt/:id', component: FleetMgmtComponent, canActivate: [AuthGuard]}, // 點進編輯頁面返回時在同一個tab
       {path: 'vehicle/:id', component: VehicleComponent, canActivate: [AuthGuard]},
       {path: 'fleet/:id', component: FleetComponent, canActivate: [AuthGuard]},
       {path: 'gps_device/:id', component: GpsDeviceComponent, canActivate: [AuthGuard]},
+      {path: 'trailers/:id', component: TrailersComponent, canActivate: [AuthGuard]},
       // driver-mgmt
       {path: 'driver', component: DriverComponent, canActivate: [AuthGuard]},
       {path: 'driver/:id', component: ViewDriverComponent, canActivate: [AuthGuard]},
