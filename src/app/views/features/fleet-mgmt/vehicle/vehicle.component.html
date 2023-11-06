@@ -2,7 +2,7 @@
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-12">
     <div class="col-12">
-      <p-button icon="pi pi-arrow-left" [routerLink]="['/fleet_mgmt', activeIndex]" size="large"
+      <p-button icon="pi pi-arrow-left" [routerLink]="['/fleet_mgmt', activeIndex]"
                 [rounded]="true" severity="secondary" [text]="true"></p-button>
     </div>
     <form [formGroup]="editVehicle_form">
@@ -25,6 +25,8 @@
               <p-button (click)="deleteVehicleRequest()" icon="pi pi-trash" size="large" [rounded]="true" severity="danger" [text]="true"></p-button>
             </div>
             <div class="col-12">
+              <p-divider></p-divider>
+              <p-card>
               <p-tabView>
                 <p-tabPanel header="基本資料">
                   <div class="grid row-gap-2 flex justify-content-center">
@@ -73,6 +75,7 @@
                   No results found ...
                 </p-tabPanel>
               </p-tabView>
+              </p-card>
             </div>
           </div>
         </div>
