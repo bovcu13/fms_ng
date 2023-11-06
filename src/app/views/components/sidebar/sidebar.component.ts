@@ -94,14 +94,7 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
-            label: '車溫儀表板', //控溫中心
-            icon: 'pi pi-chart-bar',
-            command: () => {
-              alert("功能未開放");
-            },
-          },
-          {
-            label: '行駛狀態列表',
+            label: '車輛行駛日誌',
             icon: 'pi pi-fw pi-box',
             routerLink: '/driving_status',
             command: () => {
