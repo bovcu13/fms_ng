@@ -22,4 +22,9 @@ export class DispatchListComponent {
   goToForm(id: any) {
     this.router.navigate(['/dispatch_list', id])
   }
+
+  selectedForm: any[] = [];
+  handleCheckbox(value: any) {
+    console.log('selectedForm:',this.selectedForm)
+  }
 }
