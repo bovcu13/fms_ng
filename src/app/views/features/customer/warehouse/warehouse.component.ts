@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 export class WarehouseComponent {
     @Input() warehouseId: any; // 定義 productId 作為輸入屬性
 
-    warehouses = [ 'A 倉庫','B 倉庫','C 倉庫','D 倉庫','E 倉庫' ];
+    warehouses = ['A 倉庫', 'B 倉庫', 'C 倉庫', 'D 倉庫', 'E 倉庫'];
 
     warehousesData = [
         {
@@ -38,6 +38,8 @@ export class WarehouseComponent {
         this.editable = editable;
         if (!editable) {
             this.editManager_form.reset();
+        }else {
+            this.editManager_form.patchValue(this.managerData[0])
         }
         this.editManagerVisable = true;
     }

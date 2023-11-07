@@ -58,19 +58,17 @@
                     </p-dataView>
                   </div>
                   <div *ngIf="showWarehouseDetailPage">
-                    <p-button icon="pi pi-arrow-left" (click)="backCompany()" size="large"
-                              [rounded]="true" [text]="true" severity="secondary" styleClass="mb-2"></p-button>
-                    <app-warehouse [warehouseId]="selectedProductId"></app-warehouse>
+                    <p-button icon="pi pi-arrow-left" (click)="backCompany()" [text]="true" severity="secondary" styleClass="mb-2"></p-button>
+                    <app-warehouse [warehouseId]="selectedWarehouseId"></app-warehouse>
                   </div>
                 </p-tabPanel>
                 <p-tabPanel header="貨物品項">
-                  <div *ngIf="!showGoodsDetailPage">
                     <div class="flex justify-content-end mb-3">
-                      <p-button (click)="openAddGoods()" icon="pi pi-plus" severity="warning" [text]="true"></p-button>
+                      <p-button (click)="openGoodsDialog(false)" icon="pi pi-plus" severity="warning" [text]="true"></p-button>
                     </div>
                     <p-dataView [value]="goodsData">
                       <ng-template let-product pTemplate="listItem">
-                        <div pRipple class="col-6 styled-box" (click)="showGoodsView(product.id)">
+                        <div pRipple class="col-6 styled-box" (click)="openGoodsDialog(true, product.id)">
                           <div class="flex flex-column align-items-center xl:flex-row xl:align-items-start p-3 gap-4">
                             <img class="w-8 sm:w-5rem xl:w-3rem" [src]="'assets/image/warehouse.png'"/>
                             <div
@@ -80,7 +78,7 @@
                                 <div class="flex align-items-center gap-3">
                                 <span class="flex align-items-center gap-2">
                                 <i class="pi pi-inbox text-xs"></i>
-                                <span class="font-medium text-xs">{{ product.quantity }} {{ product.unit }}</span>
+                                <span class="font-medium text-xs">單位: {{ product.unit }}</span>
                                   </span>
                                   <span class="flex align-items-center gap-2">
                                 <i class="pi pi-tag text-xs"></i>
@@ -93,12 +91,6 @@
                         </div>
                       </ng-template>
                     </p-dataView>
-                  </div>
-                  <div *ngIf="showGoodsDetailPage">
-                    <p-button icon="pi pi-arrow-left" (click)="backCompany()" size="large"
-                              [rounded]="true" severity="secondary" [text]="true" styleClass="mb-2"></p-button>
-                    <app-goods-view [productId]="selectedProductId"></app-goods-view>
-                  </div>
                 </p-tabPanel>
               </p-tabView>
             </div>
@@ -110,10 +102,18 @@
 </div>
 
 
-<p-dialog header="新增貨物品項" [(visible)]="addGoodsVisible" [modal]="true" [style]="{ width: '50vw' }"
+<p-dialog header="{{ editing ? '編輯貨物品項' : '新增貨物品項' }}" [(visible)]="goodsDialogVisible" [modal]="true" [style]="{ width: '36vw' }"
           [draggable]="false" [resizable]="false">
   <form [formGroup]="addGoods_form">
+    <div *ngIf="editing" class="flex align-items-center p-3 gap-4">
+      <img class="w-3rem" [src]="'assets/image/warehouse.png'"/>
+      <div class="text-lg font-bold">{{addGoods_form.controls['name'].value}}</div>
+      <div class="ml-auto"><p-button icon="pi pi-trash" severity="danger" [text]="true"></p-button></div>
+    </div>
     <div class="grid">
+      <div *ngIf="editing" class="col-12">
+        <p-divider></p-divider>
+      </div>
       <div class="col-12 md:col-6 lg:col-6">
         <div class="field">
           <label class="font-semibold">名稱</label>
@@ -122,39 +122,19 @@
       </div>
       <div class="col-12 md:col-6 lg:col-6">
         <div class="field">
-          <label class="font-semibold">規格</label>
-          <input formControlName="spec" pInputText/>
-        </div>
-      </div>
-      <div class="col-12 md:col-6 lg:col-6">
-        <div class="field">
-          <label class="font-semibold">數量</label>
-          <p-inputNumber class="w-full" formControlName="quantity" [min]="0"></p-inputNumber>
-        </div>
-      </div>
-      <div class="col-12 md:col-6 lg:col-6">
-        <div class="field">
           <label class="font-semibold">單位</label>
           <input formControlName="unit" pInputText/>
         </div>
       </div>
-      <div class="col-12 md:col-6 lg:col-6">
+      <div class="col-12">
         <div class="field">
-          <label class="font-semibold">單價</label>
-          <p-inputNumber class="w-full" formControlName="price" mode="currency" inputId="currency-taiwan" currency="TWD"
-                         locale="zh-TW" [min]="0"></p-inputNumber>
-        </div>
-      </div>
-      <div class="col-12 md:col-6 lg:col-6">
-        <div class="field">
-          <label class="font-semibold">總額</label>
-          <p-inputNumber class="w-full" formControlName="total" mode="currency" inputId="currency-taiwan" currency="TWD"
-                         locale="zh-TW" [min]="0"></p-inputNumber>
+          <label class="font-semibold">規格</label>
+          <input formControlName="spec" pInputText/>
         </div>
       </div>
       <div class="col-12 flex justify-content-end">
-        <p-button label="取消" (click)="addGoodsVisible=false" [outlined]="true" severity="secondary" styleClass="mr-2"></p-button>
-        <p-button label="新增" severity="warning"></p-button>
+        <p-button label="取消" (click)="goodsDialogVisible = false" [outlined]="true" severity="secondary" styleClass="mr-2"></p-button>
+        <p-button label="{{ editing ? '儲存' : '新增' }}" severity="warning"></p-button>
       </div>
     </div>
   </form>
