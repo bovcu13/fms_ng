@@ -439,10 +439,40 @@ export class SidebarComponent implements OnInit {
       {
         label: 'ESG永續與低碳運輸計畫',
         icon: 'pi pi-globe',
-        command: () => {
-          alert("功能未開放");
-          this.sideVisible = false
-        },
+        items: [
+          {
+            label: '空轉和閒置時間',
+            icon: 'pi pi-globe',
+            command: () => {
+              alert("優化運輸工具和設施的使用，以減少不必要的空轉和閒置時間，降低碳排放。");
+              this.sideVisible = false
+            }
+          },
+          {
+            label: '優化運輸路線和物流',
+            icon: 'pi pi-globe',
+            command: () => {
+              alert("針對貨物運輸，優化運輸路線和物流，以降低運輸成本和碳排放。");
+              this.sideVisible = false
+            }
+          },
+          {
+            label: '燃料效率',
+            icon: 'pi pi-globe',
+            command: () => {
+              alert("改進車輛的燃料效率，例如透過輪胎氣壓的管理、發動機效能提升和節能駕駛實踐等。");
+              this.sideVisible = false
+            }
+          },
+          {
+            label: '監測和報告',
+            icon: 'pi pi-globe',
+            command: () => {
+              alert("建立監測和報告機制，以追蹤和評估低碳運輸計畫的成效，並對計畫進行必要的調整。");
+              this.sideVisible = false
+            }
+          },
+        ]
       },
       {
         label: '平台服務專區',
