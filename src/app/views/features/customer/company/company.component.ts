@@ -65,26 +65,30 @@ export class CompanyComponent implements OnInit {
     }
   ];
 
-  showGoodsDetailPage = false;
-  selectedProductId: any; // 變數來保存所選的商品 ID
-  showGoodsView(id: any) {
-    this.selectedProductId = id; // 保存所選的商品 ID
-    this.showGoodsDetailPage = true; // 顯示商品詳細頁面
-  }
   showWarehouseDetailPage = false;
   selectedWarehouseId: any;
   showWarehouseView(id: any) {
-    this.selectedWarehouseId = id;
-    this.showWarehouseDetailPage = true;
+    this.selectedWarehouseId = id; // 保存所選的商品 ID
+    this.showWarehouseDetailPage = true; // 顯示商品詳細頁面
   }
   backCompany() {
-    this.showGoodsDetailPage = false;
     this.showWarehouseDetailPage = false;
   }
 
-  addGoodsVisible = false;
-  openAddGoods() {
-    this.addGoodsVisible = true;
+  goodsDialogVisible = false;
+  editing = true;
+  openGoodsDialog(isEdit: boolean, id?: number) {
+    this.editing = isEdit;
+
+    if (!isEdit) {
+      this.addGoods_form.reset();
+    } else {
+      if (id) {
+        this.addGoods_form.patchValue(this.goodsData[id - 1])
+      }
+    }
+
+    this.goodsDialogVisible = true;
   }
 
   editCompany_form: FormGroup;
