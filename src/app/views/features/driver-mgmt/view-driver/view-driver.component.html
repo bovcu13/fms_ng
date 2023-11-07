@@ -2,7 +2,7 @@
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-12">
     <div class="col-12">
-      <p-button icon="pi pi-arrow-left" [routerLink]="['/driver']" size="large" [rounded]="true" severity="secondary" [text]="true"></p-button>
+      <p-button icon="pi pi-arrow-left" [routerLink]="['/driver']" severity="secondary" [text]="true"></p-button>
     </div>
     <form [formGroup]="editDriver_form">
       <div class="flex justify-content-center">
@@ -24,6 +24,7 @@
               <p-button (click)="deleteDriver()" icon="pi pi-trash" size="large" [rounded]="true" severity="danger" [text]="true"></p-button>
             </div>
             <div class="col-12">
+              <p-card>
               <p-tabView>
                 <p-tabPanel header="司機資料">
                   <div class="grid row-gap-2 flex justify-content-center">
@@ -45,30 +46,34 @@
                       <label class="font-semibold">身份證字號</label>
                       <input pInputText formControlName="id_card_number"/>
                     </div>
-                    <div class="field col-12 md:col-6 lg:col-6">
-                      <label class="font-semibold">工號</label>
-                      <input pInputText formControlName="employee_number"/>
-                    </div>
-                    <div class="field col-12 md:col-6 lg:col-6">
+<!--                    <div class="field col-12 md:col-6 lg:col-6">-->
+<!--                      <label class="font-semibold">工號</label>-->
+<!--                      <input pInputText formControlName="employee_number"/>-->
+<!--                    </div>-->
+<!--                    <div class="field col-12 md:col-6 lg:col-6">-->
+<!--                      <label class="font-semibold">每日成本</label>-->
+<!--                      <input pInputText formControlName="daily_cost"/>-->
+<!--                      <small *ngIf="editDriver_form.controls['daily_cost'].hasError('pattern')"-->
+<!--                             class="p-error">請輸入整數!</small>-->
+<!--                    </div>-->
+                    <div class="field col-12">
                       <label class="font-semibold">電子郵件</label>
                       <input pInputText formControlName="email"/>
                     </div>
-                    <div class="field col-12 md:col-6 lg:col-6">
+                    <div class="field col-12">
                       <label class="font-semibold">連絡地址</label>
                       <input pInputText formControlName="address"/>
-                    </div>
-                    <div class="field col-12 md:col-6 lg:col-6">
-                      <label class="font-semibold">每日成本</label>
-                      <input pInputText formControlName="daily_cost"/>
-                      <small *ngIf="editDriver_form.controls['daily_cost'].hasError('pattern')"
-                             class="p-error">請輸入整數!</small>
                     </div>
                     <div class="col-12 flex justify-content-end">
                       <button (click)="editDriver()" pButton pRipple label="儲存" class="p-button-warning"></button>
                     </div>
                   </div>
                 </p-tabPanel>
+                <p-tabPanel header="出勤記錄">
+                  No results found..
+                </p-tabPanel>
               </p-tabView>
+              </p-card>
             </div>
           </div>
         </div>

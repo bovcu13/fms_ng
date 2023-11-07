@@ -28,10 +28,10 @@ export class DriverComponent implements OnInit {
       name: ['', Validators.required],
       phone_number: [''],
       id_card_number: [''],
-      employee_number: [''],
       email: [''],
       address: [''],
-      daily_cost: ['', [Validators.pattern('^[0-9]*$')]],
+      // employee_number: [''],
+      // daily_cost: ['', [Validators.pattern('^[0-9]*$')]],
     });
   }
 
@@ -53,7 +53,6 @@ export class DriverComponent implements OnInit {
 
   // 新增司機
   addDriver() {
-    this.addDriver_form.controls['daily_cost'].setValue(parseInt(this.addDriver_form.value.daily_cost, 10));
     console.log('addDriver_form', this.addDriver_form.value)
     this.carServ.postDriverRequest(this.addDriver_form.value).subscribe({
       next: res => {
