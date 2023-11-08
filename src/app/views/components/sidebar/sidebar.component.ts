@@ -72,6 +72,56 @@ export class SidebarComponent implements OnInit {
           //   },
           // },
           {
+            label: '異常報表',
+            icon: 'pi pi-fw pi-exclamation-triangle',
+            items: [
+              {
+                label: '異常總表',
+                icon: 'pi pi-fw pi-box',
+                routerLink: '/odd_report',
+                command: () => {
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(84, 200, 240, 0.1)'
+                },
+              },
+              {
+                label: '超速時間',
+                icon: 'pi pi-fw pi-box',
+                routerLink: '/speeding',
+                command: () => {
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(84, 200, 240, 0.1)'
+                },
+              },
+              {
+                label: '停不熄火',
+                icon: 'pi pi-fw pi-box',
+                routerLink: '/stall',
+                command: () => {
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(84, 200, 240, 0.1)'
+                },
+              },
+              {
+                label: '溫度異常',
+                icon: 'pi pi-fw pi-box',
+                routerLink: '/odd_temp',
+                command: () => {
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(84, 200, 240, 0.1)'
+                },
+              }
+            ]
+          },
+          {
             label: 'GPS圖台',
             icon: 'pi pi-map-marker',
             routerLink: '/multiCars',
@@ -441,56 +491,6 @@ export class SidebarComponent implements OnInit {
                   alert("功能未開放");
                   this.sideVisible = false
                 },
-              },
-              {
-                label: '異常報表',
-                icon: 'pi pi-fw pi-exclamation-triangle',
-                items: [
-                  {
-                    label: '異常總表',
-                    icon: 'pi pi-fw pi-box',
-                    routerLink: '/odd_report',
-                    command: () => {
-                      this.sideVisible = false
-                    },
-                    style: {
-                      background: 'rgba(84, 200, 240, 0.1)'
-                    },
-                  },
-                  {
-                    label: '超速時間',
-                    icon: 'pi pi-fw pi-box',
-                    routerLink: '/speeding',
-                    command: () => {
-                      this.sideVisible = false
-                    },
-                    style: {
-                      background: 'rgba(84, 200, 240, 0.1)'
-                    },
-                  },
-                  {
-                    label: '停不熄火',
-                    icon: 'pi pi-fw pi-box',
-                    routerLink: '/stall',
-                    command: () => {
-                      this.sideVisible = false
-                    },
-                    style: {
-                      background: 'rgba(84, 200, 240, 0.1)'
-                    },
-                  },
-                  {
-                    label: '溫度異常',
-                    icon: 'pi pi-fw pi-box',
-                    routerLink: '/odd_temp',
-                    command: () => {
-                      this.sideVisible = false
-                    },
-                    style: {
-                      background: 'rgba(84, 200, 240, 0.1)'
-                    },
-                  }
-                ]
               },
             ]
           },
