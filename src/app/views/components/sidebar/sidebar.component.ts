@@ -189,10 +189,13 @@ export class SidebarComponent implements OnInit {
           {
             label: '保險管理', // 事故資訊, 理賠資訊
             icon: 'pi pi-fw pi-box',
+            routerLink: '/insurance',
             command: () => {
-              alert("功能未開放");
               this.sideVisible = false
             },
+            style: {
+              background: 'rgba(84, 200, 240, 0.1)',
+            }
           },
           {
             label: '我的倉儲',
