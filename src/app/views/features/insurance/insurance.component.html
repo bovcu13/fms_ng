@@ -1,0 +1,64 @@
+<div class="overflow-x-hidden flex justify-content-center">
+  <div class="col-8">
+    <p-card header="保險管理">
+      <p-tabView>
+        <p-tabPanel header="事故資訊">
+          <div class="flex justify-content-end mb-3">
+            <p-button class="mr-2" icon="pi pi-plus" [text]="true"></p-button>
+            <p-button icon="pi pi-file-export"></p-button>
+          </div>
+          <div class="field">
+          <p-table [value]="accident" styleClass="p-datatable-striped">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>發生時間</th>
+                <th>車輛</th>
+                <th>客戶</th>
+                <th>等級</th>
+                <th>原因</th>
+                <th>類型</th>
+                <th>死亡</th>
+                <th>受傷</th>
+                <th>死傷</th>
+                <th></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+              <tr>
+                <td>{{product.occurrence}}</td>
+                <td>
+                  <div class="flex flex-column">
+                    <div class="font-bold">{{product.license_plate}}</div>
+                    <div class="text-xs">{{product.fleet_name}}</div>
+                  </div>
+                </td>
+                <td>
+                  <img src="assets/image/car2.png" width="32" style="vertical-align: middle" />
+                  <span class="ml-2 vertical-align-middle">{{ product.client }}</span>
+                </td>
+                <td>
+                  <p-tag [value]="product.level" [severity]="getSeverity(product.level)"></p-tag>
+                </td>
+                <td>{{product.cause}}</td>
+                <td>{{product.type}}</td>
+                <td>{{product.death}}</td>
+                <td>{{product.injuring}}</td>
+                <td>{{product.casualty}}</td>
+                <td>
+                  <p-button icon="fas fa-pencil-alt" size="small"></p-button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+          </div>
+        </p-tabPanel>
+        <p-tabPanel header="理賠資訊">
+          <div class="flex justify-content-end mb-3">
+            <p-button icon="pi pi-plus" [text]="true"></p-button>
+          </div>
+
+        </p-tabPanel>
+      </p-tabView>
+    </p-card>
+  </div>
+</div>

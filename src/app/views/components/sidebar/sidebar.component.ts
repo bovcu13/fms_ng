@@ -116,29 +116,15 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
-            label: '數位軌跡16-1報表',
+            label: '數位軌跡16-1報表', // 少大餅軌跡
             icon: 'pi pi-fw pi-chart-pie',
-            items: [
-              {
-                label: '大餅報表',
-                icon: 'pi pi-fw pi-chart-bar',
-                routerLink: '/cake_report',
-                command: () => {
-                  this.sideVisible = false
-                },
-                style: {
-                  background: 'rgba(255, 192, 203, 0.4)'
-                },
-              },
-              {
-                label: '大餅軌跡',
-                icon: 'pi pi-fw pi-chart-line',
-                command: () => {
-                  alert("功能未開放");
-                  this.sideVisible = false
-                },
-              },
-            ]
+            routerLink: '/cake_report',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(255, 192, 203, 0.4)'
+            },
           },
         ]
       },
@@ -193,6 +179,25 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
+            label: '日行檢查表',
+            icon: 'pi pi-fw pi-box',
+            command: () => {
+              alert("功能未開放");
+              this.sideVisible = false
+            },
+          },
+          {
+            label: '保險管理', // 事故資訊, 理賠資訊
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/insurance',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(84, 200, 240, 0.1)',
+            }
+          },
+          {
             label: '我的倉儲',
             icon: 'pi pi-fw pi-box',
             routerLink: '/warehouse_list',
@@ -245,14 +250,6 @@ export class SidebarComponent implements OnInit {
             },
             style: {
               background: 'rgba(255, 192, 203, 0.4)'
-            },
-          },
-          {
-            label: '行車安全檢查',
-            icon: 'pi pi-fw pi-box',
-            command: () => {
-              alert("功能未開放");
-              this.sideVisible = false
             },
           },
           {

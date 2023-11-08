@@ -49,6 +49,7 @@ import { EventComponent } from "../features/dispatch/event/event.component";
 import { DispatchViewComponent } from "../features/dispatch/dispatch/dispatch-view/dispatch-view.component";
 import { TrailersComponent } from "../features/trailers-mgmt/trailers/trailers.component";
 import { TrailersMgmtComponent } from "../features/trailers-mgmt/trailers-mgmt.component";
+import { InsuranceComponent } from "../features/insurance/insurance.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -70,6 +71,8 @@ const routes: Routes = [
       { path: 'e_tracking', component: ETrackingComponent, canActivate: [AuthGuard] },
       { path: 'e_tracking_view', component: ETrackingViewComponent, canActivate: [AuthGuard] },
       { path: 'dispatch_event', component: EventComponent, canActivate: [AuthGuard] },
+      // insurance
+      { path: 'insurance', component: InsuranceComponent, canActivate: [AuthGuard] },
       // my-warehouse
       { path: 'warehouse_list', component: WarehouseListComponent, canActivate: [AuthGuard] },
       { path: 'warehouse_list/:id', component: WarehouseViewComponent, canActivate: [AuthGuard] },

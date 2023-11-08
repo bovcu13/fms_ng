@@ -55,6 +55,7 @@ import { EventComponent } from "../features/dispatch/event/event.component";
 import { DispatchViewComponent } from "../features/dispatch/dispatch/dispatch-view/dispatch-view.component";
 import { TrailersComponent } from "../features/trailers-mgmt/trailers/trailers.component";
 import { TrailersMgmtComponent } from "../features/trailers-mgmt/trailers-mgmt.component";
+import { InsuranceComponent } from "../features/insurance/insurance.component";
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { TrailersMgmtComponent } from "../features/trailers-mgmt/trailers-mgmt.c
     EventComponent,
     DispatchViewComponent,
     TrailersComponent,
-    TrailersMgmtComponent
+    TrailersMgmtComponent,
+    InsuranceComponent,
   ],
   imports: [
     CommonModule,
