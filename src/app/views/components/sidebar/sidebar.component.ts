@@ -165,6 +165,17 @@ export class SidebarComponent implements OnInit {
               background: 'rgba(84, 200, 240, 0.1)',
             }
           },
+          {
+            label: '貨態查詢',
+            icon: 'pi pi-box',
+            url: 'https://fmpc2c.jinher-net.com/e_tracking_view/',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(84, 200, 240, 0.1)',
+            }
+          },
         ]
       },
       {
@@ -179,12 +190,15 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
-            label: '日行檢查表',
+            label: '檢核員作業',
             icon: 'pi pi-fw pi-box',
+            url: 'https://fmp-checklist.jinher-net.com/main',
             command: () => {
-              alert("功能未開放");
               this.sideVisible = false
             },
+            style: {
+              background: 'rgba(84, 200, 240, 0.1)',
+            }
           },
           {
             label: '保險管理', // 事故資訊, 理賠資訊
@@ -251,6 +265,96 @@ export class SidebarComponent implements OnInit {
             style: {
               background: 'rgba(255, 192, 203, 0.4)'
             },
+          },
+          {
+            label: '設定',
+            icon: 'pi pi-fw pi-cog',
+            items: [
+              {
+                label: '基本資料',
+                icon: 'pi pi-fw pi-box',
+                routerLink: '/basic_data',
+                command: () => {
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(84, 200, 240, 0.1)'
+                },
+              },
+              {
+                label: '異常設定',
+                icon: 'pi pi-fw pi-box',
+                // routerLink: '/odd_set',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(84, 200, 240, 0.1)'
+                },
+              },
+              {
+                label: '自建地標',
+                icon: 'pi pi-fw pi-box',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
+              },
+              {
+                label: '權限',
+                icon: 'pi pi-fw pi-box',
+                command: () => {
+                  alert("功能未開放");
+                  this.sideVisible = false
+                },
+              },
+            ]
+          },
+        ]
+      },
+      {
+        label: 'ESG永續與低碳運輸計畫',
+        icon: 'pi pi-globe',
+        items: [
+          {
+            label: '零碳整合儀表板',
+            icon: 'pi pi-globe',
+            command: () => {
+              this.sideVisible = false
+            }
+          },
+          {
+            label: '空轉和閒置時間',
+            icon: 'pi pi-globe',
+            command: () => {
+              alert("優化運輸工具和設施的使用，以減少不必要的空轉和閒置時間，降低碳排放。");
+              this.sideVisible = false
+            }
+          },
+          {
+            label: '優化運輸路線和物流',
+            icon: 'pi pi-globe',
+            command: () => {
+              alert("針對貨物運輸，優化運輸路線和物流，以降低運輸成本和碳排放。");
+              this.sideVisible = false
+            }
+          },
+          {
+            label: '燃料效率',
+            icon: 'pi pi-globe',
+            command: () => {
+              alert("改進車輛的燃料效率，例如透過輪胎氣壓的管理、發動機效能提升和節能駕駛實踐等。");
+              this.sideVisible = false
+            }
+          },
+          {
+            label: '監測和報告',
+            icon: 'pi pi-globe',
+            command: () => {
+              alert("建立監測和報告機制，以追蹤和評估低碳運輸計畫的成效，並對計畫進行必要的調整。");
+              this.sideVisible = false
+            }
           },
           {
             label: '統計分析報告',
@@ -385,89 +489,6 @@ export class SidebarComponent implements OnInit {
                 ]
               },
             ]
-          },
-          {
-            label: '設定',
-            icon: 'pi pi-fw pi-cog',
-            items: [
-              {
-                label: '基本資料',
-                icon: 'pi pi-fw pi-box',
-                routerLink: '/basic_data',
-                command: () => {
-                  this.sideVisible = false
-                },
-                style: {
-                  background: 'rgba(84, 200, 240, 0.1)'
-                },
-              },
-              {
-                label: '異常設定',
-                icon: 'pi pi-fw pi-box',
-                // routerLink: '/odd_set',
-                command: () => {
-                  alert("功能未開放");
-                  this.sideVisible = false
-                },
-                style: {
-                  background: 'rgba(84, 200, 240, 0.1)'
-                },
-              },
-              {
-                label: '自建地標',
-                icon: 'pi pi-fw pi-box',
-                command: () => {
-                  alert("功能未開放");
-                  this.sideVisible = false
-                },
-              },
-              {
-                label: '權限',
-                icon: 'pi pi-fw pi-box',
-                command: () => {
-                  alert("功能未開放");
-                  this.sideVisible = false
-                },
-              },
-            ]
-          },
-        ]
-      },
-      {
-        label: 'ESG永續與低碳運輸計畫',
-        icon: 'pi pi-globe',
-        items: [
-          {
-            label: '空轉和閒置時間',
-            icon: 'pi pi-globe',
-            command: () => {
-              alert("優化運輸工具和設施的使用，以減少不必要的空轉和閒置時間，降低碳排放。");
-              this.sideVisible = false
-            }
-          },
-          {
-            label: '優化運輸路線和物流',
-            icon: 'pi pi-globe',
-            command: () => {
-              alert("針對貨物運輸，優化運輸路線和物流，以降低運輸成本和碳排放。");
-              this.sideVisible = false
-            }
-          },
-          {
-            label: '燃料效率',
-            icon: 'pi pi-globe',
-            command: () => {
-              alert("改進車輛的燃料效率，例如透過輪胎氣壓的管理、發動機效能提升和節能駕駛實踐等。");
-              this.sideVisible = false
-            }
-          },
-          {
-            label: '監測和報告',
-            icon: 'pi pi-globe',
-            command: () => {
-              alert("建立監測和報告機制，以追蹤和評估低碳運輸計畫的成效，並對計畫進行必要的調整。");
-              this.sideVisible = false
-            }
           },
         ]
       },
