@@ -1,0 +1,41 @@
+$white: #FCFCFC;
+
+.total-carbon {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: linear-gradient(90deg, #e85d04, #dc2f02, #d00000, #9d0208);
+  color: $white;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
+}
+
+.power {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: linear-gradient(90deg, #64dfdf, #56cfe1, #48bfe3, #4ea8de);
+  color: $white;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
+}
+
+.carbon-neutral {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: linear-gradient(90deg, #9ceaef, #68d8d6, #3dccc7, #07beb8);
+  color: $white;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
+}
+
+.green-energy {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: linear-gradient(90deg, #95d5b2, #74c69d, #52b788, #40916c);
+  color: $white;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
+}
+
+.carbon-rights {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: linear-gradient(90deg, #5390d9, #5e60ce, #6930c3, #7400b8);
+  color: $white;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
+}
