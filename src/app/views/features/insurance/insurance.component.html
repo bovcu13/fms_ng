@@ -3,28 +3,139 @@
     <p-card header="保險管理">
       <p-tabView>
         <p-tabPanel header="事故資訊">
+          <div class="mt-3 grid">
+            <div class="col-12 md:col-2 lg:col-2">
+              <div class="field">
+                <label class="font-semibold text-sm">車隊</label>
+                <p-dropdown></p-dropdown>
+              </div>
+            </div>
+            <div class="col-12 md:col-2 lg:col-2">
+              <div class="field">
+                <label class="font-semibold text-sm">類型</label>
+                <p-dropdown></p-dropdown>
+              </div>
+            </div>
+            <div class="col-12 md:col-2 lg:col-2">
+              <div class="field">
+                <label class="font-semibold text-sm">原因</label>
+                <p-dropdown></p-dropdown>
+              </div>
+            </div>
+            <div class="col-12 md:col-2 lg:col-2">
+              <div class="field">
+                <label class="font-semibold text-sm">等級</label>
+                <p-dropdown></p-dropdown>
+              </div>
+            </div>
+            <div class="col-12 md:col-4 lg:col-4">
+              <div class="field">
+                <label class="font-semibold text-sm">發生時間</label>
+                <p-calendar placeholder="請選擇 開始日期 → 結束日期" selectionMode="range" [readonlyInput]="true"></p-calendar>
+              </div>
+            </div>
+            <div class="col-12">
+              <p-divider type="dashed"></p-divider>
+            </div>
+          </div>
           <div class="flex justify-content-end mb-3">
             <p-button class="mr-2" icon="pi pi-plus" [text]="true"></p-button>
             <p-button icon="pi pi-file-export"></p-button>
           </div>
-          <div class="field">
-          <p-table [value]="accident" styleClass="p-datatable-striped">
+            <p-table [value]="accident" styleClass="p-datatable-striped">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                  </th>
+                  <th>發生時間</th>
+                  <th>車輛</th>
+                  <th>客戶</th>
+                  <th>等級</th>
+                  <th>原因</th>
+                  <th>類型</th>
+                  <th>死亡</th>
+                  <th>受傷</th>
+                  <th>死傷</th>
+                  <th></th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-product>
+                <tr class="text-sm">
+                  <td>
+                    <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                  </td>
+                  <td>{{product.occurrence}}</td>
+                  <td>
+                    <div class="flex flex-column">
+                      <div class="font-bold">{{product.license_plate}}</div>
+                      <div class="text-xs">{{product.fleet_name}}</div>
+                    </div>
+                  </td>
+                  <td class="text-sm">
+                    <img src="assets/image/car2.png" width="32" style="vertical-align: middle"/>
+                    <span class="ml-2 vertical-align-middle">{{ product.client }}</span>
+                  </td>
+                  <td>
+                    <p-tag [value]="product.level" [severity]="getSeverity(product.level)"></p-tag>
+                  </td>
+                  <td>{{product.cause}}</td>
+                  <td>{{product.type}}</td>
+                  <td>{{product.death}}</td>
+                  <td>{{product.injuring}}</td>
+                  <td>{{product.casualty}}</td>
+                  <td>
+                    <p-button icon="fas fa-pencil-alt" size="small"></p-button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel header="理賠資訊">
+          <div class="mt-3 grid">
+            <div class="col-12 md:col-6 lg:col-6">
+              <div class="field">
+                <label class="font-semibold text-sm">車隊</label>
+                <p-dropdown></p-dropdown>
+              </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-6">
+              <div class="field">
+                <label class="font-semibold text-sm">發生時間</label>
+                <p-calendar placeholder="請選擇 開始日期 → 結束日期" selectionMode="range" [readonlyInput]="true"></p-calendar>
+              </div>
+            </div>
+            <div class="col-12">
+              <p-divider type="dashed"></p-divider>
+            </div>
+          </div>
+          <div class="flex justify-content-end mb-3">
+            <p-button class="mr-2" icon="pi pi-plus" [text]="true"></p-button>
+            <p-button icon="pi pi-file-export"></p-button>
+          </div>
+          <p-table [value]="claim" styleClass="p-datatable-striped">
             <ng-template pTemplate="header">
               <tr>
-                <th>發生時間</th>
+                <th>
+                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th>編號</th>
+                <th>發生日期</th>
+                <th>司機</th>
                 <th>車輛</th>
-                <th>客戶</th>
-                <th>等級</th>
-                <th>原因</th>
-                <th>類型</th>
-                <th>死亡</th>
-                <th>受傷</th>
-                <th>死傷</th>
+                <th class="text-center">期間內</th>
+                <th>狀態</th>
+                <th>總賠款</th>
+                <th>保費</th>
                 <th></th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-product>
-              <tr>
+              <tr class="text-sm">
+                <td>
+                  <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                </td>
+                <td>{{product.code}}</td>
                 <td>{{product.occurrence}}</td>
                 <td>
                   <div class="flex flex-column">
@@ -32,31 +143,20 @@
                     <div class="text-xs">{{product.fleet_name}}</div>
                   </div>
                 </td>
-                <td>
-                  <img src="assets/image/car2.png" width="32" style="vertical-align: middle" />
-                  <span class="ml-2 vertical-align-middle">{{ product.client }}</span>
+                <td class="text-sm">
+                  <img src="assets/image/car2.png" width="32" style="vertical-align: middle"/>
+                  <span class="ml-2 vertical-align-middle">{{ product.driver }}</span>
                 </td>
-                <td>
-                  <p-tag [value]="product.level" [severity]="getSeverity(product.level)"></p-tag>
-                </td>
-                <td>{{product.cause}}</td>
-                <td>{{product.type}}</td>
-                <td>{{product.death}}</td>
-                <td>{{product.injuring}}</td>
-                <td>{{product.casualty}}</td>
+                <td class="text-center">{{product.isDuring}}</td>
+                <td>{{product.status}}</td>
+                <td>{{product.claims}}</td>
+                <td>{{product.premium}}</td>
                 <td>
                   <p-button icon="fas fa-pencil-alt" size="small"></p-button>
                 </td>
               </tr>
             </ng-template>
           </p-table>
-          </div>
-        </p-tabPanel>
-        <p-tabPanel header="理賠資訊">
-          <div class="flex justify-content-end mb-3">
-            <p-button icon="pi pi-plus" [text]="true"></p-button>
-          </div>
-
         </p-tabPanel>
       </p-tabView>
     </p-card>

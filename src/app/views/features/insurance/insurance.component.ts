@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { accident } from "../../../shared/data/accident";
-import { list } from "../../../shared/data/dispatch";
+import { claim } from "../../../shared/data/claim";
 
 @Component({
   selector: 'app-insurance',
@@ -9,6 +9,7 @@ import { list } from "../../../shared/data/dispatch";
 })
 export class InsuranceComponent implements OnInit {
   accident = accident;
+  claim = claim;
 
   getSeverity(level: string): string {
     if (level === '輕微') {
@@ -24,6 +25,4 @@ export class InsuranceComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  protected readonly list = list;
 }
