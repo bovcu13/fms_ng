@@ -320,8 +320,12 @@ export class SidebarComponent implements OnInit {
           {
             label: '零碳整合儀表板',
             icon: 'pi pi-globe',
+            routerLink: '/esg_dashboard',
             command: () => {
               this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(84, 200, 240, 0.1)',
             }
           },
           {
