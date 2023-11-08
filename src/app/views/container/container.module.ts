@@ -56,6 +56,7 @@ import { DispatchViewComponent } from "../features/dispatch/dispatch/dispatch-vi
 import { TrailersComponent } from "../features/trailers-mgmt/trailers/trailers.component";
 import { TrailersMgmtComponent } from "../features/trailers-mgmt/trailers-mgmt.component";
 import { InsuranceComponent } from "../features/insurance/insurance.component";
+import { EsgDashboardComponent } from "../features/ESG/esg-dashboard/esg-dashboard.component";
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { InsuranceComponent } from "../features/insurance/insurance.component";
     TrailersComponent,
     TrailersMgmtComponent,
     InsuranceComponent,
+    EsgDashboardComponent,
   ],
   imports: [
     CommonModule,

@@ -50,6 +50,7 @@ import { DispatchViewComponent } from "../features/dispatch/dispatch/dispatch-vi
 import { TrailersComponent } from "../features/trailers-mgmt/trailers/trailers.component";
 import { TrailersMgmtComponent } from "../features/trailers-mgmt/trailers-mgmt.component";
 import { InsuranceComponent } from "../features/insurance/insurance.component";
+import { EsgDashboardComponent } from "../features/ESG/esg-dashboard/esg-dashboard.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -112,6 +113,8 @@ const routes: Routes = [
       // driver-mgmt
       { path: 'driver', component: DriverComponent, canActivate: [AuthGuard] },
       { path: 'driver/:id', component: ViewDriverComponent, canActivate: [AuthGuard] },
+      // ESG
+      { path: 'esg_dashboard', component: EsgDashboardComponent, canActivate: [AuthGuard]},
       // log
       { path: 'log', component: LogComponent, canActivate: [AuthGuard] },
       // test
