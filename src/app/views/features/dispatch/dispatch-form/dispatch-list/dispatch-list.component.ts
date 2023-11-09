@@ -26,5 +26,7 @@ export class DispatchListComponent {
   selectedForm: any[] = [];
   handleCheckbox(value: any) {
     console.log('selectedForm:',this.selectedForm)
+    console.log(value)
   }
+
 }
