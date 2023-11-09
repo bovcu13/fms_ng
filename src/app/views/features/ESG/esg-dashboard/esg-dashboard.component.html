@@ -4,38 +4,38 @@
       <div class="flex justify-content-between">
         <div class="col-2 total-carbon">
           <div class="flex flex-column gap-2">
-            <span class="text-xl">總碳量</span>
+            <span class="text-xl font-semibold">總碳量</span>
             <span class="text-3xl">26.21 t</span>
           </div>
         </div>
         <div class="col-2 power">
           <div class="flex flex-column gap-2">
-            <span class="text-xl">累積用電量</span>
+            <span class="text-xl font-semibold">累積用電量</span>
             <span class="text-3xl">41448 kWh</span>
           </div>
         </div>
         <div class="col-2 carbon-neutral">
           <div class="flex flex-column gap-2">
-            <span class="text-xl">碳中和</span>
+            <span class="text-xl font-semibold">碳中和</span>
             <span class="text-3xl">3.93 %</span>
           </div>
         </div>
         <div class="col-2 green-energy">
           <div class="flex flex-column gap-2">
-            <span class="text-xl">綠能減碳量</span>
+            <span class="text-xl font-semibold">綠能減碳量</span>
             <span class="text-3xl">0.63 t</span>
           </div>
         </div>
         <div class="col-2 carbon-rights">
           <div class="flex flex-column gap-2">
-            <span class="text-xl">碳權交易</span>
+            <span class="text-xl font-semibold">碳權交易</span>
             <span class="text-3xl">0.4 t</span>
           </div>
         </div>
       </div>
       <div class="grid mt-2">
         <div class="col-4">
-            <div class="total-carbon flex flex-column gap-2">
+            <div class="co2-ed flex flex-column gap-2">
               <span class="text-xl">碳排揭露</span>
             </div>
           <p-card>
@@ -48,19 +48,56 @@
           </p-card>
         </div>
         <div class="col-4">
-          <p-card></p-card>
+          <div class="energy-mgmt flex flex-column gap-2">
+            <span class="text-xl">綠能管理</span>
+          </div>
+          <p-card>
+            <div class="card">
+              <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+            </div>
+            <div class="card flex justify-content-center">
+              <p-chart type="pie" [data]="data2" [options]="options2"></p-chart>
+            </div>
+          </p-card>
         </div>
         <div class="col-4">
-          <p-card></p-card>
+          <div class="none flex align-items-center gap-2">
+            <span class="pi pi-map-marker"></span>
+            <span class="text-xl">總覽</span>
+          </div>
+          <div class="map-content">
+            <div id="map" style="height: 50vh; width: 100%;"></div>
+          </div>
         </div>
         <div class="col-4">
-          <p-card></p-card>
+          <div class="iot flex flex-column gap-2">
+            <span class="text-xl">IoT智慧錶</span>
+          </div>
+          <p-card>
+            <div class="card">
+              <p-chart type="bar" [data]="data4" [options]="options4"></p-chart>
+            </div>
+          </p-card>
         </div>
         <div class="col-4">
-          <p-card></p-card>
+          <div class="cr flex flex-column gap-2">
+            <span class="text-xl">碳權交易</span>
+          </div>
+          <p-card>
+            <div class="card">
+              <p-chart type="line" [data]="data5" [options]="options5"></p-chart>
+            </div>
+          </p-card>
         </div>
         <div class="col-4">
-          <p-card></p-card>
+          <div class="none flex flex-column gap-2">
+            <span class="text-xl">分時用電</span>
+          </div>
+          <p-card>
+            <div class="card">
+              <p-chart type="line" [data]="data6" [options]="options6"></p-chart>
+            </div>
+          </p-card>
         </div>
       </div>
     </div>

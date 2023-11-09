@@ -2,10 +2,19 @@ $white: #FCFCFC;
 
 .total-carbon {
   font-family: 'Noto Sans TC', sans-serif;
-  background: linear-gradient(90deg, #e85d04, #dc2f02, #d00000, #9d0208);
+  background: linear-gradient(90deg, #f6aa1c, #db7c26, #d8572a, #c32f27);
   color: $white;
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   border-radius: 5px;
+}
+
+.co2-ed {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: linear-gradient(90deg, #f6aa1c, #db7c26, #d8572a, #c32f27);
+  color: $white;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 5px 5px 0 0; // 左上和右上是圓角，左下右下不是
+  padding: 0.5rem 0 0.5rem 0.5rem;
 }
 
 .power {
@@ -14,6 +23,15 @@ $white: #FCFCFC;
   color: $white;
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   border-radius: 5px;
+}
+
+.iot {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: linear-gradient(90deg, #64dfdf, #56cfe1, #48bfe3, #4ea8de);
+  color: $white;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 5px 5px 0 0;
+  padding: 0.5rem 0 0.5rem 0.5rem;
 }
 
 .carbon-neutral {
@@ -26,10 +44,19 @@ $white: #FCFCFC;
 
 .green-energy {
   font-family: 'Noto Sans TC', sans-serif;
-  background: linear-gradient(90deg, #95d5b2, #74c69d, #52b788, #40916c);
+  background: linear-gradient(90deg, #74c69d, #52b788, #40916c, #2d6a4f);
   color: $white;
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   border-radius: 5px;
+}
+
+.energy-mgmt {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: linear-gradient(90deg, #74c69d, #52b788, #40916c, #2d6a4f);
+  color: $white;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 5px 5px 0 0;
+  padding: 0.5rem 0 0.5rem 0.5rem;
 }
 
 .carbon-rights {
@@ -38,4 +65,29 @@ $white: #FCFCFC;
   color: $white;
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   border-radius: 5px;
+}
+
+.cr {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: linear-gradient(90deg, #5390d9, #5e60ce, #6930c3, #7400b8);
+  color: $white;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 5px 5px 0 0;
+  padding: 0.5rem 0 0.5rem 0.5rem;
+}
+
+.none {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: #ffffff;
+  color: #495057;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 5px 5px 0 0;
+  padding: 0.5rem 0 0.5rem 0.5rem;
+}
+
+.map-content {
+  background: #ffffff;
+  color: #495057;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
 }
