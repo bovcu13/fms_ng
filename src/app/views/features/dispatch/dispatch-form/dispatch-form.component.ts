@@ -19,7 +19,7 @@ export class DispatchFormComponent implements OnInit {
       created_at: ['2023-10-18', Validators.required], //填單日
       id: ['236-M3', Validators.required], //單號
       name: ['', Validators.required], //名稱
-      // date: [''], //承運日期
+      deadline: [''], //指定送達時間
       shipper: ['', Validators.required], //託運人
       // trailer: [''], //板台號碼
       origin:  ['', Validators.required], //起運
@@ -57,6 +57,7 @@ export class DispatchFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(list[this.id])
     this.formName();
   }
 

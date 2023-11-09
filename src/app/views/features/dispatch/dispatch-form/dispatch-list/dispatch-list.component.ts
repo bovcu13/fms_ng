@@ -24,7 +24,17 @@ export class DispatchListComponent {
   }
 
   selectedForm: any[] = [];
-  handleCheckbox(value: any) {
+  handleCheckbox(event: any) {
     console.log('selectedForm:',this.selectedForm)
+    console.log(event)
   }
+
+  getSeverity(level: string): string {
+    if (level === '未綁定') {
+      return 'info';
+    } else {
+      return '';
+    }
+  }
+
 }
