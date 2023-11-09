@@ -35,6 +35,13 @@
           </div>
           <div class="col-12 md:col-6 lg:col-6">
             <div class="field">
+              <label class="font-semibold">指定送達時間</label>
+              <p-calendar formControlName="deadline" [showTime]="true" dateFormat="yy-mm-dd"></p-calendar>
+            </div>
+          </div>
+          <div class="col-12 md:col-6 lg:col-6"></div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <div class="field">
               <label class="font-semibold"><span class="text-red-600">*</span>起運點</label>
               <input formControlName="origin" pInputText/>
             </div>

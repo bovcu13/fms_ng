@@ -5,6 +5,7 @@ export const list = [
     created_at: "2023-10-19",
     id: "0",
     client: "ABC貨運",
+    deadline: "2023-11-10T15:30:00",
     origin: "季河",
     destination: "環球影城",
     shipping_list: [
@@ -34,6 +35,7 @@ export const list = [
     created_at: "2023-10-19",
     id: "1",
     client: "龍翔物流",
+    deadline: "2023-11-11T09:45:00",
     origin: "鼎山家樂福",
     destination: "瑞豐夜市",
     shipping_list: [
@@ -63,6 +65,7 @@ export const list = [
     created_at: "2023-10-19",
     id: "2",
     client: "豐榮運輸",
+    deadline: "2023-11-12T18:00:00",
     origin: "高第一女宿",
     destination: "開漳聖王廟",
     shipping_list: [
@@ -92,6 +95,7 @@ export const list = [
     created_at: "2023-10-19",
     id: "3",
     client: "安捷快遞服務",
+    deadline: "2023-11-13T12:30:00",
     origin: "季河",
     destination: "高雄高商",
     shipping_list: [
@@ -121,6 +125,7 @@ export const list = [
     created_at: "2023-10-19",
     id: "4",
     client: "龍翔物流",
+    deadline: "2023-11-14T20:15:00",
     origin: "中央公園",
     destination: "夢時代",
     shipping_list: [
