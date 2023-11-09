@@ -1,8 +1,10 @@
 export const list = [
   {
     name: "產品配送計劃",
+    binding: "1111客戶訂單分發",
     created_at: "2023-10-19",
     id: "0",
+    client: "ABC貨運",
     origin: "季河",
     destination: "環球影城",
     shipping_list: [
@@ -28,8 +30,10 @@ export const list = [
   },
   {
     name: "國際運送安排",
+    binding: "1111客戶訂單分發",
     created_at: "2023-10-19",
     id: "1",
+    client: "龍翔物流",
     origin: "鼎山家樂福",
     destination: "瑞豐夜市",
     shipping_list: [
@@ -55,8 +59,10 @@ export const list = [
   },
   {
     name: "訂單運輸安排",
+    binding: "1111客戶訂單分發",
     created_at: "2023-10-19",
     id: "2",
+    client: "豐榮運輸",
     origin: "高第一女宿",
     destination: "開漳聖王廟",
     shipping_list: [
@@ -82,8 +88,10 @@ export const list = [
   },
   {
     name: "商品分發管理",
+    binding: "1112貨物運輸排程",
     created_at: "2023-10-19",
     id: "3",
+    client: "安捷快遞服務",
     origin: "季河",
     destination: "高雄高商",
     shipping_list: [
@@ -109,8 +117,10 @@ export const list = [
   },
   {
     name: "物流處理訂單",
+    binding: "1112貨物運輸排程",
     created_at: "2023-10-19",
     id: "4",
+    client: "龍翔物流",
     origin: "中央公園",
     destination: "夢時代",
     shipping_list: [
