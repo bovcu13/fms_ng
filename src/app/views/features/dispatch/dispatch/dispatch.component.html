@@ -2,7 +2,7 @@
   <div class="col-8">
     <p-tabView>
       <p-tabPanel header="派工與調度">
-        <p-card header="派工與調度（貨物運輸訂單）">
+        <p-card header="派工與調度（貨物運輸計劃）">
           <p-tabView>
             <p-tabPanel header="所有工作">
               <div class="flex justify-content-end mb-3">
@@ -13,7 +13,7 @@
               <ng-container *ngIf="showList == true">
                 <p-dataView [value]="dispatchEvents">
                   <ng-template let-product pTemplate="listItem">
-                    <div pRipple class="col-6 styled-box" (click)="goToDispatchView(product.id)">
+                    <div pRipple class="col-12 styled-box" (click)="goToDispatchView(product.id)">
                       <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
                         <div
                           class="flex sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
@@ -46,9 +46,9 @@
                 </div>
               </ng-container>
             </p-tabPanel>
-            <p-tabPanel header="未進行">
-            </p-tabPanel>
             <p-tabPanel header="進行中">
+            </p-tabPanel>
+            <p-tabPanel header="未進行">
             </p-tabPanel>
             <p-tabPanel header="已完成">
             </p-tabPanel>
@@ -77,12 +77,12 @@
         <p-dropdown placeholder="選擇司機" formControlName="driver" [options]="driverData" optionLabel="name"></p-dropdown>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">車牌</label>
-        <input pInputText [disabled]="true"/>
+        <label class="font-semibold">車輛</label>
+        <p-dropdown placeholder="選擇車輛"></p-dropdown>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">板台號</label>
-        <p-dropdown placeholder="選擇板台"></p-dropdown>
+        <label class="font-semibold">板車</label>
+        <p-multiSelect placeholder="選擇板車"></p-multiSelect>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
       </div>
