@@ -9,27 +9,27 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ['./dispatch-form.component.scss']
 })
 export class DispatchFormComponent implements OnInit {
-  id: any = 0;
-  list: any = list[this.id].shipping_list;
+  code: any = 0;
+  list: any = list[this.code].shipping_list;
   dispatch_form: FormGroup;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute) {
-    this.id = this.route.snapshot.paramMap.get('id');
+    this.code = this.route.snapshot.paramMap.get('id');
     this.dispatch_form = this.fb.group({
-      created_at: ['2023-10-18', Validators.required], //填單日
       id: ['236-M3', Validators.required], //單號
       name: ['', Validators.required], //名稱
       deadline: [''], //指定送達時間
       shipper: ['', Validators.required], //託運人
-      // trailer: [''], //板台號碼
       origin:  ['', Validators.required], //起運
       destination: ['', Validators.required], //卸貨
       product_name: ['', Validators.required], //品名
       unit_price: [''], //單價
       qty: ['', Validators.required], //件數
       tonnage:  ['', Validators.required], //噸數
+      trailer: [''], //板車
+      created_at: ['2023-10-18', Validators.required], //填單日
     });
-    this.dispatch_form.patchValue(list[this.id]);
+    this.dispatch_form.patchValue(list[this.code]);
   }
 
   data: any
@@ -57,7 +57,7 @@ export class DispatchFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(list[this.id])
+    console.log(list[this.code])
     this.formName();
   }
 
