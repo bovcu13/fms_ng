@@ -19,16 +19,6 @@ export class DispatchComponent implements OnInit {
   list: any = list;
   formList: string[] = [];
 
-  workData = [
-    {
-      id: 1,
-      name: '1020出車',
-      date: '2023-10-20',
-      form: '運輸訂單02',
-      driver: '李宜蓁'
-    }
-  ]
-
   showList = true;
   showListBtn() {
     this.showList = true;
@@ -94,7 +84,7 @@ export class DispatchComponent implements OnInit {
       }
       this.event_form.patchValue({
         title: event.title,
-        start_date: new Date((event.start)),
+        start_time: new Date((event.start)),
         end_date: type === 'editList' ? new Date((event.end)) : new Date(this.dispatchEvents[Number(event._def.publicId) - 1].end),
         driver: driver
       });
@@ -119,11 +109,12 @@ export class DispatchComponent implements OnInit {
     this.event_form = this.fb.group({
       id: ['', Validators.required],
       title: ['', [Validators.required]],
-      start_date: ['', [Validators.required]],
-      end_date: ['', [Validators.required]],
-      type: ['', [Validators.required]],
       form: [''],
       driver: [''],
+      vehicle: [''],
+      start_time: ['', [Validators.required]],
+      // end_date: ['', [Validators.required]],
+      // type: ['', [Validators.required]],
       description: [''],
       created_at: [''],
       updated_at: [''],
@@ -139,6 +130,7 @@ export class DispatchComponent implements OnInit {
     this.getAllDriversRequest();
   }
 
+  // 取得訂單
   getFormListName() {
     list.forEach(item => {
       this.formList.push(item.name);
@@ -146,6 +138,7 @@ export class DispatchComponent implements OnInit {
     console.log(this.formList);
   }
 
+  // 取得司機
   driverData: any
   getAllDriversRequest() {
     this.carServ.getAllDriversRequest().subscribe({
@@ -161,6 +154,7 @@ export class DispatchComponent implements OnInit {
     });
   }
 
+  // 進入詳細頁面
   goToDispatchView(id: any) {
     this.router.navigate(['/dispatch_view', id])
   }

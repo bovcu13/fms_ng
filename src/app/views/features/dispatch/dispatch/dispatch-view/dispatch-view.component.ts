@@ -112,6 +112,8 @@ export class DispatchViewComponent implements OnInit {
     } else {
       console.log('goodsData is empty or invalid');
     }
+
+    console.log('taskList:', this.taskList);
   }
 
   onReorderTask(event: any) {
