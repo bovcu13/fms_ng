@@ -39,12 +39,10 @@ export class DispatchViewComponent implements OnInit {
       id: ['', Validators.required],
       title: ['', [Validators.required]],
       start_date: ['', [Validators.required]],
-      end_date: ['', [Validators.required]],
-      type: ['', [Validators.required]],
+      // end_date: ['', [Validators.required]],
       form: [''],
       driver: [''],
       vehicle: [''],
-      trailer: [''],
       description: [''],
       created_at: [''],
       updated_at: [''],
@@ -55,6 +53,9 @@ export class DispatchViewComponent implements OnInit {
     const driver = {
       name: this.workData.driver
     }
+    const vehicle = {
+      name: this.workData.vehicle
+    }
     const form = this.workData.form.map((item: any) => ({ name: item.name }));
 
     this.event_form.patchValue(this.workData);
@@ -62,17 +63,19 @@ export class DispatchViewComponent implements OnInit {
       start_date: new Date((this.workData.start)),
       end_date: new Date((this.workData.end)),
       driver: driver,
-      form: form
+      form: form,
+      vehicle: vehicle
     });
   }
 
   ngOnInit(): void {
     this.getFormListName();
     this.getAllDriversRequest();
+    this.getAllVehiclesRequest();
   }
 
+  // 託運訂單
   formList: any
-
   getFormListName() {
     this.formList = list.map((item: any) => ({
       name: item.name,
@@ -80,8 +83,8 @@ export class DispatchViewComponent implements OnInit {
     console.log('formList:', this.formList);
   }
 
+  // 司機
   driverData: any
-
   getAllDriversRequest() {
     this.carServ.getAllDriversRequest().subscribe({
       next: res => {
@@ -96,6 +99,23 @@ export class DispatchViewComponent implements OnInit {
     });
   }
 
+  // 車輛
+  vehiclesData: any;
+  getAllVehiclesRequest() {
+    this.carServ.getAllVehiclesRequest(1, 20).subscribe({
+      next: res => {
+        this.vehiclesData = res.body.vehicles.map((item: any) => ({
+          name: item.name,
+        }));
+        console.log('vehiclesData:', this.vehiclesData);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  // order-list
   goodsForm: any;
   taskData: any;
   shippingList: any;
@@ -112,6 +132,8 @@ export class DispatchViewComponent implements OnInit {
     } else {
       console.log('goodsData is empty or invalid');
     }
+
+    console.log('taskList:', this.taskList);
   }
 
   onReorderTask(event: any) {

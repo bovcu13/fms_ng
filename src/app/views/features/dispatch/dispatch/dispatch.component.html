@@ -2,39 +2,94 @@
   <div class="col-8">
     <p-tabView>
       <p-tabPanel header="派工與調度">
-        <p-card header="派工與調度（貨物運輸訂單）">
+        <p-card header="派工與調度（貨物運輸計劃）">
           <p-tabView>
             <p-tabPanel header="所有工作">
               <div class="flex justify-content-end mb-3">
                 <p-button (click)="showListBtn()" icon="pi pi-list" [text]="true" styleClass="mr-2"></p-button>
                 <p-button (click)="closeListBtn()" icon="pi pi-calendar" [text]="true" styleClass="mr-5"></p-button>
+                <p-button *ngIf="selectedEvent.length > 0" icon="pi pi-times-circle" [text]="true"
+                          severity="danger " pTooltip="作廢"></p-button>
                 <p-button icon="pi pi-plus" (click)="showAddEventDialog('add')" [text]="true"></p-button>
               </div>
               <ng-container *ngIf="showList == true">
-                <p-dataView [value]="dispatchEvents">
-                  <ng-template let-product pTemplate="listItem">
-                    <div pRipple class="col-6 styled-box" (click)="goToDispatchView(product.id)">
-                      <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
-                        <div
-                          class="flex sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                          <div class="flex flex-column align-items-center xl:align-items-start gap-3">
-                            <div class="text-lg font-bold">{{ product.title }}</div>
-                            <div class="flex align-items-center gap-3">
-                                <span class="flex align-items-center gap-2">
-                                <i class="pi pi-at text-xs"></i>
-                                <span class="font-medium text-xs">{{ product.driver }}</span>
-                                  </span>
-                              <span class="flex align-items-center gap-2">
-                                <i class="pi pi-calendar text-xs"></i>
-                                <span class="font-medium text-xs">{{ product.start }}</span>
+                <p-table [value]="dispatchEvents"
+                         [(selection)]="selectedEvent"
+                         (selectionChange)="handleCheckbox($event)"
+                         [paginator]="true"
+                         [rows]="5"
+                         [showCurrentPageReport]="true"
+                         [rowsPerPageOptions]="[5, 10, 20]"
+                         dataKey="id"
+                         styleClass="p-datatable-sm">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th style="width: 1rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                      </th>
+                      <th>開始時間</th>
+                      <th class="pl-4">派工資訊</th>
+                      <th>司機</th>
+                      <th>車輛</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-product>
+                    <tr class="styled-box">
+                      <td>
+                        <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                      </td>
+                      <td (click)="goToDispatchView(product.id)">{{ product.start }}</td>
+                      <td (click)="goToDispatchView(product.id)">
+                        <div class="flex align-items-center p-3 gap-4">
+                          <div
+                            class="flex sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                            <div class="flex flex-column align-items-center xl:align-items-start gap-3">
+                              <div class="font-bold">{{ product.title }}</div>
+                              <div class="flex align-items-center gap-3">
+                                <span *ngFor="let form of product.form" class="flex align-items-center gap-2">
+                                <i class="pi pi-tag text-xs"></i>
+                                <span class="font-medium text-xs">{{ form.name }}</span>
                                 </span>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
+                      </td>
+                      <td (click)="goToDispatchView(product.id)">
+                        <img src="assets/image/car2.png" width="32" style="vertical-align: middle"/>
+                        <span class="ml-2 vertical-align-middle">{{ product.driver }}</span>
+                      </td>
+                      <td (click)="goToDispatchView(product.id)">
+                        <img src="assets/image/sport-car.png" width="32" style="vertical-align: middle"/>
+                        <span class="ml-2 vertical-align-middle">{{ product.vehicle }}</span>
+                      </td>
+                    </tr>
                   </ng-template>
-                </p-dataView>
+                </p-table>
+<!--                <p-dataView [value]="dispatchEvents">-->
+<!--                  <ng-template let-product pTemplate="listItem">-->
+<!--                    <div pRipple class="col-12 styled-box" (click)="goToDispatchView(product.id)">-->
+<!--                      <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">-->
+<!--                        <div-->
+<!--                          class="flex sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">-->
+<!--                          <div class="flex flex-column align-items-center xl:align-items-start gap-3">-->
+<!--                            <div class="text-lg font-bold">{{ product.title }}</div>-->
+<!--                            <div class="flex align-items-center gap-3">-->
+<!--                                <span class="flex align-items-center gap-2">-->
+<!--                                <i class="pi pi-at text-xs"></i>-->
+<!--                                <span class="font-medium text-xs">{{ product.driver }}</span>-->
+<!--                                  </span>-->
+<!--                              <span class="flex align-items-center gap-2">-->
+<!--                                <i class="pi pi-calendar text-xs"></i>-->
+<!--                                <span class="font-medium text-xs">{{ product.start }}</span>-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </ng-template>-->
+<!--                </p-dataView>-->
               </ng-container>
               <ng-container *ngIf="showList == false">
                 <div class="flex justify-content-center">
@@ -46,9 +101,9 @@
                 </div>
               </ng-container>
             </p-tabPanel>
-            <p-tabPanel header="未進行">
-            </p-tabPanel>
             <p-tabPanel header="進行中">
+            </p-tabPanel>
+            <p-tabPanel header="未進行">
             </p-tabPanel>
             <p-tabPanel header="已完成">
             </p-tabPanel>
@@ -68,7 +123,7 @@
         <input formControlName="title" pInputText/>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">運輸訂單</label>
+        <label class="font-semibold">託運訂單</label>
         <p-multiSelect placeholder="選擇訂單" [options]="formList"
                        display="chip" [showClear]="true"></p-multiSelect>
       </div>
@@ -77,33 +132,31 @@
         <p-dropdown placeholder="選擇司機" formControlName="driver" [options]="driverData" optionLabel="name"></p-dropdown>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">車牌</label>
-        <input pInputText [disabled]="true"/>
+        <label class="font-semibold">車輛</label>
+        <p-dropdown placeholder="選擇車輛" formControlName="vehicle"></p-dropdown>
       </div>
-      <div class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">板台號</label>
-        <p-dropdown placeholder="選擇板台"></p-dropdown>
-      </div>
-      <div class="field col-12 md:col-6 lg:col-6">
-      </div>
+<!--      <div class="field col-12 md:col-6 lg:col-6">-->
+<!--        <label class="font-semibold">板車</label>-->
+<!--        <p-multiSelect placeholder="選擇板車"></p-multiSelect>-->
+<!--      </div>-->
       <div class="field col-12 md:col-6 lg:col-6">
         <label class="font-semibold">開始時間</label>
-        <p-calendar formControlName="start_date"
+        <p-calendar formControlName="start_time"
                     [appendTo]="'body'" [showTime]="true"></p-calendar>
       </div>
-      <div class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">結束時間</label>
-        <p-calendar formControlName="end_date"
-                    [appendTo]="'body'" [showTime]="true"></p-calendar>
-      </div>
-      <div *ngIf="dialogHeader == '編輯任務'" class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">實際開始時間</label>
-        <p-calendar [appendTo]="'body'" [showTime]="true"></p-calendar>
-      </div>
-      <div *ngIf="dialogHeader == '編輯任務'" class="field col-12 md:col-6 lg:col-6">
-        <label class="font-semibold">實際結束時間</label>
-        <p-calendar [appendTo]="'body'" [showTime]="true"></p-calendar>
-      </div>
+<!--      <div class="field col-12 md:col-6 lg:col-6">-->
+<!--        <label class="font-semibold">結束時間</label>-->
+<!--        <p-calendar formControlName="end_date"-->
+<!--                    [appendTo]="'body'" [showTime]="true"></p-calendar>-->
+<!--      </div>-->
+<!--      <div *ngIf="dialogHeader == '編輯任務'" class="field col-12 md:col-6 lg:col-6">-->
+<!--        <label class="font-semibold">實際開始時間</label>-->
+<!--        <p-calendar [appendTo]="'body'" [showTime]="true"></p-calendar>-->
+<!--      </div>-->
+<!--      <div *ngIf="dialogHeader == '編輯任務'" class="field col-12 md:col-6 lg:col-6">-->
+<!--        <label class="font-semibold">實際結束時間</label>-->
+<!--        <p-calendar [appendTo]="'body'" [showTime]="true"></p-calendar>-->
+<!--      </div>-->
     </div>
     <div class="flex justify-content-end">
       <p-button label="取消" severity="secondary" styleClass="mr-2" [outlined]="true"></p-button>

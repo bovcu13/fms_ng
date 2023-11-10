@@ -14,7 +14,6 @@
             <p-button routerLink="/dispatch_form" icon="pi pi-plus"
                       [text]="true" size="small" pTooltip="新增"></p-button>
           </div>
-          <div class="card">
             <p-table [value]="list"
                      [(selection)]="selectedForm"
                      (selectionChange)="handleCheckbox($event)"
@@ -30,7 +29,7 @@
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                   </th>
                   <th class="pl-4">訂單資訊</th>
-                  <th class="text-center">託運人</th>
+                  <th>託運人</th>
                   <th></th>
                   <th class="text-center">起卸點</th>
                   <th></th>
@@ -66,16 +65,18 @@
                     <img src="assets/image/car2.png" width="32" style="vertical-align: middle"/>
                     <span class="ml-2 vertical-align-middle">{{ list.client }}</span>
                   </td>
-                  <td class="text-sm text-center">{{list.origin}}</td>
-                  <td class="text-center">→</td>
-                  <td class="text-sm text-center">{{list.destination}}</td>
-                  <td class="text-sm">
+                  <td class="text-sm text-center"
+                      pRipple (click)="goToForm(list.id)">{{list.origin}}</td>
+                  <td class="text-center"
+                      pRipple (click)="goToForm(list.id)">→</td>
+                  <td class="text-sm text-center"
+                      pRipple (click)="goToForm(list.id)">{{list.destination}}</td>
+                  <td class="text-sm text-center">
                     <p-tag [severity]="getSeverity(list.binding)" value="{{ list.binding }}"></p-tag>
                   </td>
                 </tr>
               </ng-template>
             </p-table>
-          </div>
           <!--          <p-dataView [value]="list">-->
           <!--            <ng-template let-list pTemplate="listItem">-->
           <!--              <div class="col-12">-->
