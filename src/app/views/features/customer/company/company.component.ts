@@ -1,21 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {CarService} from "../../../../services/car.service";
+import {ClientService} from "../../../../services/client.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
+import { ConfirmationService, MessageService } from "primeng/api";
 
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
-  styleUrls: ['./company.component.scss']
+  styleUrls: ['./company.component.scss'],
+  providers: [ConfirmationService, MessageService]
 })
 export class CompanyComponent implements OnInit {
-  companiesData = [
-    {
-      id: 1,
-      name: '公司 1',
-      address: '台北市中山區'
-    }
-  ]
+  id: any;
 
   warehousesData = [
     {
@@ -91,24 +88,26 @@ export class CompanyComponent implements OnInit {
     this.goodsDialogVisible = true;
   }
 
-  editCompany_form: FormGroup;
+  editClient_form: FormGroup;
   addGoods_form: FormGroup;
 
   constructor(
     private carServ: CarService,
+    private clientServ: ClientService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {
-    this.editCompany_form = this.fb.group({
+    this.editClient_form = this.fb.group({
       id: ['', Validators.required],
       name: ['', Validators.required],
-      manager: ['', Validators.required],
-      address: [''],
+      phone_number: ['', Validators.required],
       created_at: [''],
       created_by: [''],
       updated_at: [''],
-      updated_by: [''],
+      // updated_by: [''],
     });
 
     this.addGoods_form = this.fb.group({
@@ -127,7 +126,82 @@ export class CompanyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.editCompany_form.patchValue(this.companiesData[0])
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.getOneClientRequest(this.id);
+  }
+
+  getOneClientRequest(id: string) {
+    this.clientServ.getOneClientRequest(id).subscribe({
+      next: res => {
+        console.log('getOneClientData:', res.body);
+        this.editClient_form.patchValue(res.body)
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  updateClientRequest(id: string, body: any) {
+    this.confirmationService.confirm({
+      message: `確定要儲存 ${this.editClient_form.controls['name'].value} 的修改？`,
+      header: '確定修改？',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.clientServ.patchClientRequest(id, body).subscribe({
+          next: res => {
+            console.log('body', body);
+            console.log(res);
+            this.showSussess('修改');
+          },
+          error: (err) => {
+            console.log('body', body);
+            console.log('err',err);
+            this.showError('修改');
+          },
+        });
+      },
+      reject: () => {
+        this.showCancel('修改');
+      }
+    });
+  }
+
+  deleteClientRequest() {
+    console.log('open')
+    this.confirmationService.confirm({
+      message: `確定要刪除 ${this.editClient_form.controls['name'].value} 嗎？`,
+      header: '確定刪除？',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.clientServ.deleteClientRequest(this.id).subscribe({
+          next: res => {
+            console.log('deleteClient', res);
+            this.showSussess('刪除');
+            this.router.navigate(['/customer']);
+          },
+          error: (err) => {
+            console.log('err', err);
+            this.showError('刪除');
+          }
+        })
+      },
+      reject: () => {
+        this.showCancel('刪除');
+      }
+    });
+  }
+
+  showSussess(info = '修改') {
+    this.messageService.add({severity: 'success', summary: '完成', detail: `${info}成功！`});
+  }
+
+  showError(info = '修改') {
+    this.messageService.add({severity: 'error', summary: '錯誤', detail: `${info}失敗！`});
+  }
+
+  showCancel(info: string = '修改') {
+    this.messageService.add({severity: 'warn', summary: '取消', detail: `取消${info}！`});
   }
 
 }

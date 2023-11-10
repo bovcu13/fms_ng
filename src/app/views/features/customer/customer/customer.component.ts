@@ -26,7 +26,7 @@ export class CustomerComponent implements OnInit {
     this.addClient_form = this.fb.group({
       id: [''],
       name: ['', Validators.required],
-      phone: ['', Validators.required],
+      phone_number: ['', Validators.required],
       addr: [''],
     });
   }
@@ -82,7 +82,7 @@ export class CustomerComponent implements OnInit {
 
     let body = {
       name: this.addClient_form.controls['name'].value,
-      phone: this.addClient_form.controls['phone'].value
+      phone_number: this.addClient_form.controls['phone_number'].value
     }
     this.clientServ.postClientRequest(body).subscribe({
       next: data => {
