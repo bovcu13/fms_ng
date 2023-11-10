@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-8">
     <p-tabView>
@@ -6,9 +7,9 @@
           <p-tabView>
             <p-tabPanel header="所有公司">
               <div class="flex justify-content-end mb-3">
-                <p-button icon="pi pi-plus" (click)="openAddCompany()" severity="warning" [text]="true"></p-button>
+                <p-button icon="pi pi-plus" (click)="openAddClient()" severity="warning" [text]="true"></p-button>
               </div>
-              <p-dataView [value]="companiesData">
+              <p-dataView [value]="clientData">
                 <ng-template let-product pTemplate="listItem">
                   <div pRipple class="col-6 styled-box" (click)="goToCompany(product.id)">
                     <div class="flex flex-column align-items-center xl:flex-row xl:align-items-start p-3 gap-4">
@@ -19,12 +20,12 @@
                           <div class="font-bold xl:text-lg font-bold">{{ product.name }}</div>
                           <div class="flex align-items-center gap-3">
                                 <span class="flex align-items-center gap-2">
-                                <i class="pi pi-at text-xs"></i>
-                                <span class="font-medium text-xs">{{ product.name }}</span>
+                                <i class="pi pi-phone text-xs"></i>
+                                <span class="font-medium text-xs">{{ product.phone }}</span>
                                   </span>
                             <span class="flex align-items-center gap-2">
                                 <i class="pi pi-tag text-xs"></i>
-                                <span class="font-medium text-xs">{{ product.address }}</span>
+                                <span class="font-medium text-xs">{{ product.addr }}</span>
                                 </span>
                           </div>
                         </div>
@@ -42,7 +43,7 @@
           <p-tabView>
             <p-tabPanel header="所有聯絡人">
               <div class="flex justify-content-end mb-3">
-                <p-button icon="pi pi-plus" (click)="openAddCustomer()" severity="warning" [text]="true"></p-button>
+                <p-button icon="pi pi-plus" (click)="openAddPerson()" severity="warning" [text]="true"></p-button>
               </div>
               No results found ...
             </p-tabPanel>
@@ -53,33 +54,38 @@
   </div>
 </div>
 
-<p-dialog header="新增公司" [(visible)]="addCompanyVisible" [modal]="true" [style]="{ width: '40vw' }"
-          [draggable]="false" [resizable]="false">
-  <div class="grid">
-    <div class="field col-12 md:col-6 lg:col-6">
-      <label class="font-semibold">公司名稱</label>
-      <input pInputText/>
+<form [formGroup]="addClient_form">
+  <p-dialog header="新增公司" [(visible)]="addClientVisible" [modal]="true" [style]="{ width: '40vw' }"
+            [draggable]="false" [resizable]="false">
+    <div class="grid">
+      <div class="col-12">
+        <span *ngIf="markAsDirty" class="text-sm text-red-600">*請填寫必填欄位</span>
+      </div>
+      <div class="field col-12 md:col-6 lg:col-6">
+        <label class="font-semibold">公司名稱</label>
+        <input formControlName="name" pInputText/>
+      </div>
+      <!--    <div class="field col-12 md:col-6 lg:col-6">-->
+      <!--      <label class="font-semibold">公司類別</label>-->
+      <!--      <p-dropdown></p-dropdown>-->
+      <!--    </div>-->
+      <div class="field col-12 md:col-6 lg:col-6">
+        <label class="font-semibold">電話</label>
+        <input formControlName="phone" pInputText/>
+      </div>
+      <!--    <div class="field col-12 md:col-6 lg:col-6">-->
+      <!--      <label class="font-semibold">行業</label>-->
+      <!--      <input pInputText/>-->
+      <!--    </div>-->
     </div>
-    <div class="field col-12 md:col-6 lg:col-6">
-      <label class="font-semibold">公司類別</label>
-      <p-dropdown></p-dropdown>
+    <div class="flex justify-content-end">
+      <p-button label="新增" (click)="postClientRequest()" severity="warning" styleClass="mr-2"></p-button>
+      <p-button label="取消" (click)="closeAddClient()" severity="secondary" [outlined]="true"></p-button>
     </div>
-    <div class="field col-12 md:col-6 lg:col-6">
-      <label class="font-semibold">電話</label>
-      <input pInputText/>
-    </div>
-    <div class="field col-12 md:col-6 lg:col-6">
-      <label class="font-semibold">行業</label>
-      <input pInputText/>
-    </div>
-  </div>
-  <div class="flex justify-content-end">
-    <p-button label="新增" severity="warning" styleClass="mr-2"></p-button>
-    <p-button label="取消" (click)="addCustomerVisible=false" severity="secondary" [outlined]="true"></p-button>
-  </div>
-</p-dialog>
+  </p-dialog>
+</form>
 
-<p-dialog header="新增聯絡人" [(visible)]="addCustomerVisible" [modal]="true" [style]="{ width: '40vw' }"
+<p-dialog header="新增聯絡人" [(visible)]="addPersonVisible" [modal]="true" [style]="{ width: '40vw' }"
           [draggable]="false" [resizable]="false">
   <div class="grid">
     <div class="field col-12 md:col-6 lg:col-6">
@@ -109,7 +115,7 @@
   </div>
   <div class="flex justify-content-end">
     <p-button label="新增" severity="warning" styleClass="mr-2"></p-button>
-    <p-button label="取消" severity="secondary" [outlined]="true" (click)="addCompanyVisible=false"></p-button>
+    <p-button label="取消" severity="secondary" [outlined]="true" (click)="closeAddPerson()"></p-button>
   </div>
 </p-dialog>
 
