@@ -16,6 +16,12 @@ import listPlugin from "@fullcalendar/list";
   styleUrls: ['./dispatch.component.scss']
 })
 export class DispatchComponent implements OnInit {
+  selectedEvent: any[] = [];
+  handleCheckbox(event: any) {
+    console.log('selectedEvent:',this.selectedEvent)
+    console.log(event)
+  }
+
   list: any = list;
   formList: string[] = [];
 
