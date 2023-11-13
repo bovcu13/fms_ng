@@ -38,7 +38,7 @@
                       <td>
                         <p-tableCheckbox [value]="product"></p-tableCheckbox>
                       </td>
-                      <td (click)="goToDispatchView(product.id)">{{ product.start }}</td>
+                      <td class="text-sm" (click)="goToDispatchView(product.id)">{{ product.start }}</td>
                       <td (click)="goToDispatchView(product.id)">
                         <div class="flex align-items-center p-3 gap-4">
                           <div
@@ -55,11 +55,11 @@
                           </div>
                         </div>
                       </td>
-                      <td (click)="goToDispatchView(product.id)">
+                      <td class="text-sm" (click)="goToDispatchView(product.id)">
                         <img src="assets/image/car2.png" width="32" style="vertical-align: middle"/>
                         <span class="ml-2 vertical-align-middle">{{ product.driver }}</span>
                       </td>
-                      <td (click)="goToDispatchView(product.id)">
+                      <td class="text-sm" (click)="goToDispatchView(product.id)">
                         <img src="assets/image/sport-car.png" width="32" style="vertical-align: middle"/>
                         <span class="ml-2 vertical-align-middle">{{ product.vehicle }}</span>
                       </td>
