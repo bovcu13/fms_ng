@@ -69,6 +69,26 @@
                   </div>
                 </p-tabPanel>
                 <p-tabPanel header="保養定檢">
+                  <p-table>
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-product>
+                      <tr>
+                        <td>111</td>
+                        <td>222</td>
+                        <td>333</td>
+                        <td>444</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </p-tabPanel>
+                <p-tabPanel header="保險紀錄">
                   No results found ...
                 </p-tabPanel>
                 <p-tabPanel header="行車日誌">

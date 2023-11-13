@@ -71,6 +71,7 @@ export class TrailersMgmtComponent {
                 this.getAllTrailersRequest();
             },
             error: (err) => {
+              this.showError('新增');
                 console.log(err);
                 console.log(body);
             },
