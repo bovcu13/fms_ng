@@ -105,7 +105,7 @@ export class HistoryPathComponent implements OnInit {
 
   Select() {
     if (this.selectedProduct) {
-      console.log(this.selectedProduct)
+      console.log('selected:',this.selectedProduct)
       this.center = this.selectedProduct;
       this.map.setCenter(new google.maps.LatLng(this.center.lat, this.center.lng));
     }
@@ -148,7 +148,6 @@ export class HistoryPathComponent implements OnInit {
 
   // 暫停車輛
   pauseCarMovement(): void {
-    // clearInterval(this.carMovementInterval);
     clearInterval(this.markerMoveInter);
   }
 
@@ -160,7 +159,7 @@ export class HistoryPathComponent implements OnInit {
   markerMoveInter: any
 
   animateMarker(route: any[], marker: any) {
-    console.log(this.speedRate)
+    console.log('目前播放速度:',this.speedRate)
     const totalFrames = 50 / this.speedRate;
     const frameDuration = 1000 / this.speedRate / totalFrames;
     const step = 1 / totalFrames;
@@ -188,7 +187,7 @@ export class HistoryPathComponent implements OnInit {
           clearInterval(this.markerMoveInter);
         }
       }
-      console.log(this.state.index)
+      console.log('state.index:',this.state.index)
     };
 
     this.markerMoveInter = setInterval(animateMarker, frameDuration);
@@ -221,7 +220,6 @@ export class HistoryPathComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.itemInit()
 
     this.mapInit()
@@ -348,7 +346,7 @@ export class HistoryPathComponent implements OnInit {
   plate: any;
 
   selectCar(event: any) {
-    console.log(event)
+    console.log('選取車輛事件:',event)
     this.plate = event;
   }
 
@@ -367,7 +365,7 @@ export class HistoryPathComponent implements OnInit {
         }));
       },
       error: (err) => {
-        console.log(err);
+        console.log('getAllVehiclesRequestError:',err);
       },
     });
   }
@@ -419,6 +417,9 @@ export class HistoryPathComponent implements OnInit {
   snappedCoordinates: google.maps.LatLngLiteral[] = [];
 
   runSnapToRoad(path: any[]) {
+    this.snappedCoordinates = [];
+    this.snappedAngles = [];
+
     // 移除重複的路徑點
     const uniquePath = this.removeDuplicates(path);
 
@@ -535,7 +536,7 @@ export class HistoryPathComponent implements OnInit {
       this.snappedAngles.push({ heading: angle, url: url });
     }
 
-    console.log(this.snappedAngles);
+    console.log('snappedAngles:',this.snappedAngles);
   }
 
   snappedBorder: any
