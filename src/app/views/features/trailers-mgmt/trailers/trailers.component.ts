@@ -11,7 +11,6 @@ import { ConfirmationService, MessageService } from "primeng/api";
   providers: [ConfirmationService, MessageService]
 })
 export class TrailersComponent implements OnInit {
-  activeIndex = 3;
   id: any;
 
   editTrailers_form: FormGroup;
@@ -29,10 +28,10 @@ export class TrailersComponent implements OnInit {
       code: [''],
       name: [''],
       type: [''],
-      created_by: [''],
-      updated_by: [''],
-      created_at: [''],
-      updated_at: ['']
+      // created_by: [''],
+      // updated_by: [''],
+      // created_at: [''],
+      // updated_at: ['']
     });
   }
 
@@ -97,7 +96,7 @@ export class TrailersComponent implements OnInit {
           next: res => {
             console.log('deleteTrailers', res);
             this.showSussess('刪除');
-            this.router.navigate(['/fleet_mgmt',this.activeIndex]);
+            this.router.navigate(['/trailers']);
           },
           error: (err) => {
             console.log('err', err);
