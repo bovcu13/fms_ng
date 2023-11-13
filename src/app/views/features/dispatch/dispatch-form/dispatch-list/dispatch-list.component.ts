@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { list } from "../../../../../shared/data/dispatch";
-import { CarService } from "../../../../../services/car.service";
 import { FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
+import { DispatchService } from "../../../../../services/dispatch.service";
 
 @Component({
   selector: 'app-dispatch-list',
@@ -13,10 +13,28 @@ export class DispatchListComponent {
   list: any = list;
 
   constructor(
-    private carServ: CarService,
+    private dispatchServ: DispatchService,
     private fb: FormBuilder,
     private router: Router
   ) {
+  }
+
+  ngOnInit() {
+    this.getAllTransportOrder();
+  }
+
+  // 取得表單
+  formData: any;
+  getAllTransportOrder() {
+    this.dispatchServ.getAllTransportOrder().subscribe({
+      next: res => {
+        this.formData = res.body.transport_orders;
+        console.log('formData:', this.formData)
+      },
+      error: (err) => {
+        console.log('getAllTransportOrderError:', err);
+      },
+    });
   }
 
   goToForm(id: any) {

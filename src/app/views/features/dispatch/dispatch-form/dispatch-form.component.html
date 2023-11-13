@@ -1,17 +1,18 @@
+<p-toast></p-toast>
 <div class="mt-2">
   <div class="col-12">
     <p-button icon="pi pi-arrow-left" [routerLink]="['/dispatch_list']" severity="secondary" [text]="true"></p-button>
   </div>
   <div class="flex justify-content-center">
     <div class="col-8 h-full">
-      <form [formGroup]="dispatch_form">
-        <p-card>
-          <h1 class="text-center">{{title}}</h1>
+      <p-card>
+        <h1 class="text-center">{{title}}</h1>
+        <form [formGroup]="dispatch_form">
           <div class="grid">
             <div class="col-12">
               <div class="flex justify-content-between">
-                <div class="font-medium text-sm">{{dispatch_form.controls['created_at'].value}}</div>
-                <div class="font-medium text-sm">{{dispatch_form.controls['id'].value}}</div>
+                <div class="font-medium text-sm">{{ createDay | date:'yyyy-MM-dd'}}</div>
+                <div class="font-medium text-sm">{{dispatch_form.controls['code']?.value}}</div>
               </div>
               <p-divider></p-divider>
             </div>
@@ -21,16 +22,11 @@
                 <input formControlName="name" pInputText/>
               </div>
             </div>
-            <!--          <div class="col-12 md:col-6 lg:col-6">-->
-            <!--            <div class="field">-->
-            <!--              <label class="font-semibold">承運日期</label>-->
-            <!--              <p-calendar formControlName="date" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>-->
-            <!--            </div>-->
-            <!--          </div>-->
             <div class="col-12 md:col-6 lg:col-6">
               <div class="field">
                 <label class="font-semibold"><span class="text-red-600">*</span>託運人</label>
-                <p-dropdown formControlName="shipper"></p-dropdown>
+                <p-dropdown [options]="clientData" optionLabel="name" placeholder="選擇託運人"
+                            formControlName="client_id"></p-dropdown>
               </div>
             </div>
             <div class="col-12 md:col-6 lg:col-6">
@@ -51,16 +47,14 @@
                 <p-calendar formControlName="deadline" [showTime]="true" dateFormat="yy-mm-dd"></p-calendar>
               </div>
             </div>
+          </div>
+        </form>
+        <form [formGroup]="shipping_list_form">
+          <div class="grid">
             <div class="col-12">
               <p-divider></p-divider>
               <h3>託運品項</h3>
             </div>
-            <!--          <div class="col-12 md:col-6 lg:col-6">-->
-            <!--            <div class="field">-->
-            <!--              <label class="font-semibold"><span class="text-red-600">*</span>板台號碼</label>-->
-            <!--              <p-dropdown formControlName="pallet"></p-dropdown>-->
-            <!--            </div>-->
-            <!--          </div>-->
             <div class="col-12 md:col-6 lg:col-6">
               <div class="field">
                 <label class="font-semibold"><span class="text-red-600">*</span>品名</label>
@@ -77,7 +71,7 @@
             <div class="col-12 md:col-6 lg:col-6">
               <div class="field">
                 <label class="font-semibold"><span class="text-red-600">*</span>數量</label>
-                <p-inputNumber class="w-full" formControlName="qty" [min]="0"></p-inputNumber>
+                <p-inputNumber class="w-full" formControlName="quantity" [min]="0"></p-inputNumber>
               </div>
             </div>
             <div class="col-12 md:col-6 lg:col-6">
@@ -89,55 +83,47 @@
             <div class="col-12 md:col-6 lg:col-6">
               <div class="field">
                 <label class="font-semibold"><span class="text-red-600">*</span>板車</label>
-                <p-multiSelect placeholder="選擇板車"></p-multiSelect>
-              </div>
-            </div>
-
-            <div class="col-12">
-              <div class="field">
-                <div class="flex justify-content-end">
-                  <p-button (click)="add()" label="加入託運清單" [outlined]="true" severity="warning"></p-button>
-                </div>
-                <p-divider></p-divider>
-                <h3>託運清單</h3>
-                <p-table [value]="list">
-                  <ng-template pTemplate="header">
-                    <tr>
-                      <!--                    <th>託運人</th>-->
-                      <!--                    <th>板台號碼</th>-->
-                      <th>品名</th>
-                      <th>單價</th>
-                      <th>件數</th>
-                      <th>噸位</th>
-                      <th>板車</th>
-                      <!--                    <th>起運點</th>-->
-                      <!--                    <th>卸貨點</th>-->
-                    </tr>
-                  </ng-template>
-                  <ng-template pTemplate="body" let-list>
-                    <tr>
-                      <!--                    <td>{{ list.shipper }}</td>-->
-                      <!--                    <td>{{ list.pallet }}</td>-->
-                      <td>{{ list.product_name }}</td>
-                      <td>{{ list.unit_price }}</td>
-                      <td>{{ list.qty }}</td>
-                      <td>{{ list.tonnage }}</td>
-                      <td></td>
-                      <!--                    <td>{{ list.origin }}</td>-->
-                      <!--                    <td>{{ list.destination }}</td>-->
-                    </tr>
-                  </ng-template>
-                </p-table>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="flex justify-content-end">
-                <p-button label="儲存" severity="warning"></p-button>
+                <p-dropdown [options]="trailersData" optionLabel="code"
+                               formControlName="trailer_id" placeholder="選擇板車"></p-dropdown>
               </div>
             </div>
           </div>
-        </p-card>
-      </form>
+        </form>
+        <div class="col-12">
+          <div class="field">
+            <div class="flex justify-content-end align-items-center">
+              <p-button (click)="add()" label="加入託運清單" [outlined]="true" severity="warning"></p-button>
+            </div>
+            <p-divider></p-divider>
+            <h3>託運清單</h3>
+            <p-table [value]="itemList">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>品名</th>
+                  <th>單價</th>
+                  <th>件數</th>
+                  <th>噸位</th>
+                  <th>板車</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-list>
+                <tr>
+                  <td>{{ list.product_name }}</td>
+                  <td>{{ list.unit_price }}</td>
+                  <td>{{ list.quantity }}</td>
+                  <td>{{ list.tonnage }}</td>
+                  <td>{{list.trailer_id.code}}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="flex justify-content-end">
+            <p-button (click)="postTransportOrder()" label="儲存" severity="warning"></p-button>
+          </div>
+        </div>
+      </p-card>
     </div>
   </div>
 </div>
