@@ -19,7 +19,8 @@
               <p-dropdown [options]="carGroups" optionLabel="name" placeholder="選擇車隊"></p-dropdown>
             </div>
             <div class="col-12 md:col-6 lg:col-6">
-              <p-dropdown [options]="cars" (onChange)="selectCar($event.value.name)" optionLabel="name" placeholder="選擇車牌"></p-dropdown>
+              <p-dropdown [options]="cars" (onChange)="selectCar($event.value.name)" optionLabel="name"
+                          placeholder="選擇車牌"></p-dropdown>
             </div>
             <div class="col-12 md:col-6 lg:col-6">
               <p-calendar [showTime]="true" [ngModel]="startDate" (onSelect)="onStartDateChange($event)"
@@ -32,16 +33,18 @@
                           placeholder="選擇結束時間"></p-calendar>
             </div>
             <div class="col-12 flex justify-content-end">
-              <p-button label="查詢" icon="pi pi-search" size="small" severity="warning" (click)="searchPath()"></p-button>
+              <p-button label="查詢" icon="pi pi-search" size="small" severity="warning"
+                        (click)="searchPath()"></p-button>
             </div>
             <div class="col-12 flex justify-content-between">
               <div class="col-12 md:col-1 lg:col-1 mt-3">
-                <p-toggleButton [ngModel]="isPlaying" (onChange)="togglePlay()" onIcon="pi pi-caret-right"
-                                styleClass="bg-yellow-400 border-yellow-400" offIcon="pi pi-pause" [disabled]="playable"></p-toggleButton>
+                <p-toggleButton [ngModel]="isPlaying" (onChange)="togglePlay()" onIcon="pi pi-caret-right" offIcon="pi pi-pause"
+                                [disabled]="playable"></p-toggleButton>
               </div>
               <div class="col-12 md:col-10 lg:col-10 mt-5">
                 <div class="slider-container">
-                  <p-slider (onChange)="onSliderChange($event)" [max]="totalTime" [min]="0" [(ngModel)]="sliderValue" [disabled]="playable"></p-slider>
+                  <p-slider (onChange)="onSliderChange($event)" [max]="totalTime" [min]="0" [(ngModel)]="sliderValue"
+                            [disabled]="playable"></p-slider>
                   <div class="slider-label" [style.left.%]="(sliderValue / totalTime) * 100">
                     {{ formatTime(sliderValue) }}
                   </div>
@@ -56,10 +59,11 @@
             <div class="col-12 flex align-items-center">
               <label>倍速：</label>
               <p-button label="{{speedRate}}" (click)="changeSpeed()" size="small" severity="warning"
-                        styleClass="ml-3" [style]="{ width: '4em' }"></p-button>
+                        [disabled]="playable" styleClass="ml-3" [style]="{ width: '4em' }"></p-button>
             </div>
           </div>
-          <p-table [value]="transformedData"
+          <p-table styleClass="text-sm p-datatable-sm"
+                   [value]="transformedData"
                    [rows]="5"
                    selectionMode="single"
                    [(selection)]="selectedProduct"
@@ -100,7 +104,8 @@
                   <h2 class="text-center">台</h2>
                 </div>
                 <div class="col-12">
-                  <p-table [value]="products" [paginator]="true" [rows]="5" selectionMode="single"
+                  <p-table styleClass="p-datatable-sm"
+                           [value]="products" [paginator]="true" [rows]="5" selectionMode="single"
                            [(selection)]="selectedProduct"
                            (onRowSelect)="Select()">
                     <ng-template pTemplate="header">
@@ -124,17 +129,6 @@
               </div>
             </div>
           </p-accordion>
-        </p-tabPanel>
-        <p-tabPanel>
-          <ng-template pTemplate="header">
-            <span>功能A</span>
-          </ng-template>
-
-        </p-tabPanel>
-        <p-tabPanel>
-          <ng-template pTemplate="header">
-            <span>功能B</span>
-          </ng-template>
         </p-tabPanel>
       </p-tabView>
     </p-card>
