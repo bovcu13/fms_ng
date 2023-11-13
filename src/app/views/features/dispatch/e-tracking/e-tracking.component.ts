@@ -12,7 +12,6 @@ import { list } from "../../../../shared/data/dispatch";
 export class ETrackingComponent {
   list: any = list;
 
-
   constructor(
     private carServ: CarService,
     private fb: FormBuilder,
@@ -23,5 +22,29 @@ export class ETrackingComponent {
 
   goToForm(id: any) {
     this.router.navigate(['/e_tracking_view'])
+  }
+
+  selectedTrack: any[] = [];
+  handleCheckbox(event: any) {
+    console.log('selectedForm:',this.selectedTrack)
+    console.log(event)
+  }
+
+  getDispatch(level: string): string {
+    if (level === '未綁定') {
+      return 'info';
+    } else {
+      return '';
+    }
+  }
+
+  getStatus(status: string): string {
+    if (status === '送達') {
+      return 'success';
+    } else if (status === '運輸中') {
+      return '';
+    } else {
+      return 'danger'; //逾時
+    }
   }
 }

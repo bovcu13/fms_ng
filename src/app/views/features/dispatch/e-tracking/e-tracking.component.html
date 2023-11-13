@@ -16,42 +16,58 @@
           </div>
           <p-tabView>
             <p-tabPanel header="所有訂單">
-              <p-dataView [value]="list">
-                <ng-template let-list pTemplate="listItem">
-                  <div pRipple class="col-6 styled-box" (click)="goToForm(list.id)">
-                    <div class="flex flex-column xl:flex-row xl:align-items-start p-3 gap-4">
-                      <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                        <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                          <div class="text-lg font-bold">{{ list.name }}</div>
-                          <div class="flex align-items-center gap-3">
-                            <span class="flex align-items-center gap-2">
-                              <i class="pi pi-tag text-xs"></i>
-                              <span class="font-medium text-xs">{{ list.id }}</span>
-                            </span>
+              <p-table [value]="list"
+                       [(selection)]="selectedTrack"
+                       (selectionChange)="handleCheckbox($event)"
+                       [paginator]="true"
+                       [rows]="5"
+                       [showCurrentPageReport]="true"
+                       [rowsPerPageOptions]="[5, 10, 20]"
+                       dataKey="id"
+                       styleClass="p-datatable-sm">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th style="width: 1rem">
+                      <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th class="pl-4">訂單資訊</th>
+                    <th></th>
+                    <th class="text-center">起卸點</th>
+                    <th></th>
+                    <th class="text-center">派工調度</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-list>
+                  <tr class="styled-box">
+                    <td>
+                      <p-tableCheckbox [value]="list"></p-tableCheckbox>
+                    </td>
+                    <td (click)="goToForm(list.id)">
+                      <div class="flex align-items-center p-3 gap-4">
+                        <div
+                          class="flex sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                          <div class="flex flex-column align-items-center xl:align-items-start gap-3">
+                            <div class="font-bold">{{ list.name }}</div>
+                            <div class="flex align-items-center gap-3">
+                              <span class="flex align-items-center gap-2">
+                                <i class="pi pi-tag text-xs"></i>
+                                <span class="font-medium text-xs">{{ list.id }}</span>
+                                </span>
+                              <p-tag styleClass="text-xs" [severity]="getStatus('運輸中')" value="運輸中"></p-tag>
+                            </div>
                           </div>
-                          <div class="flex align-items-center gap-3">
-                            <span class="flex align-items-center gap-2">
-                              <i class="pi pi-info-circle text-xs"></i>
-                              <span class="font-medium text-xs">{{ list.trips ? list.trips[list.now-1].origin : null }}</span>
-                              <i class="pi pi-arrow-right text-xs"></i>
-                              <span class="font-medium text-xs">{{ list.trips ? list.trips[list.now-1].destination : null }}</span>
-                            </span>
-                          </div>
-                          <div class="flex align-items-center gap-3">
-                          <span class="flex align-items-center gap-2">
-                              <i class="pi pi-map-marker text-xs"></i>
-                              <span class="font-medium text-xs">{{ list.addr }}</span>
-                            </span>
-                          </div>
-                        </div>
-                        <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
-                          <p-tag [severity]="list.status === '運送中' ? 'warning' : 'info'">{{ list.status }}</p-tag>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                    </td>
+                    <td class="text-sm text-center" (click)="goToForm(list.id)">{{list.origin}}</td>
+                    <td class="text-center" (click)="goToForm(list.id)">→</td>
+                    <td class="text-sm text-center" (click)="goToForm(list.id)">{{list.destination}}</td>
+                    <td class="text-sm text-center">
+                      <p-tag [severity]="getDispatch(list.binding)" value="{{ list.binding }}"></p-tag>
+                    </td>
+                  </tr>
                 </ng-template>
-              </p-dataView>
+              </p-table>
             </p-tabPanel>
           </p-tabView>
         </p-card>
