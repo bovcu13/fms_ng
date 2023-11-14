@@ -35,23 +35,23 @@ export class DrawComponent implements OnInit {
         position: google.maps.ControlPosition.TOP_CENTER,
         drawingModes: [
           // google.maps.drawing.OverlayType.MARKER,
-          google.maps.drawing.OverlayType.CIRCLE,
+          // google.maps.drawing.OverlayType.CIRCLE,
           google.maps.drawing.OverlayType.POLYGON,
-          google.maps.drawing.OverlayType.POLYLINE,
-          google.maps.drawing.OverlayType.RECTANGLE,
+          // google.maps.drawing.OverlayType.POLYLINE,
+          // google.maps.drawing.OverlayType.RECTANGLE,
         ],
       },
       // markerOptions: {
       //   icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
       // },
-      circleOptions: {
-        fillColor: "#E9CD4C",
-        fillOpacity: 0.6,
-        strokeWeight: 1,
-        clickable: false,
-        editable: true,
-        zIndex: 1,
-      },
+      // circleOptions: {
+      //   fillColor: "#E9CD4C",
+      //   fillOpacity: 0.6,
+      //   strokeWeight: 1,
+      //   clickable: false,
+      //   editable: true,
+      //   zIndex: 1,
+      // },
     });
 
     drawingManager.setMap(this.map);
@@ -73,41 +73,6 @@ export class DrawComponent implements OnInit {
     });
   }
 
-    // const map = new google.maps.Map(
-    //   document.getElementById("map") as HTMLElement,
-    //   {
-    //     center: { lat: -34.397, lng: 150.644 },
-    //     zoom: 8,
-    //   }
-    // );
-    //
-    // const drawingManager = new google.maps.drawing.DrawingManager({
-    //   drawingMode: google.maps.drawing.OverlayType.MARKER,
-    //   drawingControl: true,
-    //   drawingControlOptions: {
-    //     position: google.maps.ControlPosition.TOP_CENTER,
-    //     drawingModes: [
-    //       google.maps.drawing.OverlayType.MARKER,
-    //       google.maps.drawing.OverlayType.CIRCLE,
-    //       google.maps.drawing.OverlayType.POLYGON,
-    //       google.maps.drawing.OverlayType.POLYLINE,
-    //       google.maps.drawing.OverlayType.RECTANGLE,
-    //     ],
-    //   },
-    //   markerOptions: {
-    //     icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-    //   },
-    //   circleOptions: {
-    //     fillColor: "#E9CD4C",
-    //     fillOpacity: 0.6,
-    //     strokeWeight: 1,
-    //     clickable: false,
-    //     editable: true,
-    //     zIndex: 1,
-    //   },
-    // });
-    //
-    // drawingManager.setMap(map);
 
   ngOnInit(): void {
     this.initMap()

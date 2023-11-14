@@ -1,21 +1,108 @@
 <div class="overflow-y-hidden overflow-x-hidden">
-  <div class="grid">
+  <div class="grid nested-grid">
     <div class="col-12 md:col-12 lg:col-8">
-      <div id="map" style="height: 100vh; width: 100%;position: relative"></div>
-      <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button" size="small" severity="info"
-                [raised]="true" [text]="true" styleClass="bg-white"></p-button>
-      <div class="func">
-        <p-speedDial showIcon="pi pi-map" buttonClassName="p-button-secondary"
-                     direction="right" [model]="items">
-        </p-speedDial>
+      <div class="col-12" style="position: relative;">
+        <div id="map" style="height: 50vh; width: 100%;position: relative"></div>
+        <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button" size="small" severity="info"
+                  [raised]="true" [text]="true" styleClass="bg-white"></p-button>
+        <div class="func">
+          <p-speedDial showIcon="pi pi-map" buttonClassName="p-button-secondary"
+                       direction="right" [model]="items">
+          </p-speedDial>
+        </div>
+        <div class="rang">
+          <p-toggleButton (onChange)="toggleIsRanging()" onIcon="fas fa-ruler-horizontal"
+                          offIcon="fas fa-ruler-horizontal"
+                          [style]="{ width: '3em',height:'2.5rem' }"></p-toggleButton>
+        </div>
+        <div *ngIf="recordDistances.length >= 2" class="kmh">{{distanceText}}</div>
+        <div *ngIf="selectedProduct" class="addr">{{selectedProduct.addr}}</div>
       </div>
-      <div class="rang">
-        <p-toggleButton (onChange)="toggleIsRanging()" onIcon="fas fa-ruler-horizontal"
-                        offIcon="fas fa-ruler-horizontal"
-                        [style]="{ width: '3em',height:'2.5rem' }"></p-toggleButton>
+      <div class="col-12">
+        <p-card>
+          <div class="flex align-items-center gap-3">
+           <span class="flex align-items-center gap-2 text-xs">
+           <i class="pi pi-truck"></i>
+           <span class="font-semibold">車輛數：{{transformedData.length}}</span>
+           </span>
+           <span class="flex align-items-center gap-2 text-xs">
+           <p-image src="assets/car/normal_e.png" width="30"></p-image>
+           <span class="font-semibold">行駛：{{ statusCount['行駛'] || 0 }}</span>
+           </span>
+           <span class="flex align-items-center gap-2 text-xs">
+           <p-image src="assets/car/speeding_e.png" width="30"></p-image>
+           <span class="font-semibold">超速：{{ statusCount['超速'] || 0 }}</span>
+           </span>
+           <span class="flex align-items-center gap-2 text-xs">
+           <p-image src="assets/car/stall_e.png" width="30"></p-image>
+           <span class="font-semibold">怠停：{{ statusCount['怠停'] || 0 }}</span>
+           </span>
+           <span class="flex align-items-center gap-2 text-xs">
+           <p-image src="assets/car/stop_e.png" width="30"></p-image>
+           <span class="font-semibold">久停：{{ statusCount['久停'] || 0 }}</span>
+           </span>
+           <span class="flex align-items-center gap-2 text-xs">
+           <p-image src="assets/car/missing_e.png" width="30"></p-image>
+           <span class="font-semibold">失聯：{{ statusCount['失聯'] || 0 }}</span>
+           </span>
+           <span class="flex align-items-center gap-2 text-xs">
+           <p-image src="assets/car/off_e.png" width="30"></p-image>
+           <span class="font-semibold">熄火：{{ statusCount['熄火'] || 0 }}</span>
+           </span>
+          </div>
+        </p-card>
       </div>
-      <div *ngIf="recordDistances.length >= 2" class="kmh">{{distanceText}}</div>
-      <div *ngIf="selectedProduct" class="addr">{{selectedProduct.addr}}</div>
+      <div class="col-12">
+        <p-card>
+          <p-table [columns]="selectedColumns"
+                   [value]="transformedData"
+                   selectionMode="single"
+                   [(selection)]="selectedProduct"
+                   [scrollable]="true"
+                   scrollHeight="30vh"
+                   (onRowSelect)="Select()"
+                   styleClass="text-sm p-datatable-sm p-datatable-striped">
+            <ng-template pTemplate="caption">
+              <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns"
+                             (onClear)="clearMultiSelect()" [showClear]="true" [maxSelectedLabels]="4"
+                             optionLabel="header" selectedItemsLabel="已選擇 {0} 個欄位"
+                             placeholder="點擊選擇要顯示的欄位" styleClass="text-sm"></p-multiSelect>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th style="width: 4rem">狀態</th>
+                <th>車牌</th>
+                <th>司機</th>
+                <th *ngFor="let col of columns">
+                  {{col.header}}
+                </th>
+                <th></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product let-columns="columns">
+              <tr [pSelectableRow]="product">
+                <td pTooltip="{{product.status}}">
+                  <p-image src=" {{product.url}} " width="30"></p-image>
+                </td>
+                <td>{{product.license_plate}}</td>
+                <td>{{product.driver}}</td>
+                <td *ngFor="let col of columns">
+                  <ng-container *ngIf="col.field !== 'date_time'; else dateTemplate">
+                    {{product[col.field]}}
+                  </ng-container>
+                  <ng-template #dateTemplate>
+                    {{product[col.field] | date:'yyyy-MM-dd HH:mm:ss'}}
+                  </ng-template>
+                </td>
+                <td>
+                  <p-button routerLink="/dispatch" severity="info" [text]="true" icon="pi pi-eye"
+                            pTooltip="查看運輸派工" tooltipPosition="left"></p-button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </div>
     </div>
     <div class="col-12 md:col-12 lg:col-4">
       <p-card styleClass="h-screen">
@@ -26,53 +113,10 @@
             </ng-template>
             <div class="grid">
               <div class="col-12 md:col-6 lg:col-6">
-                <p-dropdown [options]="carGroups" optionLabel="name" placeholder="選擇車隊"></p-dropdown>
-              </div>
-              <div class="col-12 md:col-6 lg:col-6">
                 <p-dropdown [options]="cars" [ngModel]="cars" optionLabel="name" placeholder="選擇車牌"></p-dropdown>
               </div>
             </div>
-            <p-table [columns]="selectedColumns"
-                     [value]="transformedData"
-                     selectionMode="single"
-                     [(selection)]="selectedProduct"
-                     [scrollable]="true"
-                     (onRowSelect)="Select()"
-                     styleClass="p-datatable-sm p-datatable-striped">
-              <ng-template pTemplate="caption">
-                <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns"
-                               (onClear)="clearMultiSelect()" [showClear]="true" [maxSelectedLabels]="4"
-                               optionLabel="header" selectedItemsLabel="已選擇 {0} 個欄位"
-                               placeholder="點擊選擇要顯示的欄位"></p-multiSelect>
-              </ng-template>
-              <ng-template pTemplate="header" let-columns>
-                <tr>
-                  <th>狀態</th>
-                  <th>車輛名稱</th>
-                  <th>車牌</th>
-                  <th>司機</th>
-                  <th *ngFor="let col of columns">
-                    {{col.header}}
-                  </th>
-                  <th></th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-product let-columns="columns">
-                <tr [pSelectableRow]="product">
-                  <td>{{product.status}}</td>
-                  <td>{{product.vehicle_name}}</td>
-                  <td>{{product.license_plate}}</td>
-                  <td>{{product.driver}}</td>
-                  <td *ngFor="let col of columns">
-                    {{product[col.field]}}
-                  </td>
-                  <td>
-                    <p-button routerLink="/dispatch" severity="info" [text]="true" icon="pi pi-eye"
-                              pTooltip="查看運輸派工" tooltipPosition="left"></p-button>
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
+
           </p-tabPanel>
           <p-tabPanel [disabled]="true">
             <ng-template pTemplate="header">

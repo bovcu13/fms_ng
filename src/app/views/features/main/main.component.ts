@@ -11,19 +11,16 @@ interface Column {
   header: string;
 }
 
+interface StatusCount {
+  [status: string]: number;
+}
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  // 車隊
-  carGroups: any = [
-    { name: '車隊(A)', code: 'A' },
-    { name: '車隊(B)', code: 'B' },
-    { name: '車隊(C)', code: 'C' },
-    { name: '車隊(D)', code: 'D' },
-  ]
   // 溫度異常台數
   oddTem: number = 1;
 
@@ -64,43 +61,40 @@ export class MainComponent implements OnInit {
   @Input() get selectedColumns(): any[] {
     return this._selectedColumns;
   }
+
   set selectedColumns(val: any[]) {
     //restore original order
     this._selectedColumns = this.cols.filter((col) => val.includes(col));
   }
+
   clearMultiSelect() {
     // onClear事件
     this._selectedColumns = [];
   }
+
   colsInit() {
     this.cols = [
-      // { field: 'state', header: '狀態' },
-      // { field: 'license_plate', header: '車牌' },
-      { field: 'speed', header: '時速' },
-      // { field: 'vehicle_name', header: '車輛名稱' },
-      // { field: 'driver', header: '姓名' },
-      { field: 'addr', header: '地址/地標' },
+      { field: 'phone', header: '電話' },
+      { field: 'date_time', header: '回傳時間' },
+      { field: 'speed', header: '速度' },
+      { field: 'direction', header: '方向' },
+      { field: 'addr', header: '位置' },
+      { field: 'vehicle_name', header: '車輛名稱' },
       { field: 'statusAccumulated', header: '狀態累積' },
       { field: 'departureTime', header: '出車時間' },
       { field: 'drivingTime', header: '開車時間' },
       { field: 'temp', header: '溫度' },
-      { field: 'direction', header: '方向' },
-      { field: 'return', header: '回傳時間' },
-      { field: 'phone', header: '行動電話' },
       { field: 'progress', header: '裝卸進度' },
     ];
 
     this._selectedColumns = [
-      // { field: 'state', header: '狀態' },
-      // { field: 'vehicle_name', header: '車輛名稱' },
-      // { field: 'license_plate', header: '車牌' },
-      // { field: 'driver', header: '姓名' },
       { field: 'progress', header: '裝卸進度' },
     ]
   }
 
   // 功能列
   items!: MenuItem[];
+
   itemInit() {
     this.items = [
       {
@@ -152,6 +146,9 @@ export class MainComponent implements OnInit {
   landmarkButt = false;
   markDialog: boolean = false;
 
+  // draw
+  drawingManager: any;
+
   showMarkDialog() {
     this.markDialog = true;
   }
@@ -165,16 +162,30 @@ export class MainComponent implements OnInit {
   mapInit() {
     // 定義地圖相關設定
     this.mapOptions = {
-      zoom: 8,
+      zoom: 7,
       center: this.center,
       restriction: {
         latLngBounds: this.TAIWAN_BOUNDS,
         strictBounds: false,
       },
+      fullscreenControl: false,
+      streetViewControl: false,
+      scaleControl: true,
     };
 
     // 創建地圖實例
     this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
+
+    // draw
+    this.drawingManager = new google.maps.drawing.DrawingManager({
+      drawingControl: true,
+      drawingControlOptions: {
+        position: google.maps.ControlPosition.TOP_CENTER,
+        drawingModes: [
+          google.maps.drawing.OverlayType.POLYGON,
+        ],
+      },
+    });
 
     // 點右鍵生成標記以新增地標
     this.map.addListener("contextmenu", (e: any) => {
@@ -246,6 +257,7 @@ export class MainComponent implements OnInit {
   products: any[] = [];
   selectedProduct: any;
   circle: any
+
   Select() {
     if (this.selectedProduct) {
       if (!this.circle) {
@@ -309,6 +321,7 @@ export class MainComponent implements OnInit {
     this.isRanging = !this.isRanging;
     // 啟用模式才可畫線
     if (this.isRanging) {
+      this.drawingManager.setMap(this.map);
       // 設置線條紀錄距離
       this.poly = new google.maps.Polyline({
         strokeColor: "#000000",
@@ -320,7 +333,8 @@ export class MainComponent implements OnInit {
     } else {
       // 如果按鈕被關閉，則移除點擊事件監聽器
       google.maps.event.clearListeners(this.map, "click");
-      this.poly.setMap(null)
+      this.drawingManager.setMap(null);
+      this.poly.setMap(null);
       // 迭代並移除所有標記
       for (const marker of this.recordDistances) {
         marker.setMap(null);
@@ -453,6 +467,8 @@ export class MainComponent implements OnInit {
 
   infowindow = new google.maps.InfoWindow();
   cars: any;
+  carStatus: any;
+
   afterGet() {
     this.transformedData = this.products.map(item => ({
       ...item,
@@ -465,9 +481,29 @@ export class MainComponent implements OnInit {
       name: item.license_plate,
       code: item.license_plate
     }));
+    this.carStatus = this.products.map(item => ({
+      status: item.status,
+    }));
+    this.calculationCarStatus(this.carStatus);
     // 轉換成中文地址
     this.geocodePositions();
     console.log("轉換後資料:", this.transformedData)
+  }
+
+  statusCount: StatusCount = {};
+  calculationCarStatus(carStatus: any[]) {
+    // 使用 reduce() 方法來統計每個狀態的類別數
+    this.statusCount = carStatus.reduce((acc, curr) => {
+      const status = curr.status;
+
+      // 如果已經存在該狀態，則將計數加一，否則新增一個新的狀態並將計數設為一
+      acc[status] = (acc[status] || 0) + 1;
+
+      return acc;
+    }, {} as StatusCount);
+
+    // statusCount 現在包含了每個狀態的類別數
+    console.log("計算後的車輛狀態:", this.statusCount);
   }
 
   createMarkers() {
