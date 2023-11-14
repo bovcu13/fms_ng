@@ -116,7 +116,7 @@ export class MainComponent implements OnInit {
         command: () => {
           const centerLatLng = new google.maps.LatLng(23.83876, 120.9876);
           this.map.setCenter(centerLatLng);
-          this.map.setZoom(8);
+          this.map.setZoom(7);
         }
       }
     ];
