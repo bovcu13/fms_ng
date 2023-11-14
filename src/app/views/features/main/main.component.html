@@ -2,24 +2,55 @@
   <div class="grid nested-grid">
     <div class="col-12 md:col-12 lg:col-8">
       <div class="col-12" style="position: relative;">
-      <div id="map" style="height: 50vh; width: 100%;position: relative"></div>
-      <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button" size="small" severity="info"
-                [raised]="true" [text]="true" styleClass="bg-white"></p-button>
-      <div class="func">
-        <p-speedDial showIcon="pi pi-map" buttonClassName="p-button-secondary"
-                     direction="right" [model]="items">
-        </p-speedDial>
-      </div>
-      <div class="rang">
-        <p-toggleButton (onChange)="toggleIsRanging()" onIcon="fas fa-ruler-horizontal"
-                        offIcon="fas fa-ruler-horizontal"
-                        [style]="{ width: '3em',height:'2.5rem' }"></p-toggleButton>
-      </div>
-      <div *ngIf="recordDistances.length >= 2" class="kmh">{{distanceText}}</div>
-      <div *ngIf="selectedProduct" class="addr">{{selectedProduct.addr}}</div>
+        <div id="map" style="height: 50vh; width: 100%;position: relative"></div>
+        <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button" size="small" severity="info"
+                  [raised]="true" [text]="true" styleClass="bg-white"></p-button>
+        <div class="func">
+          <p-speedDial showIcon="pi pi-map" buttonClassName="p-button-secondary"
+                       direction="right" [model]="items">
+          </p-speedDial>
+        </div>
+        <div class="rang">
+          <p-toggleButton (onChange)="toggleIsRanging()" onIcon="fas fa-ruler-horizontal"
+                          offIcon="fas fa-ruler-horizontal"
+                          [style]="{ width: '3em',height:'2.5rem' }"></p-toggleButton>
+        </div>
+        <div *ngIf="recordDistances.length >= 2" class="kmh">{{distanceText}}</div>
+        <div *ngIf="selectedProduct" class="addr">{{selectedProduct.addr}}</div>
       </div>
       <div class="col-12">
-        <p-card></p-card>
+        <p-card>
+          <div class="flex align-items-center gap-3">
+           <span class="flex align-items-center gap-2 text-xs">
+           <i class="pi pi-truck"></i>
+           <span class="font-semibold">車輛數：{{transformedData.length}}</span>
+           </span>
+           <span class="flex align-items-center gap-2 text-xs">
+           <p-image src="assets/car/normal_e.png" width="30"></p-image>
+           <span class="font-semibold">行駛：{{ statusCount['行駛'] || 0 }}</span>
+           </span>
+           <span class="flex align-items-center gap-2 text-xs">
+           <p-image src="assets/car/speeding_e.png" width="30"></p-image>
+           <span class="font-semibold">超速：{{ statusCount['超速'] || 0 }}</span>
+           </span>
+           <span class="flex align-items-center gap-2 text-xs">
+           <p-image src="assets/car/stall_e.png" width="30"></p-image>
+           <span class="font-semibold">怠停：{{ statusCount['怠停'] || 0 }}</span>
+           </span>
+           <span class="flex align-items-center gap-2 text-xs">
+           <p-image src="assets/car/stop_e.png" width="30"></p-image>
+           <span class="font-semibold">久停：{{ statusCount['久停'] || 0 }}</span>
+           </span>
+           <span class="flex align-items-center gap-2 text-xs">
+           <p-image src="assets/car/missing_e.png" width="30"></p-image>
+           <span class="font-semibold">失聯：{{ statusCount['失聯'] || 0 }}</span>
+           </span>
+           <span class="flex align-items-center gap-2 text-xs">
+           <p-image src="assets/car/off_e.png" width="30"></p-image>
+           <span class="font-semibold">熄火：{{ statusCount['熄火'] || 0 }}</span>
+           </span>
+          </div>
+        </p-card>
       </div>
       <div class="col-12">
         <p-card>
@@ -50,7 +81,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-product let-columns="columns">
               <tr [pSelectableRow]="product">
-                <td  pTooltip="{{product.status}}">
+                <td pTooltip="{{product.status}}">
                   <p-image src=" {{product.url}} " width="30"></p-image>
                 </td>
                 <td>{{product.license_plate}}</td>

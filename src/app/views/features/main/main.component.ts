@@ -11,6 +11,10 @@ interface Column {
   header: string;
 }
 
+interface StatusCount {
+  [status: string]: number;
+}
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -463,7 +467,7 @@ export class MainComponent implements OnInit {
 
   infowindow = new google.maps.InfoWindow();
   cars: any;
-  carStatus: any[] = [];
+  carStatus: any;
 
   afterGet() {
     this.transformedData = this.products.map(item => ({
@@ -484,23 +488,22 @@ export class MainComponent implements OnInit {
     // 轉換成中文地址
     this.geocodePositions();
     console.log("轉換後資料:", this.transformedData)
-    console.log("車輛狀態:", this.carStatus)
   }
 
+  statusCount: StatusCount = {};
   calculationCarStatus(carStatus: any[]) {
-
     // 使用 reduce() 方法來統計每個狀態的類別數
-    const statusCount = carStatus.reduce((acc, curr) => {
+    this.statusCount = carStatus.reduce((acc, curr) => {
       const status = curr.status;
 
       // 如果已經存在該狀態，則將計數加一，否則新增一個新的狀態並將計數設為一
       acc[status] = (acc[status] || 0) + 1;
 
       return acc;
-    }, {});
+    }, {} as StatusCount);
 
     // statusCount 現在包含了每個狀態的類別數
-    console.log(statusCount);
+    console.log("計算後的車輛狀態:", this.statusCount);
   }
 
   createMarkers() {
