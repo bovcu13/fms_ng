@@ -346,9 +346,12 @@ export class SidebarComponent implements OnInit {
               {
                 label: '自建地標',
                 icon: 'pi pi-fw pi-box',
+                routerLink: '/landmark',
                 command: () => {
-                  alert("功能未開放");
                   this.sideVisible = false
+                },
+                style: {
+                  background: 'rgba(84, 200, 240, 0.1)'
                 },
               },
               {

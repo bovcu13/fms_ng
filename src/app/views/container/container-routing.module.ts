@@ -51,6 +51,7 @@ import { TrailersComponent } from "../features/trailers-mgmt/trailers/trailers.c
 import { TrailersMgmtComponent } from "../features/trailers-mgmt/trailers-mgmt.component";
 import { InsuranceComponent } from "../features/insurance/insurance.component";
 import { EsgDashboardComponent } from "../features/ESG/esg-dashboard/esg-dashboard.component";
+import { LandmarkComponent } from "../features/basic-settings/landmark/landmark.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -101,6 +102,7 @@ const routes: Routes = [
       // basic-settings
       { path: 'basic_data', component: BasicDataComponent, canActivate: [AuthGuard] },
       { path: 'odd_set', component: OddSetComponent, canActivate: [AuthGuard] },
+      { path: 'landmark', component: LandmarkComponent, canActivate: [AuthGuard] },
       // fleet-mgmt
       { path: 'fleet_mgmt', component: FleetMgmtComponent, canActivate: [AuthGuard] },
       { path: 'fleet_mgmt/:id', component: FleetMgmtComponent, canActivate: [AuthGuard] }, // 點進編輯頁面返回時在同一個tab
