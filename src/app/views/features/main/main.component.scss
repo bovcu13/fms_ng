@@ -113,52 +113,6 @@
   display: none; /* 隱藏按鈕，待右鍵點擊時再顯示 */
 }
 
-// 測量距離的按鈕
-.rang {
-  position: absolute;
-  top: 2.5rem;
-  left: 12rem;
-  padding: 10px;
-  color: #FFFFFF;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-}
-
-.kmh {
-  position: absolute;
-  top: 3.5rem;
-  height: 2rem;
-  left: 59rem;
-  background-color: rgba(300, 300, 300, 0.7);
-  border: 1px solid #ced4da;
-  padding: 10px;
-  color: #000000;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 2px;
-}
-
-.addr {
-  position: absolute;
-  top: 3.5rem;
-  height: 2rem;
-  left: 18rem;
-  background-color: rgba(300, 300, 300, 1);
-  border: 1px solid #ced4da;
-  padding: 10px;
-  color: #000000;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 2px;
-}
-
 .circle {
   width: 2rem;
   height: 2rem;
@@ -172,10 +126,59 @@
   color: #000000;
 }
 
+// 底下功能按鈕
 .func {
   position: absolute;
-  bottom: 4rem;
-  left: 1rem;
+  top: 82%;
+  left: 2%;
+}
+
+// 測量距離的按鈕
+.rang {
+  position: absolute;
+  top: 1.6%;
+  left: 25%;
+  padding: 10px;
+  color: #FFFFFF;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+// 顯示地址的區域
+.addr {
+  position: absolute;
+  top: 4.5%;
+  left: 35%;
+  height: 2rem;
+  background-color: rgba(300, 300, 300, 1);
+  border: 1px solid #ced4da;
+  padding: 10px;
+  color: #000000;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+}
+
+// 顯示測量的距離
+.kmh {
+  position: absolute;
+  top: 4.5%;
+  right: 10%;
+  height: 2rem;
+  background-color: rgba(300, 300, 300, 0.7);
+  border: 1px solid #ced4da;
+  padding: 10px;
+  color: #000000;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
 }
 
 .slider-container {
