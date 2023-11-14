@@ -1,6 +1,6 @@
 <div class="overflow-y-hidden overflow-x-hidden">
   <div class="grid nested-grid">
-    <div class="col-12 md:col-12 lg:col-8">
+    <div class="col-12 md:col-7 lg:col-7">
       <div class="col-12" style="position: relative;">
         <div id="map" style="height: 50vh; width: 100%;position: relative"></div>
         <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button" size="small" severity="info"
@@ -11,9 +11,11 @@
           </p-speedDial>
         </div>
         <div class="rang">
-          <p-toggleButton (onChange)="toggleIsRanging()" onIcon="fas fa-ruler-horizontal"
+          <p-toggleButton (onChange)="toggleIsRanging()"
+                          onIcon="fas fa-ruler-horizontal"
                           offIcon="fas fa-ruler-horizontal"
-                          [style]="{ width: '3em',height:'2.5rem' }"></p-toggleButton>
+                          [style]="{ width: '2rem', height: '2rem' }">
+          </p-toggleButton>
         </div>
         <div *ngIf="recordDistances.length >= 2" class="kmh">{{distanceText}}</div>
         <div *ngIf="selectedProduct" class="addr">{{selectedProduct.addr}}</div>
@@ -104,23 +106,28 @@
         </p-card>
       </div>
     </div>
-    <div class="col-12 md:col-12 lg:col-4">
+    <div class="col-12 md:col-5 lg:col-5">
       <p-card styleClass="h-screen">
         <p-tabView>
+<!--          <p-tabPanel>-->
+<!--            <ng-template pTemplate="header">-->
+<!--              <span>車隊查詢</span>-->
+<!--            </ng-template>-->
+<!--            <div class="grid">-->
+<!--              <div class="col-12 md:col-6 lg:col-6">-->
+<!--                <p-dropdown [options]="cars" [ngModel]="cars" optionLabel="name" placeholder="選擇車牌"></p-dropdown>-->
+<!--              </div>-->
+<!--            </div>-->
+
+<!--          </p-tabPanel>-->
           <p-tabPanel>
             <ng-template pTemplate="header">
-              <span>車隊查詢</span>
+              <span>派工與調度</span>
             </ng-template>
-            <div class="grid">
-              <div class="col-12 md:col-6 lg:col-6">
-                <p-dropdown [options]="cars" [ngModel]="cars" optionLabel="name" placeholder="選擇車牌"></p-dropdown>
-              </div>
-            </div>
-
           </p-tabPanel>
-          <p-tabPanel [disabled]="true">
+          <p-tabPanel>
             <ng-template pTemplate="header">
-              <span>運輸派工</span>
+              <span>司機回報</span>
             </ng-template>
           </p-tabPanel>
           <p-tabPanel>
@@ -128,39 +135,6 @@
               <span>異常通報</span>
               <p-tag *ngIf="oddTem > 0" severity="danger" value="{{oddTem}}"></p-tag>
             </ng-template>
-            <p-accordion [activeIndex]="0">
-              <div class="flex justify-content-center">
-                <div class="grid">
-                  <div class="col-12 flex justify-content-between">
-                    <h2 class="text-center">溫度異常</h2>
-                    <h2 class="text-center">{{oddTem}}</h2><br>
-                    <h2 class="text-center">台</h2>
-                  </div>
-                  <div class="col-12">
-                    <p-table [value]="products" [paginator]="true" [rows]="5" selectionMode="single"
-                             [(selection)]="selectedProduct"
-                             (onRowSelect)="Select()">
-                      <ng-template pTemplate="header">
-                        <tr>
-                          <th>狀態累積</th>
-                          <th>狀態</th>
-                          <th>速度</th>
-                          <th>地址</th>
-                        </tr>
-                      </ng-template>
-                      <ng-template pTemplate="body" let-product>
-                        <tr [pSelectableRow]="product">
-                          <td>{{ product.statetime }}</td>
-                          <td>{{ product.state }}</td>
-                          <td>{{ product.speed }}</td>
-                          <td>{{ product.addr }}</td>
-                        </tr>
-                      </ng-template>
-                    </p-table>
-                  </div>
-                </div>
-              </div>
-            </p-accordion>
           </p-tabPanel>
         </p-tabView>
       </p-card>
