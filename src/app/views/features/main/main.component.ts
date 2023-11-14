@@ -259,25 +259,26 @@ export class MainComponent implements OnInit {
   circle: any
 
   Select() {
-    if (this.selectedProduct) {
-      if (!this.circle) {
-        this.circle = new google.maps.Marker({
-          position: new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng),
-          map: this.map,
-          icon: {
-            url: 'assets/image/circle.png',
-            scaledSize: new google.maps.Size(60, 60),
-            anchor: new google.maps.Point(30, 30)
-          },
-          optimized: false,
-          zIndex: 0
-        });
-      } else {
-        this.circle.setPosition(new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng));
-      }
-      this.map.setCenter(new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng));
-      this.map.setZoom(20);
+    console.log('select: ', this.selectedProduct)
+    if (!this.circle) {
+      this.circle = new google.maps.Marker({
+        position: new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng),
+        map: this.map,
+        icon: {
+          url: 'assets/image/circle.png',
+          scaledSize: new google.maps.Size(60, 60),
+          anchor: new google.maps.Point(30, 30)
+        },
+        optimized: false,
+        zIndex: 0
+      });
+    } else {
+      this.circle.setPosition(new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng));
     }
+
+    this.map.setCenter(new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng));
+    this.map.setZoom(20);
+
   }
 
 
@@ -474,7 +475,6 @@ export class MainComponent implements OnInit {
       ...item,
       url: this.getUrlByDirection(item.heading, item.status),
       addr: "",
-      infoWindowContent: item.license_plate + '' + item.driver,
       direction: this.parseHeading(item.heading)
     }));
     this.cars = this.products.map(item => ({
@@ -502,8 +502,6 @@ export class MainComponent implements OnInit {
       return acc;
     }, {} as StatusCount);
 
-    // statusCount 現在包含了每個狀態的類別數
-    console.log("計算後的車輛狀態:", this.statusCount);
   }
 
   createMarkers() {
@@ -550,45 +548,6 @@ export class MainComponent implements OnInit {
   }
 
   updateMarkers() {
-    // this.markers = [];
-    // for (const location of this.transformedData) {
-    //   //標記
-    //   const marker = new google.maps.Marker({
-    //     position: new google.maps.LatLng(location.lat, location.lng),
-    //     map: this.map,
-    //     title: location.addr,
-    //     icon: {
-    //       url: location.url,
-    //       scaledSize: new google.maps.Size(60, 60),
-    //       anchor: new google.maps.Point(30, 30)
-    //     },
-    //     zIndex: 1
-    //   });
-    //
-    //   const licensePlate = location.license_plate;
-    //   const driver = location.driver;
-    //   const content = `
-    //   <div class="text-center">
-    //     <label>${licensePlate}</label>
-    //     <br>
-    //     <label>${driver}</label>
-    //   </div>
-    // `;
-    //
-    //   // 更新infowindow的内容
-    //   this.infowindow.setContent(content);
-    //
-    //   // 一開始就顯示資訊窗口
-    //   this.infowindow.open(this.map, marker);
-    //
-    //   this.markers.push(marker);
-    //
-    //   // 點擊標記顯示info, 設定中心點
-    //   google.maps.event.addListener(marker, 'click', () => {
-    //     this.selectedProduct = location;
-    //     this.Select();
-    //   });
-    // }
     for (let i = 0; i < this.transformedData.length; i++) {
       const location = this.transformedData[i];
       const marker = this.markers[i];
