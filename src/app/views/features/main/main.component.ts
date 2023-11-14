@@ -165,7 +165,7 @@ export class MainComponent implements OnInit {
       zoom: 7,
       center: this.center,
       restriction: {
-        latLngBounds: this.TAIWAN_BOUNDS,
+        // latLngBounds: this.TAIWAN_BOUNDS,
         strictBounds: false,
       },
       fullscreenControl: false,
