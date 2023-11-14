@@ -57,6 +57,7 @@ import { TrailersComponent } from "../features/trailers-mgmt/trailers/trailers.c
 import { TrailersMgmtComponent } from "../features/trailers-mgmt/trailers-mgmt.component";
 import { InsuranceComponent } from "../features/insurance/insurance.component";
 import { EsgDashboardComponent } from "../features/ESG/esg-dashboard/esg-dashboard.component";
+import { LandmarkComponent } from "../features/basic-settings/landmark/landmark.component";
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { EsgDashboardComponent } from "../features/ESG/esg-dashboard/esg-dashboa
     TrailersMgmtComponent,
     InsuranceComponent,
     EsgDashboardComponent,
+    LandmarkComponent
   ],
   imports: [
     CommonModule,
