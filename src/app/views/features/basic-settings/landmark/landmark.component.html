@@ -1,1 +1,86 @@
-<p>landmark works!</p>
+<div class="overflow-y-hidden overflow-x-hidden">
+  <div class="grid p-2">
+    <div class="col-8">
+      <div id="map" style="height: 95vh; width: 100%;"></div>
+      <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button" size="small" severity="info"
+                [raised]="true" [text]="true" styleClass="bg-white"></p-button>
+    </div>
+    <div class="col-4">
+      <p-card header="自建地標" subheader="右鍵點擊地圖可新增地標">
+        <p-tabView>
+          <p-tabPanel header="地標">
+            <div class="flex justify-content-end mb-3">
+              <p-button icon="pi pi-plus" [text]="true" size="small"></p-button>
+            </div>
+
+          </p-tabPanel>
+          <p-tabPanel header="區域">
+          </p-tabPanel>
+        </p-tabView>
+      </p-card>
+    </div>
+  </div>
+</div>
+
+<p-dialog header="地標資料" [(visible)]="markDialog" [modal]="true" [style]="{ width: '20vw' }" [draggable]="false"
+          [resizable]="false">
+  <div class="grid">
+    <div class="col-4 flex align-items-center">
+      <label>地標類型</label>
+    </div>
+    <div class="col-8">
+      <p-dropdown [options]="markType" optionLabel="name" [appendTo]="'body'">
+        <ng-template pTemplate="option" let-option>
+        <span>
+          <i class="{{ option.icon }} mr-2"></i>
+          {{ option.name }}
+        </span>
+        </ng-template>
+        <ng-template pTemplate="selectedItem" let-selectedItem>
+          <i class="{{ selectedItem.icon }} mr-2"></i>
+          {{ selectedItem.name }}
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>地標名稱</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText/>
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>客戶編號</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText/>
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>電話</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText/>
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>範圍</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText/>
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>描述</label>
+    </div>
+    <div class="col-8">
+      <input type="text" pInputText/>
+    </div>
+    <div class="col-4 flex align-items-center">
+      <label>子公司分享</label>
+    </div>
+    <div class="col-8">
+      <p-inputSwitch></p-inputSwitch>
+    </div>
+    <div class="col-12 flex justify-content-end">
+      <p-button label="取消" severity="secondary" [outlined]="true" styleClass="mr-2"></p-button>
+      <p-button label="新增" (click)="addLandMark()"></p-button>
+    </div>
+  </div>
+</p-dialog>
