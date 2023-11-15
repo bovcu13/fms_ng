@@ -1,13 +1,23 @@
+<p-toast></p-toast>
 <div class="overflow-y-hidden overflow-x-hidden">
   <div class="grid p-2">
-    <div class="col-8">
-      <div id="map" style="height: 95vh; width: 100%;"></div>
+    <div class="col-8" style="position: relative;">
+      <div id="map" style="height: 95vh; width: 100%"></div>
       <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button" size="small" severity="info"
+                [raised]="true" [text]="true" styleClass="bg-white"></p-button>
+      <p-button (click)="clearPolygons()" label="清除" id="area-button" size="small" severity="info"
                 [raised]="true" [text]="true" styleClass="bg-white"></p-button>
     </div>
     <div class="col-4">
       <p-card header="自建地標" subheader="右鍵點擊地圖可新增地標">
-        <input id="pac-input" type="text" placeholder="Enter a location" pInputText/>
+        <div class="grid">
+          <div class="col-9">
+            <input id="pac-input" type="text" placeholder="輸入地點或地址" pInputText/>
+          </div>
+          <div class="col-3 flex justify-content-center">
+            <p-button (click)="showAreaDialog()" label="新增區域" size="small"></p-button>
+          </div>
+        </div>
         <p-tabView styleClass="mt-2">
           <p-tabPanel header="地標">
             <div class="flex justify-content-end mb-3">
@@ -91,7 +101,7 @@
       <label>地址</label>
     </div>
     <div class="col-9">
-      <input [ngModel]="landMarkerAddr" type="text" pInputText/>
+      <input [ngModel]="latLngToAddr" type="text" pInputText/>
     </div>
     <div class="col-3 flex align-items-center">
       <label>描述</label>
@@ -108,6 +118,76 @@
     <div class="col-12 flex justify-content-end">
       <p-button label="取消" severity="secondary" [outlined]="true" styleClass="mr-2"></p-button>
       <p-button label="新增" (click)="addLandMark()"></p-button>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog header="區域資料" [(visible)]="areaDialog" [modal]="true" [style]="{ width: '20vw' }" [draggable]="false"
+          [resizable]="false">
+  <div class="grid">
+    <div class="col-3 flex align-items-center">
+      <label>編號</label>
+    </div>
+    <div class="col-9">
+      <input type="text" pInputText/>
+    </div>
+    <div class="col-3 flex align-items-center">
+      <label>名稱</label>
+    </div>
+    <div class="col-9">
+      <input type="text" pInputText/>
+    </div>
+    <div class="col-3 flex align-items-center">
+      <label>類型</label>
+    </div>
+    <div class="col-9">
+      <p-dropdown [options]="markType" optionLabel="name" [appendTo]="'body'"
+                  (onChange)="getLandMarkerIcon($event.value)">
+        <ng-template pTemplate="option" let-option>
+        <span>
+          <i class="{{ option.icon }} mr-2"></i>
+          {{ option.name }}
+        </span>
+        </ng-template>
+        <ng-template pTemplate="selectedItem" let-selectedItem>
+          <i class="{{ selectedItem.icon }} mr-2"></i>
+          {{ selectedItem.name }}
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class="col-3 flex align-items-center">
+      <label>長度(公尺)</label>
+    </div>
+    <div class="col-9">
+      <input type="text" pInputText/>
+    </div>
+    <div class="col-3 flex align-items-center">
+      <label>面積(平方公尺)</label>
+    </div>
+    <div class="col-9">
+      <input type="text" pInputText/>
+    </div>
+    <div class="col-3 flex align-items-center">
+      <label>中心地址</label>
+    </div>
+    <div class="col-9">
+      <input [ngModel]="latLngToAddr" type="text" pInputText/>
+    </div>
+    <div class="col-3 flex align-items-center">
+      <label>描述</label>
+    </div>
+    <div class="col-9">
+      <input type="text" pInputText/>
+    </div>
+    <!--    <div class="col-4 flex align-items-center">-->
+    <!--      <label>子公司分享</label>-->
+    <!--    </div>-->
+    <!--    <div class="col-8">-->
+    <!--      <p-inputSwitch></p-inputSwitch>-->
+    <!--    </div>-->
+    <div class="col-12 flex justify-content-end">
+      <p-button label="取消" severity="secondary" [outlined]="true" styleClass="mr-2"></p-button>
+      <p-button label="新增" (click)="addArea()"></p-button>
     </div>
   </div>
 </p-dialog>
