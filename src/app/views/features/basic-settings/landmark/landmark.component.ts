@@ -37,6 +37,7 @@ export class LandmarkComponent {
   }
 
   initMap() {
+    this.siteAuto();
     // 定義地圖相關設定
     this.mapOptions = {
       zoom: 8,
@@ -62,6 +63,48 @@ export class LandmarkComponent {
     this.drawingManager.setMap(this.map);
 
     this.mapLandMarkListener();
+  }
+
+  autocomplete: any
+  place: any
+
+  // 地址自動完成 + 地圖的中心移到輸入結果的地址上
+  siteAuto() {
+    const options = {
+      types: ['establishment'], // 限制類型為地址
+      componentRestrictions: { country: 'tw' },// 限制在台灣範圍
+      fields: ['place_id', 'geometry', 'name', 'formatted_address']
+    };
+    this.autocomplete = new google.maps.places.Autocomplete(document.getElementById('pac-input'), options);
+    console.log(this.autocomplete)
+    // 地址的輸入框，值有變動時執行
+    this.autocomplete.addListener("place_changed", () => {
+      console.log('place_changed')
+      this.place = this.autocomplete.getPlace(); // 地點資料存進place
+      // 確認回來的資料有經緯度
+      if (this.place.geometry) {
+
+        // 改變map的中心點
+        const searchCenter = this.place.geometry.location;
+
+        // panTo是平滑移動、setCenter是直接改變地圖中心
+        this.map.panTo(searchCenter);
+
+        // 在搜尋結果的地點上放置標記
+        const marker = new google.maps.Marker({
+          position: searchCenter,
+          map: this.map
+        });
+
+        // info window
+        const infowindow = new google.maps.InfoWindow({
+          content: this.place.formatted_address
+        });
+        infowindow.open(this.map, marker);
+
+      }
+
+    });
   }
 
   // 監聽LandMarker事件
