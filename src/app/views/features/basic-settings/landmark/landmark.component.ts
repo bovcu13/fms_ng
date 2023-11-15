@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { landmark } from "../../../../shared/data/landmark";
 
 declare var google: any;
 
@@ -8,9 +9,12 @@ declare var google: any;
   styleUrls: ['./landmark.component.scss']
 })
 export class LandmarkComponent {
+  landmarkData = landmark;
+  selectedLandmark: any;
 
   ngOnInit() {
     this.initMap();
+    this.createLandMark(this.landmarkData);
   }
 
   // 地圖
@@ -20,13 +24,6 @@ export class LandmarkComponent {
   center: google.maps.LatLngLiteral = {
     lat: 23.83876,
     lng: 120.9876
-  };
-  // 地圖邊界
-  TAIWAN_BOUNDS = {
-    north: 25.36,
-    south: 21.86,
-    west: 118.18,
-    east: 123.78,
   };
   // draw
   drawingManager: any
@@ -44,10 +41,6 @@ export class LandmarkComponent {
     this.mapOptions = {
       zoom: 8,
       center: this.center,
-      restriction: {
-        // latLngBounds: this.TAIWAN_BOUNDS,
-        strictBounds: false,
-      },
       fullscreenControl: false,
       streetViewControl: false,
       scaleControl: true,
@@ -71,78 +64,7 @@ export class LandmarkComponent {
     this.mapLandMarkListener();
   }
 
-  previousMarker: google.maps.Marker | null = null;
-
-  // 點擊地圖座標跑至中心
-  placeMarkerAndPanTo(latLng: google.maps.LatLng, map: google.maps.Map) {
-    // 清除之前的標記
-    if (this.previousMarker) {
-      this.previousMarker.setMap(null);
-    }
-
-    // 創建新的標記
-    const marker = new google.maps.Marker({
-      position: latLng,
-      map: map,
-    });
-
-    // 設定地圖中心為新位置
-    map.panTo(latLng);
-
-    // 將新標記設為上一個標記
-    this.previousMarker = marker;
-  }
-
-  markType: any[] = [
-    { name: 'Home', icon: 'pi pi-home', code: 'Home' },
-    { name: 'Star', icon: 'pi pi-star-fill', code: 'Star' },
-    { name: 'Company', icon: 'pi pi-building', code: 'Company' },
-  ];
-
-  landMarker = google.maps.LatLngLiteral
-
-  //新增地標的按鈕
-  addLandMark() {
-    const svgMarker = {
-      path: "M19,11v9h-5v-6h-4v6H5v-9H3.6L12,3.4l8.4,7.6H19z",
-      fillColor: "red",
-      fillOpacity: 0.8,
-      strokeWeight: 0,
-      rotation: 0,
-      scale: 1,
-      anchor: new google.maps.Point(0, 20),
-    };
-
-    this.landMarker = this.previousMarker
-    // 創建新的標記
-    const marker = new google.maps.Marker({
-      position: this.landMarker.getPosition(),
-      map: this.map,
-      label: {
-        text: "\ue88a", // codepoint from https://fonts.google.com/icons
-        fontFamily: "Material Icons",
-        color: "#ffffff",
-        fontSize: "18px",
-      },
-    });
-
-    this.markDialog = false;
-    // 清除之前的標記
-    if (this.previousMarker) {
-      this.previousMarker.setMap(null);
-      this.previousMarker.setPosition(null);
-    }
-    // 檢查 landmarkButt 是否為 true，如果是就隱藏座標和按鈕
-    if (this.landmarkButt) {
-      const customButton = document.getElementById('custom-button');
-      if (customButton) {
-        customButton.style.display = 'none';
-      }
-      // 將 landmarkButt 設定為 false
-      this.landmarkButt = false;
-    }
-  }
-
+  // 監聽LandMarker事件
   mapLandMarkListener() {
     // 點右鍵生成標記以新增地標
     this.map.addListener("contextmenu", (e: any) => {
@@ -209,4 +131,139 @@ export class LandmarkComponent {
       }, 0);
     });
   }
+
+  markType: any[] = [
+    { name: '倉庫', icon: 'fas fa-warehouse', code: 'warehouse', text: '\uebb8' },
+    { name: '客戶', icon: 'pi pi-user', code: 'client', text: '\ue7fd' },
+  ];
+
+  landMarkerIcon: any = '\uebb8';
+
+  // 儲存選擇到的類型icon
+  getLandMarkerIcon(event: any) {
+    this.landMarkerIcon = event.text
+    console.log(this.landMarkerIcon)
+  }
+
+  // 右鍵點擊地圖顯示的marker
+  previousMarker: google.maps.Marker | null = null;
+
+  // 右鍵點擊地圖 - 以marker為中心
+  placeMarkerAndPanTo(latLng: google.maps.LatLng, map: google.maps.Map) {
+    // 清除之前的標記
+    if (this.previousMarker) {
+      this.previousMarker.setMap(null);
+    }
+    // 新的標記
+    const marker = new google.maps.Marker({
+      position: latLng,
+      map: map,
+    });
+    // 設定地圖中心為新位置
+    map.panTo(latLng);
+    // 取得位置的地址資料
+    this.latLngToString(latLng);
+    // 將新標記設為上一個標記
+    this.previousMarker = marker;
+  }
+
+  // 取得位置地址資料
+  landMarkerAddr: any;
+
+  latLngToString(latLng: google.maps.LatLng) {
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ location: latLng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
+      if (status === google.maps.GeocoderStatus.OK) {
+        let addressFound = false;
+        if (results && results.length > 0) {
+          for (let i = 0; i < results.length; i++) {
+            const formattedAddress = results[i].formatted_address;
+            if (!formattedAddress.match(/\b\w+\+\w+\b/)) {
+              this.landMarkerAddr = formattedAddress;
+              addressFound = true;
+              break; // 找到非 Plus Code 地址後跳出迴圈
+            }
+          }
+        }
+        if (!addressFound) {
+          this.landMarkerAddr = '找不到地址';
+        }
+      } else {
+        this.landMarkerAddr = '編碼錯誤';
+      }
+    });
+  }
+
+  landMarker = google.maps.LatLngLiteral;
+
+  // 新增地標的按鈕
+  addLandMark() {
+    this.landMarker = this.previousMarker
+
+    // 創建新的標記
+    const marker = new google.maps.Marker({
+      position: this.landMarker.getPosition(),
+      map: this.map,
+      label: {
+        text: this.landMarkerIcon, // codepoint from https://fonts.google.com/icons
+        fontFamily: "Material Icons",
+        color: "#ffffff",
+        fontSize: "18px",
+      },
+    });
+
+    this.markDialog = false;
+    // 清除之前的標記
+    if (this.previousMarker) {
+      this.previousMarker.setMap(null);
+      this.previousMarker.setPosition(null);
+    }
+    // 檢查 landmarkButt 是否為 true，如果是就隱藏座標和按鈕
+    if (this.landmarkButt) {
+      const customButton = document.getElementById('custom-button');
+      if (customButton) {
+        customButton.style.display = 'none';
+      }
+      // 將 landmarkButt 設定為 false
+      this.landmarkButt = false;
+    }
+  }
+
+  // 建立資料庫內的LandMark
+  createLandMark(landMarkerData: any) {
+    for (const location of landMarkerData) {
+      const name = location.name;
+      const contentString = `<label>${name}</label>`;
+      const infowindow = new google.maps.InfoWindow({
+        content: contentString,
+      });
+      const marker = new google.maps.Marker({
+        position: new google.maps.LatLng(location.lat, location.lng),
+        map: this.map,
+        label: {
+          text: location.text, // codepoint from https://fonts.google.com/icons
+          fontFamily: "Material Icons",
+          color: "#ffffff",
+          fontSize: "18px",
+        },
+      });
+      marker.addListener("click", () => {
+        infowindow.open({
+          anchor: marker,
+          map: this.map,
+        });
+        this.selectedLandmark = location;
+        this.select();
+      });
+    }
+  }
+
+  select() {
+    console.log('select: ', this.selectedLandmark)
+
+    this.map.setCenter(new google.maps.LatLng(this.selectedLandmark.lat, this.selectedLandmark.lng));
+    this.map.setZoom(20);
+
+  }
+
 }
