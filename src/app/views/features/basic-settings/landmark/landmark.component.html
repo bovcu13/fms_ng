@@ -7,7 +7,8 @@
     </div>
     <div class="col-4">
       <p-card header="自建地標" subheader="右鍵點擊地圖可新增地標">
-        <p-tabView>
+        <input id="pac-input" type="text" placeholder="Enter a location" pInputText/>
+        <p-tabView styleClass="mt-2">
           <p-tabPanel header="地標">
             <div class="flex justify-content-end mb-3">
               <p-button icon="pi pi-plus" [text]="true" size="small"></p-button>
