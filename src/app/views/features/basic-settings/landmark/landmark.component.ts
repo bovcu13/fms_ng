@@ -1,16 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { landmark } from "../../../../shared/data/landmark";
+import { ConfirmationService, MessageService } from "primeng/api";
+import { CarService } from "../../../../services/car.service";
+import { FormBuilder } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 
 declare var google: any;
 
 @Component({
   selector: 'app-landmark',
   templateUrl: './landmark.component.html',
-  styleUrls: ['./landmark.component.scss']
+  styleUrls: ['./landmark.component.scss'],
+  providers: [ConfirmationService, MessageService]
 })
 export class LandmarkComponent {
   landmarkData = landmark;
   selectedLandmark: any;
+
+  constructor(
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
+  ) { }
 
   ngOnInit() {
     this.initMap();
@@ -62,6 +72,9 @@ export class LandmarkComponent {
     });
     this.drawingManager.setMap(this.map);
 
+    // 監聽draw的事件
+    this.mapDrawListener();
+    // 監聽LandMarker事件
     this.mapLandMarkListener();
   }
 
@@ -105,6 +118,99 @@ export class LandmarkComponent {
       }
 
     });
+  }
+  drawnPolygons: any[] = []; // 用於存儲已繪製的多邊形
+  mapDrawListener() {
+    // 繪製多邊形完成
+    this.drawingManager.addListener('overlaycomplete', (event: any) => {
+      if (event.type === google.maps.drawing.OverlayType.POLYGON) {
+        // 獲取多邊形的路徑（坐標）
+        const polygon = event.overlay;
+        const path = polygon.getPath().getArray();
+        // 轉格式
+        const coordinates = path.map((latLng: any) => {
+          return { lat: latLng.lat(), lng: latLng.lng() };
+        });
+
+        console.log('多邊形坐標:', coordinates);
+
+        // 暫存多邊形
+        this.drawnPolygons.push(polygon);
+
+        // 設置地圖中心點為多邊形的中心
+        this.setMapCenterToPolygonCenter(polygon);
+
+        // const areaButton = document.getElementById('area-button');
+        // // 檢查 customButton 是否為 null
+        // if (areaButton) {
+        //   areaButton.style.display = 'block';
+        // }
+      }
+    });
+
+    // 監聽地圖的拖動事件，清空繪製的區域
+    this.map.addListener("drag", () => {
+      this.clearPolygons();
+    });
+
+    // 監聽地圖的點擊事件，清空繪製的區域
+    this.map.addListener("click", () => {
+      this.clearPolygons();
+    });
+
+  }
+
+  clearPolygons() {
+    // 已繪製的多邊形
+    this.drawnPolygons.forEach((polygon) => {
+      polygon.setMap(null);
+    });
+
+    // 清空已繪製的多邊形數組
+    this.drawnPolygons = [];
+  }
+
+  setMapCenterToPolygonCenter(polygon: any) {
+    const bounds = new google.maps.LatLngBounds();
+    const path = polygon.getPath();
+
+    // 將多邊形的所有坐標加入bounds，以計算中心
+    path.forEach((latLng: any) => {
+      bounds.extend(latLng);
+    });
+
+    // 計算多邊形的中心
+    const center = bounds.getCenter();
+    // 取得多邊形中心的地址資料
+    this.latLngToString(center);
+    // 設置地圖中心點為多邊形的中心
+    this.map.setCenter(center);
+  }
+
+  areaDialog: boolean = false;
+
+  showAreaDialog() {
+    if (this.drawnPolygons.length > 0) {
+      this.areaDialog = true;
+    } else {
+      this.showError();
+    }
+  }
+
+  area: any[] = [];
+  addArea() {
+    if (this.drawnPolygons.length > 0) {
+      // 使用 concat 方法將 drawnPolygons 的內容添加到 area 中
+      this.area.push(this.drawnPolygons);
+
+      // 清空 drawnPolygons
+      this.drawnPolygons = [];
+
+      // this.area 包含了以前的內容以及新添加的多邊形
+      console.log('Updated area:', this.area);
+    } else {
+      this.showError();
+    }
   }
 
   // 監聽LandMarker事件
@@ -211,8 +317,7 @@ export class LandmarkComponent {
   }
 
   // 取得位置地址資料
-  landMarkerAddr: any;
-
+  latLngToAddr: any;
   latLngToString(latLng: google.maps.LatLng) {
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({ location: latLng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
@@ -222,17 +327,17 @@ export class LandmarkComponent {
           for (let i = 0; i < results.length; i++) {
             const formattedAddress = results[i].formatted_address;
             if (!formattedAddress.match(/\b\w+\+\w+\b/)) {
-              this.landMarkerAddr = formattedAddress;
+              this.latLngToAddr = formattedAddress;
               addressFound = true;
               break; // 找到非 Plus Code 地址後跳出迴圈
             }
           }
         }
         if (!addressFound) {
-          this.landMarkerAddr = '找不到地址';
+          this.latLngToAddr = '找不到地址';
         }
       } else {
-        this.landMarkerAddr = '編碼錯誤';
+        this.latLngToAddr = '編碼錯誤';
       }
     });
   }
@@ -308,5 +413,11 @@ export class LandmarkComponent {
     this.map.setZoom(20);
 
   }
+
+  // 操作提示
+  showError() {
+    this.messageService.add({ severity: 'warn', summary: '提示', detail: `請先繪製一個區域` });
+  }
+
 
 }
