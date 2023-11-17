@@ -26,6 +26,7 @@
             <p-table [value]="landmarkData"
                      selectionMode="single"
                      [(selection)]="selectedLandmark"
+                     (onRowSelect)="select()"
                      dataKey="code"
                      styleClass="text-sm p-datatable-sm">
               <ng-template pTemplate="header">
