@@ -1,19 +1,7 @@
+<div class="overlay" *ngIf="visible">
+  <i class="pi pi-spin pi-spinner text-white" style="font-size: 2.5rem"></i>
+</div>
 <div class="col-12">
-  <p-table>
-    <ng-template pTemplate="caption">
-      <div class="flex align-items-center justify-content-between">
-        <div>
-          多車監控
-<!--          <p-button icon="pi pi-plus" styleClass="p-button-text"-->
-<!--                    (click)="addNewTab()"></p-button>-->
-        </div>
-        <div>
-          <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right"
-                          [ngModel]="false" (ngModelChange)="toggleSidebar()"></p-toggleButton>
-        </div>
-      </div>
-    </ng-template>
-  </p-table>
   <div class="grid">
     <div [ngClass]="getMiddleDivClass()">
       <p-tabView (onChange)="check($event)" (onClose)="close($event)" [selectOnFocus]="true">

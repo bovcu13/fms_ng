@@ -123,6 +123,7 @@ export class MultipleCarsComponent implements OnInit {
     this.getAllNewGpsRequest();
   }
 
+  visible = true;
   getAllNewGpsRequest() {
     this.carServ.getAllNewGpsRequest().subscribe({
       next: (res) => {
@@ -146,6 +147,7 @@ export class MultipleCarsComponent implements OnInit {
           infoWindowContent: product.address,
         }));
         console.log(this.markers)
+        this.visible = false;
       },
       error: (err) => {
         console.log(err);
