@@ -3,21 +3,10 @@
   <div class="grid p-2">
     <div class="col-8" style="position: relative;">
       <div id="map" style="height: 95vh; width: 100%"></div>
-      <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button" size="small" severity="info"
-                [raised]="true" [text]="true" styleClass="bg-white"></p-button>
-      <p-button (click)="clearPolygons()" label="清除" id="area-button" size="small" severity="info"
-                [raised]="true" [text]="true" styleClass="bg-white"></p-button>
     </div>
     <div class="col-4">
-      <p-card header="自建地標" subheader="右鍵點擊地圖可新增地標">
-        <div class="grid">
-          <div class="col-9">
-            <input id="pac-input" type="text" placeholder="輸入地點或地址" pInputText/>
-          </div>
-          <div class="col-3 flex justify-content-center">
-            <p-button (click)="showAreaDialog()" label="新增區域" size="small"></p-button>
-          </div>
-        </div>
+      <p-card header="自建地標" subheader="右鍵點擊地圖可標記位置">
+        <input id="pac-input" type="text" placeholder="輸入地點或地址" pInputText/>
         <p-tabView styleClass="mt-2">
           <p-tabPanel header="地標">
             <div class="flex justify-content-end mb-3">
@@ -26,6 +15,7 @@
             <p-table [value]="landmarkData"
                      selectionMode="single"
                      [(selection)]="selectedLandmark"
+                     (onRowSelect)="select()"
                      dataKey="code"
                      styleClass="text-sm p-datatable-sm">
               <ng-template pTemplate="header">
@@ -51,6 +41,36 @@
             </p-table>
           </p-tabPanel>
           <p-tabPanel header="區域">
+            <div class="flex justify-content-end mb-3">
+              <p-button (click)="showAreaDialog()" icon="pi pi-plus" [text]="true" size="small"></p-button>
+            </div>
+            <p-table [value]="areaData"
+                     selectionMode="single"
+                     [(selection)]="selectedArea"
+                     (onRowSelect)="select()"
+                     dataKey="code"
+                     styleClass="text-sm p-datatable-sm">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>編號</th>
+                  <th>名稱</th>
+                  <th>類型</th>
+                  <th>長度</th>
+                  <th>面積</th>
+                  <th>描述</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-product>
+                <tr [pSelectableRow]="product">
+                  <td>{{product.code}}</td>
+                  <td>{{product.name}}</td>
+                  <td>{{product.type}}</td>
+                  <td>{{product.phone}}</td>
+                  <td>{{product.addr}}</td>
+                  <td>{{product.note}}</td>
+                </tr>
+              </ng-template>
+            </p-table>
           </p-tabPanel>
         </p-tabView>
       </p-card>

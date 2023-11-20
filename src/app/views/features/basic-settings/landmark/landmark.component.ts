@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { landmark } from "../../../../shared/data/landmark";
+import { landmark, area } from "../../../../shared/data/landmark";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { CarService } from "../../../../services/car.service";
 import { FormBuilder } from "@angular/forms";
@@ -14,8 +14,10 @@ declare var google: any;
   providers: [ConfirmationService, MessageService]
 })
 export class LandmarkComponent {
+  areaData = area;
   landmarkData = landmark;
   selectedLandmark: any;
+  selectedArea: any;
 
   constructor(
     private messageService: MessageService,
@@ -25,6 +27,7 @@ export class LandmarkComponent {
   ngOnInit() {
     this.initMap();
     this.createLandMark(this.landmarkData);
+    this.createArea(this.areaData);
   }
 
   // 地圖
@@ -37,9 +40,7 @@ export class LandmarkComponent {
   };
   // draw
   drawingManager: any
-
-  // 按下右鍵的地標按鈕顯示
-  landmarkButt = false;
+  // 地標
   markDialog: boolean = false;
 
   showMarkDialog() {
@@ -47,7 +48,8 @@ export class LandmarkComponent {
   }
 
   initMap() {
-    this.siteAuto();
+    // this.siteAuto();
+
     // 定義地圖相關設定
     this.mapOptions = {
       zoom: 8,
@@ -218,21 +220,6 @@ export class LandmarkComponent {
     // 點右鍵生成標記以新增地標
     this.map.addListener("contextmenu", (e: any) => {
       this.placeMarkerAndPanTo(e.latLng, this.map);
-      const customButton = document.getElementById('custom-button');
-      // 檢查 customButton 是否為 null
-      if (customButton) {
-        customButton.style.display = 'block';
-
-        // 設定按鈕位置在地圖中心點的下方
-        const buttonLeft = (this.map.getDiv().offsetWidth / 2 - 38) + 'px';
-        const buttonTop = (this.map.getDiv().offsetHeight / 2 + 55) + 'px';
-
-        customButton.style.left = buttonLeft;
-        customButton.style.top = buttonTop;
-
-        // 設定 landmarkButt 為 true
-        this.landmarkButt = true;
-      }
     });
 
     // 監聽地圖的點擊事件，清空地標
@@ -242,15 +229,6 @@ export class LandmarkComponent {
         this.previousMarker.setMap(null);
         this.previousMarker.setPosition(null);
       }
-      // 檢查 landmarkButt 是否為 true，如果是就隱藏座標和按鈕
-      if (this.landmarkButt) {
-        const customButton = document.getElementById('custom-button');
-        if (customButton) {
-          customButton.style.display = 'none';
-        }
-        // 將 landmarkButt 設定為 false
-        this.landmarkButt = false;
-      }
     });
 
     // 監聽地圖的拖動事件，清空地標
@@ -259,15 +237,6 @@ export class LandmarkComponent {
       if (this.previousMarker) {
         this.previousMarker.setMap(null);
         this.previousMarker.setPosition(null);
-      }
-      // 檢查 landmarkButt 是否為 true，如果是就隱藏座標和按鈕
-      if (this.landmarkButt) {
-        const customButton = document.getElementById('custom-button');
-        if (customButton) {
-          customButton.style.display = 'none';
-        }
-        // 將 landmarkButt 設定為 false
-        this.landmarkButt = false;
       }
     });
 
@@ -366,15 +335,6 @@ export class LandmarkComponent {
       this.previousMarker.setMap(null);
       this.previousMarker.setPosition(null);
     }
-    // 檢查 landmarkButt 是否為 true，如果是就隱藏座標和按鈕
-    if (this.landmarkButt) {
-      const customButton = document.getElementById('custom-button');
-      if (customButton) {
-        customButton.style.display = 'none';
-      }
-      // 將 landmarkButt 設定為 false
-      this.landmarkButt = false;
-    }
   }
 
   // 建立資料庫內的LandMark
@@ -406,12 +366,33 @@ export class LandmarkComponent {
     }
   }
 
+  createArea(areaData: any) {
+    for (const location of areaData) {
+      const polygon = new google.maps.Polygon({
+        paths: location.path,
+        strokeColor: "#000000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#000000",
+        fillOpacity: 0.35,
+      });
+      polygon.setMap(this.map);
+    }
+  }
+
   select() {
-    console.log('select: ', this.selectedLandmark)
+    if (this.selectedLandmark) {
+      console.log('select: ', this.selectedLandmark)
 
-    this.map.setCenter(new google.maps.LatLng(this.selectedLandmark.lat, this.selectedLandmark.lng));
-    this.map.setZoom(20);
+      this.map.setCenter(new google.maps.LatLng(this.selectedLandmark.lat, this.selectedLandmark.lng));
+      this.map.setZoom(20);
+    } else if (this.selectedArea) {
+      console.log('select: ', this.selectedArea)
 
+      this.map.setCenter(new google.maps.LatLng(this.selectedArea.lat, this.selectedArea.lng));
+      this.map.setZoom(20);
+
+    }
   }
 
   // 操作提示
