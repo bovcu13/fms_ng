@@ -1,46 +1,26 @@
 <div class="overflow-x-hidden">
-  <div class="col-12">
-    <p-table>
-      <ng-template pTemplate="caption">
-        <div class="flex align-items-center justify-content-between">
-          數位大餅
-          <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right" class="mb-2"
-                          [ngModel]="false"
-                          (ngModelChange)="toggleSidebar()"></p-toggleButton>
-        </div>
-      </ng-template>
-    </p-table>
-  </div>
   <div class="flex justify-content-between">
     <div [ngClass]="getMiddleDivClass()">
       <p-card>
-        <p-tabView>
-          <p-tabPanel header="傳統大餅">
-            <div class="text-center" *ngIf="data == null">
-              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
-              <h4>查無資料</h4>
-              <p>請在右側選擇查詢選項</p>
-            </div>
-          </p-tabPanel>
-          <p-tabPanel header="數位大餅">
-            <div class="text-center" *ngIf="data == null">
-              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
-              <h4>查無資料</h4>
-              <p>請在右側選擇查詢選項</p>
-            </div>
-            <p-chart type="line" [data]="data" [options]="options"></p-chart>
-          </p-tabPanel>
-          <p-tabPanel header="駕駛出勤表">
-            <div class="text-center" *ngIf="data == null">
-              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
-              <h4>查無資料</h4>
-              <p>請在右側選擇查詢選項</p>
-            </div>
-
-            <h5 *ngIf="data != null">製表日期: {{today | date:'yyyy-MM-dd'}}</h5>
-            <p-chart type="line" [data]="data" [options]="options"></p-chart>
-          </p-tabPanel>
-        </p-tabView>
+        <div class="grid">
+          <div class="col-11">
+            <p-tabView>
+              <p-tabPanel header="數位大餅">
+                <div class="text-center" *ngIf="data == null">
+                  <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                  <h4>查無資料</h4>
+                  <p>請在右側選擇查詢選項</p>
+                </div>
+                <p-chart type="line" [data]="data" [options]="options"></p-chart>
+              </p-tabPanel>
+            </p-tabView>
+          </div>
+          <div class="col-1 flex justify-content-end">
+            <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right" class="mb-2"
+                            [ngModel]="false"
+                            (ngModelChange)="toggleSidebar()"></p-toggleButton>
+          </div>
+        </div>
       </p-card>
     </div>
     <div class="col-12 md:col-12 lg:col-3" *ngIf="sidebarRightOpen">
