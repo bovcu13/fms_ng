@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ClientService } from "../../../../services/client.service";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { CarService } from "../../../../services/car.service";
@@ -21,6 +21,7 @@ export class DispatchFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private carServ: CarService,
     private dispatchServ: DispatchService,
     private clientServ: ClientService,
@@ -51,17 +52,19 @@ export class DispatchFormComponent implements OnInit {
     if (this.code != 0) {
       this.getOneTransportOrder(this.code);
     }
-    this.getFormName();
     this.getCreateDay();
     this.getAllClientRequest();
     this.getAllTrailersRequest();
   }
+
+  title: any = "新增託運訂單";
 
   getOneTransportOrder(id: string) {
     this.dispatchServ.getOneTransportOrder(id).subscribe({
       next: res => {
         console.log('getOneTransportOrder:', res.body);
         this.dispatch_form.patchValue(res.body);
+        this.title = res.body.name;
         this.dispatch_form.patchValue({
           deadline: res.body.deadline? new Date(res.body.deadline): '',
           client_id: {
@@ -85,15 +88,6 @@ export class DispatchFormComponent implements OnInit {
         console.log(err);
       },
     });
-  }
-
-  title: any;
-  getFormName() {
-    if (this.dispatch_form.controls['name'].value) {
-      this.title = this.dispatch_form.controls['name'].value;
-    } else {
-      this.title = "新增託運訂單";
-    }
   }
 
   markAsDirty = false;
@@ -213,6 +207,69 @@ export class DispatchFormComponent implements OnInit {
       error: (err) => {
         console.log(err);
       },
+    });
+  }
+
+  updateTransportOrder(id: string) {
+    let body = {
+      name: this.dispatch_form.controls['name'].value,
+      client_id: this.dispatch_form.controls['client_id'].value.id,
+      origin: this.dispatch_form.controls['origin'].value,
+      destination: this.dispatch_form.controls['destination'].value,
+      deadline: this.dispatch_form.controls['deadline'].value,
+      shipping_list: this.itemList.map((item: any) => ({
+        product_name: item.product_name,
+        unit_price: item.unit_price? item.unit_price: 0,
+        quantity: item.quantity,
+        tonnage: item.tonnage,
+        trailer_id: item.trailer_id.id,
+      })),
+    }
+    console.log('body:', body)
+    this.confirmationService.confirm({
+      message: `確定要儲存 ${this.dispatch_form.controls['name'].value} 的修改？`,
+      header: '確定修改？',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.dispatchServ.patchTransportOrder(id, body).subscribe({
+          next: res => {
+            console.log(res);
+            this.showSussess('修改');
+          },
+          error: (err) => {
+            console.log(err);
+            this.showError('修改');
+          },
+        });
+      },
+      reject: () => {
+        this.showCancel('修改');
+      }
+    });
+  }
+
+  deleteTransportOrder() {
+    console.log('open')
+    this.confirmationService.confirm({
+      message: `確定要刪除 ${this.dispatch_form.controls['name'].value} 嗎？`,
+      header: '確定刪除？',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.dispatchServ.deleteTransportOrder(this.code).subscribe({
+          next: res => {
+            console.log('deleteDriver', res);
+            this.showSussess('刪除');
+            this.router.navigate(['/dispatch_list']);
+          },
+          error: (err) => {
+            console.log('err', err);
+            this.showError('刪除');
+          }
+        })
+      },
+      reject: () => {
+        this.showCancel('刪除');
+      }
     });
   }
 

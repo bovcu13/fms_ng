@@ -6,8 +6,8 @@
   <div class="flex justify-content-center">
     <div class="col-8 h-full">
       <p-card>
-        <h1 class="text-center">{{title}}</h1>
         <form [formGroup]="dispatch_form">
+          <h1 class="text-center">{{title}}</h1>
           <div class="grid">
             <div class="col-12">
               <div class="flex justify-content-between">
@@ -84,7 +84,7 @@
               <div class="field">
                 <label class="font-semibold"><span class="text-red-600">*</span>板車</label>
                 <p-dropdown [options]="trailersData" optionLabel="code"
-                               formControlName="trailer_id" placeholder="選擇板車"></p-dropdown>
+                            formControlName="trailer_id" placeholder="選擇板車"></p-dropdown>
               </div>
             </div>
           </div>
@@ -119,11 +119,27 @@
           </div>
         </div>
         <div class="col-12">
-          <div class="flex justify-content-end">
-            <p-button (click)="postTransportOrder()" label="儲存" severity="warning"></p-button>
+          <div class="flex">
+            <div class="flex justify-content-start">
+              <p-button *ngIf="title!=='新增託運訂單'" (click)="deleteTransportOrder()" label="刪除"
+                        severity="danger"></p-button>
+            </div>
+            <div class="flex ml-auto">
+              <p-button *ngIf="title!=='新增託運訂單'" (click)="updateTransportOrder(code)" label="儲存"
+                        severity="warning"></p-button>
+              <p-button *ngIf="title=='新增託運訂單'" (click)="postTransportOrder()" label="新增"
+                        severity="warning" styleClass="ml-auto"></p-button>
+            </div>
           </div>
         </div>
       </p-card>
     </div>
   </div>
 </div>
+
+<p-confirmDialog #cd [style]="{ width: '40vw' }">
+  <ng-template pTemplate="footer">
+    <p-button (click)="cd.reject()" label="取消" icon="pi pi-times" severity="secondary"></p-button>
+    <p-button (click)="cd.accept()" label="確定" icon="pi pi-check" severity="warning"></p-button>
+  </ng-template>
+</p-confirmDialog>
