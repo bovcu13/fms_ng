@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { list } from "../../../../shared/data/dispatch";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { ClientService } from "../../../../services/client.service";
@@ -46,18 +45,56 @@ export class DispatchFormComponent implements OnInit {
       tonnage: ['', Validators.required], //噸數
       trailer_id: ['', Validators.required], //板車
     });
-    this.dispatch_form.patchValue(list[this.code]);
   }
 
   ngOnInit(): void {
-    console.log(list[this.code])
+    if (this.code != 0) {
+      this.getOneTransportOrder(this.code);
+    }
     this.getFormName();
     this.getCreateDay();
     this.getAllClientRequest();
     this.getAllTrailersRequest();
   }
 
-  data: any
+  getOneTransportOrder(id: string) {
+    this.dispatchServ.getOneTransportOrder(id).subscribe({
+      next: res => {
+        console.log('getOneTransportOrder:', res.body);
+        this.dispatch_form.patchValue(res.body);
+        this.dispatch_form.patchValue({
+          deadline: res.body.deadline? new Date(res.body.deadline): '',
+          client_id: {
+            name: res.body.client_name,
+            id: res.body.client_id,
+          }
+        });
+        this.itemList = res.body.shipping_list.map((item: any) => ({
+          product_name: item.product_name,
+          unit_price: item.unit_price? item.unit_price: 0,
+          quantity: item.quantity,
+          tonnage: item.tonnage,
+          trailer_id: {
+            id: item.trailer_id,
+            code: item.trailer_code,
+          }
+        }));
+        console.log('itemList:', this.itemList);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  title: any;
+  getFormName() {
+    if (this.dispatch_form.controls['name'].value) {
+      this.title = this.dispatch_form.controls['name'].value;
+    } else {
+      this.title = "新增託運訂單";
+    }
+  }
 
   markAsDirty = false;
   itemList: any = [];
@@ -89,16 +126,6 @@ export class DispatchFormComponent implements OnInit {
     console.log(items)
     console.log(this.itemList)
     this.shipping_list_form.reset();
-  }
-
-  title: any;
-
-  getFormName() {
-    if (this.dispatch_form.controls['name'].value) {
-      this.title = this.dispatch_form.controls['name'].value;
-    } else {
-      this.title = "新增託運訂單";
-    }
   }
 
   // 新增訂單
