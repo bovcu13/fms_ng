@@ -47,8 +47,10 @@ export class DispatchListComponent {
     console.log(event)
   }
 
+  tagValue: any;
   getSeverity(level: string): string {
-    if (level === '未綁定') {
+    if (level === undefined) {
+      this.tagValue = '未綁定';
       return 'info';
     } else {
       return '';

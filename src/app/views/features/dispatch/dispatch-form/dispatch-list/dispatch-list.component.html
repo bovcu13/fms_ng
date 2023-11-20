@@ -67,7 +67,7 @@
                 <td class="text-center" (click)="goToForm(list.id)">→</td>
                 <td class="text-sm text-center" (click)="goToForm(list.id)">{{list.destination}}</td>
                 <td class="text-sm text-center">
-                  <p-tag [severity]="getSeverity(list.transport_task_title)" value="{{ list.transport_task_title }}"></p-tag>
+                  <p-tag [severity]="getSeverity(list.transport_task_title)" value="{{ tagValue }}"></p-tag>
                 </td>
               </tr>
             </ng-template>

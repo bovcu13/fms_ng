@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-12 md:col-12 lg:col-8">
     <p-card header="派工與調度（貨物運輸計劃）">
@@ -120,7 +121,8 @@
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
         <label class="font-semibold">託運訂單</label>
-        <p-multiSelect placeholder="選擇訂單" [options]="formData"
+        <p-multiSelect formControlName="form" placeholder="選擇訂單"
+                       [options]="formData" optionLabel="name"
                        display="chip" [showClear]="true"></p-multiSelect>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
@@ -161,7 +163,7 @@
     <div class="flex justify-content-end">
       <p-button label="取消" severity="secondary" styleClass="mr-2" [outlined]="true"></p-button>
       <p-button *ngIf="dialogHeader == '編輯任務'" label="儲存" severity="warning"></p-button>
-      <p-button *ngIf="dialogHeader != '編輯任務'" label="新增" severity="warning"></p-button>
+      <p-button *ngIf="dialogHeader != '編輯任務'" label="新增" (click)="postTransportTask()" severity="warning"></p-button>
     </div>
   </p-dialog>
 </form>

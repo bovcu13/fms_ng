@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CarService } from "../../../../../services/car.service";
 import { DispatchService } from "../../../../../services/dispatch.service";
+import { ConfirmationService, MessageService } from "primeng/api";
 
 @Component({
   selector: 'app-dispatch-view',
   templateUrl: './dispatch-view.component.html',
-  styleUrls: ['./dispatch-view.component.scss']
+  styleUrls: ['./dispatch-view.component.scss'],
+  providers: [ConfirmationService, MessageService]
 })
 export class DispatchViewComponent implements OnInit {
   id: any = 0;
@@ -19,7 +21,9 @@ export class DispatchViewComponent implements OnInit {
     private dispatchServ: DispatchService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
 
@@ -146,5 +150,76 @@ export class DispatchViewComponent implements OnInit {
 
   onReorderTask(event: any) {
     console.log('ReorderEvent:', event);
+  }
+
+  updateTransportTask(id: string) {
+    const form = this.event_form.controls['form'].value.map((item:any) => (item.name));
+    console.log('form:', form)
+    let body = {
+      title: this.event_form.controls['title'].value,
+      form: form,
+      driver_id: this.event_form.controls['driver'].value.id,
+      vehicle_id: this.event_form.controls['vehicle'].value.id,
+      // start_time: this.event_form.controls['start_time'].value,
+    }
+    console.log('body:', body)
+    this.confirmationService.confirm({
+      message: `確定要儲存 ${this.event_form.controls['title'].value} 的修改？`,
+      header: '確定修改？',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.dispatchServ.patchTransportTask(id, body).subscribe({
+          next: res => {
+            console.log(res);
+            this.showSussess('修改');
+          },
+          error: (err) => {
+            console.log(err);
+            this.showError('修改');
+          },
+        });
+      },
+      reject: () => {
+        this.showCancel('修改');
+      }
+    });
+  }
+
+  deleteTransportTask() {
+    console.log('open')
+    this.confirmationService.confirm({
+      message: `確定要刪除 ${this.event_form.controls['title'].value} 嗎？`,
+      header: '確定刪除？',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.dispatchServ.deleteTransportTask(this.id).subscribe({
+          next: res => {
+            console.log('deleteDriver', res);
+            this.showSussess('刪除');
+            this.router.navigate(['/dispatch']);
+          },
+          error: (err) => {
+            console.log('err', err);
+            this.showError('刪除');
+          }
+        })
+      },
+      reject: () => {
+        this.showCancel('刪除');
+      }
+    });
+  }
+
+  // 操作結果提示
+  showSussess(info = '修改') {
+    this.messageService.add({ severity: 'success', summary: '完成', detail: `${info}成功！` });
+  }
+
+  showError(info = '修改') {
+    this.messageService.add({ severity: 'error', summary: '錯誤', detail: `${info}失敗！` });
+  }
+
+  showCancel(info: string = '修改') {
+    this.messageService.add({ severity: 'warn', summary: '取消', detail: `取消${info}！` });
   }
 }

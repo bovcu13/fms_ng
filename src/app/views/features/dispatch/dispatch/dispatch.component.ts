@@ -10,11 +10,13 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import { DispatchService } from "../../../../services/dispatch.service";
+import { ConfirmationService, MessageService } from "primeng/api";
 
 @Component({
   selector: 'app-dispatch',
   templateUrl: './dispatch.component.html',
-  styleUrls: ['./dispatch.component.scss']
+  styleUrls: ['./dispatch.component.scss'],
+  providers: [ConfirmationService, MessageService]
 })
 export class DispatchComponent implements OnInit {
   selectedEvent: any[] = [];
@@ -111,14 +113,16 @@ export class DispatchComponent implements OnInit {
     private dispatchServ: DispatchService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {
     this.event_form = this.fb.group({
-      code: ['', Validators.required],
+      code: [''],
       title: ['', [Validators.required]],
-      form: [''],
-      driver: [''],
-      vehicle: [''],
+      form: ['', [Validators.required]],
+      driver: ['', [Validators.required]],
+      vehicle: ['', [Validators.required]],
       start_time: ['', [Validators.required]],
       // end_date: ['', [Validators.required]],
       // type: ['', [Validators.required]],
@@ -158,7 +162,10 @@ export class DispatchComponent implements OnInit {
   getAllTransportOrder() {
     this.dispatchServ.getAllTransportOrder().subscribe({
       next: res => {
-        this.formData = res.body.transport_orders.map((item: any) => item.name);
+        this.formData = res.body.transport_orders.map((item:any) => ({
+          name: item.name,
+          id: item.id
+        }));
         console.log('formData:', this.formData)
       },
       error: (err) => {
@@ -174,6 +181,7 @@ export class DispatchComponent implements OnInit {
       next: res => {
         this.driverData = res.body.drivers.map((item:any) => ({
           name: item.name,
+          id: item.id
         }));
         console.log(this.driverData);
       },
@@ -190,6 +198,7 @@ export class DispatchComponent implements OnInit {
       next: res => {
         this.vehiclesData = res.body.vehicles.map((item: any) => ({
           name: item.license_plate,
+          id: item.id
         }));
       },
       error: (err) => {
@@ -203,4 +212,58 @@ export class DispatchComponent implements OnInit {
     this.router.navigate(['/dispatch_view', id])
   }
 
+  markAsDirty = false;
+  // 新增訂單
+  postTransportTask() {
+    if (this.event_form.invalid) {
+      this.markAsDirty = true;
+      // 使用 markAsDirty() 標記未填寫的必填欄位
+      Object.keys(this.event_form.controls).forEach(controlName => {
+        const control = this.event_form.get(controlName);
+        if (control?.hasError('required')) {
+          // 這個控制項是必填的，標記為已修改
+          control.markAsDirty();
+        }
+      });
+      console.log('未填完')
+      this.showError('新增');
+      return; // 停止繼續執行
+    }
+
+    const form = this.event_form.controls['form'].value.map((item:any) => (item.id));
+
+    let body = {
+      title: this.event_form.controls['title'].value,
+      form: form,
+      driver_id: this.event_form.controls['driver'].value.id,
+      vehicle_id: this.event_form.controls['vehicle'].value.id,
+      start_time: this.event_form.controls['start_time'].value,
+    }
+    this.dispatchServ.postTransportTask(body).subscribe({
+      next: data => {
+        this.showSussess('新增');
+        this.event_form.reset();
+        console.log(data);
+        console.log(body);
+      },
+      error: (err) => {
+        this.showError('新增');
+        console.log(err);
+        console.log(body);
+      },
+    });
+  }
+
+  // 操作結果提示
+  showSussess(info = '修改') {
+    this.messageService.add({ severity: 'success', summary: '完成', detail: `${info}成功！` });
+  }
+
+  showError(info = '修改') {
+    this.messageService.add({ severity: 'error', summary: '錯誤', detail: `${info}失敗！` });
+  }
+
+  showCancel(info: string = '修改') {
+    this.messageService.add({ severity: 'warn', summary: '取消', detail: `取消${info}！` });
+  }
 }
