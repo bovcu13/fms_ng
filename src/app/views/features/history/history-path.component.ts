@@ -382,24 +382,21 @@ export class HistoryPathComponent implements OnInit {
         // 根據資料來源新增url, addr, direction
         this.transformedData = this.products.map(item => ({
           ...item,
+          lng: item.lon,
           url: this.getUrlByDirection(item.heading),
-          addr: "",
           direction: this.parseHeading(item.heading)
         }));
 
         // 包裝路徑資料
         this.routeCoordinates = this.products.map(item => ({
           lat: item.lat,
-          lng: item.lng
+          lng: item.lon
         }));
 
         // 將路徑資料顯示在地圖上
         this.runSnapToRoad(this.routeCoordinates)
 
         console.log("轉換後資料:", this.transformedData);
-
-        // 轉換成中文地址
-        this.geocodePositions();
 
         this.map.setCenter(this.routeCoordinates[0]);
         this.map.setZoom(20);

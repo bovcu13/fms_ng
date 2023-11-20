@@ -43,7 +43,7 @@ export class MainComponent implements OnInit {
         )
         .subscribe();
 
-    interval(7000)  // 每隔15秒
+    interval(15000)  // 每隔15秒
       .pipe(
         mergeMap(() => this.getAllNewGpsRequest()),  // 取得新資料
         tap(res => {
@@ -78,7 +78,7 @@ export class MainComponent implements OnInit {
       { field: 'date_time', header: '回傳時間' },
       { field: 'speed', header: '速度' },
       { field: 'direction', header: '方向' },
-      { field: 'addr', header: '位置' },
+      { field: 'address', header: '位置' },
       { field: 'vehicle_name', header: '車輛名稱' },
       { field: 'statusAccumulated', header: '狀態累積' },
       { field: 'departureTime', header: '出車時間' },
@@ -461,7 +461,6 @@ export class MainComponent implements OnInit {
     return this.carServ.getAllNewGpsRequest().pipe(
       tap(res => {
         this.products = res.body.gps;
-        console.log("來源資料:", res);
       })
     );
   }
@@ -486,8 +485,8 @@ export class MainComponent implements OnInit {
     }));
     this.calculationCarStatus(this.carStatus);
     // 轉換成中文地址
-    this.geocodePositions();
-    console.log("轉換後資料:", this.transformedData)
+    // this.geocodePositions();
+    console.log("資料:", this.transformedData)
   }
 
   statusCount: StatusCount = {};
@@ -510,7 +509,7 @@ export class MainComponent implements OnInit {
       const marker = new google.maps.Marker({
         position: new google.maps.LatLng(location.lat, location.lng),
         map: this.map,
-        title: location.addr,
+        title: location.address,
         icon: {
           url: location.url,
           scaledSize: new google.maps.Size(60, 60),
