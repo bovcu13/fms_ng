@@ -1,133 +1,136 @@
 <div class="flex justify-content-center">
-    <div class="grid">
-        <div class="col-12">
-          <p-table>
-            <ng-template pTemplate="caption">
-              <div class="flex align-items-center justify-content-between">
-                <div>
-                  影像監控
-                </div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div>
-                  <p-button class="mr-2" (click)="plus()" label="Add" icon="pi pi-plus"></p-button>
-                  <p-button class="mr-5" (click)="minus()" label="Remove" icon="pi pi-minus"></p-button>
-                </div>
-                <div></div>
-                <div>
-                  <p-selectButton [options]="paymentOptions" [(ngModel)]="value"
-                                  optionLabel="name" optionValue="value" (onChange)="changeRow()"></p-selectButton>
-                </div>
-                <div>
-                  <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right"
-                                  [ngModel]="false" (ngModelChange)="toggleSidebar()"></p-toggleButton>
-                </div>
-              </div>
-            </ng-template>
-          </p-table>
-        </div>
-        <div [ngClass]="getMiddleDivClass()">
-            <div class="grid">
-                <ng-container *ngFor="let item of layout">
-<!--                    <div class="col-{{12/rows}}">-->
-<!--                        <vg-player class="{{height}}">-->
-<!--                            <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>-->
-<!--                                &lt;!&ndash;      <source src="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4" type="video/mp4">&ndash;&gt;-->
-<!--                                <source src="assets/vdo/winnie.mp4" type="video/mp4">-->
-<!--                            </video>-->
-<!--                        </vg-player>-->
-<!--                      <vg-player class="{{height}}">-->
-                      <video id="videoElement" controls="controls" x5-video-player-fullscreen="true"
-                             x5-video-orientation="landscape" class="{{height}} col-{{12/rows}}"
-                             >Your browser is too old to support HTML5 video.
-                      </video>
-<!--                      </vg-player>-->
-<!--                    </div>-->
-                </ng-container>
+  <div class="grid">
+    <div class="col-12">
+      <p-table>
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+            <div>
+              車機影像
             </div>
-        </div>
-        <div class="col-12 md:col-12 lg:col-4" *ngIf="sidebarRightOpen">
-            <div class="col-12">
-                <p-dropdown [options]="carGroups" optionLabel="name" placeholder="選擇車隊"></p-dropdown>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div>
+              <p-button class="mr-2" (click)="plus()" icon="pi pi-plus"></p-button>
+              <p-button class="mr-5" (click)="minus()" icon="pi pi-minus"></p-button>
             </div>
-            <div class="col-12">
-                <p-table [value]="monitorStatus" selectionMode="single" [(selection)]="selectedCar"
-                         [scrollable]="true" scrollHeight="{{scrollHeight}}"
-                         [tableStyle]="{ 'min-width': '40rem' }" (onRowSelect)="Select()">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>狀態</th>
-                            <th>車牌</th>
-                            <th>駕駛姓名</th>
-                            <th>車輛名稱</th>
-                            <th>監控鏡頭</th>
-                            <th>定位位址</th>
-                            <th>車速</th>
-                        <tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-car>
-                        <tr [pSelectableRow]="car">
-                            <td>{{car.status}}</td>
-                            <td>{{car.licensePlate}}</td>
-                            <td>{{car.driverName}}</td>
-                            <td>{{car.vehicleName}}</td>
-                            <td>{{car.camera}}</td>
-                            <td>{{car.addr}}</td>
-                            <td>{{car.speed}}</td>
-                        <tr>
-                    </ng-template>
-                </p-table>
+            <div></div>
+            <div>
+              <p-selectButton [options]="paymentOptions" [(ngModel)]="value"
+                              optionLabel="name" optionValue="value" (onChange)="changeRow()"></p-selectButton>
             </div>
-            <div class="col-12 flex justify-content-center">
-                <p-toggleButton onIcon="pi pi-chevron-down" offIcon="pi pi-chevron-up"
-                                [ngModel]="true" (ngModelChange)="toggleMap()" class="toggleMap"></p-toggleButton>
+            <div>
+              <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right"
+                              [ngModel]="false" (ngModelChange)="toggleSidebar()"></p-toggleButton>
             </div>
-            <ng-container *ngIf="mapOpen">
-                <google-map class="w-full" height="35vh" width="100%"
-                            [center]="center" [zoom]="zoom" [options]="options"
-                            (mapClick)="moveMap($event)" (mapMousemove)="move($event)" #map>
-                    <map-marker #markerElem="mapMarker"
-                                *ngFor="let marker of markers"
-                                [position]="marker.position"
-                                [title]="marker.title"
-                                [icon]="marker.icon" (mapClick)="openInfo(markerElem,marker.label?.text)">
-                    </map-marker>
-                    <map-info-window>{{infoContent}}</map-info-window>
-                </google-map>
-            </ng-container>
-        </div>
-        <!--  <ng-container *ngIf="12 % rows != 0">-->
-        <!--    <div class="grid">-->
-        <!--      <ng-container *ngFor="let item of layout">-->
-        <!--        <div class="col-3">-->
-        <!--          <vg-player>-->
-        <!--            <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>-->
-        <!--              &lt;!&ndash;      <source src="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4" type="video/mp4">&ndash;&gt;-->
-        <!--              <source src="assets/vdo/winnie.mp4" type="video/mp4">-->
-        <!--            </video>-->
-        <!--          </vg-player>-->
-        <!--          <span>{{item + 1}}</span>-->
-        <!--        </div>-->
-        <!--      </ng-container>-->
-        <!--    </div>-->
-        <!--  </ng-container>-->
-        <!--  <ng-container *ngIf="12 % rows == 0">-->
-        <!--    <div class="col-12">-->
-        <!--      <div class="grid">-->
-        <!--        <ng-container *ngFor="let item of layout">-->
-        <!--          <div class="col-{{12/rows}}">-->
-        <!--            <vg-player>-->
-        <!--              <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>-->
-        <!--                &lt;!&ndash;      <source src="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4" type="video/mp4">&ndash;&gt;-->
-        <!--                <source src="assets/vdo/winnie.mp4" type="video/mp4">-->
-        <!--              </video>-->
-        <!--            </vg-player>-->
-        <!--            <span>{{item + 1}}</span>-->
-        <!--          </div>-->
-        <!--        </ng-container>-->
-        <!--      </div>-->
-        <!--    </div>-->
-        <!--  </ng-container>-->
+          </div>
+        </ng-template>
+      </p-table>
     </div>
+    <div [ngClass]="getMiddleDivClass()">
+      <div class="grid">
+        <ng-container *ngFor="let item of layout">
+          <!--                    <div class="col-{{12/rows}}">-->
+          <!--                        <vg-player class="{{height}}">-->
+          <!--                            <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>-->
+          <!--                                &lt;!&ndash;      <source src="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4" type="video/mp4">&ndash;&gt;-->
+          <!--                                <source src="assets/vdo/winnie.mp4" type="video/mp4">-->
+          <!--                            </video>-->
+          <!--                        </vg-player>-->
+          <!--                      <vg-player class="{{height}}">-->
+          <video id="videoElement" controls="controls" x5-video-player-fullscreen="true"
+                 x5-video-orientation="landscape" class="{{height}} col-{{12/rows}}"
+          >Your browser is too old to support HTML5 video.
+          </video>
+          <!--                      </vg-player>-->
+          <!--                    </div>-->
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-12 md:col-12 lg:col-4" *ngIf="sidebarRightOpen">
+      <div class="col-12">
+        <p-card>
+        <p-table [value]="products"
+                 [loading]="loading"
+                 selectionMode="single"
+                 [(selection)]="selectedCar"
+                 [scrollable]="true"
+                 scrollHeight="{{scrollHeight}}"
+                 [tableStyle]="{ 'min-width': '40rem' }"
+                 (onRowSelect)="Select()"
+                 styleClass="p-datatable-sm">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>狀態</th>
+              <th>車牌</th>
+              <th>司機</th>
+              <th>鏡頭</th>
+              <th>位置</th>
+              <th>車速</th>
+            <tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-car>
+            <tr [pSelectableRow]="car">
+              <td>{{car.status}}</td>
+              <td>{{car.license_plate}}</td>
+              <td>{{car.driver}}</td>
+              <td> - </td>
+              <td>{{car.address}}</td>
+              <td> - </td>
+            <tr>
+          </ng-template>
+        </p-table>
+        </p-card>
+      </div>
+      <div class="col-12 flex justify-content-center">
+        <p-toggleButton onIcon="pi pi-chevron-down" offIcon="pi pi-chevron-up"
+                        [ngModel]="true" (ngModelChange)="toggleMap()" class="toggleMap"></p-toggleButton>
+      </div>
+      <ng-container *ngIf="mapOpen">
+        <google-map class="w-full" height="35vh" width="100%"
+                    [center]="center" [zoom]="zoom" [options]="options"
+                    (mapClick)="moveMap($event)" (mapMousemove)="move($event)" #map>
+          <map-marker #markerElem="mapMarker"
+                      *ngFor="let marker of markers"
+                      [position]="marker.position"
+                      [title]="marker.title"
+                      [icon]="marker.icon" (mapClick)="openInfo(markerElem,marker.label?.text)">
+          </map-marker>
+          <map-info-window>{{infoContent}}</map-info-window>
+        </google-map>
+      </ng-container>
+    </div>
+    <!--  <ng-container *ngIf="12 % rows != 0">-->
+    <!--    <div class="grid">-->
+    <!--      <ng-container *ngFor="let item of layout">-->
+    <!--        <div class="col-3">-->
+    <!--          <vg-player>-->
+    <!--            <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>-->
+    <!--              &lt;!&ndash;      <source src="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4" type="video/mp4">&ndash;&gt;-->
+    <!--              <source src="assets/vdo/winnie.mp4" type="video/mp4">-->
+    <!--            </video>-->
+    <!--          </vg-player>-->
+    <!--          <span>{{item + 1}}</span>-->
+    <!--        </div>-->
+    <!--      </ng-container>-->
+    <!--    </div>-->
+    <!--  </ng-container>-->
+    <!--  <ng-container *ngIf="12 % rows == 0">-->
+    <!--    <div class="col-12">-->
+    <!--      <div class="grid">-->
+    <!--        <ng-container *ngFor="let item of layout">-->
+    <!--          <div class="col-{{12/rows}}">-->
+    <!--            <vg-player>-->
+    <!--              <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>-->
+    <!--                &lt;!&ndash;      <source src="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4" type="video/mp4">&ndash;&gt;-->
+    <!--                <source src="assets/vdo/winnie.mp4" type="video/mp4">-->
+    <!--              </video>-->
+    <!--            </vg-player>-->
+    <!--            <span>{{item + 1}}</span>-->
+    <!--          </div>-->
+    <!--        </ng-container>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--  </ng-container>-->
+  </div>
 </div>
