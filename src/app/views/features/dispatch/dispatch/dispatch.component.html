@@ -11,7 +11,7 @@
             <p-button icon="pi pi-plus" (click)="showAddEventDialog('add')" [text]="true"></p-button>
           </div>
           <ng-container *ngIf="showList == true">
-            <p-table [value]="dispatchEvents"
+            <p-table [value]="eventData"
                      [(selection)]="selectedEvent"
                      (selectionChange)="handleCheckbox($event)"
                      [paginator]="true"
@@ -55,11 +55,11 @@
                   </td>
                   <td class="text-sm" (click)="goToDispatchView(product.id)">
                     <img src="assets/image/car2.png" width="32" style="vertical-align: middle"/>
-                    <span class="ml-2 vertical-align-middle">{{ product.driver }}</span>
+                    <span class="ml-2 vertical-align-middle">{{ product.driver_name }}</span>
                   </td>
                   <td class="text-sm" (click)="goToDispatchView(product.id)">
                     <img src="assets/image/sport-car.png" width="32" style="vertical-align: middle"/>
-                    <span class="ml-2 vertical-align-middle">{{ product.vehicle }}</span>
+                    <span class="ml-2 vertical-align-middle">{{ product.vehicle_name }}</span>
                   </td>
                 </tr>
               </ng-template>
@@ -120,17 +120,18 @@
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
         <label class="font-semibold">託運訂單</label>
-        <p-multiSelect placeholder="選擇訂單" [options]="formList"
+        <p-multiSelect placeholder="選擇訂單" [options]="formData"
                        display="chip" [showClear]="true"></p-multiSelect>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
         <label class="font-semibold">司機</label>
-        <p-dropdown placeholder="選擇司機" formControlName="driver" [options]="driverData"
-                    optionLabel="name"></p-dropdown>
+        <p-dropdown placeholder="選擇司機" formControlName="driver" appendTo="body"
+                    [options]="driverData" optionLabel="name"></p-dropdown>
       </div>
       <div class="field col-12 md:col-6 lg:col-6">
         <label class="font-semibold">車輛</label>
-        <p-dropdown placeholder="選擇車輛" formControlName="vehicle"></p-dropdown>
+        <p-dropdown placeholder="選擇車輛" formControlName="vehicle" appendTo="body"
+                    [options]="vehiclesData" optionLabel="name"></p-dropdown>
       </div>
       <!--      <div class="field col-12 md:col-6 lg:col-6">-->
       <!--        <label class="font-semibold">板車</label>-->
@@ -139,7 +140,9 @@
       <div class="field col-12 md:col-6 lg:col-6">
         <label class="font-semibold">開始時間</label>
         <p-calendar formControlName="start_time"
-                    [appendTo]="'body'" [showTime]="true"></p-calendar>
+                    [minDate]="minDate"
+                    [appendTo]="'body'"
+                    [showTime]="true"></p-calendar>
       </div>
       <!--      <div class="field col-12 md:col-6 lg:col-6">-->
       <!--        <label class="font-semibold">結束時間</label>-->

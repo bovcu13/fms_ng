@@ -23,7 +23,7 @@
                       </div>
                       <div class="field col-12 md:col-6 lg:col-6">
                         <label class="font-semibold">託運訂單</label>
-                        <p-multiSelect formControlName="form" [options]="formList"
+                        <p-multiSelect formControlName="form" [options]="formData"
                                        optionLabel="name"
                                        placeholder="選擇訂單" display="chip"
                                        [showClear]="true"></p-multiSelect>
@@ -79,7 +79,7 @@
                     <p-tabView>
                       <p-tabPanel header="運輸順序">
                         <div class="card xl:flex xl:justify-content-center">
-                          <p-orderList [value]="taskList"
+                          <p-orderList [value]="formList"
                                        (onSelectionChange)="onClickTask($event)"
                                        (onReorder)="onReorderTask($event)"
                                        [responsive]="true" [dragdrop]="true">
@@ -110,8 +110,8 @@
                   <p-card>
                     <p-tabView>
                       <p-tabPanel header="運輸貨品清單">
-                        <h4 class="text-center">{{taskData.name}} {{goodsForm}}</h4>
-                        <p-dataView [value]="shippingList">
+                        <h4 class="text-center">{{formName}}</h4>
+                        <p-dataView [value]="shipList">
                           <ng-template let-product pTemplate="listItem">
                             <div pRipple class="col-12">
                               <div
@@ -124,7 +124,7 @@
                                     <div class="flex align-items-center gap-3">
                                 <span class="flex align-items-center gap-2">
                                 <i class="pi pi-inbox text-xs"></i>
-                                <span class="text-xs">{{ product.qty }}</span>
+                                <span class="text-xs">{{ product.quantity }}</span>
                                   </span>
                                       <span class="flex align-items-center gap-2">
                                 <i class="pi pi-tag text-xs"></i>
@@ -132,7 +132,7 @@
                                 </span>
                                       <span class="flex align-items-center gap-2">
                                 <i class="pi pi-truck text-xs"></i>
-                                <span class="text-xs">板車</span>
+                                <span class="text-xs">{{ product.trailer_code }}</span>
                                   </span>
                                     </div>
                                   </div>

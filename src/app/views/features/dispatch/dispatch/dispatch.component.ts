@@ -9,6 +9,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
+import { DispatchService } from "../../../../services/dispatch.service";
 
 @Component({
   selector: 'app-dispatch',
@@ -23,7 +24,6 @@ export class DispatchComponent implements OnInit {
   }
 
   list: any = list;
-  formList: string[] = [];
 
   showList = true;
   showListBtn() {
@@ -108,12 +108,13 @@ export class DispatchComponent implements OnInit {
 
   constructor(
     private carServ: CarService,
+    private dispatchServ: DispatchService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
   ) {
     this.event_form = this.fb.group({
-      id: ['', Validators.required],
+      code: ['', Validators.required],
       title: ['', [Validators.required]],
       form: [''],
       driver: [''],
@@ -132,16 +133,38 @@ export class DispatchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getFormListName();
+    this.getAllTransportTask();
+    this.getAllTransportOrder();
     this.getAllDriversRequest();
+    this.getAllVehiclesRequest();
   }
 
-  // 取得訂單
-  getFormListName() {
-    list.forEach(item => {
-      this.formList.push(item.name);
+  // 取得派工調度
+  eventData: any;
+  getAllTransportTask() {
+    this.dispatchServ.getAllTransportTask().subscribe({
+      next: res => {
+        this.eventData = res.body.transport_tasks;
+        console.log('eventData:', this.eventData)
+      },
+      error: (err) => {
+        console.log('getAllTransportTaskError:', err);
+      },
     });
-    console.log(this.formList);
+  }
+
+  // 取得表單
+  formData: any;
+  getAllTransportOrder() {
+    this.dispatchServ.getAllTransportOrder().subscribe({
+      next: res => {
+        this.formData = res.body.transport_orders.map((item: any) => item.name);
+        console.log('formData:', this.formData)
+      },
+      error: (err) => {
+        console.log('getAllTransportOrderError:', err);
+      },
+    });
   }
 
   // 取得司機
@@ -153,6 +176,21 @@ export class DispatchComponent implements OnInit {
           name: item.name,
         }));
         console.log(this.driverData);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  // 取得車輛
+  vehiclesData: any;
+  getAllVehiclesRequest() {
+    this.carServ.getAllVehiclesRequest(1, 20).subscribe({
+      next: res => {
+        this.vehiclesData = res.body.vehicles.map((item: any) => ({
+          name: item.license_plate,
+        }));
       },
       error: (err) => {
         console.log(err);
