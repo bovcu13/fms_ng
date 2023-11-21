@@ -3,6 +3,7 @@ import { MapInfoWindow, MapMarker } from "@angular/google-maps";
 import { monitorStatus } from "../../../shared/data/monitor";
 import * as flvjs from 'flv.js';
 import { CarService } from "../../../services/car.service";
+import { Table } from "primeng/table";
 
 @Component({
   selector: 'app-monitor',
@@ -27,6 +28,7 @@ export class MonitorComponent implements AfterViewInit ,OnInit {
   player: any;
   flvPlayer: any;
   isPlay: boolean = false;
+  trafficVisable: boolean = false;
 
   // 調整視窗顯示排版 & 高度
   paymentOptions: any[] = [
@@ -85,6 +87,7 @@ export class MonitorComponent implements AfterViewInit ,OnInit {
     { name: '車隊(D)', code: 'D' },
   ]
 
+  @ViewChild('dt1') dt1!: Table;
   @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   @ViewChild('map', { static: false }) map: any;
@@ -144,12 +147,6 @@ export class MonitorComponent implements AfterViewInit ,OnInit {
     }
     console.log(flvjs.default.getFeatureList());
   }
-
-
-
-
-
-
 
   ngOnInit(): void {
     this.getAllNewGpsRequest();
@@ -355,6 +352,10 @@ export class MonitorComponent implements AfterViewInit ,OnInit {
         }
       });
     });
+  }
+
+  filterGlobal(event: any) {
+    this.dt1.filterGlobal(event.target.value, 'contains')
   }
 
   getUrlByDirection(heading: number, status: string) {
