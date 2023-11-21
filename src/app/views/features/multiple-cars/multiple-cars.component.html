@@ -10,6 +10,11 @@
             <ng-template pTemplate="header">
               <span>查詢{{search}}</span>
             </ng-template>
+            <div class="text-center" *ngIf="saveSelectedProduct.length === 0">
+              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+              <h4>尚未選擇</h4>
+              <p>請在右側選擇欲查看車輛</p>
+            </div>
             <div class="grid">
               <ng-container *ngFor="let selected of selectedProduct">
                 <google-map class="border-3" [ngClass]="showLayout()" height="100%" width="100%"
