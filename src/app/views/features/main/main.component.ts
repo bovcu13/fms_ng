@@ -34,7 +34,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.mapInit();
-    this.colsInit();
+    // this.colsInit();
     // this.itemInit();
 
     this.getAllNewGpsRequest()
@@ -62,42 +62,42 @@ export class MainComponent implements OnInit {
   }
 
   // 顯示欄位
-  cols!: Column[];
-  _selectedColumns!: Column[];
-  @Input() get selectedColumns(): any[] {
-    return this._selectedColumns;
-  }
-
-  set selectedColumns(val: any[]) {
-    //restore original order
-    this._selectedColumns = this.cols.filter((col) => val.includes(col));
-  }
-
-  clearMultiSelect() {
-    // onClear事件
-    this._selectedColumns = [];
-  }
-
-  colsInit() {
-    this.cols = [
-      { field: 'phone', header: '電話' },
-      { field: 'date_time', header: '回傳時間' },
-      { field: 'speed', header: '速度' },
-      { field: 'direction', header: '方向' },
-      { field: 'address', header: '位置' },
-      { field: 'vehicle_name', header: '車輛名稱' },
-      { field: 'statusAccumulated', header: '狀態累積' },
-      { field: 'departureTime', header: '出車時間' },
-      { field: 'drivingTime', header: '開車時間' },
-      { field: 'temp', header: '溫度' },
-      // { field: 'progress', header: '裝卸進度' },
-    ];
-
-    this._selectedColumns = [
-      { field: 'address', header: '位置' },
-      // { field: 'progress', header: '裝卸進度' },
-    ]
-  }
+  // cols!: Column[];
+  // _selectedColumns!: Column[];
+  // @Input() get selectedColumns(): any[] {
+  //   return this._selectedColumns;
+  // }
+  //
+  // set selectedColumns(val: any[]) {
+  //   //restore original order
+  //   this._selectedColumns = this.cols.filter((col) => val.includes(col));
+  // }
+  //
+  // clearMultiSelect() {
+  //   // onClear事件
+  //   this._selectedColumns = [];
+  // }
+  //
+  // colsInit() {
+  //   this.cols = [
+  //     { field: 'phone', header: '電話' },
+  //     { field: 'date_time', header: '回傳時間' },
+  //     { field: 'speed', header: '速度' },
+  //     { field: 'direction', header: '方向' },
+  //     { field: 'address', header: '位置' },
+  //     { field: 'vehicle_name', header: '車輛名稱' },
+  //     { field: 'statusAccumulated', header: '狀態累積' },
+  //     { field: 'departureTime', header: '出車時間' },
+  //     { field: 'drivingTime', header: '開車時間' },
+  //     { field: 'temp', header: '溫度' },
+  //     // { field: 'progress', header: '裝卸進度' },
+  //   ];
+  //
+  //   this._selectedColumns = [
+  //     { field: 'address', header: '位置' },
+  //     // { field: 'progress', header: '裝卸進度' },
+  //   ]
+  // }
 
   // 功能列
   // items!: MenuItem[];
