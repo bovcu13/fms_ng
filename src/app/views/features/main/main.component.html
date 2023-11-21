@@ -5,18 +5,6 @@
         <div id="map" style="height: 50vh; width: 100%;position: relative"></div>
         <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button" size="small" severity="info"
                   [raised]="true" [text]="true" styleClass="bg-white"></p-button>
-        <div class="func">
-          <p-speedDial showIcon="pi pi-map" buttonClassName="p-button-secondary"
-                       direction="right" [model]="items">
-          </p-speedDial>
-        </div>
-        <div class="rang">
-          <p-toggleButton (onChange)="toggleIsRanging()"
-                          onIcon="fas fa-ruler-horizontal"
-                          offIcon="fas fa-ruler-horizontal"
-                          [style]="{ width: '2rem', height: '2rem' }">
-          </p-toggleButton>
-        </div>
         <div *ngIf="recordDistances.length >= 2" class="kmh">{{distanceText}}</div>
         <div *ngIf="selectedProduct" class="addr">{{selectedProduct.address}}</div>
       </div>
@@ -59,19 +47,51 @@
            </span>
             </div>
           </div>
-          <p-table [columns]="selectedColumns"
+          <p-table #dt1
+                   [columns]="selectedColumns"
                    [value]="transformedData"
                    selectionMode="single"
                    [(selection)]="selectedProduct"
                    [scrollable]="true"
                    scrollHeight="30vh"
                    (onRowSelect)="Select()"
+                   [globalFilterFields]="['status', 'license_plate', 'driver', 'address', 'direction', 'speed', 'date_time', 'vehicle_name']"
                    styleClass="text-sm p-datatable-sm p-datatable-striped">
             <ng-template pTemplate="caption">
-              <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns"
-                             (onClear)="clearMultiSelect()" [showClear]="true" [maxSelectedLabels]="4"
-                             optionLabel="header" selectedItemsLabel="已選擇 {0} 個欄位"
-                             placeholder="點擊選擇要顯示的欄位" styleClass="text-sm"></p-multiSelect>
+              <div class="flex justify-content-start">
+                <div class="col-6">
+                  <span class="p-input-icon-left mr-auto">
+                    <i class="pi pi-search text-sm"></i>
+                    <input pInputText type="text"
+                           (input)="filterGlobal($event)"
+                           class="text-sm"
+                           placeholder="搜尋 .."/>
+                  </span>
+                </div>
+                <div class="col-4 ml-auto">
+                  <p-multiSelect [options]="cols"
+                                 [(ngModel)]="selectedColumns"
+                                 (onClear)="clearMultiSelect()"
+                                 [showClear]="true"
+                                 [maxSelectedLabels]="4"
+                                 optionLabel="header"
+                                 selectedItemsLabel="已選擇 {0} 個欄位"
+                                 placeholder="點擊選擇要顯示的欄位"
+                                 styleClass="text-sm"></p-multiSelect>
+                </div>
+                <div class="col-2 ml-auto">
+                  <p-toggleButton (onChange)="toggleIsRanging()"
+                                  onIcon="fas fa-ruler-horizontal"
+                                  offIcon="fas fa-ruler-horizontal"
+                                  styleClass="border-circle mr-2"
+                                  pTooltip="測量距離">
+                  </p-toggleButton>
+                  <p-button icon="fas fa-compress-arrows-alt" (click)="setZoom7()"
+                            pTooltip="全景地圖" styleClass="border-circle mr-2"></p-button>
+                  <p-button icon="pi pi-truck" (click)="toggleTraffic()"
+                            pTooltip="顯示路況" styleClass="border-circle"></p-button>
+                </div>
+              </div>
             </ng-template>
             <ng-template pTemplate="header" let-columns>
               <tr>
@@ -112,17 +132,6 @@
     <div class="col-12 md:col-5 lg:col-5">
       <p-card styleClass="h-screen">
         <p-tabView>
-          <!--          <p-tabPanel>-->
-          <!--            <ng-template pTemplate="header">-->
-          <!--              <span>車隊查詢</span>-->
-          <!--            </ng-template>-->
-          <!--            <div class="grid">-->
-          <!--              <div class="col-12 md:col-6 lg:col-6">-->
-          <!--                <p-dropdown [options]="cars" [ngModel]="cars" optionLabel="name" placeholder="選擇車牌"></p-dropdown>-->
-          <!--              </div>-->
-          <!--            </div>-->
-
-          <!--          </p-tabPanel>-->
           <p-tabPanel>
             <ng-template pTemplate="header">
               <span>派工與調度</span>

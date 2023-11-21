@@ -1,8 +1,9 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api'
 import { CarService } from "../../../services/car.service";
 import { mergeMap, switchMap, tap } from "rxjs/operators";
 import { interval, of } from "rxjs";
+import { Table } from "primeng/table";
 
 declare var google: any;
 
@@ -123,6 +124,18 @@ export class MainComponent implements OnInit {
         }
       }
     ];
+  }
+
+  @ViewChild('dt1') dt1!: Table;
+
+  filterGlobal(event: any) {
+    this.dt1.filterGlobal(event.target.value, 'contains')
+  }
+
+  setZoom7() {
+    const centerLatLng = new google.maps.LatLng(23.83876, 120.9876);
+    this.map.setCenter(centerLatLng);
+    this.map.setZoom(7);
   }
 
   // 地圖
