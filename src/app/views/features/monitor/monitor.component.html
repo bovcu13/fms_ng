@@ -1,90 +1,97 @@
 <div class="flex justify-content-center">
   <div class="grid">
-    <div class="col-12">
-      <p-table>
-        <ng-template pTemplate="caption">
-          <div class="flex align-items-center justify-content-between">
-            <div>
-              車機影像
-            </div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div>
-              <p-button class="mr-2" (click)="plus()" icon="pi pi-plus"></p-button>
-              <p-button class="mr-5" (click)="minus()" icon="pi pi-minus"></p-button>
-            </div>
-            <div></div>
-            <div>
-              <p-selectButton [options]="paymentOptions" [(ngModel)]="value"
-                              optionLabel="name" optionValue="value" (onChange)="changeRow()"></p-selectButton>
-            </div>
-            <div>
-              <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right"
-                              [ngModel]="false" (ngModelChange)="toggleSidebar()"></p-toggleButton>
-            </div>
-          </div>
-        </ng-template>
-      </p-table>
+    <div class="col-12 mt-2">
+      <div class="flex align-items-center justify-content-start">
+        <div class="ml-3">
+          <p-selectButton [options]="paymentOptions" [(ngModel)]="value"
+                          optionLabel="name" optionValue="value" (onChange)="changeRow()"></p-selectButton>
+        </div>
+        <p-button class="ml-3 mr-2" (click)="plus()" icon="pi pi-plus"></p-button>
+        <p-button class="mr-2" (click)="minus()" icon="pi pi-minus"></p-button>
+        <p-toggleButton onIcon="pi pi-chevron-left" offIcon="pi pi-chevron-right"
+                        styleClass="mr-3"
+                        [ngModel]="false" (ngModelChange)="toggleSidebar()"></p-toggleButton>
+
+      </div>
     </div>
     <div [ngClass]="getMiddleDivClass()">
-      <div class="grid">
-        <ng-container *ngFor="let item of layout">
-          <!--                    <div class="col-{{12/rows}}">-->
-          <!--                        <vg-player class="{{height}}">-->
-          <!--                            <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>-->
-          <!--                                &lt;!&ndash;      <source src="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4" type="video/mp4">&ndash;&gt;-->
-          <!--                                <source src="assets/vdo/winnie.mp4" type="video/mp4">-->
-          <!--                            </video>-->
-          <!--                        </vg-player>-->
-          <!--                      <vg-player class="{{height}}">-->
-          <video id="videoElement" controls="controls" x5-video-player-fullscreen="true"
-                 x5-video-orientation="landscape" class="{{height}} col-{{12/rows}}"
-          >Your browser is too old to support HTML5 video.
-          </video>
-          <!--                      </vg-player>-->
-          <!--                    </div>-->
-        </ng-container>
-      </div>
+      <ng-container *ngFor="let item of layout">
+        <!--                    <div class="col-{{12/rows}}">-->
+        <!--                        <vg-player class="{{height}}">-->
+        <!--                            <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>-->
+        <!--                                &lt;!&ndash;      <source src="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4" type="video/mp4">&ndash;&gt;-->
+        <!--                                <source src="assets/vdo/winnie.mp4" type="video/mp4">-->
+        <!--                            </video>-->
+        <!--                        </vg-player>-->
+        <!--                      <vg-player class="{{height}}">-->
+        <video id="videoElement" controls="controls" x5-video-player-fullscreen="true"
+               x5-video-orientation="landscape" class="{{height}} col-{{12/rows}}"
+        >Your browser is too old to support HTML5 video.
+        </video>
+        <!--                      </vg-player>-->
+        <!--                    </div>-->
+      </ng-container>
     </div>
     <div class="col-12 md:col-12 lg:col-4" *ngIf="sidebarRightOpen">
       <div class="col-12">
         <p-card>
-        <p-table [value]="products"
-                 [loading]="loading"
-                 selectionMode="single"
-                 [(selection)]="selectedCar"
-                 [scrollable]="true"
-                 scrollHeight="{{scrollHeight}}"
-                 [tableStyle]="{ 'min-width': '40rem' }"
-                 (onRowSelect)="Select()"
-                 styleClass="p-datatable-sm">
-          <ng-template pTemplate="header">
-            <tr>
-              <th>狀態</th>
-              <th>車牌</th>
-              <th>司機</th>
-              <th>鏡頭</th>
-              <th>位置</th>
-              <th>車速</th>
-            <tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-car>
-            <tr [pSelectableRow]="car">
-              <td>{{car.status}}</td>
-              <td>{{car.license_plate}}</td>
-              <td>{{car.driver}}</td>
-              <td> - </td>
-              <td>{{car.address}}</td>
-              <td> - </td>
-            <tr>
-          </ng-template>
-        </p-table>
+          <p-tabView>
+            <p-tabPanel>
+              <ng-template pTemplate="header">
+                <span>車隊查詢</span>
+              </ng-template>
+              <p-table #dt1
+                       [value]="products"
+                       [loading]="loading"
+                       selectionMode="single"
+                       [(selection)]="selectedCar"
+                       [scrollable]="true"
+                       scrollHeight="{{scrollHeight}}"
+                       [tableStyle]="{ 'min-width': '40rem' }"
+                       (onRowSelect)="Select()"
+                       [globalFilterFields]="['status', 'license_plate', 'driver', 'address']"
+                       styleClass="text-sm p-datatable-sm">
+                <ng-template pTemplate="caption">
+                  <div class="flex justify-content-start">
+                  <span class="p-input-icon-left mr-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="filterGlobal($event)" placeholder="搜尋 .."/>
+                  </span>
+                    <div class="ml-auto">
+                      <p-toggleButton pTooltip="顯示路況" styleClass="border-circle" [(ngModel)]="trafficVisable"
+                                      onIcon="pi pi-truck" offIcon="pi pi-truck"></p-toggleButton>
+                    </div>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>狀態</th>
+                    <th>車牌</th>
+                    <th>司機</th>
+                    <th>鏡頭</th>
+                    <th>位置</th>
+                    <th>車速</th>
+                  <tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-car>
+                  <tr [pSelectableRow]="car">
+                    <td>{{car.status}}</td>
+                    <td>{{car.license_plate}}</td>
+                    <td>{{car.driver}}</td>
+                    <td> -</td>
+                    <td>{{car.address}}</td>
+                    <td> -</td>
+                  <tr>
+                </ng-template>
+              </p-table>
+            </p-tabPanel>
+          </p-tabView>
         </p-card>
       </div>
       <div class="col-12 flex justify-content-center">
         <p-toggleButton onIcon="pi pi-chevron-down" offIcon="pi pi-chevron-up"
-                        [ngModel]="true" (ngModelChange)="toggleMap()" class="toggleMap"></p-toggleButton>
+                        [ngModel]="true" (ngModelChange)="toggleMap()"
+                        [style]="{ width: '34rem', height: '1rem' }"></p-toggleButton>
       </div>
       <ng-container *ngIf="mapOpen">
         <google-map class="w-full" height="35vh" width="100%"
@@ -97,6 +104,9 @@
                       [icon]="marker.icon" (mapClick)="openInfo(markerElem,marker.label?.text)">
           </map-marker>
           <map-info-window>{{infoContent}}</map-info-window>
+          <ng-container *ngIf="trafficVisable">
+            <map-traffic-layer [autoRefresh]="true"></map-traffic-layer>
+          </ng-container>
         </google-map>
       </ng-container>
     </div>
