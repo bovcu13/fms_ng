@@ -58,6 +58,8 @@ import {MessageService} from 'primeng/api';
 import {StepsModule} from "primeng/steps";
 import {GalleriaModule} from "primeng/galleria";
 import { InputMaskModule } from 'primeng/inputmask';
+import { KnobModule } from 'primeng/knob';
+
 import {FullCalendarModule} from '@fullcalendar/angular';
 
 @NgModule({
@@ -124,6 +126,7 @@ import {FullCalendarModule} from '@fullcalendar/angular';
     StepsModule,
     GalleriaModule,
     InputMaskModule,
+    KnobModule,
     FullCalendarModule
   ],
   providers: [MessageService]

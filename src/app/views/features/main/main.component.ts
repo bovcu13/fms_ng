@@ -1,8 +1,10 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api'
 import { CarService } from "../../../services/car.service";
 import { mergeMap, switchMap, tap } from "rxjs/operators";
 import { interval, of } from "rxjs";
+import { Table } from "primeng/table";
+import { driver_msg } from "../../../shared/data/products";
 
 declare var google: any;
 
@@ -23,7 +25,8 @@ interface StatusCount {
 export class MainComponent implements OnInit {
   // 溫度異常台數
   oddTem: number = 1;
-
+  speed: number = 0;
+  driver_msg = driver_msg;
   visible: boolean = true;
 
   constructor(private carServ: CarService) {
@@ -31,8 +34,8 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.mapInit();
-    this.colsInit();
-    this.itemInit();
+    // this.colsInit();
+    // this.itemInit();
 
     this.getAllNewGpsRequest()
         .pipe(
@@ -59,70 +62,83 @@ export class MainComponent implements OnInit {
   }
 
   // 顯示欄位
-  cols!: Column[];
-  _selectedColumns!: Column[];
-  @Input() get selectedColumns(): any[] {
-    return this._selectedColumns;
-  }
-
-  set selectedColumns(val: any[]) {
-    //restore original order
-    this._selectedColumns = this.cols.filter((col) => val.includes(col));
-  }
-
-  clearMultiSelect() {
-    // onClear事件
-    this._selectedColumns = [];
-  }
-
-  colsInit() {
-    this.cols = [
-      { field: 'phone', header: '電話' },
-      { field: 'date_time', header: '回傳時間' },
-      { field: 'speed', header: '速度' },
-      { field: 'direction', header: '方向' },
-      { field: 'address', header: '位置' },
-      { field: 'vehicle_name', header: '車輛名稱' },
-      { field: 'statusAccumulated', header: '狀態累積' },
-      { field: 'departureTime', header: '出車時間' },
-      { field: 'drivingTime', header: '開車時間' },
-      { field: 'temp', header: '溫度' },
-      { field: 'progress', header: '裝卸進度' },
-    ];
-
-    this._selectedColumns = [
-      { field: 'progress', header: '裝卸進度' },
-    ]
-  }
+  // cols!: Column[];
+  // _selectedColumns!: Column[];
+  // @Input() get selectedColumns(): any[] {
+  //   return this._selectedColumns;
+  // }
+  //
+  // set selectedColumns(val: any[]) {
+  //   //restore original order
+  //   this._selectedColumns = this.cols.filter((col) => val.includes(col));
+  // }
+  //
+  // clearMultiSelect() {
+  //   // onClear事件
+  //   this._selectedColumns = [];
+  // }
+  //
+  // colsInit() {
+  //   this.cols = [
+  //     { field: 'phone', header: '電話' },
+  //     { field: 'date_time', header: '回傳時間' },
+  //     { field: 'speed', header: '速度' },
+  //     { field: 'direction', header: '方向' },
+  //     { field: 'address', header: '位置' },
+  //     { field: 'vehicle_name', header: '車輛名稱' },
+  //     { field: 'statusAccumulated', header: '狀態累積' },
+  //     { field: 'departureTime', header: '出車時間' },
+  //     { field: 'drivingTime', header: '開車時間' },
+  //     { field: 'temp', header: '溫度' },
+  //     // { field: 'progress', header: '裝卸進度' },
+  //   ];
+  //
+  //   this._selectedColumns = [
+  //     { field: 'address', header: '位置' },
+  //     // { field: 'progress', header: '裝卸進度' },
+  //   ]
+  // }
 
   // 功能列
-  items!: MenuItem[];
+  // items!: MenuItem[];
+  //
+  // itemInit() {
+  //   this.items = [
+  //     {
+  //       icon: 'pi pi-truck',
+  //       tooltipOptions: {
+  //         tooltipLabel: "路況顯示",
+  //         tooltipPosition: "bottom"
+  //       },
+  //       command: () => {
+  //         this.toggleTraffic()
+  //       }
+  //     },
+  //     {
+  //       icon: 'fas fa-compress-arrows-alt',
+  //       tooltipOptions: {
+  //         tooltipLabel: "全景地圖",
+  //         tooltipPosition: "bottom"
+  //       },
+  //       command: () => {
+  //         const centerLatLng = new google.maps.LatLng(23.83876, 120.9876);
+  //         this.map.setCenter(centerLatLng);
+  //         this.map.setZoom(7);
+  //       }
+  //     }
+  //   ];
+  // }
 
-  itemInit() {
-    this.items = [
-      {
-        icon: 'pi pi-truck',
-        tooltipOptions: {
-          tooltipLabel: "路況顯示",
-          tooltipPosition: "bottom"
-        },
-        command: () => {
-          this.toggleTraffic()
-        }
-      },
-      {
-        icon: 'fas fa-compress-arrows-alt',
-        tooltipOptions: {
-          tooltipLabel: "全景地圖",
-          tooltipPosition: "bottom"
-        },
-        command: () => {
-          const centerLatLng = new google.maps.LatLng(23.83876, 120.9876);
-          this.map.setCenter(centerLatLng);
-          this.map.setZoom(7);
-        }
-      }
-    ];
+  @ViewChild('dt1') dt1!: Table;
+
+  filterGlobal(event: any) {
+    this.dt1.filterGlobal(event.target.value, 'contains')
+  }
+
+  setZoom7() {
+    const centerLatLng = new google.maps.LatLng(23.83876, 120.9876);
+    this.map.setCenter(centerLatLng);
+    this.map.setZoom(7);
   }
 
   // 地圖
@@ -263,6 +279,7 @@ export class MainComponent implements OnInit {
 
   Select() {
     console.log('select: ', this.selectedProduct)
+    this.speed = this.selectedProduct.speed;
     if (!this.circle) {
       this.circle = new google.maps.Marker({
         position: new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng),
@@ -479,6 +496,7 @@ export class MainComponent implements OnInit {
       addr: "",
       direction: this.parseHeading(item.heading)
     }));
+    this.speed = this.transformedData[0].speed;
     this.cars = this.products.map(item => ({
       name: item.license_plate,
       code: item.license_plate
@@ -493,6 +511,7 @@ export class MainComponent implements OnInit {
   }
 
   statusCount: StatusCount = {};
+
   calculationCarStatus(carStatus: any[]) {
     // 使用 reduce() 方法來統計每個狀態的類別數
     this.statusCount = carStatus.reduce((acc, curr) => {
