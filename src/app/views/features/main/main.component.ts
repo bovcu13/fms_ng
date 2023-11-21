@@ -24,6 +24,8 @@ export class MainComponent implements OnInit {
   // 溫度異常台數
   oddTem: number = 1;
 
+  visible: boolean = true;
+
   constructor(private carServ: CarService) {
   }
 
@@ -36,6 +38,7 @@ export class MainComponent implements OnInit {
         .pipe(
           switchMap(() => {
             // 資料取得後進行
+            this.visible = false;
             this.afterGet()
             this.createMarkers()
             return of(null); // 使用 RxJS 的 of 函式返回一個 Observable 包裹的 null
@@ -642,7 +645,7 @@ export class MainComponent implements OnInit {
       }
     };
 
-    return directionUrlMap[direction] && directionUrlMap[direction][status] || 'assets/image/warehouse.png';
+    return directionUrlMap[direction] && directionUrlMap[direction][status] || 'assets/image/car1.png';
   }
 
   parseHeading(heading: number) {
