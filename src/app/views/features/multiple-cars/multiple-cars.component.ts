@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap, MapInfoWindow, MapMarker } from "@angular/google-maps";
-import { products } from "../../../shared/data/products";
+import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
-import { tap } from "rxjs/operators";
 import { CarService } from "../../../services/car.service";
 
 @Component({
@@ -108,6 +107,7 @@ export class MultipleCarsComponent implements OnInit {
     }
   }
 
+  @ViewChild('dt1') dt1!: Table;
   @ViewChild(MapInfoWindow, { static: false }) info!: MapInfoWindow
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
 
@@ -144,8 +144,9 @@ export class MultipleCarsComponent implements OnInit {
             url: product.url,
             scaledSize: new google.maps.Size(50, 50)
           },
-          infoWindowContent: product.address,
+          infoWindowContent: product.license_plate,
         }));
+
         console.log(this.markers)
         this.visible = false;
       },
@@ -171,7 +172,7 @@ export class MultipleCarsComponent implements OnInit {
     mapTypeId: 'terrain',
     maxZoom: 20,
   }
-  zoom = 15;
+  zoom = 20;
   infoContent = ''
 
   // 開啟標記標籤的內容
@@ -203,6 +204,10 @@ export class MultipleCarsComponent implements OnInit {
   // 開合側邊欄按鈕
   toggleSidebar() {
     this.sidebarRightOpen = !this.sidebarRightOpen;
+  }
+
+  filterGlobal(event: any) {
+    this.dt1.filterGlobal(event.target.value, 'contains')
   }
 
   getUrlByDirection(heading: number, status: string) {
