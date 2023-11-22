@@ -25,25 +25,57 @@ export class CakeReportComponent implements OnInit {
   cakeOptions: any
 
   initCake() {
+    const hours = Array.from({ length: 25 }, (_, i) => i < 10 ? '0' + i + ':00' : i + ':00');
+
     this.cakeData = {
-      labels: [],
-      datasets: [
-        {
-          label: 'Dataset 1',
-          data: []
-        }
-      ]
-    }
+      labels: hours,
+      datasets: [{
+        label: 'My First Dataset',
+        data: [65, 59, 90, 81, 56, 55, 40, 75, 80, 60, 45, 70, 50, 65, 55, 40, 75, 80, 60, 45, 70, 50, 65, 55, 40],
+        fill: false,
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgb(255, 99, 132)',
+        pointBackgroundColor: 'rgb(255, 99, 132)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(255, 99, 132)'
+      }, {
+        label: 'My Second Dataset',
+        data: [20, 40, 10, 10, 30, 50, 20, 10, 30, 10, 40, 50, 20, 10, 30, 10, 40, 20, 10, 50, 30, 10, 40, 50, 10],
+        fill: false,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgb(54, 162, 235)',
+        pointBackgroundColor: 'rgb(54, 162, 235)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(54, 162, 235)'
+      }]
+    };
 
     this.cakeOptions = {
-      plugins: {
-        emptyDoughnut: {
-          color: 'rgba(255, 128, 0, 0.5)',
-          width: 2,
-          radiusDecrease: 20
+      scales: {
+        // r為雷達圖中的放射軸（radial axis）
+        r: {
+          max: 120,
+          min: 0,
+          ticks: {
+            stepSize: 10
+          },
+          grid: {
+            // 將網格設定為圓形，使雷達圖呈現圓形
+            circular: true,
+          },
+          // 將放射軸的起點設定為零
+          beginAtZero: true
+        },
+      },
+      elements: {
+        line: {
+          // 線條寬度
+          borderWidth: 3
         }
-      }
-    }
+      },
+    };
   }
 
   test: any;
@@ -121,6 +153,7 @@ export class CakeReportComponent implements OnInit {
   search() {
     this.getAllGpsRequest(this.plate, { filter: { start_time: this.startTime, end_time: this.endTime } })
     console.log("開始：", this.startTime, "結束：", this.endTime)
+
   }
 
   plate: any;
@@ -155,7 +188,10 @@ export class CakeReportComponent implements OnInit {
         console.log("轉換後資料:", this.transformedData);
         console.log("timeData:", this.timeData)
         console.log("speedData:", this.speedData)
+
         this.initChart();
+
+        this.initCake();
       },
       error: (err) => {
         console.log(err);
@@ -216,36 +252,47 @@ export class CakeReportComponent implements OnInit {
     }
   }
 
-  today: any
+  searchDay: any
   startTime: any
   endTime: any
   maxDate = new Date()
 
   getDefaultDate() {
-    this.today = new Date();
-    this.today.setHours(0, 0, 0, 0); // Set to 00:00:00.000
-    this.startTime = this.today;
+    // 查詢日期預設為今天
+    this.searchDay = new Date();
+    // 開始時間預設為00:00
+    this.startTime = new Date();
+    this.startTime.setHours(0);
+    this.startTime.setMinutes(0);
+    // 結束時間預設為現在的時間
     this.endTime = new Date();
+    this.endTime.setFullYear(this.searchDay.getFullYear());
+    this.endTime.setMonth(this.searchDay.getMonth());
+    this.endTime.setDate(this.searchDay.getDate());
+    this.endTime.setHours(new Date().getHours());
+    this.endTime.setMinutes(new Date().getMinutes());
+    this.endTime.setSeconds(new Date().getSeconds());
   }
 
   onDateChange(event: any) {
-    this.today = event;
+    console.log('更新日期為 ',event)
+    this.searchDay = event;
     this.onStartDateChange(event)
     this.onEndDateChange(event)
   }
 
   onStartDateChange(event: any) {
-    const newStartTime = this.today;
+    const newStartTime = event;
     newStartTime.setHours(event.getHours(), event.getMinutes());
     this.startTime = newStartTime;
-    console.log(this.startTime);
+    console.log('更新開始時間為 ',this.startTime);
   }
 
   onEndDateChange(event: any) {
-    const newEndTime = this.today;
+    const newEndTime = event;
     newEndTime.setHours(event.getHours(), event.getMinutes());
     this.endTime = newEndTime;
-    console.log(this.endTime);
+    console.log('更新結束時間為 ',this.endTime);
   }
 
   sidebarRightOpen = true;

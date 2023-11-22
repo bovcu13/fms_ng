@@ -72,6 +72,62 @@ export class SidebarComponent implements OnInit {
           //   },
           // },
           {
+            label: 'GPS圖台',
+            icon: 'pi pi-map-marker',
+            routerLink: '/multiCars',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(255, 192, 203, 0.4)'
+            },
+          },
+          {
+            label: '車機影像',
+            icon: 'pi pi-fw pi-video',
+            routerLink: '/monitor',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(255, 192, 203, 0.4)'
+            },
+          },
+          {
+            label: '歷史軌跡',
+            icon: 'pi pi-directions-alt',
+            routerLink: '/history',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(255, 192, 203, 0.4)'
+            },
+          },
+          {
+            label: '數位軌跡16-1報表', // 少大餅軌跡
+            icon: 'pi pi-fw pi-chart-pie',
+            routerLink: '/cake_report',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(255, 192, 203, 0.4)'
+            },
+          },
+
+          {
+            label: '車輛行駛日誌',
+            icon: 'pi pi-fw pi-box',
+            routerLink: '/driving_status',
+            command: () => {
+              this.sideVisible = false
+            },
+            style: {
+              background: 'rgba(84, 200, 240, 0.1)'
+            },
+          },
+          {
             label: '異常報表',
             icon: 'pi pi-fw pi-exclamation-triangle',
             items: [
@@ -121,61 +177,6 @@ export class SidebarComponent implements OnInit {
               }
             ]
           },
-          {
-            label: 'GPS圖台',
-            icon: 'pi pi-map-marker',
-            routerLink: '/multiCars',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(84, 200, 240, 0.1)'
-            },
-          },
-          {
-            label: '車機影像',
-            icon: 'pi pi-fw pi-video',
-            routerLink: '/monitor',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(84, 200, 240, 0.1)'
-            },
-          },
-          {
-            label: '車輛行駛日誌',
-            icon: 'pi pi-fw pi-box',
-            routerLink: '/driving_status',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(84, 200, 240, 0.1)'
-            },
-          },
-          {
-            label: '歷史軌跡',
-            icon: 'pi pi-directions-alt',
-            routerLink: '/history',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(255, 192, 203, 0.4)'
-            },
-          },
-          {
-            label: '數位軌跡16-1報表', // 少大餅軌跡
-            icon: 'pi pi-fw pi-chart-pie',
-            routerLink: '/cake_report',
-            command: () => {
-              this.sideVisible = false
-            },
-            style: {
-              background: 'rgba(255, 192, 203, 0.4)'
-            },
-          },
         ]
       },
       {
@@ -190,8 +191,8 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.1)',
-            }
+              background: 'rgba(255, 192, 203, 0.4)'
+            },
           },
           {
             label: '派工與調度',
@@ -201,8 +202,8 @@ export class SidebarComponent implements OnInit {
               this.sideVisible = false
             },
             style: {
-              background: 'rgba(84, 200, 240, 0.1)',
-            }
+              background: 'rgba(255, 192, 203, 0.4)'
+            },
           },
           {
             label: '貨態追蹤',
@@ -222,9 +223,6 @@ export class SidebarComponent implements OnInit {
             command: () => {
               this.sideVisible = false
             },
-            style: {
-              background: 'rgba(84, 200, 240, 0.1)',
-            }
           },
         ]
       },
