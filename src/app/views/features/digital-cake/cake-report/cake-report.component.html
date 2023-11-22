@@ -5,6 +5,9 @@
         <div class="grid">
           <div class="col-11">
             <p-tabView>
+              <p-tabPanel header="傳統大餅">
+                <p-chart type="doughnut" [data]="cakeData" [options]="cakeOptions"></p-chart>
+              </p-tabPanel>
               <p-tabPanel header="數位大餅">
                 <div class="text-center" *ngIf="data == null">
                   <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>

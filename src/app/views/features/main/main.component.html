@@ -1,65 +1,177 @@
 <div class="overflow-y-hidden overflow-x-hidden">
   <div class="grid nested-grid">
-    <div class="col-12 md:col-7 lg:col-7">
+    <div class="col-12 md:col-6 lg:col-6">
       <div class="col-12" style="position: relative;">
+        <div class="map-card">
         <div id="map" style="height: 50vh; width: 100%;position: relative"></div>
+        </div>
         <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button" size="small" severity="info"
                   [raised]="true" [text]="true" styleClass="bg-white"></p-button>
         <div *ngIf="recordDistances.length >= 2" class="kmh">{{distanceText}}</div>
         <div *ngIf="selectedProduct" class="addr">{{selectedProduct.address}}</div>
       </div>
       <div class="col-12">
-        <p-card>
-          <!--          overlay-->
-          <div class="overlay" *ngIf="visible">
-            <i class="pi pi-spin pi-spinner text-white" style="font-size: 2.5rem"></i>
-          </div>
-          <div class="flex align-items-center gap-3">
-            <div class="mr-auto">
+        <p-card styleClass="h-27rem" [style]="{ height: '40vh' }">
+          <p-tabView>
+            <p-tabPanel>
+              <ng-template pTemplate="header">
+                <span>行車資訊</span>
+              </ng-template>
+              <div class="col-12 driver-content mt-6">
+                <div class="flex flex-column xl:flex-row xl:align-items-start p-2 gap-4">
+                  <img class="w-3 sm:w-3 xl:w-3rem" [src]="'assets/image/car2.png'"/>
+                  <div
+                    class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-center flex-1 gap-4">
+                    <div class="flex flex-column align-items-center sm:align-items-start gap-2">
+                      <div class="text-sm text-600">司機</div>
+                      <div class="flex align-items-center gap-2 sm:flex-column lg:flex-row">
+                        <div
+                          class="text-xl font-bold text-900">{{ selectedProduct?.driver ?? transformedData[0]?.driver }}</div>
+                        <div
+                          class="text-700">{{ selectedProduct?.license_plate ?? transformedData[0]?.license_plate }}</div>
+                      </div>
+                    </div>
+                    <div class="flex gap-2 md:flex-column lg:flex-row gap-2">
+                      <p-button label="撥打電話" icon="pi pi-phone" size="small" severity="warning"
+                                [outlined]="true"></p-button>
+                      <p-button label="傳送訊息" icon="pi pi-comments" size="small" severity="warning"></p-button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <div class="mt-2 col-2 driver-content flex flex-column align-items-center">
+                  <p-knob [(ngModel)]="speed" [readonly]="true"></p-knob>
+                  <div class="text-sm text-600 text-center">限速:50</div>
+                </div>
+                <div class="mt-2 col-10">
+                  <div class="driver-content">
+                    <div class="flex flex-column align-items-center sm:align-items-start p-2 gap-2">
+                      <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-map-marker text-xs text-600"></i>
+                              <span class="font-medium text-xs text-600">目前位置</span>
+                            </span>
+                      </div>
+                      <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-map-marker text-xs text-0"></i>
+                              <span
+                                class="font-medium text-sm text-900">{{ selectedProduct?.address ?? transformedData[0]?.address }}</span>
+                            </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2 driver-content">
+                    <div class="flex flex-column align-items-center sm:align-items-start p-2 gap-2">
+                      <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="fas fa-temperature-low text-xs text-600"></i>
+                              <span class="font-medium text-xs text-600">車溫</span>
+                            </span>
+                      </div>
+                      <div class="flex align-items-center">
+                            <span class="flex align-items-center gap-2">
+                              <i class="pi pi-map-marker text-xs text-0"></i>
+                              <span class="font-medium text-sm text-900">28 ⁰C</span>
+                            </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </p-tabPanel>
+            <p-tabPanel>
+              <ng-template pTemplate="header">
+                <span>司機回報</span>
+              </ng-template>
+                <p-table [value]="driver_msg"
+                         [scrollable]="true"
+                         scrollHeight="35vh"
+                         styleClass="text-sm p-datatable-sm">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>類型</th>
+                      <th>時間</th>
+                      <th>內容</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-product>
+                    <tr>
+                      <td>{{ product.type }}</td>
+                      <td>{{ product.date }}</td>
+                      <td>{{ product.content }}</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+            </p-tabPanel>
+            <p-tabPanel>
+              <ng-template pTemplate="header">
+                <span>異常通報</span>
+                <p-tag *ngIf="oddTem > 0" severity="danger" value="{{oddTem}}"></p-tag>
+              </ng-template>
+            </p-tabPanel>
+          </p-tabView>
+        </p-card>
+      </div>
+    </div>
+    <div class="col-12 md:col-6 lg:col-6">
+      <p-card styleClass="h-screen">
+        <p-tabView>
+          <p-tabPanel>
+            <ng-template pTemplate="header">
+              <span>即時狀態</span>
+            </ng-template>
+            <!--          overlay-->
+            <div class="overlay" *ngIf="visible">
+              <i class="pi pi-spin pi-spinner text-white" style="font-size: 2.5rem"></i>
+            </div>
+            <div class="mb-3 flex align-items-center gap-3">
+              <div class="mr-auto">
            <span class="flex align-items-center gap-2 text-xs">
            <i class="pi pi-truck"></i>
            <span class="font-semibold">車輛數：{{transformedData.length}}</span>
            </span>
-            </div>
-            <div class="flex justify-content-end">
+              </div>
+              <div class="flex justify-content-end">
             <span class="flex align-items-center gap-2 text-xs">
            <p-image src="assets/car/normal_e.png" width="30"></p-image>
            <span class="font-semibold">行駛：{{ statusCount['行駛'] || 0 }}</span>
            </span>
-              <span class="flex align-items-center gap-2 text-xs">
+                <span class="flex align-items-center gap-2 text-xs">
            <p-image src="assets/car/speeding_e.png" width="30"></p-image>
            <span class="font-semibold">超速：{{ statusCount['超速'] || 0 }}</span>
            </span>
-              <span class="flex align-items-center gap-2 text-xs">
+                <span class="flex align-items-center gap-2 text-xs">
            <p-image src="assets/car/stall_e.png" width="30"></p-image>
            <span class="font-semibold">怠停：{{ statusCount['怠停'] || 0 }}</span>
            </span>
-              <span class="flex align-items-center gap-2 text-xs">
+                <span class="flex align-items-center gap-2 text-xs">
            <p-image src="assets/car/stop_e.png" width="30"></p-image>
            <span class="font-semibold">久停：{{ statusCount['久停'] || 0 }}</span>
            </span>
-              <span class="flex align-items-center gap-2 text-xs">
+                <span class="flex align-items-center gap-2 text-xs">
            <p-image src="assets/car/missing_e.png" width="30"></p-image>
            <span class="font-semibold">失聯：{{ statusCount['失聯'] || 0 }}</span>
            </span>
-              <span class="flex align-items-center gap-2 text-xs">
+                <span class="flex align-items-center gap-2 text-xs">
            <p-image src="assets/car/off_e.png" width="30"></p-image>
            <span class="font-semibold">熄火：{{ statusCount['熄火'] || 0 }}</span>
            </span>
+              </div>
             </div>
-          </div>
-          <p-table #dt1
-                   [value]="transformedData"
-                   selectionMode="single"
-                   [(selection)]="selectedProduct"
-                   [scrollable]="true"
-                   scrollHeight="30vh"
-                   (onRowSelect)="Select()"
-                   [globalFilterFields]="['status', 'license_plate', 'driver', 'address', 'direction', 'speed', 'date_time', 'vehicle_name']"
-                   styleClass="text-sm p-datatable-sm p-datatable-striped">
-            <ng-template pTemplate="caption">
-              <div class="flex justify-content-start">
-                <div class="col-6">
+            <p-table #dt1
+                     [value]="transformedData"
+                     selectionMode="single"
+                     [(selection)]="selectedProduct"
+                     [scrollable]="true"
+                     scrollHeight="90vh"
+                     (onRowSelect)="Select()"
+                     [globalFilterFields]="['status', 'license_plate', 'driver', 'address', 'direction', 'speed', 'date_time', 'vehicle_name']"
+                     styleClass="text-sm p-datatable-striped">
+              <ng-template pTemplate="caption">
+                <div class="flex justify-content-between">
+                  <div class="col-6">
                   <span class="p-input-icon-left mr-auto">
                     <i class="pi pi-search text-sm"></i>
                     <input pInputText type="text"
@@ -67,172 +179,62 @@
                            class="text-sm"
                            placeholder="搜尋 .."/>
                   </span>
+                  </div>
+                  <div class="col-3 flex justify-content-end">
+                    <p-toggleButton (onChange)="toggleIsRanging()"
+                                    onIcon="fas fa-ruler-horizontal"
+                                    offIcon="fas fa-ruler-horizontal"
+                                    styleClass="border-circle mr-2"
+                                    pTooltip="測量距離">
+                    </p-toggleButton>
+                    <p-button icon="fas fa-compress-arrows-alt" (click)="setZoom7()"
+                              pTooltip="全景地圖" styleClass="border-circle mr-2"></p-button>
+                    <p-button icon="pi pi-truck" (click)="toggleTraffic()"
+                              pTooltip="顯示路況" styleClass="border-circle"></p-button>
+                  </div>
                 </div>
-                <div class="col-4 ml-auto">
-<!--                  <p-multiSelect [options]="cols"-->
-<!--                                 [(ngModel)]="selectedColumns"-->
-<!--                                 (onClear)="clearMultiSelect()"-->
-<!--                                 [showClear]="true"-->
-<!--                                 [maxSelectedLabels]="4"-->
-<!--                                 optionLabel="header"-->
-<!--                                 selectedItemsLabel="已選擇 {0} 個欄位"-->
-<!--                                 placeholder="選擇要顯示的欄位"-->
-<!--                                 styleClass="text-sm"></p-multiSelect>-->
-                </div>
-                <div class="col-2 ml-auto">
-                  <p-toggleButton (onChange)="toggleIsRanging()"
-                                  onIcon="fas fa-ruler-horizontal"
-                                  offIcon="fas fa-ruler-horizontal"
-                                  styleClass="border-circle mr-2"
-                                  pTooltip="測量距離">
-                  </p-toggleButton>
-                  <p-button icon="fas fa-compress-arrows-alt" (click)="setZoom7()"
-                            pTooltip="全景地圖" styleClass="border-circle mr-2"></p-button>
-                  <p-button icon="pi pi-truck" (click)="toggleTraffic()"
-                            pTooltip="顯示路況" styleClass="border-circle"></p-button>
-                </div>
-              </div>
-            </ng-template>
-            <ng-template pTemplate="header" let-columns>
-              <tr>
-                <th style="width: 5rem">裝卸進度</th>
-                <th>狀態</th>
-                <th>車牌</th>
-                <th>司機</th>
-<!--                <th *ngFor="let col of columns">-->
-<!--                  {{col.header}}-->
-<!--                </th>-->
-                <th style="width: 4rem"></th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-product let-columns="columns">
-              <tr [pSelectableRow]="product">
-                <td> -</td>
-                <td pTooltip="{{product.status}}">
-                  <p-image src=" {{product.url}} " width="30"></p-image>
-                </td>
-                <td>{{product.license_plate}}</td>
-                <td>{{product.driver}}</td>
-<!--                <td *ngFor="let col of columns">-->
-<!--                  <ng-container *ngIf="col.field !== 'date_time'; else dateTemplate">-->
-<!--                    {{product[col.field]}}-->
-<!--                  </ng-container>-->
-<!--                  <ng-template #dateTemplate>-->
-<!--                    {{product[col.field] | date:'yyyy-MM-dd HH:mm:ss'}}-->
-<!--                  </ng-template>-->
-<!--                </td>-->
-                <td>
-                  <p-button routerLink="/e_tracking_view" severity="info" [text]="true" icon="pi pi-eye"
-                            pTooltip="貨態追蹤" tooltipPosition="left"></p-button>
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
-        </p-card>
-      </div>
-    </div>
-    <div class="col-12 md:col-5 lg:col-5">
-      <p-card styleClass="h-screen">
-        <p-tabView>
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th style="width: 6rem">裝卸進度</th>
+                  <th>狀態</th>
+                  <th>車牌</th>
+                  <th>司機</th>
+                  <!--                <th *ngFor="let col of columns">-->
+                  <!--                  {{col.header}}-->
+                  <!--                </th>-->
+                  <th style="width: 4rem"></th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-product let-columns="columns">
+                <tr [pSelectableRow]="product">
+                  <td> -</td>
+                  <td pTooltip="{{product.status}}">
+                    <p-image src=" {{product.url}} " width="30"></p-image>
+                  </td>
+                  <td>{{product.license_plate}}</td>
+                  <td>{{product.driver}}</td>
+                  <!--                <td *ngFor="let col of columns">-->
+                  <!--                  <ng-container *ngIf="col.field !== 'date_time'; else dateTemplate">-->
+                  <!--                    {{product[col.field]}}-->
+                  <!--                  </ng-container>-->
+                  <!--                  <ng-template #dateTemplate>-->
+                  <!--                    {{product[col.field] | date:'yyyy-MM-dd HH:mm:ss'}}-->
+                  <!--                  </ng-template>-->
+                  <!--                </td>-->
+                  <td>
+                    <p-button routerLink="/e_tracking_view" severity="info" [text]="true" icon="pi pi-eye"
+                              pTooltip="貨態追蹤" tooltipPosition="left"></p-button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </p-tabPanel>
           <p-tabPanel>
             <ng-template pTemplate="header">
               <span>派工與調度</span>
             </ng-template>
             <app-dispatch></app-dispatch>
-          </p-tabPanel>
-          <p-tabPanel>
-            <ng-template pTemplate="header">
-              <span>司機回報</span>
-            </ng-template>
-            <div class="col-12 driver-content">
-              <div class="flex flex-column xl:flex-row xl:align-items-start p-2 gap-4">
-                <img class="w-3 sm:w-3 xl:w-3rem" [src]="'assets/image/car2.png'"/>
-                <div
-                  class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-center flex-1 gap-4">
-                  <div class="flex flex-column align-items-center sm:align-items-start gap-2">
-                    <div class="text-sm text-600">司機</div>
-                    <div class="flex align-items-center gap-2 sm:flex-column lg:flex-row">
-                      <div
-                        class="text-xl font-bold text-900">{{ selectedProduct?.driver ?? transformedData[0]?.driver }}</div>
-                      <div
-                        class="text-700">{{ selectedProduct?.license_plate ?? transformedData[0]?.license_plate }}</div>
-                    </div>
-                  </div>
-                  <div class="flex gap-2 md:flex-column lg:flex-row gap-2">
-                    <p-button label="撥打電話" icon="pi pi-phone" size="small" severity="warning"
-                              [outlined]="true"></p-button>
-                    <p-button label="傳送訊息" icon="pi pi-comments" size="small" severity="warning"></p-button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="flex gap-2">
-              <div class="mt-2 col-2 driver-content flex flex-column align-items-center">
-                <p-knob [(ngModel)]="speed" [readonly]="true"></p-knob>
-                <div class="text-sm text-600 text-center">限速:50</div>
-              </div>
-              <div class="mt-2 col-10">
-                <div class="driver-content">
-                  <div class="flex flex-column align-items-center sm:align-items-start p-2 gap-2">
-                    <div class="flex align-items-center">
-                            <span class="flex align-items-center gap-2">
-                              <i class="pi pi-map-marker text-xs text-600"></i>
-                              <span class="font-medium text-xs text-600">目前位置</span>
-                            </span>
-                    </div>
-                    <div class="flex align-items-center">
-                            <span class="flex align-items-center gap-2">
-                              <i class="pi pi-map-marker text-xs text-0"></i>
-                              <span
-                                class="font-medium text-sm text-900">{{ selectedProduct?.address ?? transformedData[0]?.address }}</span>
-                            </span>
-                    </div>
-                  </div>
-                </div>
-                <div class="mt-2 driver-content">
-                  <div class="flex flex-column align-items-center sm:align-items-start p-2 gap-2">
-                    <div class="flex align-items-center">
-                            <span class="flex align-items-center gap-2">
-                              <i class="fas fa-temperature-low text-xs text-600"></i>
-                              <span class="font-medium text-xs text-600">車溫</span>
-                            </span>
-                    </div>
-                    <div class="flex align-items-center">
-                            <span class="flex align-items-center gap-2">
-                              <i class="pi pi-map-marker text-xs text-0"></i>
-                              <span class="font-medium text-sm text-900">28 ⁰C</span>
-                            </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p-divider styleClass="mt-5"></p-divider>
-            <p-panel header="回報紀錄">
-              <p-table [value]="driver_msg"
-                       styleClass="text-sm p-datatable-sm">
-                <ng-template pTemplate="header">
-                  <tr>
-                    <th>類型</th>
-                    <th>時間</th>
-                    <th>內容</th>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-product>
-                  <tr>
-                    <td>{{ product.type }}</td>
-                    <td>{{ product.date }}</td>
-                    <td>{{ product.content }}</td>
-                  </tr>
-                </ng-template>
-              </p-table>
-            </p-panel>
-          </p-tabPanel>
-          <p-tabPanel>
-            <ng-template pTemplate="header">
-              <span>異常通報</span>
-              <p-tag *ngIf="oddTem > 0" severity="danger" value="{{oddTem}}"></p-tag>
-            </ng-template>
           </p-tabPanel>
         </p-tabView>
       </p-card>
