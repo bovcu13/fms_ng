@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
         label: '帳號'
       },
       {
-        label: '<div class="flex justify-content-center"><img style="width: 2rem" src="assets/image/car2.png"/></div><div class="font-bold text-xs text-center">bovcu13</div>',
+        label: '<div class="flex justify-content-center"><img style="width: 2rem" src="assets/image/car2.png"/></div><div class="font-bold text-xs text-center">user_name</div>',
         escape: false,
         items: [
           {
