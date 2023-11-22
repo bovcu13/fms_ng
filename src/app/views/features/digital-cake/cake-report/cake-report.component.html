@@ -19,10 +19,13 @@
                 </div>
               </p-tabPanel>
               <p-tabPanel header="數位大餅">
-                <div class="text-center" *ngIf="data == null">
+                <div class="text-center" *ngIf="!loading">
                   <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
                   <h4>查無資料</h4>
                   <p>請在右側選擇查詢選項</p>
+                </div>
+                <div class="flex justify-content-center mt-8" *ngIf="loading">
+                  <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
                 </div>
                 <p-chart type="line" [data]="data" [options]="options"></p-chart>
               </p-tabPanel>

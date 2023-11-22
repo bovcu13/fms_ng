@@ -205,9 +205,9 @@ export class CakeReportComponent implements OnInit {
 
   // 取得車輛歷史資料
   getAllGpsRequest(id: any, body: any) {
+    this.loading = true;
     this.carServ.getAllGpsRequest(id, body).subscribe({
       next: (res) => {
-        this.loading = true;
         const getData = res.body.gps;
         console.log("來源資料:", res.body.gps);
 
@@ -236,6 +236,7 @@ export class CakeReportComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+        this.loading = false;
       },
     });
   }
