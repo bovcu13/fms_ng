@@ -6,7 +6,9 @@
           <div class="col-11">
             <p-tabView>
               <p-tabPanel header="傳統大餅">
-                <p-chart type="doughnut" [data]="cakeData" [options]="cakeOptions"></p-chart>
+                <div class="flex justify-content-center">
+                <p-chart type="radar" [data]="cakeData" [options]="cakeOptions" width="45rem" height="45rem"></p-chart>
+                </div>
               </p-tabPanel>
               <p-tabPanel header="數位大餅">
                 <div class="text-center" *ngIf="data == null">
@@ -42,7 +44,7 @@
             <div class="col-12">
               <p-calendar [showIcon]="true"
                           [appendTo]="'body'"
-                          [ngModel]="today"
+                          [ngModel]="searchDay"
                           [dateFormat]="'yy-mm-dd'"
                           [maxDate]="maxDate"
                           (onSelect)="onDateChange($event)"
