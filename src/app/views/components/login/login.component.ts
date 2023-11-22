@@ -34,9 +34,9 @@ export class LoginComponent implements OnInit {
     private tokenStorage: TokenStorageService
   ) {
     this.login_form = this.fb.group({
-      fleet_code: ['A12345', [Validators.required]],
-      user_name: ['admin', [Validators.required]],
-      password: ['12345', [Validators.required]],
+      fleet_code: ['', [Validators.required]],
+      user_name: ['', [Validators.required]],
+      password: ['', [Validators.required]],
       recaptcha: ['', Validators.required]
     });
     this.register_form = this.fb.group({
