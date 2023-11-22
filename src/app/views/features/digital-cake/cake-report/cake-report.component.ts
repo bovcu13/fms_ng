@@ -18,69 +18,12 @@ export class CakeReportComponent implements OnInit {
   ngOnInit() {
     this.getDefaultDate();
     this.getAllVehiclesRequest();
-    this.initCake();
-  }
-
-  cakeData: any
-  cakeOptions: any
-
-  initCake() {
-    const hours = Array.from({ length: 25 }, (_, i) => i < 10 ? '0' + i + ':00' : i + ':00');
-
-    this.cakeData = {
-      labels: hours,
-      datasets: [{
-        label: 'My First Dataset',
-        data: [65, 59, 90, 81, 56, 55, 40, 75, 80, 60, 45, 70, 50, 65, 55, 40, 75, 80, 60, 45, 70, 50, 65, 55, 40],
-        fill: false,
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgb(255, 99, 132)',
-        pointBackgroundColor: 'rgb(255, 99, 132)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgb(255, 99, 132)'
-      }, {
-        label: 'My Second Dataset',
-        data: [20, 40, 10, 10, 30, 50, 20, 10, 30, 10, 40, 50, 20, 10, 30, 10, 40, 20, 10, 50, 30, 10, 40, 50, 10],
-        fill: false,
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgb(54, 162, 235)',
-        pointBackgroundColor: 'rgb(54, 162, 235)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgb(54, 162, 235)'
-      }]
-    };
-
-    this.cakeOptions = {
-      scales: {
-        // r為雷達圖中的放射軸（radial axis）
-        r: {
-          max: 120,
-          min: 0,
-          ticks: {
-            stepSize: 10
-          },
-          grid: {
-            // 將網格設定為圓形，使雷達圖呈現圓形
-            circular: true,
-          },
-          // 將放射軸的起點設定為零
-          beginAtZero: true
-        },
-      },
-      elements: {
-        line: {
-          // 線條寬度
-          borderWidth: 3
-        }
-      },
-    };
   }
 
   test: any;
+  // 數位大餅
+  data: any
   options: any;
-
   initChart() {
     // 從文件取特定 CSS
     const documentStyle = getComputedStyle(document.documentElement);
@@ -150,20 +93,112 @@ export class CakeReportComponent implements OnInit {
     };
   }
 
-  search() {
-    this.getAllGpsRequest(this.plate, { filter: { start_time: this.startTime, end_time: this.endTime } })
-    console.log("開始：", this.startTime, "結束：", this.endTime)
+  // 傳統大餅
+  cakeData: any
+  cakeOptions: any
 
+  initCake() {
+    this.speedData = this.convertValues(this.speedData)
+    console.log("convertSpeedData:", this.speedData)
+    const hours = Array.from({ length: 25 }, (_, i) => i < 10 ? '0' + i + ':00' : i + ':00');
+
+    this.cakeData = {
+      labels: this.timeData,
+      datasets: [{
+        label: '時速',
+        data: this.speedData,
+        fill: false,
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgb(255, 99, 132)',
+        pointBackgroundColor: 'rgb(255, 99, 132)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(255, 99, 132)'
+      }, {
+        label: '行駛距離',
+        data: [],
+        fill: false,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgb(54, 162, 235)',
+        pointBackgroundColor: 'rgb(54, 162, 235)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(54, 162, 235)'
+      }]
+    };
+
+    this.cakeOptions = {
+      scales: {
+        // r為雷達圖中的放射軸（radial axis）
+        r: {
+          max: 180, // 調整最大值為180
+          min: 0,
+          ticks: {
+            stepSize: 10,
+            callback: function(value: any, index: any, values: any) {
+              // 實際的數值進行線性映射
+              var mappedValue = (value / 180) * 120;
+
+              // 自定義刻度的標籤
+              var customLabels = ['0', '1', '2', '3', '4', '5', '0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100', '110', '120'];
+
+              // 返回自定義標籤
+              return customLabels[index % customLabels.length];
+            }
+          },
+          grid: {
+            // 將網格設定為圓形，使雷達圖呈現圓形
+            circular: true,
+          },
+          // 將放射軸的起點設定為零
+          beginAtZero: true
+        },
+      },
+      elements: {
+        line: {
+          // 線條寬度
+          borderWidth: 3
+        }
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function(context: any) {
+              let label = context.dataset.label || '';
+
+              if (label) {
+                // console.log("label:", label)
+                // console.log("context.parsed:", context.parsed)
+                label += ': ';
+              }
+
+              if (context.parsed.r !== null) {
+                // 將原本的美元格式改為資料減去60的數值
+                label += (context.parsed.r - 60).toString();
+              }
+
+              return label;
+            }
+          }
+        }
+      }
+    };
+  }
+
+  loading = false;
+  search() {
+    if (this.plate) {
+      this.getAllGpsRequest(this.plate, { filter: { start_time: this.startTime, end_time: this.endTime } })
+      console.log("開始：", this.startTime, "結束：", this.endTime)
+    }
   }
 
   plate: any;
-
   selectCar(event: any) {
     console.log(event)
     this.plate = event;
   }
 
-  data: any
   transformedData: any
   timeData: any
   speedData: any
@@ -172,26 +207,32 @@ export class CakeReportComponent implements OnInit {
   getAllGpsRequest(id: any, body: any) {
     this.carServ.getAllGpsRequest(id, body).subscribe({
       next: (res) => {
-        this.data = res.body.gps;
+        this.loading = true;
+        const getData = res.body.gps;
         console.log("來源資料:", res.body.gps);
-        this.transformedData = this.data.map((item: any) => ({
+
+        this.transformedData = getData.map((item: any) => ({
           ...item,
-          addr: "",
           direction: this.parseHeading(item.heading)
         }));
-        this.timeData = this.data.map((item: any) =>
+        console.log("轉換後資料:", this.transformedData);
+
+        // chart用到的資料拆解
+        this.timeData = getData.map((item: any) =>
           this.getTimeFromDateTime(item.date_time)
         );
-        this.speedData = this.data.map((item: any) =>
+        this.speedData = getData.map((item: any) =>
           item.speed
         );
-        console.log("轉換後資料:", this.transformedData);
+
         console.log("timeData:", this.timeData)
         console.log("speedData:", this.speedData)
 
+        // 產生chart
         this.initChart();
-
         this.initCake();
+
+        this.loading = false;
       },
       error: (err) => {
         console.log(err);
@@ -293,6 +334,17 @@ export class CakeReportComponent implements OnInit {
     newEndTime.setHours(event.getHours(), event.getMinutes());
     this.endTime = newEndTime;
     console.log('更新結束時間為 ',this.endTime);
+  }
+
+  // 換算速率資料 (maybe)
+  convertValues(inputArray: any[]) {
+    // 基準值
+    const baseValue = 60;
+
+    // 使用 map 方法對每個數字進行換算
+    const convertValues = inputArray.map(value => baseValue + value);
+
+    return convertValues;
   }
 
   sidebarRightOpen = true;
