@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CarService } from "../../../../services/car.service";
 import { Chart } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
+
 Chart.register(zoomPlugin);
 
 
@@ -17,10 +18,37 @@ export class CakeReportComponent implements OnInit {
   ngOnInit() {
     this.getDefaultDate();
     this.getAllVehiclesRequest();
+    this.initCake();
+  }
+
+  cakeData: any
+  cakeOptions: any
+
+  initCake() {
+    this.cakeData = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Dataset 1',
+          data: []
+        }
+      ]
+    }
+
+    this.cakeOptions = {
+      plugins: {
+        emptyDoughnut: {
+          color: 'rgba(255, 128, 0, 0.5)',
+          width: 2,
+          radiusDecrease: 20
+        }
+      }
+    }
   }
 
   test: any;
   options: any;
+
   initChart() {
     // 從文件取特定 CSS
     const documentStyle = getComputedStyle(document.documentElement);
@@ -53,7 +81,7 @@ export class CakeReportComponent implements OnInit {
         },
         zoom: {
           pan: {
-            enabled:true,
+            enabled: true,
             mode: 'x'
           },
           zoom: {
@@ -155,7 +183,7 @@ export class CakeReportComponent implements OnInit {
     this.carServ.getAllVehiclesRequest().subscribe({
       next: res => {
         this.vehiclesData = res.body.vehicles;
-        this.cars = this.vehiclesData.map((item:any) => ({
+        this.cars = this.vehiclesData.map((item: any) => ({
           name: item.license_plate,
           code: item.license_plate
         }));
