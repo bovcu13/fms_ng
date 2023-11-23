@@ -1,36 +1,34 @@
+<p-toast></p-toast>
+<p-confirmDialog #cd [style]="{ width: '40vw' }">
+  <ng-template pTemplate="footer">
+    <p-button (click)="cd.reject()" label="取消" icon="pi pi-times" severity="secondary"></p-button>
+    <p-button (click)="cd.accept()" label="確定" icon="pi pi-check" severity="warning"></p-button>
+  </ng-template>
+</p-confirmDialog>
 <div class="overflow-x-hidden flex justify-content-center">
   <div class="col-8">
     <p-tabView>
       <p-tabPanel header="概覽">
         <div class="flex justify-content-between">
           <div class="col-3">
-            <div class="col-12 flex justify-content-center">
-              <p-image src="assets/image/car1.png" alt="Image" width="150" [preview]="true"></p-image>
-            </div>
-            <div class="col-12 flex justify-content-center">
-              <label class="text-xl font-light text-yellow-900">user_name</label>
-            </div>
-            <div *ngIf="!editable" class="col-12 mt-2 flex justify-content-center">
-              <p-button (click)="edit()" label="編輯個人資料" size="small" [outlined]="true" severity="warning"
-                        [style]="{'width': '13em'}"></p-button>
-            </div>
-            <div *ngIf="editable" class="mt-2">
-              <div class="col-12">
-                <div class="field">
-                  <label class="text-sm font-semibold">姓名</label>
-                  <input pInputText/>
+            <div class="flex justify-content-center">
+              <div class="grid">
+                <div class="col-12">
+                  <p-image src="assets/image/car1.png" alt="Image" width="150" [preview]="true"></p-image>
                 </div>
-                <div class="field">
-                  <label class="text-sm font-semibold">電話號碼</label>
-                  <input pInputText/>
+                <div class="col-12">
+                  <label class="text-xl font-light">{{user_form.controls['user_name'].value}}</label>
                 </div>
-                <div class="field">
-                  <label class="text-sm font-semibold">修改密碼</label>
-                  <input pInputText/>
+                <div class="col-12 flex flex-column gap-2">
+                  <p-button (click)="showEditProfile()" label="編輯個人資料"
+                            size="small" [outlined]="true" severity="warning"
+                            [style]="{'width': '13em'}"></p-button>
+                  <p-button (click)="showEditPass()" label="修改密碼"
+                            size="small" [outlined]="true"
+                            [style]="{'width': '13em'}"></p-button>
                 </div>
-                <div class="flex justify-content-center">
-                  <p-button (click)="cancel()" label="取消" severity="secondary" [outlined]="true"  size="small" styleClass="mr-2"></p-button>
-                  <p-button (click)="save()" label="儲存" severity="warning" size="small" styleClass="mr-2"></p-button>
+                <div class="col-12">
+
                 </div>
               </div>
             </div>
@@ -38,7 +36,8 @@
           <div class="col-8">
             <p-card header="車輛資料">
               <div class="flex justify-content-end mb-3">
-                <p-button label="查看更多" [routerLink]="['/fleet_mgmt', activeIndex]" [link]="true" size="small"></p-button>
+                <p-button label="查看更多" [routerLink]="['/fleet_mgmt', activeIndex]" [link]="true"
+                          size="small"></p-button>
               </div>
               <p-dataView [value]="vehiclesData">
                 <ng-template let-product pTemplate="listItem">
@@ -70,9 +69,12 @@
           </div>
         </div>
       </p-tabPanel>
+      <!--      <p-tabPanel header="帳號設定">-->
+
+      <!--      </p-tabPanel>-->
       <p-tabPanel header="偏好設定">
         <div class="flex justify-content-center">
-          <div class="col-8">
+          <div class="col-12">
             <h2>語言偏好</h2>
             <div class="field grid">
               <label class="col-fixed font-semibold">語言</label>
@@ -95,3 +97,70 @@
   </div>
 </div>
 
+<form [formGroup]="user_form">
+  <p-dialog header="個人資料" [(visible)]="editProfileVisible" [modal]="true" [style]="{ width: '30vw' }"
+            [draggable]="false"
+            [resizable]="false">
+    <div class="col-12">
+      <div class="field">
+        <label class="text-sm font-semibold">帳號</label>
+        <br>
+        <label>{{user_form.controls['name'].value}}</label>
+      </div>
+      <div class="field">
+        <label class="text-sm font-semibold">姓名</label>
+        <input formControlName="user_name" pInputText/>
+      </div>
+      <div class="field">
+        <label class="text-sm font-semibold">電話號碼</label>
+        <input formControlName="phone_number1" pInputText/>
+      </div>
+      <div class="field">
+        <label class="text-sm font-semibold">電子信箱</label>
+        <input formControlName="email" pInputText/>
+      </div>
+      <div class="mt-5 flex justify-content-end">
+        <p-button (click)="cancelEditProfile()" label="取消" severity="secondary" [outlined]="true" size="small"
+                  styleClass="mr-2"></p-button>
+        <p-button (click)="saveEditProfile(user_form.value)" label="儲存" severity="warning" size="small"
+                  styleClass="mr-2"></p-button>
+      </div>
+    </div>
+  </p-dialog>
+</form>
+
+<form [formGroup]="user_form">
+  <p-dialog header="修改密碼" [(visible)]="editPassVisible" [modal]="true" [style]="{ width: '30vw' }"
+            [draggable]="false"
+            [resizable]="false">
+    <div class="col-12">
+      <div class="field">
+        <label class="text-sm font-semibold">目前的密碼</label>
+        <input formControlName="old_password" pInputText/>
+      </div>
+      <div class="field">
+        <label class="text-sm font-semibold">新密碼</label>
+        <input formControlName="password" pInputText/>
+      </div>
+      <div class="field">
+        <label class="text-sm font-semibold">確認密碼</label>
+        <input formControlName="confirm_password" pInputText/>
+        <small
+          *ngIf="user_form.controls['password'].touched && user_form.controls['password'].value !== user_form.controls['confirm_password'].value"
+          class="p-error text-xs">請輸入相同的密碼</small>
+      </div>
+      <div class="flex">
+        <div class="mr-auto">
+          <p-button label="忘記密碼？"
+                    [link]="true" size="small"></p-button>
+        </div>
+        <div class="flex justify-content-end">
+          <p-button (click)="cancelEditPass()" label="取消" severity="secondary" [outlined]="true" size="small"
+                    styleClass="mr-2"></p-button>
+          <p-button (click)="saveEditPass(user_form.value)" label="確認" severity="warning" size="small"
+                    styleClass="mr-2"></p-button>
+        </div>
+      </div>
+    </div>
+  </p-dialog>
+</form>
