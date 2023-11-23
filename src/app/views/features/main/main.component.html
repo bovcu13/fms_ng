@@ -11,40 +11,41 @@
         <div *ngIf="selectedProduct" class="addr">{{selectedProduct.address}}</div>
       </div>
       <div class="col-12">
-        <p-card styleClass="h-27rem" [style]="{ height: '40vh' }">
+        <p-card [style]="{ height: '45vh' }">
           <p-tabView>
             <p-tabPanel>
               <ng-template pTemplate="header">
-                <span>行車資訊</span>
+                <span class="text-sm">行車資訊</span>
               </ng-template>
-              <div class="col-12 driver-content mt-6">
+              <div class="col-12 driver-content">
                 <div class="flex flex-column xl:flex-row xl:align-items-start p-2 gap-4">
-                  <img class="w-3 sm:w-3 xl:w-3rem" [src]="'assets/image/car2.png'"/>
+                  <img class="w-2 sm:w-2 xl:w-2rem" [src]="'assets/image/car2.png'"/>
                   <div
                     class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-center flex-1 gap-4">
                     <div class="flex flex-column align-items-center sm:align-items-start gap-2">
-                      <div class="text-sm text-600">司機</div>
+                      <div class="text-xs text-600">司機</div>
                       <div class="flex align-items-center gap-2 sm:flex-column lg:flex-row">
                         <div
-                          class="text-xl font-bold text-900">{{ selectedProduct?.driver ?? transformedData[0]?.driver }}</div>
+                          class="text-sm font-bold text-900">{{ selectedProduct?.driver ?? transformedData[0]?.driver }}</div>
                         <div
-                          class="text-700">{{ selectedProduct?.license_plate ?? transformedData[0]?.license_plate }}</div>
+                          class="text-sm text-700">{{ selectedProduct?.license_plate ?? transformedData[0]?.license_plate }}</div>
                       </div>
                     </div>
                     <div class="flex gap-2 md:flex-column lg:flex-row gap-2">
                       <p-button label="撥打電話" icon="pi pi-phone" size="small" severity="warning"
-                                [outlined]="true"></p-button>
-                      <p-button label="傳送訊息" icon="pi pi-comments" size="small" severity="warning"></p-button>
+                                [outlined]="true" styleClass="text-xs"></p-button>
+                      <p-button label="傳送訊息" icon="pi pi-comments" size="small" severity="warning"
+                                styleClass="text-xs"></p-button>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="flex gap-2">
                 <div class="mt-2 col-2 driver-content flex flex-column align-items-center">
-                  <p-knob [(ngModel)]="speed" [readonly]="true"></p-knob>
-                  <div class="text-sm text-600 text-center">限速:50</div>
+                  <p-knob [(ngModel)]="speed" [readonly]="true" [size]="90"></p-knob>
+                  <div class="font-medium text-xs text-600 text-center">限速:50</div>
                 </div>
-                <div class="mt-2 col-10">
+                <div class="col-10">
                   <div class="driver-content">
                     <div class="flex flex-column align-items-center sm:align-items-start p-2 gap-2">
                       <div class="flex align-items-center">
@@ -57,7 +58,7 @@
                             <span class="flex align-items-center gap-2">
                               <i class="pi pi-map-marker text-xs text-0"></i>
                               <span
-                                class="font-medium text-sm text-900">{{ selectedProduct?.address ?? transformedData[0]?.address }}</span>
+                                class="font-medium text-xs text-900">{{ selectedProduct?.address ?? transformedData[0]?.address }}</span>
                             </span>
                       </div>
                     </div>
@@ -73,7 +74,7 @@
                       <div class="flex align-items-center">
                             <span class="flex align-items-center gap-2">
                               <i class="pi pi-map-marker text-xs text-0"></i>
-                              <span class="font-medium text-sm text-900">28 ⁰C</span>
+                              <span class="font-medium text-xs text-900">28 ⁰C</span>
                             </span>
                       </div>
                     </div>
@@ -83,11 +84,11 @@
             </p-tabPanel>
             <p-tabPanel>
               <ng-template pTemplate="header">
-                <span>司機回報</span>
+                <span class="text-sm">司機回報</span>
               </ng-template>
                 <p-table [value]="driver_msg"
                          [scrollable]="true"
-                         scrollHeight="35vh"
+                         scrollHeight="30vh"
                          styleClass="text-sm p-datatable-sm">
                   <ng-template pTemplate="header">
                     <tr>
@@ -107,7 +108,7 @@
             </p-tabPanel>
             <p-tabPanel>
               <ng-template pTemplate="header">
-                <span>異常通報</span>
+                <span class="text-sm">異常通報</span>
                 <p-tag *ngIf="oddTem > 0" severity="danger" value="{{oddTem}}"></p-tag>
               </ng-template>
             </p-tabPanel>
@@ -120,7 +121,7 @@
         <p-tabView>
           <p-tabPanel>
             <ng-template pTemplate="header">
-              <span>即時狀態</span>
+              <span class="text-sm">即時狀態</span>
             </ng-template>
             <!--          overlay-->
             <div class="overlay" *ngIf="visible">
@@ -165,7 +166,7 @@
                      selectionMode="single"
                      [(selection)]="selectedProduct"
                      [scrollable]="true"
-                     scrollHeight="90vh"
+                     scrollHeight="65vh"
                      (onRowSelect)="Select()"
                      [globalFilterFields]="['status', 'license_plate', 'driver', 'address', 'direction', 'speed', 'date_time', 'vehicle_name']"
                      styleClass="text-sm p-datatable-striped">
@@ -232,7 +233,7 @@
           </p-tabPanel>
           <p-tabPanel>
             <ng-template pTemplate="header">
-              <span>派工與調度</span>
+              <span class="text-sm">派工與調度</span>
             </ng-template>
             <app-dispatch></app-dispatch>
           </p-tabPanel>

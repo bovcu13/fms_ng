@@ -6,7 +6,7 @@
           <div class="col-11">
             <p-tabView>
               <p-tabPanel header="傳統大餅">
-                <div class="text-center" *ngIf="!loading">
+                <div class="text-center" *ngIf="!loading || data === null">
                   <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
                   <h4>查無資料</h4>
                   <p>請在右側選擇查詢選項</p>
