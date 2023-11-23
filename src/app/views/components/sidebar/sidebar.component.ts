@@ -326,7 +326,7 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
                 style: {
-                  background: 'rgba(84, 200, 240, 0.1)'
+                  background: 'rgba(255, 192, 203, 0.4)'
                 },
               },
               {
