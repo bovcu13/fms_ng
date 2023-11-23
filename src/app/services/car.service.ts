@@ -13,6 +13,77 @@ export class CarService {
   constructor(private http: HttpClient) {
   }
 
+  //--權限------------------------------------------------------------------------------------------------
+
+  getPoliciesRequest(): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/policies`;
+    return this.http.get<any>(url);
+  }
+
+  postPoliciesRequest(body: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/policies`;
+    return this.http.post<any>(url, body);
+  }
+
+  deletePoliciesRequest(body: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/policies`;
+    return this.http.delete<any>(body);
+  }
+
+  //--角色------------------------------------------------------------------------------------------------
+
+  getAllRolesRequest(): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/roles`;
+    return this.http.get<any>(url);
+  }
+
+  postRolesRequest(body: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/roles`;
+    return this.http.post<any>(url, body);
+  }
+
+  getOneRoleRequest(id: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/roles/${id}`;
+    return this.http.get<any>(url);
+  }
+
+  deleteRoleRequest(id: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/roles/${id}`;
+    return this.http.delete<any>(url);
+  }
+
+  patchRoleRequest(id: any, body: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/roles/${id}`;
+    return this.http.patch<any>(url, body);
+  }
+
+  //--使用者------------------------------------------------------------------------------------------------
+
+  getAllUsersRequest(): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/users`;
+    return this.http.get<any>(url);
+  }
+
+  postUserRequest(body: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/users`;
+    return this.http.post<any>(url, body);
+  }
+
+  getOneUserRequest(): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/users/current-user`;
+    return this.http.get<any>(url);
+  }
+
+  deleteUserRequest(id: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/users/${id}`;
+    return this.http.delete<any>(url);
+  }
+
+  patchUserRequest(body: any): Observable<any> {
+    const url = `${BaseUrl}/web/v1.0/users/current-user`;
+    return this.http.patch<any>(url, body);
+  }
+
   //--車隊------------------------------------------------------------------------------------------------
 
   getAllFleetRequest(page: number = 1, limit: number = 20): Observable<any> {
@@ -120,77 +191,6 @@ export class CarService {
   postRefreshRequest(body: any): Observable<any> {
     const url = `${BaseUrl}/web/v1.0/refresh`;
     return this.http.post<any>(url, body);
-  }
-
-  //--權限------------------------------------------------------------------------------------------------
-
-  getPoliciesRequest(): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/policies`;
-    return this.http.get<any>(url);
-  }
-
-  postPoliciesRequest(body: any): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/policies`;
-    return this.http.post<any>(url, body);
-  }
-
-  deletePoliciesRequest(body: any): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/policies`;
-    return this.http.delete<any>(body);
-  }
-
-  //--角色------------------------------------------------------------------------------------------------
-
-  getAllRolesRequest(): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/roles`;
-    return this.http.get<any>(url);
-  }
-
-  postRolesRequest(body: any): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/roles`;
-    return this.http.post<any>(url, body);
-  }
-
-  getOneRoleRequest(id: any): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/roles/${id}`;
-    return this.http.get<any>(url);
-  }
-
-  deleteRoleRequest(id: any): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/roles/${id}`;
-    return this.http.delete<any>(url);
-  }
-
-  patchRoleRequest(id: any, body: any): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/roles/${id}`;
-    return this.http.patch<any>(url, body);
-  }
-
-  //--使用者------------------------------------------------------------------------------------------------
-
-  getAllUsersRequest(): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/users`;
-    return this.http.get<any>(url);
-  }
-
-  postUserRequest(body: any): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/users`;
-    return this.http.post<any>(url, body);
-  }
-
-  getOneUserRequest(id: any): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/users/${id}`;
-    return this.http.get<any>(url);
-  }
-
-  deleteUserRequest(id: any): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/users/${id}`;
-    return this.http.delete<any>(url);
-  }
-
-  patchUserRequest(id: any, body: any): Observable<any> {
-    const url = `${BaseUrl}/web/v1.0/users/${id}`;
-    return this.http.patch<any>(url, body);
   }
 
   //--車輛------------------------------------------------------------------------------------------------
