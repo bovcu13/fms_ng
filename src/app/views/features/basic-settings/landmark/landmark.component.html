@@ -15,7 +15,6 @@
             <p-table [value]="landmarkData"
                      selectionMode="single"
                      [(selection)]="selectedLandmark"
-                     (onRowSelect)="select()"
                      dataKey="code"
                      styleClass="text-sm p-datatable-sm">
               <ng-template pTemplate="header">
@@ -47,7 +46,6 @@
             <p-table [value]="areaData"
                      selectionMode="single"
                      [(selection)]="selectedArea"
-                     (onRowSelect)="select()"
                      dataKey="code"
                      styleClass="text-sm p-datatable-sm">
               <ng-template pTemplate="header">
@@ -137,7 +135,7 @@
     <!--    </div>-->
     <div class="col-12 flex justify-content-end">
       <p-button label="取消" severity="secondary" [outlined]="true" styleClass="mr-2"></p-button>
-      <p-button label="新增" (click)="addLandMark()"></p-button>
+      <p-button label="新增" ></p-button>
     </div>
   </div>
 </p-dialog>
