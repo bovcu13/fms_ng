@@ -40,6 +40,12 @@ export class MainComponent implements OnInit {
     this.mapInit();
     this.createMarkers();
 
+    this.carStatus = this.transformedData.map(item => ({
+      status: item.status,
+    }));
+
+    this.calculationCarStatus(this.carStatus);
+
     // Api資料
     // this.getAllNewGpsRequest()
     //     .pipe(
