@@ -5,8 +5,6 @@
         <div class="map-card">
         <div id="map" style="height: 50vh; width: 100%;position: relative"></div>
         </div>
-        <p-button (click)="showMarkDialog()" label="建立地標" id="custom-button" size="small" severity="info"
-                  [raised]="true" [text]="true" styleClass="bg-white"></p-button>
         <div *ngIf="recordDistances.length >= 2" class="kmh">{{distanceText}}</div>
         <div *ngIf="selectedProduct" class="addr">{{selectedProduct.address}}</div>
       </div>
@@ -202,9 +200,6 @@
                   <th>狀態</th>
                   <th>車牌</th>
                   <th>司機</th>
-                  <!--                <th *ngFor="let col of columns">-->
-                  <!--                  {{col.header}}-->
-                  <!--                </th>-->
                   <th style="width: 4rem"></th>
                 </tr>
               </ng-template>
@@ -216,14 +211,6 @@
                   </td>
                   <td>{{product.license_plate}}</td>
                   <td>{{product.driver}}</td>
-                  <!--                <td *ngFor="let col of columns">-->
-                  <!--                  <ng-container *ngIf="col.field !== 'date_time'; else dateTemplate">-->
-                  <!--                    {{product[col.field]}}-->
-                  <!--                  </ng-container>-->
-                  <!--                  <ng-template #dateTemplate>-->
-                  <!--                    {{product[col.field] | date:'yyyy-MM-dd HH:mm:ss'}}-->
-                  <!--                  </ng-template>-->
-                  <!--                </td>-->
                   <td>
                     <p-button routerLink="/e_tracking_view" severity="info" [text]="true" icon="pi pi-eye"
                               pTooltip="貨態追蹤" tooltipPosition="left"></p-button>
@@ -243,68 +230,6 @@
     </div>
   </div>
 </div>
-<p-dialog header="地標資料" [(visible)]="markDialog" [modal]="true" [style]="{ width: '20vw' }" [draggable]="false"
-          [resizable]="false">
-  <div class="grid">
-    <div class="col-4 flex align-items-center">
-      <label>地標類型</label>
-    </div>
-    <div class="col-8">
-      <p-dropdown [options]="markType" optionLabel="name" [appendTo]="'body'">
-        <ng-template pTemplate="option" let-option>
-        <span>
-          <i class="{{ option.icon }} mr-2"></i>
-          {{ option.name }}
-        </span>
-        </ng-template>
-        <ng-template pTemplate="selectedItem" let-selectedItem>
-          <i class="{{ selectedItem.icon }} mr-2"></i>
-          {{ selectedItem.name }}
-        </ng-template>
-      </p-dropdown>
-    </div>
-    <div class="col-4 flex align-items-center">
-      <label>地標名稱</label>
-    </div>
-    <div class="col-8">
-      <input type="text" pInputText/>
-    </div>
-    <div class="col-4 flex align-items-center">
-      <label>客戶編號</label>
-    </div>
-    <div class="col-8">
-      <input type="text" pInputText/>
-    </div>
-    <div class="col-4 flex align-items-center">
-      <label>電話</label>
-    </div>
-    <div class="col-8">
-      <input type="text" pInputText/>
-    </div>
-    <div class="col-4 flex align-items-center">
-      <label>範圍</label>
-    </div>
-    <div class="col-8">
-      <input type="text" pInputText/>
-    </div>
-    <div class="col-4 flex align-items-center">
-      <label>描述</label>
-    </div>
-    <div class="col-8">
-      <input type="text" pInputText/>
-    </div>
-    <div class="col-4 flex align-items-center">
-      <label>子公司分享</label>
-    </div>
-    <div class="col-8">
-      <p-inputSwitch></p-inputSwitch>
-    </div>
-    <div class="col-12 flex justify-content-end">
-      <p-button label="取消" severity="secondary" [outlined]="true" styleClass="mr-2"></p-button>
-      <p-button label="新增" (click)="addLandMark()"></p-button>
-    </div>
-  </div>
-</p-dialog>
 
 
 
