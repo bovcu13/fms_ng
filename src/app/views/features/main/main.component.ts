@@ -7,7 +7,7 @@ import { Table } from "primeng/table";
 import { driver_msg } from "../../../shared/data/products";
 import { now } from "../../../shared/data/now";
 
-declare var google: any;
+// declare var google: any;
 
 interface Column {
   field: string;
@@ -37,8 +37,8 @@ export class MainComponent implements OnInit {
 
     // 假資料
     this.transformedData = now
-    this.mapInit();
-    this.createMarkers();
+    // this.mapInit();
+    // this.createMarkers();
 
     this.carStatus = this.transformedData.map(item => ({
       status: item.status,
@@ -79,164 +79,164 @@ export class MainComponent implements OnInit {
     this.dt1.filterGlobal(event.target.value, 'contains')
   }
 
-  // 作用在全景地圖按鈕
-  setZoom7() {
-    const centerLatLng = new google.maps.LatLng(23.83876, 120.9876);
-    this.map.setCenter(centerLatLng);
-    this.map.setZoom(7);
-  }
-
-  // 地圖 & 地圖設定
-  map: any
-  mapOptions: any
-  // 標記
-  markers: google.maps.Marker[] = [];
-  // 線條
-  poly = google.maps.Polyline;
-  // 初始地圖地點
-  center: google.maps.LatLngLiteral = {
-    lat: 23.83876,
-    lng: 120.9876
-  };
+  // // 作用在全景地圖按鈕
+  // setZoom7() {
+  //   const centerLatLng = new google.maps.LatLng(23.83876, 120.9876);
+  //   this.map.setCenter(centerLatLng);
+  //   this.map.setZoom(7);
+  // }
+  //
+  // // 地圖 & 地圖設定
+  // map: any
+  // mapOptions: any
+  // // 標記
+  // markers: google.maps.Marker[] = [];
+  // // 線條
+  // poly = google.maps.Polyline;
+  // // 初始地圖地點
+  // center: google.maps.LatLngLiteral = {
+  //   lat: 23.83876,
+  //   lng: 120.9876
+  // };
 
   // draw
   drawingManager: any;
 
-  // 地圖初始化
-  mapInit() {
-    // 定義地圖相關設定
-    this.mapOptions = {
-      zoom: 7,
-      center: this.center,
-      restriction: {
-        strictBounds: false,
-      },
-      fullscreenControl: false,
-      streetViewControl: false,
-      scaleControl: true,
-    };
-
-    // 創建地圖實例
-    this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
-
-    // draw
-    this.drawingManager = new google.maps.drawing.DrawingManager({
-      drawingControl: true,
-      drawingControlOptions: {
-        position: google.maps.ControlPosition.TOP_CENTER,
-        drawingModes: [
-          google.maps.drawing.OverlayType.POLYGON,
-        ],
-      },
-    });
-  }
+  // // 地圖初始化
+  // mapInit() {
+  //   // 定義地圖相關設定
+  //   this.mapOptions = {
+  //     zoom: 7,
+  //     center: this.center,
+  //     restriction: {
+  //       strictBounds: false,
+  //     },
+  //     fullscreenControl: false,
+  //     streetViewControl: false,
+  //     scaleControl: true,
+  //   };
+  //
+  //   // 創建地圖實例
+  //   // this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
+  //
+  //   // draw
+  //   this.drawingManager = new google.maps.drawing.DrawingManager({
+  //     drawingControl: true,
+  //     drawingControlOptions: {
+  //       position: google.maps.ControlPosition.TOP_CENTER,
+  //       drawingModes: [
+  //         google.maps.drawing.OverlayType.POLYGON,
+  //       ],
+  //     },
+  //   });
+  // }
 
   products: any[] = [];
   selectedProduct: any;
   circle: any
 
   // 選取車輛後
-  Select() {
-    console.log('select: ', this.selectedProduct)
-    this.speed = this.selectedProduct.speed;
-    if (!this.circle) {
-      this.circle = new google.maps.Marker({
-        position: new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng),
-        map: this.map,
-        icon: {
-          url: 'assets/image/circle.png',
-          scaledSize: new google.maps.Size(60, 60),
-          anchor: new google.maps.Point(30, 30)
-        },
-        optimized: false,
-        zIndex: 0
-      });
-    } else {
-      this.circle.setPosition(new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng));
-    }
+  // Select() {
+  //   console.log('select: ', this.selectedProduct)
+  //   this.speed = this.selectedProduct.speed;
+  //   if (!this.circle) {
+  //     this.circle = new google.maps.Marker({
+  //       position: new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng),
+  //       map: this.map,
+  //       icon: {
+  //         url: 'assets/image/circle.png',
+  //         scaledSize: new google.maps.Size(60, 60),
+  //         anchor: new google.maps.Point(30, 30)
+  //       },
+  //       optimized: false,
+  //       zIndex: 0
+  //     });
+  //   } else {
+  //     this.circle.setPosition(new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng));
+  //   }
+  //
+  //   this.map.setCenter(new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng));
+  //   this.map.setZoom(20);
+  //
+  // }
 
-    this.map.setCenter(new google.maps.LatLng(this.selectedProduct.lat, this.selectedProduct.lng));
-    this.map.setZoom(20);
+  // // 計算距離
+  // recordDistances: google.maps.Marker[] = [];
+  // distanceText: string | null = null;
+  // addLatLng = (event: google.maps.MapMouseEvent) => {
+  //   const path = this.poly.getPath();
+  //
+  //   // 加入座標至地圖
+  //   path.push(event.latLng as google.maps.LatLng);
+  //
+  //   // 創建新的標記並將其存入陣列
+  //   const marker = new google.maps.Marker({
+  //     position: event.latLng,
+  //     title: "#" + path.getLength(),
+  //     map: this.map,
+  //   });
+  //   this.recordDistances.push(marker);
+  //
+  //   // 如果陣列中有至少兩個標記，計算並顯示距離
+  //   if (this.recordDistances.length >= 2) {
+  //     let totalDistance = 0;
+  //     for (let i = 0; i < this.recordDistances.length - 1; i++) {
+  //       const startMarker = this.recordDistances[i];
+  //       const endMarker = this.recordDistances[i + 1];
+  //       const distance = google.maps.geometry.spherical.computeDistanceBetween(
+  //         startMarker.getPosition(),
+  //         endMarker.getPosition()
+  //       );
+  //       totalDistance += distance;
+  //     }
+  //     this.distanceText = `${totalDistance.toFixed(2)} 公尺`;
+  //   }
+  // }
 
-  }
-
-  // 計算距離
-  recordDistances: google.maps.Marker[] = [];
-  distanceText: string | null = null;
-  addLatLng = (event: google.maps.MapMouseEvent) => {
-    const path = this.poly.getPath();
-
-    // 加入座標至地圖
-    path.push(event.latLng as google.maps.LatLng);
-
-    // 創建新的標記並將其存入陣列
-    const marker = new google.maps.Marker({
-      position: event.latLng,
-      title: "#" + path.getLength(),
-      map: this.map,
-    });
-    this.recordDistances.push(marker);
-
-    // 如果陣列中有至少兩個標記，計算並顯示距離
-    if (this.recordDistances.length >= 2) {
-      let totalDistance = 0;
-      for (let i = 0; i < this.recordDistances.length - 1; i++) {
-        const startMarker = this.recordDistances[i];
-        const endMarker = this.recordDistances[i + 1];
-        const distance = google.maps.geometry.spherical.computeDistanceBetween(
-          startMarker.getPosition(),
-          endMarker.getPosition()
-        );
-        totalDistance += distance;
-      }
-      this.distanceText = `${totalDistance.toFixed(2)} 公尺`;
-    }
-  }
-
-  // 測量模式是否開啟
-  isRanging = false
-
-  // 測量模式開關
-  toggleIsRanging() {
-    this.isRanging = !this.isRanging;
-    // 啟用模式才可畫線
-    if (this.isRanging) {
-      this.drawingManager.setMap(this.map);
-      // 設置線條紀錄距離
-      this.poly = new google.maps.Polyline({
-        strokeColor: "#000000",
-        strokeOpacity: 1.0,
-        strokeWeight: 3,
-      });
-      this.poly.setMap(this.map);
-      this.map.addListener("click", this.addLatLng.bind(this));
-    } else {
-      // 如果按鈕被關閉，則移除點擊事件監聽器
-      google.maps.event.clearListeners(this.map, "click");
-      this.drawingManager.setMap(null);
-      this.poly.setMap(null);
-      // 迭代並移除所有標記
-      for (const marker of this.recordDistances) {
-        marker.setMap(null);
-      }
-      // 清空陣列
-      this.recordDistances = [];
-    }
-  }
+  // // 測量模式是否開啟
+  // isRanging = false
+  //
+  // // 測量模式開關
+  // toggleIsRanging() {
+  //   this.isRanging = !this.isRanging;
+  //   // 啟用模式才可畫線
+  //   if (this.isRanging) {
+  //     this.drawingManager.setMap(this.map);
+  //     // 設置線條紀錄距離
+  //     this.poly = new google.maps.Polyline({
+  //       strokeColor: "#000000",
+  //       strokeOpacity: 1.0,
+  //       strokeWeight: 3,
+  //     });
+  //     this.poly.setMap(this.map);
+  //     this.map.addListener("click", this.addLatLng.bind(this));
+  //   } else {
+  //     // 如果按鈕被關閉，則移除點擊事件監聽器
+  //     google.maps.event.clearListeners(this.map, "click");
+  //     this.drawingManager.setMap(null);
+  //     this.poly.setMap(null);
+  //     // 迭代並移除所有標記
+  //     for (const marker of this.recordDistances) {
+  //       marker.setMap(null);
+  //     }
+  //     // 清空陣列
+  //     this.recordDistances = [];
+  //   }
+  // }
 
   // 交通圖層
-  trafficLayer = new google.maps.TrafficLayer();
+  // trafficLayer = new google.maps.TrafficLayer();
 
-  // 路況圖層開關
-  toggleTraffic() {
-    if (this.trafficLayer.getMap()) {
-      // 如果交通圖層已經可見，則隱藏它
-      this.trafficLayer.setMap(null);
-    } else {
-      // 如果交通圖層未可見，則顯示它
-      this.trafficLayer.setMap(this.map);
-    }
-  }
+  // // 路況圖層開關
+  // toggleTraffic() {
+  //   if (this.trafficLayer.getMap()) {
+  //     // 如果交通圖層已經可見，則隱藏它
+  //     this.trafficLayer.setMap(null);
+  //   } else {
+  //     // 如果交通圖層未可見，則顯示它
+  //     this.trafficLayer.setMap(this.map);
+  //   }
+  // }
 
   // 存轉換後api資料
   transformedData: any[] = [];
@@ -250,7 +250,7 @@ export class MainComponent implements OnInit {
     );
   }
 
-  infowindow = new google.maps.InfoWindow();
+  // infowindow = new google.maps.InfoWindow();
   cars: any;
   carStatus: any;
 
@@ -291,84 +291,84 @@ export class MainComponent implements OnInit {
     }, {} as StatusCount);
   }
 
-  // 創標記
-  createMarkers() {
-    for (const location of this.transformedData) {
-      //標記
-      const marker = new google.maps.Marker({
-        position: new google.maps.LatLng(location.lat, location.lng),
-        map: this.map,
-        title: location.address,
-        icon: {
-          url: location.url,
-          scaledSize: new google.maps.Size(60, 60),
-          anchor: new google.maps.Point(30, 30)
-        },
-        zIndex: 1
-      });
+  // // 創標記
+  // createMarkers() {
+  //   for (const location of this.transformedData) {
+  //     //標記
+  //     const marker = new google.maps.Marker({
+  //       position: new google.maps.LatLng(location.lat, location.lng),
+  //       map: this.map,
+  //       title: location.address,
+  //       icon: {
+  //         url: location.url,
+  //         scaledSize: new google.maps.Size(60, 60),
+  //         anchor: new google.maps.Point(30, 30)
+  //       },
+  //       zIndex: 1
+  //     });
+  //
+  //     const licensePlate = location.license_plate;
+  //     const driver = location.driver;
+  //     const content = `
+  //     <div class="text-center">
+  //       <label>${licensePlate}</label>
+  //       <br>
+  //       <label>${driver}</label>
+  //     </div>
+  //   `;
+  //
+  //     // 更新infowindow的内容
+  //     this.infowindow = new google.maps.InfoWindow({
+  //       content: content,
+  //     });
+  //
+  //     // 一開始就顯示資訊窗口
+  //     this.infowindow.open(this.map, marker);
+  //
+  //     this.markers.push(marker);
+  //
+  //     // 點擊標記顯示info, 設定中心點
+  //     google.maps.event.addListener(marker, 'click', () => {
+  //       this.selectedProduct = location;
+  //       this.Select();
+  //     });
+  //   }
+  // }
 
-      const licensePlate = location.license_plate;
-      const driver = location.driver;
-      const content = `
-      <div class="text-center">
-        <label>${licensePlate}</label>
-        <br>
-        <label>${driver}</label>
-      </div>
-    `;
-
-      // 更新infowindow的内容
-      this.infowindow = new google.maps.InfoWindow({
-        content: content,
-      });
-
-      // 一開始就顯示資訊窗口
-      this.infowindow.open(this.map, marker);
-
-      this.markers.push(marker);
-
-      // 點擊標記顯示info, 設定中心點
-      google.maps.event.addListener(marker, 'click', () => {
-        this.selectedProduct = location;
-        this.Select();
-      });
-    }
-  }
-
-  // 更新標記
-  updateMarkers() {
-    for (let i = 0; i < this.transformedData.length; i++) {
-      const location = this.transformedData[i];
-      const marker = this.markers[i];
-
-      // 檢查 marker 是否存在
-      if (!marker) {
-        continue;  // 若 marker 不存在，跳過這次迴圈
-      }
-
-      const currentPosition = marker.getPosition();
-
-      // 檢查 currentPosition 是否存在
-      if (currentPosition) {
-        // 檢查位置是否有變化
-        if (currentPosition.lat() !== location.lat || currentPosition.lng() !== location.lng) {
-          // 更新 marker 位置
-          const newPosition = new google.maps.LatLng(location.lat, location.lng);
-          marker.setPosition(newPosition);
-        }
-      }
-
-      // 檢查URL變化
-      if (marker.getIcon() !== location.url) {
-        // 更新URL
-        marker.setIcon({
-          url: location.url,
-          scaledSize: new google.maps.Size(60, 60),
-          anchor: new google.maps.Point(30, 30)
-        });
-      }
-    }
-  }
+  // // 更新標記
+  // updateMarkers() {
+  //   for (let i = 0; i < this.transformedData.length; i++) {
+  //     const location = this.transformedData[i];
+  //     const marker = this.markers[i];
+  //
+  //     // 檢查 marker 是否存在
+  //     if (!marker) {
+  //       continue;  // 若 marker 不存在，跳過這次迴圈
+  //     }
+  //
+  //     const currentPosition = marker.getPosition();
+  //
+  //     // 檢查 currentPosition 是否存在
+  //     if (currentPosition) {
+  //       // 檢查位置是否有變化
+  //       if (currentPosition.lat() !== location.lat || currentPosition.lng() !== location.lng) {
+  //         // 更新 marker 位置
+  //         const newPosition = new google.maps.LatLng(location.lat, location.lng);
+  //         marker.setPosition(newPosition);
+  //       }
+  //     }
+  //
+  //     // 檢查URL變化
+  //     if (marker.getIcon() !== location.url) {
+  //       // 更新URL
+  //       marker.setIcon({
+  //         url: location.url,
+  //         scaledSize: new google.maps.Size(60, 60),
+  //         anchor: new google.maps.Point(30, 30)
+  //       });
+  //     }
+  //   }
+  // }
 
   // 依方位取得車輛圖片
   getUrlByDirection(heading: number, status: string) {
@@ -445,33 +445,33 @@ export class MainComponent implements OnInit {
 
   addr: any[] = []
 
-  // 轉換成中文地址
-  geocodePositions() {
-    const geocoder = new google.maps.Geocoder();
-
-    this.transformedData.forEach(product => {
-      const latlng = new google.maps.LatLng(product.lat, product.lng);
-      geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
-        if (status === google.maps.GeocoderStatus.OK) {
-          let addressFound = false;
-          if (results && results.length > 0) {
-            for (let i = 0; i < results.length; i++) {
-              const formattedAddress = results[i].formatted_address;
-              if (!formattedAddress.match(/\b\w+\+\w+\b/)) {
-                product.addr = formattedAddress;
-                addressFound = true;
-                break; // 找到非 Plus Code 地址後跳出迴圈
-              }
-            }
-          }
-          if (!addressFound) {
-            product.addr = '找不到地址';
-          }
-        } else {
-          product.addr = '編碼錯誤';
-        }
-      });
-    });
-  }
+  // // 轉換成中文地址
+  // geocodePositions() {
+  //   const geocoder = new google.maps.Geocoder();
+  //
+  //   this.transformedData.forEach(product => {
+  //     const latlng = new google.maps.LatLng(product.lat, product.lng);
+  //     geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
+  //       if (status === google.maps.GeocoderStatus.OK) {
+  //         let addressFound = false;
+  //         if (results && results.length > 0) {
+  //           for (let i = 0; i < results.length; i++) {
+  //             const formattedAddress = results[i].formatted_address;
+  //             if (!formattedAddress.match(/\b\w+\+\w+\b/)) {
+  //               product.addr = formattedAddress;
+  //               addressFound = true;
+  //               break; // 找到非 Plus Code 地址後跳出迴圈
+  //             }
+  //           }
+  //         }
+  //         if (!addressFound) {
+  //           product.addr = '找不到地址';
+  //         }
+  //       } else {
+  //         product.addr = '編碼錯誤';
+  //       }
+  //     });
+  //   });
+  // }
 
 }
