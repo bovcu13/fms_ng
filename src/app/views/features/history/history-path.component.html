@@ -34,16 +34,16 @@
             </div>
             <div class="col-12 flex justify-content-end">
               <p-button label="查詢" icon="pi pi-search" size="small" severity="warning"
-                        (click)="searchPath()"></p-button>
+                        ></p-button>
             </div>
             <div class="col-12 flex justify-content-between">
               <div class="col-12 md:col-1 lg:col-1 mt-3">
-                <p-toggleButton [ngModel]="isPlaying" (onChange)="togglePlay()" onIcon="pi pi-caret-right" offIcon="pi pi-pause"
+                <p-toggleButton [ngModel]="isPlaying"  onIcon="pi pi-caret-right" offIcon="pi pi-pause"
                                 [disabled]="playable"></p-toggleButton>
               </div>
               <div class="col-12 md:col-10 lg:col-10 mt-5">
                 <div class="slider-container">
-                  <p-slider (onChange)="onSliderChange($event)" [max]="totalTime" [min]="0" [(ngModel)]="sliderValue"
+                  <p-slider  [max]="totalTime" [min]="0" [(ngModel)]="sliderValue"
                             [disabled]="playable"></p-slider>
                   <div class="slider-label" [style.left.%]="(sliderValue / totalTime) * 100">
                     {{ formatTime(sliderValue) }}
@@ -58,7 +58,7 @@
             </div>
             <div class="col-12 flex align-items-center">
               <label>倍速：</label>
-              <p-button label="{{speedRate}}" (click)="changeSpeed()" size="small" severity="warning"
+              <p-button label="{{speedRate}}"  size="small" severity="warning"
                         [disabled]="playable" styleClass="ml-3" [style]="{ width: '4em' }"></p-button>
             </div>
           </div>
@@ -67,7 +67,6 @@
                    [rows]="5"
                    selectionMode="single"
                    [(selection)]="selectedProduct"
-                   (onRowSelect)="Select()"
                    [scrollable]="true"
                    scrollHeight="50vh">
             <ng-template pTemplate="header">
@@ -107,7 +106,7 @@
                   <p-table styleClass="p-datatable-sm"
                            [value]="products" [paginator]="true" [rows]="5" selectionMode="single"
                            [(selection)]="selectedProduct"
-                           (onRowSelect)="Select()">
+                           >
                     <ng-template pTemplate="header">
                       <tr>
                         <th>狀態累積</th>
@@ -193,7 +192,7 @@
     </div>
     <div class="col-12 flex justify-content-end">
       <p-button label="取消" severity="secondary" [outlined]="true" styleClass="mr-2"></p-button>
-      <p-button label="新增" (click)="addLandMark()"></p-button>
+      <p-button label="新增" ></p-button>
     </div>
   </div>
 </p-dialog>
