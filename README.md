@@ -1,27 +1,27 @@
 # Fms
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+此專案使用 [Angular CLI](https://github.com/angular/angular-cli) 版本 16.2.0 。
 
-## Development server
+## 安裝 Angular CLI
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+在安裝之前，確保已經安裝了 Node.js。  
+執行以下指令透過 NPM 安裝 Angular CLI：  
+`npm install --global @angular/cli`
 
-## Code scaffolding
+### 檢查確認
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+安裝完成後，您可以使用以下指令檢查 Angular CLI 的版本：  
+`ng --version`
 
-## Build
+## 執行 Angular 開發用 Server
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+使用以下指令啟動 Angular 開發伺服器：  
+`ng serve`  
+編譯完成後，您可以在瀏覽器中打開 http://localhost:4200/ 查看。
 
-## Running unit tests
+## 檔案結構
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+* `src`：開發中所有程式碼、資源全部都在這裡。
+* `src/app`：包含整個網頁應用程式的 Module、Component、Service。
+* `src/assets`：靜態資源資料夾。例如：圖片、多語系 json 檔等。
+* `src/environments`：環境變數設定檔資料夾。
