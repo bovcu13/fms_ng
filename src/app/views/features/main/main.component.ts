@@ -5,6 +5,7 @@ import { mergeMap, switchMap, tap } from "rxjs/operators";
 import { interval, of } from "rxjs";
 import { Table } from "primeng/table";
 import { driver_msg } from "../../../shared/data/products";
+import { now } from "../../../shared/data/now";
 
 declare var google: any;
 
@@ -33,115 +34,59 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    // 假資料
+    this.transformedData = now
     this.mapInit();
-    // this.colsInit();
-    // this.itemInit();
+    this.createMarkers();
 
-    this.getAllNewGpsRequest()
-        .pipe(
-          switchMap(() => {
-            // 資料取得後進行
-            this.visible = false;
-            this.afterGet()
-            this.createMarkers()
-            return of(null); // 使用 RxJS 的 of 函式返回一個 Observable 包裹的 null
-          })
-        )
-        .subscribe();
+    this.carStatus = this.transformedData.map(item => ({
+      status: item.status,
+    }));
 
-    interval(15000)  // 每隔15秒
-      .pipe(
-        mergeMap(() => this.getAllNewGpsRequest()),  // 取得新資料
-        tap(res => {
-          // 資料取得後進行的動作
-          this.afterGet();
-          this.updateMarkers();
-        })
-      )
-      .subscribe();
+    this.calculationCarStatus(this.carStatus);
+
+    // Api資料
+    // this.getAllNewGpsRequest()
+    //     .pipe(
+    //       switchMap(() => {
+    //         // 資料取得後進行
+    //         this.visible = false;
+    //         this.afterGet()
+    //         this.createMarkers()
+    //         return of(null); // 使用 RxJS 的 of 函式返回一個 Observable 包裹的 null
+    //       })
+    //     )
+    //     .subscribe();
+    //
+    // interval(15000)  // 每隔15秒
+    //   .pipe(
+    //     mergeMap(() => this.getAllNewGpsRequest()),  // 取得新資料
+    //     tap(res => {
+    //       // 資料取得後進行的動作
+    //       this.afterGet();
+    //       this.updateMarkers();
+    //     })
+    //   )
+    //   .subscribe();
   }
 
-  // 顯示欄位
-  // cols!: Column[];
-  // _selectedColumns!: Column[];
-  // @Input() get selectedColumns(): any[] {
-  //   return this._selectedColumns;
-  // }
-  //
-  // set selectedColumns(val: any[]) {
-  //   //restore original order
-  //   this._selectedColumns = this.cols.filter((col) => val.includes(col));
-  // }
-  //
-  // clearMultiSelect() {
-  //   // onClear事件
-  //   this._selectedColumns = [];
-  // }
-  //
-  // colsInit() {
-  //   this.cols = [
-  //     { field: 'phone', header: '電話' },
-  //     { field: 'date_time', header: '回傳時間' },
-  //     { field: 'speed', header: '速度' },
-  //     { field: 'direction', header: '方向' },
-  //     { field: 'address', header: '位置' },
-  //     { field: 'vehicle_name', header: '車輛名稱' },
-  //     { field: 'statusAccumulated', header: '狀態累積' },
-  //     { field: 'departureTime', header: '出車時間' },
-  //     { field: 'drivingTime', header: '開車時間' },
-  //     { field: 'temp', header: '溫度' },
-  //     // { field: 'progress', header: '裝卸進度' },
-  //   ];
-  //
-  //   this._selectedColumns = [
-  //     { field: 'address', header: '位置' },
-  //     // { field: 'progress', header: '裝卸進度' },
-  //   ]
-  // }
-
-  // 功能列
-  // items!: MenuItem[];
-  //
-  // itemInit() {
-  //   this.items = [
-  //     {
-  //       icon: 'pi pi-truck',
-  //       tooltipOptions: {
-  //         tooltipLabel: "路況顯示",
-  //         tooltipPosition: "bottom"
-  //       },
-  //       command: () => {
-  //         this.toggleTraffic()
-  //       }
-  //     },
-  //     {
-  //       icon: 'fas fa-compress-arrows-alt',
-  //       tooltipOptions: {
-  //         tooltipLabel: "全景地圖",
-  //         tooltipPosition: "bottom"
-  //       },
-  //       command: () => {
-  //         const centerLatLng = new google.maps.LatLng(23.83876, 120.9876);
-  //         this.map.setCenter(centerLatLng);
-  //         this.map.setZoom(7);
-  //       }
-  //     }
-  //   ];
-  // }
-
+  // 即時狀態資料表格 #dt1
   @ViewChild('dt1') dt1!: Table;
 
+  // 篩選
   filterGlobal(event: any) {
     this.dt1.filterGlobal(event.target.value, 'contains')
   }
 
+  // 作用在全景地圖按鈕
   setZoom7() {
     const centerLatLng = new google.maps.LatLng(23.83876, 120.9876);
     this.map.setCenter(centerLatLng);
     this.map.setZoom(7);
   }
 
-  // 地圖
+  // 地圖 & 地圖設定
   map: any
   mapOptions: any
   // 標記
@@ -153,38 +98,17 @@ export class MainComponent implements OnInit {
     lat: 23.83876,
     lng: 120.9876
   };
-  // 地圖邊界
-  TAIWAN_BOUNDS = {
-    north: 25.36,
-    south: 21.86,
-    west: 118.18,
-    east: 123.78,
-  };
-
-  // 按下右鍵的地標按鈕顯示
-  landmarkButt = false;
-  markDialog: boolean = false;
 
   // draw
   drawingManager: any;
 
-  showMarkDialog() {
-    this.markDialog = true;
-  }
-
-  markType: any[] = [
-    { name: 'Home', icon: 'pi pi-home', code: 'Home' },
-    { name: 'Star', icon: 'pi pi-star-fill', code: 'Star' },
-    { name: 'Company', icon: 'pi pi-building', code: 'Company' },
-  ];
-
+  // 地圖初始化
   mapInit() {
     // 定義地圖相關設定
     this.mapOptions = {
       zoom: 7,
       center: this.center,
       restriction: {
-        // latLngBounds: this.TAIWAN_BOUNDS,
         strictBounds: false,
       },
       fullscreenControl: false,
@@ -205,78 +129,13 @@ export class MainComponent implements OnInit {
         ],
       },
     });
-
-    // 點右鍵生成標記以新增地標
-    this.map.addListener("contextmenu", (e: any) => {
-      this.placeMarkerAndPanTo(e.latLng, this.map);
-      const customButton = document.getElementById('custom-button');
-      // 檢查 customButton 是否為 null
-      if (customButton) {
-        customButton.style.display = 'block';
-
-        // 設定按鈕位置在地圖中心點的下方
-        const buttonLeft = (this.map.getDiv().offsetWidth / 2 - 45) + 'px';
-        const buttonTop = (this.map.getDiv().offsetHeight / 2 + 50) + 'px';
-
-        customButton.style.left = buttonLeft;
-        customButton.style.top = buttonTop;
-
-        // 設定 landmarkButt 為 true
-        this.landmarkButt = true;
-      }
-    });
-
-    // 監聽地圖的點擊事件，清空地標
-    this.map.addListener("click", (e: any) => {
-      // 清除之前的標記
-      if (this.previousMarker) {
-        this.previousMarker.setMap(null);
-        this.previousMarker.setPosition(null);
-      }
-      // 檢查 landmarkButt 是否為 true，如果是就隱藏座標和按鈕
-      if (this.landmarkButt) {
-        const customButton = document.getElementById('custom-button');
-        if (customButton) {
-          customButton.style.display = 'none';
-        }
-        // 將 landmarkButt 設定為 false
-        this.landmarkButt = false;
-      }
-    });
-
-    // 監聽地圖的拖動事件，清空地標
-    this.map.addListener("drag", () => {
-      // 清除之前的標記
-      if (this.previousMarker) {
-        this.previousMarker.setMap(null);
-        this.previousMarker.setPosition(null);
-      }
-      // 檢查 landmarkButt 是否為 true，如果是就隱藏座標和按鈕
-      if (this.landmarkButt) {
-        const customButton = document.getElementById('custom-button');
-        if (customButton) {
-          customButton.style.display = 'none';
-        }
-        // 將 landmarkButt 設定為 false
-        this.landmarkButt = false;
-      }
-    });
-
-    // 右鍵新增的標記顯示在中間
-    this.map.addListener("center_changed", () => {
-      window.setTimeout(() => {
-        if (this.previousMarker) {
-          this.map.panTo(this.previousMarker.getPosition() as google.maps.LatLng);
-        }
-      }, 0);
-    });
   }
 
-  // 選取車輛
   products: any[] = [];
   selectedProduct: any;
   circle: any
 
+  // 選取車輛後
   Select() {
     console.log('select: ', this.selectedProduct)
     this.speed = this.selectedProduct.speed;
@@ -300,7 +159,6 @@ export class MainComponent implements OnInit {
     this.map.setZoom(20);
 
   }
-
 
   // 計算距離
   recordDistances: google.maps.Marker[] = [];
@@ -338,6 +196,7 @@ export class MainComponent implements OnInit {
   // 測量模式是否開啟
   isRanging = false
 
+  // 測量模式開關
   toggleIsRanging() {
     this.isRanging = !this.isRanging;
     // 啟用模式才可畫線
@@ -365,9 +224,10 @@ export class MainComponent implements OnInit {
     }
   }
 
-  // 路況圖層開關
+  // 交通圖層
   trafficLayer = new google.maps.TrafficLayer();
 
+  // 路況圖層開關
   toggleTraffic() {
     if (this.trafficLayer.getMap()) {
       // 如果交通圖層已經可見，則隱藏它
@@ -378,105 +238,10 @@ export class MainComponent implements OnInit {
     }
   }
 
-  poiMarker = google.maps.LatLngLiteral
+  // 存轉換後api資料
+  transformedData: any[] = [];
 
-  //新增地標的按鈕
-  addLandMark() {
-    const svgMarker = {
-      path: "M19,11v9h-5v-6h-4v6H5v-9H3.6L12,3.4l8.4,7.6H19z",
-      fillColor: "red",
-      fillOpacity: 0.8,
-      strokeWeight: 0,
-      rotation: 0,
-      scale: 1,
-      anchor: new google.maps.Point(0, 20),
-    };
-
-    this.poiMarker = this.previousMarker
-    // 創建新的標記
-    const marker = new google.maps.Marker({
-      position: this.poiMarker.getPosition(),
-      map: this.map,
-      label: {
-        text: "\ue88a", // codepoint from https://fonts.google.com/icons
-        fontFamily: "Material Icons",
-        color: "#ffffff",
-        fontSize: "18px",
-      },
-    });
-
-    this.markDialog = false;
-    // 清除之前的標記
-    if (this.previousMarker) {
-      this.previousMarker.setMap(null);
-      this.previousMarker.setPosition(null);
-    }
-    // 檢查 landmarkButt 是否為 true，如果是就隱藏座標和按鈕
-    if (this.landmarkButt) {
-      const customButton = document.getElementById('custom-button');
-      if (customButton) {
-        customButton.style.display = 'none';
-      }
-      // 將 landmarkButt 設定為 false
-      this.landmarkButt = false;
-    }
-  }
-
-  previousMarker: google.maps.Marker | null = null;
-
-  // 點擊地圖座標跑至中心
-  placeMarkerAndPanTo(latLng: google.maps.LatLng, map: google.maps.Map) {
-    // 清除之前的標記
-    if (this.previousMarker) {
-      this.previousMarker.setMap(null);
-    }
-
-    // 創建新的標記
-    const marker = new google.maps.Marker({
-      position: latLng,
-      map: map,
-    });
-
-    // 設定地圖中心為新位置
-    map.panTo(latLng);
-
-    // 將新標記設為上一個標記
-    this.previousMarker = marker;
-  }
-
-  addr: any[] = []
-
-  // 加到addr
-  geocodePositions() {
-    const geocoder = new google.maps.Geocoder();
-
-    this.transformedData.forEach(product => {
-      const latlng = new google.maps.LatLng(product.lat, product.lng);
-      geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
-        if (status === google.maps.GeocoderStatus.OK) {
-          let addressFound = false;
-          if (results && results.length > 0) {
-            for (let i = 0; i < results.length; i++) {
-              const formattedAddress = results[i].formatted_address;
-              if (!formattedAddress.match(/\b\w+\+\w+\b/)) {
-                product.addr = formattedAddress;
-                addressFound = true;
-                break; // 找到非 Plus Code 地址後跳出迴圈
-              }
-            }
-          }
-          if (!addressFound) {
-            product.addr = '找不到地址';
-          }
-        } else {
-          product.addr = '編碼錯誤';
-        }
-      });
-    });
-  }
-
-  transformedData: any[] = []; // 存轉換後api資料
-
+  // 取得即時狀態Api資料
   getAllNewGpsRequest() {
     return this.carServ.getAllNewGpsRequest().pipe(
       tap(res => {
@@ -489,6 +254,7 @@ export class MainComponent implements OnInit {
   cars: any;
   carStatus: any;
 
+  // Api資料取得後進行
   afterGet() {
     this.transformedData = this.products.map(item => ({
       ...item,
@@ -512,6 +278,7 @@ export class MainComponent implements OnInit {
 
   statusCount: StatusCount = {};
 
+  // 統計車輛狀態
   calculationCarStatus(carStatus: any[]) {
     // 使用 reduce() 方法來統計每個狀態的類別數
     this.statusCount = carStatus.reduce((acc, curr) => {
@@ -522,9 +289,9 @@ export class MainComponent implements OnInit {
 
       return acc;
     }, {} as StatusCount);
-
   }
 
+  // 創標記
   createMarkers() {
     for (const location of this.transformedData) {
       //標記
@@ -568,6 +335,7 @@ export class MainComponent implements OnInit {
     }
   }
 
+  // 更新標記
   updateMarkers() {
     for (let i = 0; i < this.transformedData.length; i++) {
       const location = this.transformedData[i];
@@ -602,6 +370,7 @@ export class MainComponent implements OnInit {
     }
   }
 
+  // 依方位取得車輛圖片
   getUrlByDirection(heading: number, status: string) {
     let direction = this.parseHeading(heading);
 
@@ -667,10 +436,42 @@ export class MainComponent implements OnInit {
     return directionUrlMap[direction] && directionUrlMap[direction][status] || 'assets/image/car1.png';
   }
 
+  // 依方位取得方位文字
   parseHeading(heading: number) {
     const directions = ['北', '東北', '東', '東南', '南', '西南', '西', '西北'];
     const index = Math.floor(((heading + 22.5) % 360) / 45);
     return directions[index] || '未知方位';
+  }
+
+  addr: any[] = []
+
+  // 轉換成中文地址
+  geocodePositions() {
+    const geocoder = new google.maps.Geocoder();
+
+    this.transformedData.forEach(product => {
+      const latlng = new google.maps.LatLng(product.lat, product.lng);
+      geocoder.geocode({ location: latlng }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+          let addressFound = false;
+          if (results && results.length > 0) {
+            for (let i = 0; i < results.length; i++) {
+              const formattedAddress = results[i].formatted_address;
+              if (!formattedAddress.match(/\b\w+\+\w+\b/)) {
+                product.addr = formattedAddress;
+                addressFound = true;
+                break; // 找到非 Plus Code 地址後跳出迴圈
+              }
+            }
+          }
+          if (!addressFound) {
+            product.addr = '找不到地址';
+          }
+        } else {
+          product.addr = '編碼錯誤';
+        }
+      });
+    });
   }
 
 }
