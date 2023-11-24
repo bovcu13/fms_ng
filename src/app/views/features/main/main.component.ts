@@ -5,6 +5,7 @@ import { mergeMap, switchMap, tap } from "rxjs/operators";
 import { interval, of } from "rxjs";
 import { Table } from "primeng/table";
 import { driver_msg } from "../../../shared/data/products";
+import { now } from "../../../shared/data/now";
 
 declare var google: any;
 
@@ -33,32 +34,39 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    // 假資料
+    this.transformedData = now
     this.mapInit();
+    this.createMarkers();
+
+
     // this.colsInit();
     // this.itemInit();
 
-    this.getAllNewGpsRequest()
-        .pipe(
-          switchMap(() => {
-            // 資料取得後進行
-            this.visible = false;
-            this.afterGet()
-            this.createMarkers()
-            return of(null); // 使用 RxJS 的 of 函式返回一個 Observable 包裹的 null
-          })
-        )
-        .subscribe();
-
-    interval(15000)  // 每隔15秒
-      .pipe(
-        mergeMap(() => this.getAllNewGpsRequest()),  // 取得新資料
-        tap(res => {
-          // 資料取得後進行的動作
-          this.afterGet();
-          this.updateMarkers();
-        })
-      )
-      .subscribe();
+    // Api資料
+    // this.getAllNewGpsRequest()
+    //     .pipe(
+    //       switchMap(() => {
+    //         // 資料取得後進行
+    //         this.visible = false;
+    //         this.afterGet()
+    //         this.createMarkers()
+    //         return of(null); // 使用 RxJS 的 of 函式返回一個 Observable 包裹的 null
+    //       })
+    //     )
+    //     .subscribe();
+    //
+    // interval(15000)  // 每隔15秒
+    //   .pipe(
+    //     mergeMap(() => this.getAllNewGpsRequest()),  // 取得新資料
+    //     tap(res => {
+    //       // 資料取得後進行的動作
+    //       this.afterGet();
+    //       this.updateMarkers();
+    //     })
+    //   )
+    //   .subscribe();
   }
 
   // 顯示欄位
