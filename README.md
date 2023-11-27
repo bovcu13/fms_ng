@@ -24,6 +24,10 @@
 
 * `src`：開發中所有程式碼、資源全部都在這裡。
 * `src/app`：包含整個網頁應用程式的 Module、Component、Service。
+* `src/app/shared`：共用的 Module、data(假資料)。
+* `src/app/views/features`：各個頁面的 Component。
+* `src/app/views/container`：各個頁面的路由，組合頁首與頁面內容。
+* `src/app/views/component`：登入頁 和 頁首。
 * `src/assets`：靜態資源資料夾。例如：圖片、多語系 json 檔等。
 * `src/environments`：環境變數設定檔資料夾。
 
