@@ -4,7 +4,8 @@
 
 ## 安裝 Angular CLI
 
-在安裝之前，確保已經安裝了 Node.js。  
+在安裝之前，執行以下指令確認是否安裝了 Node.js。  
+`node --version`  
 執行以下指令透過 NPM 安裝 Angular CLI：  
 `npm install --global @angular/cli`
 
@@ -25,3 +26,10 @@
 * `src/app`：包含整個網頁應用程式的 Module、Component、Service。
 * `src/assets`：靜態資源資料夾。例如：圖片、多語系 json 檔等。
 * `src/environments`：環境變數設定檔資料夾。
+
+## Google Maps JavaScript API
+
+相關的 Google Map API 引用，放在 `src/index.html` 中，如下：
+
+* `Places and Directions libraries`：地點和方向功能。
+* `Drawing library`：地圖上的繪圖圖層
