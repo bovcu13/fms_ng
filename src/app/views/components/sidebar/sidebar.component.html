@@ -34,4 +34,6 @@
     <p-button icon="pi pi-user" (click)="test_menu.toggle($event)" [text]="true" styleClass="text-white"></p-button>
   </div>
 </p-sidebar>
-<p-menu #test_menu [model]="testMenu" [popup]="true"></p-menu>
+
+<!--測試標籤放在src/app/shared/data/menu.ts-->
+<p-menu #test_menu [model]="testMenu" [popup]="true" ></p-menu>

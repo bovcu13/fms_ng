@@ -21,7 +21,7 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-    // userItems
+    // 右上角 userItems
     this.userItems = [
       {
         label: '帳號'
@@ -49,7 +49,7 @@ export class SidebarComponent implements OnInit {
       }
     ];
 
-    // sidebarMenu
+    // 左上角 Menu
     this.sidebarMenu = [
       {
         label: '首頁',
