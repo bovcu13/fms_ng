@@ -60,17 +60,6 @@ export class SidebarComponent implements OnInit {
         label: '車隊監控管理(FMS)',
         icon: 'pi pi-fw pi-sitemap',
         items: [
-          // {
-          //   label: '區域監控',
-          //   icon: 'pi pi-fw pi-box',
-          //   routerLink: '/main',
-          //   command: () => {
-          //     this.sideVisible = false
-          //   },
-          //   style: {
-          //     background: 'rgba(84, 200, 240, 0.1)'
-          //   },
-          // },
           {
             label: 'GPS圖台',
             icon: 'pi pi-map-marker',
@@ -105,7 +94,7 @@ export class SidebarComponent implements OnInit {
             },
           },
           {
-            label: '數位軌跡16-1報表', // 少大餅軌跡
+            label: '數位軌跡16-1報表',
             icon: 'pi pi-fw pi-chart-pie',
             routerLink: '/cake_report',
             command: () => {
@@ -332,13 +321,9 @@ export class SidebarComponent implements OnInit {
               {
                 label: '異常設定',
                 icon: 'pi pi-fw pi-box',
-                // routerLink: '/odd_set',
                 command: () => {
                   alert("功能未開放");
                   this.sideVisible = false
-                },
-                style: {
-                  background: 'rgba(84, 200, 240, 0.1)'
                 },
               },
               {
@@ -383,17 +368,6 @@ export class SidebarComponent implements OnInit {
             label: '碳足跡揭露',
             icon: 'pi pi-fw pi-chart-line',
             items: [
-              // {
-              //   label: '紀錄列表',
-              //   icon: 'pi pi-fw pi-box',
-              //   routerLink: '/record',
-              //   command: () => {
-              //     this.sideVisible = false
-              //   },
-              //   style: {
-              //     background: 'rgba(84, 200, 240, 0.1)'
-              //   },
-              // },
               {
                 label: '里程統計',
                 icon: 'pi pi-fw pi-box',
@@ -405,14 +379,6 @@ export class SidebarComponent implements OnInit {
                   background: 'rgba(84, 200, 240, 0.1)'
                 },
               },
-              // {
-              //   label: '地標統計',
-              //   icon: 'pi pi-fw pi-box',
-              //   command: () => {
-              //     alert("功能未開放");
-              //     this.sideVisible = false
-              //   },
-              // },
               {
                 label: '國道計費',
                 icon: 'pi pi-fw pi-box',
@@ -453,14 +419,6 @@ export class SidebarComponent implements OnInit {
                   this.sideVisible = false
                 },
               },
-              // {
-              //   label: '績效',
-              //   icon: 'pi pi-fw pi-box',
-              //   command: () => {
-              //     alert("功能未開放");
-              //     this.sideVisible = false
-              //   },
-              // },
             ]
           },
           {
@@ -551,19 +509,6 @@ export class SidebarComponent implements OnInit {
           background: 'rgba(220,250,220,0.6)',
         },
       },
-      // {
-      //   label: 'FMP-功能清單',
-      //   icon: 'pi pi-google',
-      //   style: {
-      //     background: 'rgba(220,250,220,0.6)',
-      //   },
-      //   url: 'https://docs.google.com/spreadsheets/d/1E3c_g36atRFDkZRQkvwTOzWWXnATkNnwX0bcMW5atL0/edit#gid=0'
-      // },
-      // {
-      //   label: 'rtsp測試',
-      //   icon: 'pi pi-code',
-      //   routerLink: '/test'
-      // }
     ]
   }
 }

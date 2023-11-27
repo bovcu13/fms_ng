@@ -19,11 +19,9 @@ import { DrivingStatusComponent } from "../features/driving-status/driving-statu
 import { DrawComponent } from "../features/test/draw/draw.component";
 import { InfoComponent } from "../features/test/info/info.component";
 import { HistoryPathComponent } from "../features/history/history-path.component";
-import { RecordComponent } from "../features/statistics/record/record.component";
 import { CakeReportComponent } from "../features/digital-cake/cake-report/cake-report.component";
 import { SignalComponent } from "../features/test/signal/signal.component";
 import { BasicDataComponent } from "../features/basic-settings/basic-data/basic-data.component";
-import { OddSetComponent } from "../features/basic-settings/odd-set/odd-set.component";
 import { OddReportComponent } from "../features/odd-list/odd-report/odd-report.component";
 import { SpeedingComponent } from "../features/odd-list/speeding/speeding.component";
 import { StallComponent } from "../features/odd-list/stall/stall.component";
@@ -33,7 +31,6 @@ import { MileComponent } from "../features/statistics/mile/mile.component";
 import { PremiumComponent } from "../features/premium/premium.component";
 import { SuccessComponent } from "../features/premium/success/success.component";
 import { FailedComponent } from "../features/premium/failed/failed.component";
-import { TempDashboardComponent } from "../features/temp-control/temp-dashboard/temp-dashboard.component";
 import { VehicleComponent } from "../features/fleet-mgmt/vehicle/vehicle.component";
 import { FleetMgmtComponent } from "../features/fleet-mgmt/fleet-mgmt/fleet-mgmt.component";
 import { DriverComponent } from "../features/driver-mgmt/driver/driver.component";
@@ -74,11 +71,9 @@ import { LandmarkComponent } from "../features/basic-settings/landmark/landmark.
     DrawComponent,
     InfoComponent,
     HistoryPathComponent,
-    RecordComponent,
     CakeReportComponent,
     SignalComponent,
     BasicDataComponent,
-    OddSetComponent,
     OddReportComponent,
     SpeedingComponent,
     StallComponent,
@@ -88,7 +83,6 @@ import { LandmarkComponent } from "../features/basic-settings/landmark/landmark.
     PremiumComponent,
     SuccessComponent,
     FailedComponent,
-    TempDashboardComponent,
     VehicleComponent,
     FleetMgmtComponent,
     DriverComponent,
