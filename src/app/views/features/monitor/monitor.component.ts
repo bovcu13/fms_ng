@@ -4,6 +4,8 @@ import { monitorStatus } from "../../../shared/data/monitor";
 import * as flvjs from 'flv.js';
 import { CarService } from "../../../services/car.service";
 import { Table } from "primeng/table";
+import { products } from "../../../shared/data/products";
+import { now } from "../../../shared/data/now";
 
 @Component({
   selector: 'app-monitor',
@@ -163,9 +165,7 @@ export class MonitorComponent implements AfterViewInit ,OnInit {
   products: any[] = [];
   loading = true;
   getAllNewGpsRequest() {
-    this.carServ.getAllNewGpsRequest().subscribe({
-      next: (res) => {
-        this.products = res.body.gps.map((item: any) => ({
+        this.products = now.map((item: any) => ({
           ...item,
           position: {
             lat: item.lat,
@@ -177,7 +177,7 @@ export class MonitorComponent implements AfterViewInit ,OnInit {
         console.log("來源資料:", this.products);
         this.loading = false;
 
-        this.markers = this.products.map((product: any) => ({
+        this.markers = now.map((product: any) => ({
           position: product.position,
           icon: {
             url: product.url,
@@ -186,11 +186,34 @@ export class MonitorComponent implements AfterViewInit ,OnInit {
           infoWindowContent: product.address,
         }));
         console.log(this.markers)
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    // this.carServ.getAllNewGpsRequest().subscribe({
+    //   next: (res) => {
+    //     this.products = res.body.gps.map((item: any) => ({
+    //       ...item,
+    //       position: {
+    //         lat: item.lat,
+    //         lng: item.lng
+    //       },
+    //       url: this.getUrlByDirection(item.heading, item.status),
+    //       direction: this.parseHeading(item.heading)
+    //     }));
+    //     console.log("來源資料:", this.products);
+    //     this.loading = false;
+    //
+    //     this.markers = this.products.map((product: any) => ({
+    //       position: product.position,
+    //       icon: {
+    //         url: product.url,
+    //         scaledSize: new google.maps.Size(50, 50)
+    //       },
+    //       infoWindowContent: product.address,
+    //     }));
+    //     console.log(this.markers)
+    //   },
+    //   error: (err) => {
+    //     console.log(err);
+    //   },
+    // });
   }
 
   vedioInit() {
