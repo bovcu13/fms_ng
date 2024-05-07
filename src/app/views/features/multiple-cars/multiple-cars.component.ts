@@ -3,6 +3,7 @@ import { GoogleMap, MapInfoWindow, MapMarker } from "@angular/google-maps";
 import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { CarService } from "../../../services/car.service";
+import { now } from "../../../shared/data/now";
 
 @Component({
   selector: 'app-multiple-cars',
@@ -125,9 +126,7 @@ export class MultipleCarsComponent implements OnInit {
 
   visible = true;
   getAllNewGpsRequest() {
-    this.carServ.getAllNewGpsRequest().subscribe({
-      next: (res) => {
-        this.products = res.body.gps.map((item: any) => ({
+        this.products = now.map((item: any) => ({
           ...item,
           position: {
             lat: item.lat,
@@ -138,7 +137,7 @@ export class MultipleCarsComponent implements OnInit {
         }));
         console.log("來源資料:", this.products);
 
-        this.markers = this.products.map((product: any) => ({
+        this.markers = now.map((product: any) => ({
           position: product.position,
           icon: {
             url: product.url,
@@ -149,11 +148,35 @@ export class MultipleCarsComponent implements OnInit {
 
         console.log(this.markers)
         this.visible = false;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    // this.carServ.getAllNewGpsRequest().subscribe({
+    //   next: (res) => {
+    //     this.products = res.body.gps.map((item: any) => ({
+    //       ...item,
+    //       position: {
+    //         lat: item.lat,
+    //         lng: item.lng
+    //       },
+    //       url: this.getUrlByDirection(item.heading, item.status),
+    //       direction: this.parseHeading(item.heading)
+    //     }));
+    //     console.log("來源資料:", this.products);
+    //
+    //     this.markers = this.products.map((product: any) => ({
+    //       position: product.position,
+    //       icon: {
+    //         url: product.url,
+    //         scaledSize: new google.maps.Size(50, 50)
+    //       },
+    //       infoWindowContent: product.license_plate,
+    //     }));
+    //
+    //     console.log(this.markers)
+    //     this.visible = false;
+    //   },
+    //   error: (err) => {
+    //     console.log(err);
+    //   },
+    // });
   }
 
   // 初始地圖地點
