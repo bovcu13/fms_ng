@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { CarService } from "../../../../../services/car.service";
 import { DispatchService } from "../../../../../services/dispatch.service";
 import { ConfirmationService, MessageService } from "primeng/api";
+import { workData } from "../../../../../shared/data/event";
+import { list } from "../../../../../shared/data/dispatch";
 
 @Component({
   selector: 'app-dispatch-view',
@@ -13,6 +15,8 @@ import { ConfirmationService, MessageService } from "primeng/api";
 })
 export class DispatchViewComponent implements OnInit {
   id: any = 0;
+
+  testData: any = workData;
 
   event_form: FormGroup;
 
@@ -52,90 +56,126 @@ export class DispatchViewComponent implements OnInit {
 
   formList: any = [];
 
-  getOneTransportTask(id: string) {
-    this.dispatchServ.getOneTransportTask(id).subscribe({
-      next: res => {
-        console.log('getOneTransportTask:', res.body);
+  getOneTransportTask(id: number) {
+        console.log('getOneTransportTask:', this.testData[id-1]);
         // 取得派工任務的託運訂單
-        this.formList = res.body.form;
+        this.formList = this.testData[id-1].form;
         console.log('formList:', this.formList);
 
-        this.event_form.patchValue(res.body);
+        this.event_form.patchValue(this.testData[id-1]);
 
         // 只取託運訂單名稱陣列
         const formArray = this.formList.map((item: any) => ({ name: item.name }));
         this.event_form.patchValue({
           form: formArray,
           driver: {
-            name: res.body.driver_name,
-            id: res.body.driver_id,
+            name: this.testData[id-1].driver_name,
+            id: this.testData[id-1].driver_id,
           },
           vehicle: {
-            name: res.body.vehicle_name,
-            id: res.body.vehicle_id,
+            name: this.testData[id-1].vehicle_name,
+            id: this.testData[id-1].vehicle_id,
           },
         });
 
         this.formName = this.formList[0].name;
         this.shipList = this.formList[0].shipping_list;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+
+    // this.dispatchServ.getOneTransportTask(id).subscribe({
+    //   next: res => {
+    //     console.log('getOneTransportTask:', res.body);
+    //     // 取得派工任務的託運訂單
+    //     this.formList = res.body.form;
+    //     console.log('formList:', this.formList);
+    //
+    //     this.event_form.patchValue(res.body);
+    //
+    //     // 只取託運訂單名稱陣列
+    //     const formArray = this.formList.map((item: any) => ({ name: item.name }));
+    //     this.event_form.patchValue({
+    //       form: formArray,
+    //       driver: {
+    //         name: res.body.driver_name,
+    //         id: res.body.driver_id,
+    //       },
+    //       vehicle: {
+    //         name: res.body.vehicle_name,
+    //         id: res.body.vehicle_id,
+    //       },
+    //     });
+    //
+    //     this.formName = this.formList[0].name;
+    //     this.shipList = this.formList[0].shipping_list;
+    //   },
+    //   error: (err) => {
+    //     console.log(err);
+    //   },
+    // });
   }
 
   // 取得表單
   formData: any;
 
+  testFormData: any = list
+
   getAllTransportOrder() {
-    this.dispatchServ.getAllTransportOrder().subscribe({
-      next: res => {
-        this.formData = res.body.transport_orders.map((item: any) => ({
-          name: item.name,
-        }));
-        console.log('formData:', this.formData)
-      },
-      error: (err) => {
-        console.log('getAllTransportOrderError:', err);
-      },
-    });
+    this.formData = this.testFormData.map((item: any) => ({ name: item.name }));
+    // this.dispatchServ.getAllTransportOrder().subscribe({
+    //   next: res => {
+    //     this.formData = res.body.transport_orders.map((item: any) => ({
+    //       name: item.name,
+    //     }));
+    //     console.log('formData:', this.formData)
+    //   },
+    //   error: (err) => {
+    //     console.log('getAllTransportOrderError:', err);
+    //   },
+    // });
   }
 
   // 司機
   driverData: any
 
   getAllDriversRequest() {
-    this.carServ.getAllDriversRequest().subscribe({
-      next: res => {
-        this.driverData = res.body.drivers.map((item: any) => ({
-          name: item.name,
-          id: item.id
-        }));
-        console.log('driverData:', this.driverData);
-      },
-      error: (err) => {
-        console.log('getAllDriversRequestError:', err);
-      },
-    });
+    this.driverData = this.testData.map((item: any) => ({
+      name: item.driver_name,
+      id: item.driver_id
+    }));
+    // this.carServ.getAllDriversRequest().subscribe({
+    //   next: res => {
+    //     this.driverData = res.body.drivers.map((item: any) => ({
+    //       name: item.name,
+    //       id: item.id
+    //     }));
+    //     console.log('driverData:', this.driverData);
+    //   },
+    //   error: (err) => {
+    //     console.log('getAllDriversRequestError:', err);
+    //   },
+    // });
   }
 
   // 車輛
   vehiclesData: any;
 
   getAllVehiclesRequest() {
-    this.carServ.getAllVehiclesRequest(1, 20).subscribe({
-      next: res => {
-        this.vehiclesData = res.body.vehicles.map((item: any) => ({
-          name: item.name,
-          id: item.id
-        }));
-        console.log('vehiclesData:', this.vehiclesData);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.vehiclesData = this.testData.map((item: any) => ({
+      name: item.vehicle_name,
+      id: item.vehicle_id
+    }));
+
+    // this.carServ.getAllVehiclesRequest(1, 20).subscribe({
+    //   next: res => {
+    //     this.vehiclesData = res.body.vehicles.map((item: any) => ({
+    //       name: item.name,
+    //       id: item.id
+    //     }));
+    //     console.log('vehiclesData:', this.vehiclesData);
+    //   },
+    //   error: (err) => {
+    //     console.log(err);
+    //   },
+    // });
   }
 
   // order-list

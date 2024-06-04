@@ -12,7 +12,7 @@
             <p-button routerLink="/dispatch_form" icon="pi pi-plus"
                       [text]="true" size="small" pTooltip="新增"></p-button>
           </div>
-          <p-table [value]="formData"
+          <p-table [value]="list"
                    [(selection)]="selectedForm"
                    (selectionChange)="handleCheckbox($event)"
                    [paginator]="true"

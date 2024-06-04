@@ -12,7 +12,7 @@
             <p-button icon="pi pi-plus" (click)="showAddEventDialog('add')" [text]="true"></p-button>
           </div>
           <ng-container *ngIf="showList == true">
-            <p-table [value]="eventData"
+            <p-table [value]="dispatchEvents"
                      [(selection)]="selectedEvent"
                      (selectionChange)="handleCheckbox($event)"
                      [paginator]="true"
@@ -37,7 +37,7 @@
                   <td>
                     <p-tableCheckbox [value]="product"></p-tableCheckbox>
                   </td>
-                  <td class="text-sm" (click)="goToDispatchView(product.id)">{{ product.start }}</td>
+                  <td class="text-sm" (click)="goToDispatchView(product.id)">{{ product.start_date }}</td>
                   <td (click)="goToDispatchView(product.id)">
                     <div class="flex align-items-center p-3 gap-4">
                       <div
