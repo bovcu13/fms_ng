@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./views/container/container.module').then(m => m.ContainerModule),
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   }
 ];
 

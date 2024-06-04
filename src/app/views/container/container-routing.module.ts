@@ -55,92 +55,92 @@ const routes: Routes = [
   {
     path: '', component: ContainerComponent,
     children: [
-      { path: 'main', component: MainComponent, canActivate: [AuthGuard] },
-      { path: 'role', component: RoleComponent, canActivate: [AuthGuard] },
+      { path: 'main', component: MainComponent,  },
+      { path: 'role', component: RoleComponent,  },
 // --------------------FMS-------------------------------------------------------------------------------------------------------------------------------------------------------
       // GPS圖台
-      { path: 'multiCars', component: MultipleCarsComponent, canActivate: [AuthGuard] },
+      { path: 'multiCars', component: MultipleCarsComponent,  },
       // 車機影像
-      { path: 'monitor', component: MonitorComponent, canActivate: [AuthGuard] },
+      { path: 'monitor', component: MonitorComponent,  },
       // 歷史軌跡
-      { path: 'history', component: HistoryPathComponent, canActivate: [AuthGuard] },
+      { path: 'history', component: HistoryPathComponent,  },
       // 數位軌跡16-1報表
-      { path: 'cake_report', component: CakeReportComponent, canActivate: [AuthGuard] },
+      { path: 'cake_report', component: CakeReportComponent,  },
       // 車輛行駛日誌
-      { path: 'driving_status', component: DrivingStatusComponent, canActivate: [AuthGuard] },
+      { path: 'driving_status', component: DrivingStatusComponent,  },
       // 異常報表 - 異常總表
-      { path: 'odd_report', component: OddReportComponent, canActivate: [AuthGuard] },
+      { path: 'odd_report', component: OddReportComponent,  },
       // 異常報表 - 超速時間
-      { path: 'speeding', component: SpeedingComponent, canActivate: [AuthGuard] },
+      { path: 'speeding', component: SpeedingComponent,  },
       // 異常報表 - 停不熄火
-      { path: 'stall', component: StallComponent, canActivate: [AuthGuard] },
+      { path: 'stall', component: StallComponent,  },
       // 異常報表 - 溫度異常
-      { path: 'odd_temp', component: OddTempComponent, canActivate: [AuthGuard] },
+      { path: 'odd_temp', component: OddTempComponent,  },
 
 // --------------------TMS-------------------------------------------------------------------------------------------------------------------------------------------------------
       // 託運訂單
-      { path: 'dispatch_list', component: DispatchListComponent, canActivate: [AuthGuard] },
-      { path: 'dispatch_list/:id', component: DispatchFormComponent, canActivate: [AuthGuard] },
-      { path: 'dispatch_form', component: DispatchFormComponent, canActivate: [AuthGuard] },
+      { path: 'dispatch_list', component: DispatchListComponent,  },
+      { path: 'dispatch_list/:id', component: DispatchFormComponent,  },
+      { path: 'dispatch_form', component: DispatchFormComponent,  },
       // 派工與調度
-      { path: 'dispatch', component: DispatchComponent, canActivate: [AuthGuard] },
-      { path: 'dispatch_view/:id', component: DispatchViewComponent, canActivate: [AuthGuard] },
-      { path: 'dispatch_event', component: EventComponent, canActivate: [AuthGuard] },
+      { path: 'dispatch', component: DispatchComponent,  },
+      { path: 'dispatch_view/:id', component: DispatchViewComponent,  },
+      { path: 'dispatch_event', component: EventComponent,  },
       // 貨態追蹤
-      { path: 'e_tracking', component: ETrackingComponent, canActivate: [AuthGuard] },
-      { path: 'e_tracking_view', component: ETrackingViewComponent, canActivate: [AuthGuard] },
+      { path: 'e_tracking', component: ETrackingComponent,  },
+      { path: 'e_tracking_view', component: ETrackingViewComponent,  },
 
 // --------------------行政管理中心-------------------------------------------------------------------------------------------------------------------------------------------------------
       // 保險管理
-      { path: 'insurance', component: InsuranceComponent, canActivate: [AuthGuard] },
+      { path: 'insurance', component: InsuranceComponent,  },
       // 我的倉儲
-      { path: 'warehouse_list', component: WarehouseListComponent, canActivate: [AuthGuard] },
-      { path: 'warehouse_list/:id', component: WarehouseViewComponent, canActivate: [AuthGuard] },
-      { path: 'goods_view/:id', component: GoodsViewComponent, canActivate: [AuthGuard] },
+      { path: 'warehouse_list', component: WarehouseListComponent,  },
+      { path: 'warehouse_list/:id', component: WarehouseViewComponent,  },
+      { path: 'goods_view/:id', component: GoodsViewComponent,  },
       // 客戶管理
-      { path: 'customer', component: CustomerComponent, canActivate: [AuthGuard] },
-      { path: 'company/:id', component: CompanyComponent, canActivate: [AuthGuard] },
-      { path: 'warehouse/:id', component: WarehouseComponent, canActivate: [AuthGuard] },
+      { path: 'customer', component: CustomerComponent,  },
+      { path: 'company/:id', component: CompanyComponent,  },
+      { path: 'warehouse/:id', component: WarehouseComponent,  },
       // 車隊管理
-      { path: 'fleet_mgmt', component: FleetMgmtComponent, canActivate: [AuthGuard] },
-      { path: 'fleet_mgmt/:id', component: FleetMgmtComponent, canActivate: [AuthGuard] }, // 點進編輯頁面返回時在同一個tab
-      { path: 'vehicle/:id', component: VehicleComponent, canActivate: [AuthGuard] },
-      { path: 'fleet/:id', component: FleetComponent, canActivate: [AuthGuard] },
-      { path: 'gps_device/:id', component: GpsDeviceComponent, canActivate: [AuthGuard] },
+      { path: 'fleet_mgmt', component: FleetMgmtComponent,  },
+      { path: 'fleet_mgmt/:id', component: FleetMgmtComponent,  }, // 點進編輯頁面返回時在同一個tab
+      { path: 'vehicle/:id', component: VehicleComponent,  },
+      { path: 'fleet/:id', component: FleetComponent,  },
+      { path: 'gps_device/:id', component: GpsDeviceComponent,  },
       // 板車管理
-      { path: 'trailers', component: TrailersMgmtComponent, canActivate: [AuthGuard] },
-      { path: 'trailers/:id', component: TrailersComponent, canActivate: [AuthGuard] },
+      { path: 'trailers', component: TrailersMgmtComponent,  },
+      { path: 'trailers/:id', component: TrailersComponent,  },
       // 司機管理
-      { path: 'driver', component: DriverComponent, canActivate: [AuthGuard] },
-      { path: 'driver/:id', component: ViewDriverComponent, canActivate: [AuthGuard] },
+      { path: 'driver', component: DriverComponent,  },
+      { path: 'driver/:id', component: ViewDriverComponent,  },
       // --------------------設定------------------------------------------------------------
       // 基本設定
-      { path: 'basic_data', component: BasicDataComponent, canActivate: [AuthGuard] },
+      { path: 'basic_data', component: BasicDataComponent,  },
       // 自建地標
-      { path: 'landmark', component: LandmarkComponent, canActivate: [AuthGuard] },
+      { path: 'landmark', component: LandmarkComponent,  },
 
 // --------------------ESG-------------------------------------------------------------------------------------------------------------------------------------------------------
       // 零碳整合儀表板
-      { path: 'esg_dashboard', component: EsgDashboardComponent, canActivate: [AuthGuard] },
+      { path: 'esg_dashboard', component: EsgDashboardComponent,  },
       // 碳足跡揭露 - 里程統計
-      { path: 'mile', component: MileComponent, canActivate: [AuthGuard] },
+      { path: 'mile', component: MileComponent,  },
 
 // --------------------平台服務專區-------------------------------------------------------------------------------------------------------------------------------------------------------
       // premium
-      { path: 'premium', component: PremiumComponent, canActivate: [AuthGuard] },
-      { path: 'pay_success', component: SuccessComponent, canActivate: [AuthGuard] },
-      { path: 'pay_failed', component: FailedComponent, canActivate: [AuthGuard] },
+      { path: 'premium', component: PremiumComponent,  },
+      { path: 'pay_success', component: SuccessComponent,  },
+      { path: 'pay_failed', component: FailedComponent,  },
 
 // --------------------更新日誌-------------------------------------------------------------------------------------------------------------------------------------------------------
-      { path: 'log', component: LogComponent, canActivate: [AuthGuard] },
+      { path: 'log', component: LogComponent,  },
 
 // --------------------test-------------------------------------------------------------------------------------------------------------------------------------------------------
-      { path: 'stream', component: StreamComponent, canActivate: [AuthGuard] },
-      { path: 'map', component: MaaaapComponent, canActivate: [AuthGuard] },
-      { path: 'draw', component: DrawComponent, canActivate: [AuthGuard] },
-      { path: 'info', component: InfoComponent, canActivate: [AuthGuard] },
-      { path: 'signal', component: SignalComponent, canActivate: [AuthGuard] },
-      { path: 'poly', component: PolyComponent, canActivate: [AuthGuard] },
+      { path: 'stream', component: StreamComponent,  },
+      { path: 'map', component: MaaaapComponent,  },
+      { path: 'draw', component: DrawComponent,  },
+      { path: 'info', component: InfoComponent,  },
+      { path: 'signal', component: SignalComponent,  },
+      { path: 'poly', component: PolyComponent,  },
     ],
   },
 ];
